@@ -1,39 +1,43 @@
 package multi.com.finalprojects.member.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import lombok.extern.slf4j.Slf4j;
+import multi.com.finalprojects.member.model.MemberVO;
+import multi.com.finalprojects.member.service.MemberService;
+
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@Slf4j
 public class MemberRestController {
+	@Autowired
+	MemberService service;
 	
-	private static final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	@RequestMapping(value = "/json_m_selectAll.do", method = RequestMethod.GET)
+	public List<MemberVO> json_m_selectAll() {
+		log.info("/json_m_selectAll.do");
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		List<MemberVO> vos = service.selectAll();
 		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		return vos;
 	}
 	
+	@RequestMapping(value = "/json_m_selectOne.do", method = RequestMethod.GET)
+	public MemberVO json_m_selectOne(MemberVO vo) {
+		log.info("/json_mv_selectAll.do");
+		
+		MemberVO vo2 = service.selectOne(vo);
+		if(vo2==null) vo2 = vo;
+		return vo2;
+	
+}
 }
