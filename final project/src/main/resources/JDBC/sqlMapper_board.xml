@@ -100,10 +100,18 @@
 		]]>
 	</select>
 	
+	<select id="B_COUNT" resultType="Integer">
+		select count(*) from board where bname=#{bname}
+	</select>
+	
 	
 	<insert id="B_INSERT" parameterType="multi.com.finalproject.board.model.BoardVO">
 		insert into board(bnum, bname, caname, writer, title, content) 
 		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content})
+	</insert>
+	
+	<insert id="B_LIKE" parameterType="Map">
+		insert into likes values(#{num}, #{bnum})
 	</insert>
 	
 	<update id="B_UPDATE" parameterType="multi.com.finalproject.board.model.BoardVO">
