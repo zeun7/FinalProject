@@ -92,7 +92,7 @@ public class MiniBoardController {
 		}
 	}
 	
-	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.POST)
 	public String diary_deleteOK(MiniBoardVO vo) {
 		log.info("diary_deleteOK(vo)...{}", vo);
 
@@ -104,13 +104,6 @@ public class MiniBoardController {
 		} else {
 			return "redirect:diary_update.do";
 		}
-	}
-	
-	@RequestMapping(value = "/mini_visit.do", method = RequestMethod.GET)
-	public String mini_visit() {
-		log.info("mini_visit()...");
-		
-		return "mini/visit/visit";
 	}
 
 	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
@@ -159,7 +152,7 @@ public class MiniBoardController {
 		return "redirect:mini_gallery.do";
 	}
 
-	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/gallery_deleteOK.do", method = RequestMethod.GET)
 	public String gallery_deleteOK(MiniBoardVO vo) {
 		log.info("gallery_deleteOK(vo)...{}", vo);
 		
