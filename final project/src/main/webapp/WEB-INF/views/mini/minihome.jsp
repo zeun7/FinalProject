@@ -23,7 +23,16 @@
 		<li><a href="mini_gallery.do">갤러리</a></li>
 		<li><a href="mini_game.do">게임</a></li>
 	</ul>
-		<li><a href="home.do">메인페이지</a></li>
+	
+	<div style="background-image: url('resources/uploadimg/${vo2.backimg}'); background-size: cover; width: 100%; height: 100vh;">
+	<div>${vo2.title}</div>
+	<div>${vo2.message}</div>
+	<div>bgm : ${vo2.bgm}
+	<audio src="https://ccrma.stanford.edu/~jos/mp3/harpsi-cs.mp3" controls></audio>
+	</div>
+	<div>vtoday : ${vo2.vtoday}</div>
+	<div>vtotal : ${vo2.vtotal}</div>
+	</div>
 	
 	
 </body>
