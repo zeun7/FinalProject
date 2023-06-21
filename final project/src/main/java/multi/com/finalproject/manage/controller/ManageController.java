@@ -32,7 +32,7 @@ public class ManageController {
 	@ResponseBody
 	@RequestMapping(value = "/json_mng_member.do",  method = RequestMethod.GET)
 	public List<MemberVO> json_mng_member() {
-		log.info("/json_mng_member.do...");
+		log.info("/json_mng_member.do...testest");
 		
 		List<MemberVO> vos = service.member();
 		
