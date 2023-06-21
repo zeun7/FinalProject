@@ -1,12 +1,12 @@
-package multi.com.finalprojects.member.service;
+package multi.com.finalproject.member.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import multi.com.finalprojects.member.model.MemberDAO;
-import multi.com.finalprojects.member.model.MemberVO;
+import multi.com.finalproject.member.model.MemberDAO;
+import multi.com.finalproject.member.model.MemberVO;
 @Service
 public class MemberService {
 @Autowired

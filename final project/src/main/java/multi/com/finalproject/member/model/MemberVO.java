@@ -1,4 +1,4 @@
-package multi.com.finalprojects.member.model;
+package multi.com.finalproject.member.model;
 
 import org.springframework.web.multipart.MultipartFile;
 

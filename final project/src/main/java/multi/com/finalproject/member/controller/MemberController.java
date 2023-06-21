@@ -1,20 +1,15 @@
-package multi.com.finalprojects.member.controller;
+package multi.com.finalproject.member.controller;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalprojects.member.model.MemberVO;
-import multi.com.finalprojects.member.service.MemberService;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Controller
 @Slf4j
 public class MemberController {
@@ -59,7 +52,7 @@ public class MemberController {
 			vo.setProfilepic(getOriginalFilename);
 		} else {
 			vo.setProfilepic(getOriginalFilename);
-			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			// �쎒 �뼱�뵆由ъ��씠�뀡�씠 媛뽯뒗 �떎�젣 寃쎈줈: �씠誘몄�瑜� �뾽濡쒕뱶�븷 ���긽 寃쎈줈瑜� 李얠븘�꽌 �뙆�씪���옣.
 			String realPath = sContext.getRealPath("resources/uploadimg");
 			log.info("realPath : {}", realPath);
 

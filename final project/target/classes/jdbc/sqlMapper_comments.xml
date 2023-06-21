@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.mall.com.comments">
+
+	<select id="C_SELECT_ALL" resultType="multi.mall.com.comments.model.CommentsVO">
+		select cnum, wnum, writer, content, to_char(cdate,'yyyy-mm-dd hh24:mi:ss') as cdate 
+		from mm_comments where wnum = #{wnum} order by cnum desc
+	</select>
+	
+	<insert id="C_INSERT">
+		insert into mm_comments(cnum, wnum, writer, content) 
+		values(seq_mm_comments.nextval, #{wnum}, #{writer}, #{content})
+	</insert>
+	
+	<update id="C_UPDATE">
+		update mm_comments set content = #{content}, cdate = sysdate where cnum = #{cnum}
+	</update>
+	
+	<delete id="C_DELETE">
+		delete from mm_comments where cnum = #{cnum}
+	</delete>
+</mapper>
