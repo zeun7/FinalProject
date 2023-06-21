@@ -18,7 +18,7 @@
 		<property name="driverClassName"
 			value="${oracle.DRIVER_NAME}" />
 		<property name="url" value="${oracle.URL}" />
-		<property name="username" value="${oracle.USER_NAME}" />
+		<property name="username" value="${oracle.USER}" />
 		<property name="password" value="${oracle.PASSWORD}" />
 	</bean>
 
