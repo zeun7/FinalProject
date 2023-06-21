@@ -9,6 +9,5 @@
 <jsp:include page="top_menu.jsp"></jsp:include>
 	<h1>Hello world!</h1>
 
-	<P>The time on the server is ${serverTime}.</P>
 </body>
 </html>
