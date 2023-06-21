@@ -17,20 +17,19 @@ function manage_mem(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<table>
- 								<thead>
- 								<tr>
- 								<th>No.</th>
- 								<th>ID</th>
- 								<th>닉네임</th>
- 								<th>프로필 이미지</th>
- 								<th>이름</th>
- 								<th>전화번호</th>
- 								<th>미니홈피 주소</th>
- 								<th>사용자 등급</th>
- 								</tr>
- 								</thead>
- 								</tbody>`; 			
+ 			let tag_vos = `<thead>
+							<tr>
+							<th>No.</th>
+							<th>ID</th>
+							<th>닉네임</th>
+							<th>프로필 이미지</th>
+							<th>이름</th>
+							<th>전화번호</th>
+							<th>미니홈피 주소</th>
+							<th>사용자 등급</th>
+							</tr>
+							</thead>
+							</tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -49,7 +48,7 @@ function manage_mem(){
  			});
 			
  			tag_vos += `</tbody>
- 						</table>`;
+ 						`;
 			$("#vos").html(tag_vos);
 		},
 		error:function(xhr,status,error){
@@ -66,17 +65,16 @@ function manage_board(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<table>
- 								<thead>
- 								<tr>
- 								<th>No.</th>
- 								<th>제목</th>
- 								<th>작성자</th>
- 								<th>신고사유</th>
- 								<th>삭제</th>
- 								</tr>
- 								</thead>
- 								</tbody>`; 			
+ 			let tag_vos = `<thead>
+							<tr>
+							<th>No.</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>신고사유</th>
+							<th>삭제</th>
+							</tr>
+							</thead>
+							</tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -90,7 +88,7 @@ function manage_board(){
  			});
 			
  			tag_vos += `</tbody>
- 						</table>`;
+ 						`;
 			$("#vos").html(tag_vos);
 		},
 		error:function(xhr,status,error){
@@ -107,17 +105,16 @@ function manage_board(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<table>
- 								<thead>
- 								<tr>
- 								<th>No.</th>
- 								<th>댓글 내용</th>
- 								<th>작성자</th>
- 								<th>신고사유</th>
- 								<th>삭제</th>
- 								</tr>
- 								</thead>
- 								</tbody>`; 			
+ 			let tag_vos = `<thead>
+							<tr>
+							<th>No.</th>
+							<th>댓글 내용</th>
+							<th>작성자</th>
+							<th>신고사유</th>
+							<th>삭제</th>
+							</tr>
+							</thead>
+							</tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -131,7 +128,7 @@ function manage_board(){
  			});
 			
  			tag_vos += `</tbody>
- 						</table>`;
+ 						`;
 			$("#vos").html(tag_vos);
 		},
 		error:function(xhr,status,error){
@@ -147,5 +144,7 @@ function manage_board(){
 		<li><button onclick="manage_board()">신고 게시글</button></li>
 		<li><button onclick="manage_comments()">신고 댓글</button></li>
 	</ul>
+	<table id="vos">
+	</table>
 </body>
 </html>
