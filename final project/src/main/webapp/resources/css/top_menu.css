@@ -29,6 +29,23 @@ li a:hover:not(.active) {
 	background-color: #A067F6;
 }
 
+ol {
+	list-style-type: none;
+	margin: 20px 10px;
+	padding: 0;
+	background-color: #AD7EF4;
+}
+
+ol:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+ol li {
+	float:right;
+}
+
 .active {
 	background-color: #A067F6;
 }
