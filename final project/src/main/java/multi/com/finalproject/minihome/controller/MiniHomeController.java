@@ -1,4 +1,4 @@
-package multi.com.finalproject.controller;
+package multi.com.finalproject.minihome.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
