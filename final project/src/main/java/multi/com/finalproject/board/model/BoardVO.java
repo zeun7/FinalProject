@@ -17,5 +17,6 @@ public class BoardVO {
 	private String filepath;
 	private int vcount;
 	private int likes;
-	
+	private int report;
+	private String reason;
 }
