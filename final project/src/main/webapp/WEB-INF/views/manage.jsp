@@ -11,7 +11,7 @@ $(funciton(){manage_mem()});
 
 function manage_mem(){
 	$.ajax({
-		url : "json_m_selectAll.do",
+		url : "json_mng_member.do",
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -59,7 +59,7 @@ function manage_mem(){
 
 function manage_board(){
 	$.ajax({
-		url : "json_b_report.do",
+		url : "json_mng_board.do",
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -99,7 +99,7 @@ function manage_board(){
 
 function manage_board(){
 	$.ajax({
-		url : "json_b_report.do",
+		url : "json_mng_comments.do",
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {

@@ -9,11 +9,11 @@
 		select * from member order by num desc
 	</select>
 	
-	<select id="REPORT_B_SELECT_ALL" resultType="multi.com.finalproject.board.model.BoardVO">
+	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
 		select * from board where report = 1
 	</select>
 	
-	<select id="REPORT_C_SELECT_ALL" resultType="multi.com.finalproject.Comments.model.CommentsVO">
+	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.Comments.model.CommentsVO">
 		select * from comments where report = 1
 	</select>
 </mapper>
