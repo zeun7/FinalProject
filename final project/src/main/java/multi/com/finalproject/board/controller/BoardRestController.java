@@ -35,16 +35,28 @@ public class BoardRestController {
 		map.put("limit", limit);
 		
 		List<BoardVO> vos = service.selectAll(map);
+		log.info("{}", vos);
 		
 		return vos;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_searchList.do", method = RequestMethod.GET)
-	public List<BoardVO> json_b_searchList(String searchKey, String searchWord) {
-		log.info("/json_b_searchList.do...{}, {}", searchKey, searchWord);
+	public List<BoardVO> json_b_searchList(BoardVO vo, int page, int limit, String searchKey, String searchWord) {
+		log.info("/json_b_searchList.do...{}", vo);
+		log.info("page:{}, limit:{}", page, limit);
+		log.info("searchKey:{}", searchKey);
+		log.info("searchWord:{}", searchWord);
 		
-		List<BoardVO> vos = new ArrayList<BoardVO>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("page", page);
+		map.put("limit", limit);
+		map.put("searchKey", searchKey);
+		map.put("searchWord", "%"+searchWord+"%");
+		
+		List<BoardVO> vos = service.searchList(map);
+		log.info("{}", vos);
 		
 		return vos;
 	}

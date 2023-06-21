@@ -30,39 +30,49 @@ public class BoardDAOimpl implements BoardDAO {
 	@Override
 	public BoardVO selectOne(BoardVO vo) {
 		log.info("selectOne()...{}", vo);
-		return null;
+		
+		return sqlSession.selectOne("B_SELECT_ONE", vo);
 	}
 
 	@Override
-	public List<BoardVO> searchList(String searchKey, String searchWord) {
-		log.info("searchList()...");
-		log.info("searchKey:{}", searchKey);
-		log.info("searchWord:{}", searchWord);
-		return null;
+	public List<BoardVO> searchList(Map<String, Object> map) {
+		log.info("searchList...{}", map);
+		
+		if(map.get("searchKey").toString().equals("title")) {
+			return sqlSession.selectList("B_SEARCH_LIST_TITLE", map);
+		}else if(map.get("searchKey").toString().equals("content")) {
+			return sqlSession.selectList("B_SEARCH_LIST_CONTENT", map);
+		}else {
+			return sqlSession.selectList("B_SEARCH_LIST_WRITER", map);
+		}
 	}
 
 	@Override
 	public void vcountUp(BoardVO vo) {
 		log.info("vcountUp()...{}", vo);
 
+		sqlSession.update("B_VCOUNT_UP", vo);
 	}
 
 	@Override
 	public int insert(BoardVO vo) {
 		log.info("insert()...{}", vo);
-		return 0;
+		
+		return sqlSession.insert("B_INSERT", vo);
 	}
 
 	@Override
 	public int update(BoardVO vo) {
 		log.info("update()...{}", vo);
-		return 0;
+		
+		return sqlSession.update("B_UPDATE", vo);
 	}
 
 	@Override
 	public int delete(BoardVO vo) {
 		log.info("delete()...{}", vo);
-		return 0;
+		
+		return sqlSession.delete("B_DELETE", vo);
 	}
 
 	@Override

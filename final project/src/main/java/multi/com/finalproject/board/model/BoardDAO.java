@@ -9,7 +9,7 @@ public interface BoardDAO {
 
 	public BoardVO selectOne(BoardVO vo);
 
-	public List<BoardVO> searchList(String searchKey, String searchWord);
+	public List<BoardVO> searchList(Map<String, Object> map);
 
 	public void vcountUp(BoardVO vo);
 

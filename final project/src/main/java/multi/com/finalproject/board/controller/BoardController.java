@@ -29,7 +29,10 @@ public class BoardController {
 	public String b_selectOne(BoardVO vo, Model model) {
 		log.info("/b_selectOne.do...{}", vo);
 		
+		service.vcountUp(vo);
+		
 		BoardVO vo2 = service.selectOne(vo);
+		log.info("vo2:{}", vo2);
 		model.addAttribute(vo2);
 		
 		return "board/selectOne";
@@ -53,21 +56,42 @@ public class BoardController {
 	public String b_insertOK(BoardVO vo) {
 		log.info("/b_insertOK.do...{}", vo);
 		
-		return "";
+		int result = service.insert(vo);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:b_selectAll.do";
+		}else {
+			return "redirect:b_insert.do";
+		}
 	}
 	
 	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.GET)
 	public String b_updateOK(BoardVO vo) {
 		log.info("/b_updateOK.do...{}", vo);
 		
-		return "";
+		int result = service.update(vo);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
+		}else {
+			return "redirect:b_update.do";
+		}
 	}
 	
 	@RequestMapping(value = "/b_deleteOK.do", method = RequestMethod.GET)
 	public String b_deleteOK(BoardVO vo) {
 		log.info("/b_deleteOK.do...{}", vo);
 		
-		return "";
+		int result = service.delete(vo);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:b_selectAll.do";
+		}else {
+			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
+		}
 	}
 	
 }
