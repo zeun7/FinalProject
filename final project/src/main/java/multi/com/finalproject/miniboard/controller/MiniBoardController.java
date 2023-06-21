@@ -92,7 +92,7 @@ public class MiniBoardController {
 		}
 	}
 	
-	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.POST)
 	public String diary_deleteOK(MiniBoardVO vo) {
 		log.info("diary_deleteOK(vo)...{}", vo);
 
