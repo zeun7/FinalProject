@@ -15,14 +15,14 @@ public class HomeController {
 	
 	@RequestMapping(value = {"/", "/home.do"}, method = RequestMethod.GET)
 	public String home() {
-		log.info("home.do");
+		log.info("/home.do...");
 		
 		return "home";
 	}
 	
 	@RequestMapping(value = "/manage.do",  method = RequestMethod.GET)
 	public String manage() {
-		log.info("manage.do");
+		log.info("/manage.do...");
 		
 		return "manage";
 	}
