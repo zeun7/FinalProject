@@ -1,5 +1,7 @@
 package multi.com.finalproject.miniboard.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,8 @@ public class MiniBoardService {
 		log.info("MiniBoardService...");
 	}
 	
-	public int update(MiniBoardVO vo) {
-		return dao.update(vo);
+	public List<MiniBoardVO> selectAll() {
+		return dao.selectAll();
 	}
 
 }

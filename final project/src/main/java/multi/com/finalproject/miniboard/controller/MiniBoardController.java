@@ -1,5 +1,8 @@
 package multi.com.finalproject.miniboard.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,14 +10,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
+import multi.com.finalproject.miniboard.service.MiniBoardService;
 
 @Slf4j
 @Controller
 public class MiniBoardController {
 	
+	@Autowired
+	MiniBoardService service;
+	
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
 	public String mini_diary(Model model) {
 		log.info("mini_diary()...");
+		
+		List<MiniBoardVO> vos = service.selectAll();
+		
+		for (MiniBoardVO vo : vos) {
+			log.info("vo : {}",vo);
+		}
+		
+		model.addAttribute("vos", vos);
 		
 		return "mini/diary/selectAll";
 	}

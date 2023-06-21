@@ -31,6 +31,5 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		return sqlSession.update("MINI_UPDATE",vo);
 	}
 
-	
 
 }

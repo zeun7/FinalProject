@@ -30,6 +30,8 @@
 			<list>
 				<value>classpath:jdbc/sqlMapper_member.xml</value>
 				<value>classpath:jdbc/sqlMapper_board.xml</value>
+				<value>classpath:jdbc/sqlMapper_minihome.xml</value>
+				<value>classpath:jdbc/sqlMapper_miniboard.xml</value>
 			</list>
 		</property>
 	</bean>

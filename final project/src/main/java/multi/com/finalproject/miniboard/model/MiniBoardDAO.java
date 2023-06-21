@@ -1,7 +1,9 @@
 package multi.com.finalproject.miniboard.model;
 
+import java.util.List;
+
 public interface MiniBoardDAO {
 	
-	public int update(MiniBoardVO vo);
+	public List<MiniBoardVO> selectAll();
 	
 }

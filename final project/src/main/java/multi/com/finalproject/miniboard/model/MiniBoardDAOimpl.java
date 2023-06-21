@@ -1,5 +1,7 @@
 package multi.com.finalproject.miniboard.model;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,9 +20,11 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 	
 	@Override
-	public int update(MiniBoardVO vo) {
-		log.info("update(vo)...{}", vo);
-		return sqlSession.update("MINI_UPDATE",vo);
+	public List<MiniBoardVO> selectAll() {
+		log.info("selectAll()....");
+		List<MiniBoardVO> vos = sqlSession.selectList("DIARY_SELECT_ALL");
+		log.info("{}",vos);
+		return vos;
 	}
 
 }
