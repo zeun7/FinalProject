@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <ol>
-	<li><a href="login.do" id="login">로그인</a></li>
-	<li><a href="m_selectOne.do" id="myinfo">내정보</a>
-	<li><a href="m_insert.do" id="m_insert">회원가입</a>
 	<li><a href="logout.do" id="logout">로그아웃</a></li>
+	<li><a href="m_insert.do" id="m_insert">회원가입</a>
+	<li><a href="m_selectOne.do" id="myinfo">내정보</a>
+	<li><a href="login.do" id="login">로그인</a></li>
 </ol>
 
 <ul>
