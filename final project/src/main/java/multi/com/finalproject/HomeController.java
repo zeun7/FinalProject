@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class HomeController {
 	
-	@RequestMapping(value = {"/", "home.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/home.do"}, method = RequestMethod.GET)
 	public String home() {
 		log.info("home.do");
 		
