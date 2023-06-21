@@ -7,9 +7,9 @@
 <jsp:include page="css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-$(funciton(){manage_mem()});
+$(funciton(){manage_member()});
 
-function manage_mem(){
+function manage_member(){
 	$.ajax({
 		url : "json_mng_member.do",
 		method:'GET',
@@ -17,7 +17,8 @@ function manage_mem(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<thead>
+ 			let tag_vos = `
+ 						<thead>
 							<tr>
 							<th>No.</th>
 							<th>ID</th>
@@ -65,7 +66,8 @@ function manage_board(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<thead>
+ 			let tag_vos = `
+ 						<thead>
 							<tr>
 							<th>No.</th>
 							<th>제목</th>
@@ -105,7 +107,8 @@ function manage_board(){
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `<thead>
+ 			let tag_vos = `
+ 						<thead>
 							<tr>
 							<th>No.</th>
 							<th>댓글 내용</th>
@@ -140,7 +143,7 @@ function manage_board(){
 </head>
 <body>
 	<ul>
-		<li><button onclick="manage_mem()">회원관리</button></li>
+		<li><button onclick="manage_member()">회원관리</button></li>
 		<li><button onclick="manage_board()">신고 게시글</button></li>
 		<li><button onclick="manage_comments()">신고 댓글</button></li>
 	</ul>
