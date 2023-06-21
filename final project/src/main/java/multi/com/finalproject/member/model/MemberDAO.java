@@ -21,5 +21,8 @@ public interface MemberDAO {
 	public MemberVO idCheck(MemberVO vo);
 
 	public MemberVO NickCheck(MemberVO vo);
+	
+	public String find_id(String email) throws Exception;
+
 
 }
