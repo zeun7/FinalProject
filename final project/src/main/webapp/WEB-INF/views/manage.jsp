@@ -97,7 +97,7 @@ function manage_board(){
 	});
 }
 
-function manage_board(){
+function manage_comments(){
 	$.ajax({
 		url : "json_mng_comments.do",
 		method:'GET',
