@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.board.service.BoardService;
 
-
 @Controller
 @Slf4j
 public class BoardController {

@@ -21,9 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 @Slf4j
 public class MemberController {
