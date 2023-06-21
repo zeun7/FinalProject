@@ -22,9 +22,13 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	@Override
 	public List<MiniBoardVO> selectAll() {
 		log.info("selectAll()....");
-		List<MiniBoardVO> vos = sqlSession.selectList("DIARY_SELECT_ALL");
-		log.info("{}",vos);
-		return vos;
+		return sqlSession.selectList("DIARY_SELECT_ALL");
+	}
+
+	@Override
+	public MiniBoardVO selectOne(MiniBoardVO vo) {
+		log.info("selectOne(vo)...{}", vo);
+		return sqlSession.selectOne("DIARY_SELECT_ONE", vo);
 	}
 
 }

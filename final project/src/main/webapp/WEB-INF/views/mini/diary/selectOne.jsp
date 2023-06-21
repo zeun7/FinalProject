@@ -10,6 +10,6 @@
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectOne.jsp</h1>
-
+	
 </body>
 </html>

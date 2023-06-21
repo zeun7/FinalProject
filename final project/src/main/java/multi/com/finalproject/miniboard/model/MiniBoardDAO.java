@@ -5,5 +5,7 @@ import java.util.List;
 public interface MiniBoardDAO {
 	
 	public List<MiniBoardVO> selectAll();
+
+	public MiniBoardVO selectOne(MiniBoardVO vo);
 	
 }

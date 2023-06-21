@@ -34,6 +34,16 @@ public class MiniBoardController {
 		return "mini/diary/selectAll";
 	}
 	
+	@RequestMapping(value = "/diary_selectOne.do", method = RequestMethod.GET)
+	public String diary_selectOne(Model model, MiniBoardVO vo) {
+		log.info("diary_selectOne(vo)...{}", vo);
+		
+		MiniBoardVO vo2 = service.selectOne(vo);
+		
+		return "mini/diary/selectOne";
+	}
+	
+	
 	@RequestMapping(value = "/diary_insert.do", method = RequestMethod.GET)
 	public String diary_insert() {
 		log.info("diary_insert()...");
@@ -41,12 +51,6 @@ public class MiniBoardController {
 		return "mini/diary/insert";
 	}
 	
-	@RequestMapping(value = "/diary_selectOne.do", method = RequestMethod.GET)
-	public String diary_selectOne(MiniBoardVO vo) {
-		log.info("diary_selectOne(vo)...{}", vo);
-		
-		return "mini/diary/insert";
-	}
 	
 	@RequestMapping(value = "/diary_insertOK.do", method = RequestMethod.GET)
 	public String diary_insertOK(MiniBoardVO vo) {

@@ -23,4 +23,8 @@ public class MiniBoardService {
 		return dao.selectAll();
 	}
 
+	public MiniBoardVO selectOne(MiniBoardVO vo) {
+		return dao.selectOne(vo);
+	}
+
 }

@@ -8,5 +8,9 @@
 	<select id="DIARY_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		select * from miniboard order by mbnum desc
 	</select>
+	
+	<select id="DIARY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where mbnum=#{mbnum}
+	</select>
 
 </mapper>

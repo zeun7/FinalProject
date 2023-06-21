@@ -21,23 +21,25 @@
 			<th>title</th>
 			<th>content</th>
 			<th>wdate</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="vo" items="${vos}">
 			<tr>
-				<td><a href="diary_selectOne.do?mbnum=${vo.mbnum}">${vo.mbnum}</a></td>
+				<td>${vo.mbnum}</td>
 				<td>${vo.mbname}</td>
 				<td>${vo.writer}</td>
 				<td>${vo.title}</td>
 				<td>${vo.content}</td>
 				<td>${vo.wdate}</td>
+				<td><a href="diary_selectOne.do?mbnum=${vo.mbnum}">자세히 보기</a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="6">1 2 3 4 5</td>
+			<td colspan="7">1 2 3 4 5</td>
 		</tr>
 	</tfoot>
 	</table>
