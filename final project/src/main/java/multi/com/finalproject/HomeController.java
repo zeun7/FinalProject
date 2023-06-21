@@ -20,4 +20,10 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/manage.do",  method = RequestMethod.GET)
+	public String manage() {
+		log.info("manage.do");
+		
+		return "manage";
+	}
 }
