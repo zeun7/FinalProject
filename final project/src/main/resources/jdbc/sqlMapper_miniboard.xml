@@ -18,4 +18,25 @@
 		values(seq_miniboard.nextval,#{mbname},#{writer},#{title},#{content});
 	</insert>
 	
+	<update id="DIARY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</update>
+	
+	<delete id="DIARY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</delete>
+	
+	<select id="GALLERY_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</select>
+	
+	<select id="GALLERY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</select>
+	
+	<insert id="GALLERY_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</insert>
+	
+	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</update>
+	
+	<delete id="GALLERY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</delete>
+	
 </mapper>

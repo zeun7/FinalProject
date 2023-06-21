@@ -25,6 +25,8 @@ public class MiniHomeService {
 	public int update(MiniHomeVO vo) {
 		return dao.update(vo);
 	}
-	
-
+		
+	public void vcountUp(MiniHomeVO vo) {
+		dao.vcountUp(vo);
+	}
 }

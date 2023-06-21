@@ -31,5 +31,11 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		return sqlSession.update("MINI_UPDATE",vo);
 	}
 
+	@Override
+	public void vcountUp(MiniHomeVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
