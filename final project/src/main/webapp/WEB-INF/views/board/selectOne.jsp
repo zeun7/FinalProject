@@ -8,7 +8,15 @@
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
-	<h1>게시글</h1>
+	<table>
+		<tr>
+			<td><h3>${vo2.title }</h3></td>
+			<td>${vo2.writer }</td>
+			<td>${vo2.vcount }</td>
+		</tr>
+		<tr><td>${vo2.wdate }</td></tr>
+	</table>
 
+	
 </body>
 </html>

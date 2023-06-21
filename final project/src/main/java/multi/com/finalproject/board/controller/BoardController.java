@@ -33,7 +33,7 @@ public class BoardController {
 		
 		BoardVO vo2 = service.selectOne(vo);
 		log.info("vo2:{}", vo2);
-		model.addAttribute(vo2);
+		model.addAttribute("vo2", vo2);
 		
 		return "board/selectOne";
 	}
