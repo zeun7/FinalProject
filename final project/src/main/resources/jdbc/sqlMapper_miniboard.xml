@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.com.finalproject.miniboard">
+
+	<select id="DIARY_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard order by mbnum desc
+	</select>
+	
+	<select id="DIARY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where mbnum=#{mbnum}
+	</select>
+	
+	<insert id="DIARY_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		insert into miniboard(mbnum,mbname,writer,title,content) 
+		values(seq_miniboard.nextval,#{mbname},#{writer},#{title},#{content});
+	</insert>
+	
+	<update id="DIARY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</update>
+	
+	<delete id="DIARY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</delete>
+	
+	<select id="GALLERY_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</select>
+	
+	<select id="GALLERY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</select>
+	
+	<insert id="GALLERY_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</insert>
+	
+	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</update>
+	
+	<delete id="GALLERY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	</delete>
+	
+</mapper>
