@@ -13,7 +13,7 @@
 		select * from board where report = 1
 	</select>
 	
-	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.Comments.model.CommentsVO">
+	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
 		select * from comments where report = 1
 	</select>
 </mapper>
