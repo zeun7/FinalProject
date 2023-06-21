@@ -76,15 +76,23 @@ public class BoardDAOimpl implements BoardDAO {
 	}
 
 	@Override
-	public int like(BoardVO vo) {
-		log.info("like()...{}", vo);
-		return 0;
+	public int like(Map<String, Integer> param) {
+		log.info("like()...{}", param);
+		
+		return sqlSession.insert("B_LIKE", param);
 	}
 
 	@Override
 	public int report(BoardVO vo) {
 		log.info("report()...{}", vo);
 		return 0;
+	}
+
+	@Override
+	public int count(BoardVO vo) {
+		log.info("count()...{}", vo);
+		
+		return sqlSession.selectOne("B_COUNT", vo);
 	}
 
 }

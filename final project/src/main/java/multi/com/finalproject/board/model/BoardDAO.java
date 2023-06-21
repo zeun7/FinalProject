@@ -19,8 +19,10 @@ public interface BoardDAO {
 
 	public int delete(BoardVO vo);
 	
-	public int like(BoardVO vo);
+	public int like(Map<String, Integer> param);
 	
 	public int report(BoardVO vo);
+
+	public int count(BoardVO vo);
 
 }

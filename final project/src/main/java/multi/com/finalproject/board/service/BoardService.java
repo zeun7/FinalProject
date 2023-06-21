@@ -49,12 +49,16 @@ public class BoardService {
 		return dao.delete(vo);
 	}
 	
-	public int like(BoardVO vo){
-		return dao.like(vo);
+	public int like(Map<String, Integer> param){
+		return dao.like(param);
 	}
 	
 	public int report(BoardVO vo){
 		return dao.report(vo);
+	}
+
+	public int count(BoardVO vo) {
+		return dao.count(vo);
 	}
 	
 }
