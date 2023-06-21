@@ -15,5 +15,26 @@
 	<li><a href="b_selectAll.do?bname=">게시판4</a></li>
 	<li><a href="b_selectAll.do?bname=">게시판5</a></li>
 	<li><a href="m_friends.do">친구목록</a></li>
-	<li><a href="manage.do">관리</a></li>
+	<li><a href="manage.do" id="manage">관리</a></li>
 </ul>
+<script type="text/javascript">
+	if('${user_id}' === ''){	// 로그아웃 상태
+		$('#logout').hide();
+		$('#m_insert').show();
+		$('#myinfo').hide();
+		$('#login').show();
+	}
+	else{						// 로그인 상태
+		$('#logout').show();
+		$('#m_insert').hide();
+		$('#myinfo').show();
+		$('#login').hide();
+	}
+	
+	if(${mclass} === 1){		// 관리자
+		$('#manage').show();
+	}
+	else{						// 일반 유저
+		$('#manage').hide();
+	}
+</script>
