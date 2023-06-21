@@ -1,6 +1,5 @@
 package multi.com.finalproject.board.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,16 @@ public class BoardRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_b_count.do", method = RequestMethod.GET)
+	public int json_b_count(BoardVO vo) {
+		log.info("/json_b_count.do...{}", vo);
+		
+		int count = service.count(vo);
+		
+		return count;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_b_searchList.do", method = RequestMethod.GET)
 	public List<BoardVO> json_b_searchList(BoardVO vo, int page, int limit, String searchKey, String searchWord) {
 		log.info("/json_b_searchList.do...{}", vo);
@@ -63,10 +72,20 @@ public class BoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_like.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_b_like(BoardVO vo) {
-		log.info("/json_b_searchList.do...{}", vo);
+	public Map<String, Integer> json_b_like(int num, int bnum) {
+		log.info("/json_b_searchList.do...");
+		log.info("num:{}", num);
+		log.info("bnum:{}", bnum);
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("num", num);
+		param.put("bnum", num);
+		
+		int result = service.like(param);
+		log.info("result:{}", result);
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
 		
 		return map;
 	}
@@ -79,6 +98,5 @@ public class BoardRestController {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		return map;
-	}
-	
+	}	
 }
