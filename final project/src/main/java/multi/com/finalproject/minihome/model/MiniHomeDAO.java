@@ -6,4 +6,5 @@ public interface MiniHomeDAO {
 	
 	public int update(MiniHomeVO vo);
 	
+	public void vcountUp(MiniHomeVO vo);
 }
