@@ -40,6 +40,8 @@ public class MiniBoardController {
 		
 		MiniBoardVO vo2 = service.selectOne(vo);
 		
+		model.addAttribute("vo2", vo2);
+		
 		return "mini/diary/selectOne";
 	}
 	

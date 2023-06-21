@@ -17,7 +17,7 @@
 		<li><a href="mini_random.do">랜덤 미니홈피 가기</a></li>
 	</ul>
 	<ul>
-		<li><a href="mini_home.do?hnum=1">홈</a></li>
+		<li><a href="mini_home.do?hnum=${param.hnum}">홈</a></li>
 		<li><a href="mini_diary.do">다이어리</a></li>
 		<li><a href="mini_visit.do">방명록</a></li>
 		<li><a href="mini_gallery.do">갤러리</a></li>
@@ -28,7 +28,7 @@
 	<div>${vo2.title}</div>
 	<div>${vo2.message}</div>
 	<div>bgm : ${vo2.bgm}
-	<audio src="https://ccrma.stanford.edu/~jos/mp3/harpsi-cs.mp3" controls></audio>
+		<audio src="https://ccrma.stanford.edu/~jos/mp3/harpsi-cs.mp3" controls></audio>
 	</div>
 	<div>vtoday : ${vo2.vtoday}</div>
 	<div>vtotal : ${vo2.vtotal}</div>

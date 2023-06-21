@@ -11,6 +11,7 @@
 <jsp:include page="../../top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectAll.jsp</h1>
 	<h1>다이어리</h1>
+	<span>다이어리 작성</span>
 	
 	<table id="boardList">
 	<thead>
