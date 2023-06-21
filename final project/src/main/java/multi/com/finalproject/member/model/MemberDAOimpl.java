@@ -1,4 +1,4 @@
-package multi.com.finalprojects.member.model;
+package multi.com.finalproject.member.model;
 
 import java.util.List;
 
@@ -80,6 +80,11 @@ public class MemberDAOimpl implements MemberDAO {
 	public MemberVO NickCheck(MemberVO vo) {
 		log.info("NickCheck()...{}", vo);
 		return sqlSession.selectOne("M_Nick_CHECK",vo);
+	}
+	
+	@Override
+	public String find_id(String email) throws Exception{
+		return sqlSession.selectOne("FIND_ID", email);
 	}
 
 

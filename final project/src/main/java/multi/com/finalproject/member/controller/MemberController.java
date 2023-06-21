@@ -1,29 +1,26 @@
-package multi.com.finalprojects.member.controller;
+package multi.com.finalproject.member.controller;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalprojects.member.model.MemberVO;
-import multi.com.finalprojects.member.service.MemberService;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -31,25 +28,26 @@ import multi.com.finalprojects.member.service.MemberService;
 @Controller
 @Slf4j
 public class MemberController {
-	
+
 	@Autowired
 	MemberService service;
-	
+
 	@Autowired
 	ServletContext sContext;
-	
+
 	@Autowired
 	HttpSession session;
-	
-	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
-		log.info("insert()....",vo);
-			
+		log.info("insert()....", vo);
+
 		return "member/insert";
 	}
-	@RequestMapping(value = "/insertOK.do", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/m_insertOK.do", method = RequestMethod.POST)
 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
-		log.info("insertOK()....",vo);
+		log.info("insertOK()....", vo);
 		String getOriginalFilename = vo.getFile().getOriginalFilename();
 		int fileNameLength = vo.getFile().getOriginalFilename().length();
 		log.info("getOriginalFilename:{}", getOriginalFilename);
@@ -88,20 +86,19 @@ public class MemberController {
 			return "redirect:m_insert.do";
 		}
 	}
-	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(Model model) {
-		log.info("selectAll()....{}");
-		
-		List<MemberVO> vos = service.selectAll();
-		
-		model.addAttribute("vos", vos);
-		
-		return "member/selectAll";
-	}
-	
-	
-	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/m_selectOne.do", method = RequestMethod.GET)
 	public String selectOne(MemberVO vo, Model model) {
+		log.info("selectAll()....{}");
+
+		MemberVO vo2 = service.selectOne(vo);
+
+		model.addAttribute("vo2", vo2);
+
+		return "member/selectOne";
+	}
+	@RequestMapping(value = "/m_update.do", method = RequestMethod.GET)
+	public String m_update(MemberVO vo, Model model) {
 		log.info("selectAll()....{}");
 		
 		MemberVO vo2 = service.selectOne(vo);
@@ -109,6 +106,63 @@ public class MemberController {
 		model.addAttribute("vo2", vo2);
 		
 		return "member/selectOne";
+	}
+	@RequestMapping(value = "/m_updateOK.do", method = RequestMethod.GET)
+	public String m_updateOK(MemberVO vo, Model model) {
+		log.info("selectAll()....{}");
+		
+		MemberVO vo2 = service.selectOne(vo);
+		
+		model.addAttribute("vo2", vo2);
+		
+		return "member/selectOne";
+	}
+	@RequestMapping(value = "/m_delete.do", method = RequestMethod.GET)
+	public String m_delete(MemberVO vo, Model model) {
+		log.info("selectAll()....{}");
+		
+		MemberVO vo2 = service.selectOne(vo);
+		
+		model.addAttribute("vo2", vo2);
+		
+		return "member/selectOne";
+	}
+
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
+	public String login(String message, Model model) {
+		log.info("/login.do....{}", message);
+
+		if (message != null)
+			message = "아이디/비번 을 확인하세요";
+		model.addAttribute("message", message);
+
+		return "member/login";
+	}
+
+	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
+	public String loginOK(MemberVO vo) {
+		log.info("/loginOK.do...{}", vo);
+
+		MemberVO vo2 = service.login(vo);
+		log.info("vo2...{}", vo2);
+
+		if (vo2 == null) {
+			return "redirect:login.do?message=fail";
+		} else {
+			session.setAttribute("user_id", vo2.getId());
+			return "redirect:home.do";
+		}
+	}
+
+	@RequestMapping(value = "/find_id.do", method = RequestMethod.POST)
+	public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
+		md.addAttribute("id", service.find_id(response, email));
+		return "/member/find_id";
+	}
+	
+	@RequestMapping(value = "/find_id_from.do")
+	public String find_id_from() throws Exception{
+		return "member/find_id_from";
 	}
 	
 }

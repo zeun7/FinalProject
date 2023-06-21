@@ -1,16 +1,15 @@
-package multi.com.finalprojects.member.controller;
+package multi.com.finalproject.member.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalprojects.member.model.MemberVO;
-import multi.com.finalprojects.member.service.MemberService;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 
 
 /**
