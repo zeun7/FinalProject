@@ -81,6 +81,10 @@ public class MemberDAOimpl implements MemberDAO {
 		log.info("NickCheck()...{}", vo);
 		return sqlSession.selectOne("M_Nick_CHECK",vo);
 	}
-
+	
+	@Override
+	public String find_id(String email) throws Exception{
+		return sqlSession.selectOne("FIND_ID", email);
+	}
 
 }
