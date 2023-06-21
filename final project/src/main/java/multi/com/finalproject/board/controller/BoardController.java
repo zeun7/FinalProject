@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.board.service.BoardService;
 
-
 @Controller
 @Slf4j
 public class BoardController {
@@ -33,7 +32,7 @@ public class BoardController {
 		
 		BoardVO vo2 = service.selectOne(vo);
 		log.info("vo2:{}", vo2);
-		model.addAttribute(vo2);
+		model.addAttribute("vo2", vo2);
 		
 		return "board/selectOne";
 	}
@@ -46,13 +45,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/b_update.do", method = RequestMethod.GET)
-	public String b_update() {
-		log.info("/b_update.do...");
+	public String b_update(Model model, BoardVO vo) {
+		log.info("/b_update.do...{}", vo);
+		
+		BoardVO vo2 = service.selectOne(vo);
+		model.addAttribute("vo2", vo2);
 		
 		return "board/update";
 	}
 	
-	@RequestMapping(value = "/b_insertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/b_insertOK.do", method = RequestMethod.POST)
 	public String b_insertOK(BoardVO vo) {
 		log.info("/b_insertOK.do...{}", vo);
 		
@@ -60,13 +62,13 @@ public class BoardController {
 		log.info("result:{}", result);
 		
 		if(result == 1) {
-			return "redirect:b_selectAll.do";
+			return "redirect:b_selectAll.do?bname="+vo.getBname();
 		}else {
-			return "redirect:b_insert.do";
+			return "redirect:b_insert.do?bname="+vo.getBname();
 		}
 	}
 	
-	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.POST)
 	public String b_updateOK(BoardVO vo) {
 		log.info("/b_updateOK.do...{}", vo);
 		
@@ -88,10 +90,9 @@ public class BoardController {
 		log.info("result:{}", result);
 		
 		if(result == 1) {
-			return "redirect:b_selectAll.do";
+			return "redirect:b_selectAll.do?bname="+vo.getBname();
 		}else {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		}
 	}
-	
 }

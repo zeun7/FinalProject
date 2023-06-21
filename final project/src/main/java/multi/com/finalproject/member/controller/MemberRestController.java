@@ -35,5 +35,5 @@ public class MemberRestController {
 		if(vo2==null) vo2 = vo;
 		return vo2;
 	
-}
+	}
 }

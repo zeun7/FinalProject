@@ -7,67 +7,67 @@
 <title>insert</title>
 <jsp:include page="../css.jsp"></jsp:include>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript">
+<!-- <script -->
+<!-- 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+<!-- <script type="text/javascript"> -->
 
- $(function(){
- 	console.log("onload....");
- });
+<!-- //  $(function(){ -->
+<!-- //  	console.log("onload...."); -->
+<!-- //  }); -->
 
- function idCheck(){
- 	console.log("idCheck....",$('#id').val());
+<!-- //  function idCheck(){ -->
+<!-- //  	console.log("idCheck....",$('#id').val()); -->
 	
- 	$.ajax({
- 		url : "json_m_idCheck.do",
- 		data:{id:$('#id').val()},
- 		method:'GET',
- 		dataType:'json',
- 		success : function(obj) {
- 			console.log('ajax...success:', obj);
- 			console.log('ajax...success:', obj.result);
- 			let msg = '';
- 			if(obj.result==='OK'){
- 				msg = '사용가능한 아이디입니다.';
- 			}else{
- 				msg = '사용중인 아이디입니다.';
- 			}
- 			$('#demo1').text(msg);
- 		},
- 		error:function(xhr,status,error){
- 			console.log('xhr.status:', xhr.status);
- 		}
- 	});//end $.ajax()...
+<!-- //  	$.ajax({ -->
+<!-- //  		url : "json_m_idCheck.do", -->
+<!-- //  		data:{id:$('#id').val()}, -->
+<!-- //  		method:'GET', -->
+<!-- //  		dataType:'json', -->
+<!-- //  		success : function(obj) { -->
+<!-- //  			console.log('ajax...success:', obj); -->
+<!-- //  			console.log('ajax...success:', obj.result); -->
+<!-- //  			let msg = ''; -->
+<!-- //  			if(obj.result==='OK'){ -->
+<!-- //  				msg = '사용가능한 아이디입니다.'; -->
+<!-- //  			}else{ -->
+<!-- //  				msg = '사용중인 아이디입니다.'; -->
+<!-- //  			} -->
+<!-- //  			$('#demo1').text(msg); -->
+<!-- //  		}, -->
+<!-- //  		error:function(xhr,status,error){ -->
+<!-- //  			console.log('xhr.status:', xhr.status); -->
+<!-- //  		} -->
+<!-- //  	});//end $.ajax()... -->
 	
- }//end idCheck()...
+<!-- //  }//end idCheck()... -->
 
- function NickCheck(){
- 	console.log("NickCheck....",$('#nickname').val());
+<!-- //  function NickCheck(){ -->
+<!-- //  	console.log("NickCheck....",$('#nickname').val()); -->
 	
- 	$.ajax({
- 		url : "json_m_NickCheck.do",
- 		data:{nickname:$('#nickname').val()},
- 		method:'GET',
- 		dataType:'json',
- 		success : function(obj) {
- 			console.log('ajax...success:', obj);
- 			console.log('ajax...success:', obj.result);
- 			let msg = '';
- 			if(obj.result==='OK'){
- 				msg = '사용가능한 닉네임입니다.';
- 			}else{
- 				msg = '사용중인 닉네임입니다.';
- 			}
- 			$('#demo2').text(msg);
- 		},
- 		error:function(xhr,status,error){
- 			console.log('xhr.status:', xhr.status);
- 		}
- 	});//end $.ajax()...
+<!-- //  	$.ajax({ -->
+<!-- //  		url : "json_m_NickCheck.do", -->
+<!-- //  		data:{nickname:$('#nickname').val()}, -->
+<!-- //  		method:'GET', -->
+<!-- //  		dataType:'json', -->
+<!-- //  		success : function(obj) { -->
+<!-- //  			console.log('ajax...success:', obj); -->
+<!-- //  			console.log('ajax...success:', obj.result); -->
+<!-- //  			let msg = ''; -->
+<!-- //  			if(obj.result==='OK'){ -->
+<!-- //  				msg = '사용가능한 닉네임입니다.'; -->
+<!-- //  			}else{ -->
+<!-- //  				msg = '사용중인 닉네임입니다.'; -->
+<!-- //  			} -->
+<!-- //  			$('#demo2').text(msg); -->
+<!-- //  		}, -->
+<!-- //  		error:function(xhr,status,error){ -->
+<!-- //  			console.log('xhr.status:', xhr.status); -->
+<!-- //  		} -->
+<!-- //  	});//end $.ajax()... -->
 	
- }//end NickCheck()...
+<!-- //  }//end NickCheck()... -->
 
-</script>
+<!-- </script> -->
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td><label for="question">question:</label></td>
-				<td><input type="text" id="text" name="text" value="너가한테 가장 기억에 남은 일이 뭐야?"></td>
+				<td><input type="text" id="text" name="text" value="기억에 남은 일이 뭐야?"></td>
 			</tr>
 			<tr>
 				<td><label for="answer">answer:</label></td>
