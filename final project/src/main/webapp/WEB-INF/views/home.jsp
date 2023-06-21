@@ -8,6 +8,6 @@
 <body>
 <jsp:include page="top_menu.jsp"></jsp:include>
 	<h1>Hello world!</h1>
-
+	Merge test
 </body>
 </html>
