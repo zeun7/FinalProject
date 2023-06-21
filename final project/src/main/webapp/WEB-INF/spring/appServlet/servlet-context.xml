@@ -32,7 +32,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/*.do" />
-			<beans:bean class="multi.mall.com.MMInterceptor"></beans:bean>
+			<beans:bean class="multi.com.finalproject.interceptor.LoginInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
 
