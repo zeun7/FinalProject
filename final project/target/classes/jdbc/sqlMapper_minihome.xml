@@ -6,11 +6,11 @@
 <mapper namespace="multi.com.finalproject.minihome">
 	
 	<select id="MINI_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.MiniHomeVO">
-		select * from minihome where hnum = #{hnum}
+		select * from minihome where id = #{id}
 	</select>
 	
 	<update id="MINI_UPDATE" parameterType="multi.com.finalproject.minihome.model.MiniHomeVO">
-		update minihome set title=#{title}, message=#{message}, backimg=#{backimg} where hnum=#{hnum}
+		update minihome set title=#{title}, message=#{message}, backimg=#{backimg} where id=#{id}
 	</update>
 	
 </mapper>

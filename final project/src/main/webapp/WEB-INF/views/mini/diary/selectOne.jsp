@@ -13,9 +13,10 @@
 
 	<div>${vo2.mbname}</div>
 	<div>제목 : ${vo2.title}</div>
+	<div>닉네임 : ${vo2.writer}</div>
 	<div>작성일자 : ${vo2.wdate}</div>
-	<div>
-		<textarea rows="10" cols="90" name="content">~~~~</textarea>
+	<div style="border: 1px solid black; width: 700px; height: 350px;">
+		<p id="content">${vo2.content}</p>
 	</div>
 	<div>
 		<a href="diary_update.do?mbnum=${param.mbnum}" class="myButton">수정</a>

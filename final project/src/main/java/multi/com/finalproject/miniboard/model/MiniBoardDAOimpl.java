@@ -31,4 +31,10 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		return sqlSession.selectOne("DIARY_SELECT_ONE", vo);
 	}
 
+	@Override
+	public int insert(MiniBoardVO vo) {
+		log.info("insert(vo)...{}", vo);
+		return sqlSession.insert("DIARY_INSERT",vo);
+	}
+
 }

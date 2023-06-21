@@ -12,5 +12,10 @@
 	<select id="DIARY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		select * from miniboard where mbnum=#{mbnum}
 	</select>
-
+	
+	<insert id="DIARY_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		insert into miniboard(mbnum,mbname,writer,title,content) 
+		values(seq_miniboard.nextval,#{mbname},#{writer},#{title},#{content});
+	</insert>
+	
 </mapper>

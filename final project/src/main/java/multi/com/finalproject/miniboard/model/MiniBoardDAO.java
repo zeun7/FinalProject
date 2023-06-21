@@ -7,5 +7,7 @@ public interface MiniBoardDAO {
 	public List<MiniBoardVO> selectAll();
 
 	public MiniBoardVO selectOne(MiniBoardVO vo);
+
+	public int insert(MiniBoardVO vo);
 	
 }

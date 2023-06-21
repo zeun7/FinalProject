@@ -21,7 +21,10 @@
 			</tr>
 			<tr>
 				<td><label for="id">id:</label></td>
-				<td><span id="span_id">${vo2.id}</span></td>
+				<td>
+					<span id="span_id">${vo2.id}</span>
+					<input type="hidden" id="id" name="id" value="${vo2.id}">
+				</td>
 			</tr>
 			<tr>
 				<td><label for="title">title:</label></td>

@@ -27,4 +27,8 @@ public class MiniBoardService {
 		return dao.selectOne(vo);
 	}
 
+	public int insert(MiniBoardVO vo) {
+		return dao.insert(vo);
+	}
+
 }

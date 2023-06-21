@@ -6,12 +6,38 @@
 <head>
 <title>다이어리_selectAll</title>
 <jsp:include page="../../css.jsp"></jsp:include>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+function insertOK() {
+	console.log('insertOK()...');
+	
+	$.ajax({
+		url : "json_diary_insert.do",
+		data : {},
+		method:'GET',//default get
+//			method:'POST',
+		dataType:'json', //xml,text
+		success : function(obj){
+			console.log('ajax...success:', obj);//{"result":1}
+			if(obj.result == 1) selectAll();
+		},
+		
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+		
+	});
+}//end insertOK
+
+</script>
+
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectAll.jsp</h1>
 	<h1>다이어리</h1>
-	<span>다이어리 작성</span>
+	<a href="diary_insert.do?writer=${param.writer}" class="myButton">다이어리 작성</a>
 	
 	<table id="boardList">
 	<thead>

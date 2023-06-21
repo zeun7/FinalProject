@@ -91,9 +91,9 @@ public class MiniHomeController {
 		log.info("result : {}", result);
 
 		if (result == 1) {
-			return "redirect:mini_home.do?hnum=1";
+			return "redirect:mini_home.do?id=" + vo.getId();
 		} else {
-			return "redirect:mini_update.do?hnum=1";
+			return "redirect:mini_update.do?id=" + vo.getId();
 		}
 	}
 	
