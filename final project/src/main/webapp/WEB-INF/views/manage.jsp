@@ -28,7 +28,7 @@ function manage_member(){
 							<th>사용자 등급</th>
 							</tr>
 							</thead>
-							</tbody>`; 			
+							<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -74,7 +74,7 @@ function manage_board(){
 							<th>삭제</th>
 							</tr>
 							</thead>
-							</tbody>`; 			
+							<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -115,7 +115,7 @@ function manage_comments(){
 							<th>삭제</th>
 							</tr>
 							</thead>
-							</tbody>`; 			
+							<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
