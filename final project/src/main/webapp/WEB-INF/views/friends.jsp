@@ -63,16 +63,16 @@ function friends_ban(){
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead>
-							<tr>
-							<th>No.</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>신고사유</th>
-							<th>삭제</th>
-							</tr>
-							</thead>
-							</tbody>`; 			
+					<thead>
+						<tr>
+						<th>No.</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>신고사유</th>
+						<th>삭제</th>
+						</tr>
+					</thead>
+					<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -104,16 +104,16 @@ function friends_add(){
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead>
-							<tr>
-							<th>No.</th>
-							<th>댓글 내용</th>
-							<th>작성자</th>
-							<th>신고사유</th>
-							<th>삭제</th>
-							</tr>
-							</thead>
-							</tbody>`; 			
+					<thead>
+						<tr>
+						<th>No.</th>
+						<th>댓글 내용</th>
+						<th>작성자</th>
+						<th>신고사유</th>
+						<th>삭제</th>
+						</tr>
+					</thead>
+					<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>

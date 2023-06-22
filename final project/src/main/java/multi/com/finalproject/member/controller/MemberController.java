@@ -36,14 +36,14 @@ public class MemberController {
 
 	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
-		log.info("insert()....", vo);
+		log.info("m_insert()....", vo);
 
 		return "member/insert";
 	}
 
 	@RequestMapping(value = "/m_insertOK.do", method = RequestMethod.POST)
 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
-		log.info("insertOK()....", vo);
+		log.info("m_insertOK()....", vo);
 		String getOriginalFilename = vo.getFile().getOriginalFilename();
 		int fileNameLength = vo.getFile().getOriginalFilename().length();
 		log.info("getOriginalFilename:{}", getOriginalFilename);
@@ -85,7 +85,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/m_selectOne.do", method = RequestMethod.GET)
 	public String selectOne(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
+		log.info("/m_selectOne()....{}");
 
 		MemberVO vo2 = service.selectOne(vo);
 
@@ -93,9 +93,10 @@ public class MemberController {
 
 		return "member/selectOne";
 	}
+	
 	@RequestMapping(value = "/m_update.do", method = RequestMethod.GET)
 	public String m_update(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
+		log.info("/m_update()....{}");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		
@@ -103,9 +104,10 @@ public class MemberController {
 		
 		return "member/selectOne";
 	}
+	
 	@RequestMapping(value = "/m_updateOK.do", method = RequestMethod.GET)
 	public String m_updateOK(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
+		log.info("/m_updateOK()....{}");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		
@@ -115,7 +117,7 @@ public class MemberController {
 	}
 	@RequestMapping(value = "/m_delete.do", method = RequestMethod.GET)
 	public String m_delete(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
+		log.info("/m_delete()....{}");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		
@@ -159,6 +161,13 @@ public class MemberController {
 	@RequestMapping(value = "/find_id_from.do")
 	public String find_id_from() throws Exception{
 		return "member/find_id_from";
+	}
+	
+	@RequestMapping(value = "/m_friends.do", method = RequestMethod.GET)
+	public String m_friends(MemberVO vo, Model model) {
+		log.info("/m_friends.do()....{}");
+
+		return "friends";
 	}
 	
 }

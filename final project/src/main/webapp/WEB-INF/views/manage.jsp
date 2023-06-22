@@ -27,8 +27,8 @@ function manage_member(){
 							<th>미니홈피 주소</th>
 							<th>사용자 등급</th>
 							</tr>
-							</thead>
-							<tbody>`; 			
+						</thead>
+						<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -73,8 +73,8 @@ function manage_board(){
 							<th>신고사유</th>
 							<th>삭제</th>
 							</tr>
-							</thead>
-							<tbody>`; 			
+						</thead>
+						<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
@@ -114,8 +114,8 @@ function manage_comments(){
 							<th>신고사유</th>
 							<th>삭제</th>
 							</tr>
-							</thead>
-							<tbody>`; 			
+						</thead>
+						<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
