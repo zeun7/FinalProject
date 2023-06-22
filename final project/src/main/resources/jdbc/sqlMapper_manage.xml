@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.com.finalproject">
+	
+	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
+		select * from board where report = 1
+	</select>
+	
+	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments where report = 1
+	</select>
+</mapper>

@@ -1,5 +1,8 @@
 package multi.com.finalproject.board.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.board.service.BoardService;
-
 
 @Controller
 @Slf4j
@@ -55,6 +57,13 @@ public class BoardController {
 		return "board/update";
 	}
 	
+	@RequestMapping(value = "/b_report.do", method = RequestMethod.GET)
+	public String b_report() {
+		log.info("/b_report.do...");
+		
+		return "board/report";
+	}
+
 	@RequestMapping(value = "/b_insertOK.do", method = RequestMethod.POST)
 	public String b_insertOK(BoardVO vo) {
 		log.info("/b_insertOK.do...{}", vo);
@@ -79,7 +88,7 @@ public class BoardController {
 		if(result == 1) {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		}else {
-			return "redirect:b_update.do";
+			return "redirect:b_update.do?bnum="+vo.getBnum();
 		}
 	}
 	
@@ -96,5 +105,25 @@ public class BoardController {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		}
 	}
+	
+	@RequestMapping(value = "/b_reportOK.do", method = RequestMethod.POST)
+	public String b_reportOK(BoardVO vo, String reason) {
+		log.info("/b_reportOK.do...{}", vo);
+		log.info("reason:{}", reason);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("reason", reason);
+		
+		int result = service.report(map);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:b_report.do?bnum=0";
+		}else {
+			return "redirect:b_report.do?bnum="+vo.getBnum();
+		}
+	}
+	
 	
 }

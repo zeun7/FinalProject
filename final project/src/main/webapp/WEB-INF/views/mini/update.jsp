@@ -10,16 +10,21 @@
 <body>
 <jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>mini/update.jsp</h1>
-	<form action="mini_updateOK.do" method="post"
-		enctype="multipart/form-data">
-		<table>
+	<form action="mini_updateOK.do" method="post" enctype="multipart/form-data">
+		<table id="memberList">
 			<tr>
 				<td><label for="hnum">hnum:</label></td>
-				<td><span id="span_hnum">${vo2.hnum}</span></td>
+				<td>
+					<span id="span_hnum">${vo2.hnum}</span>
+					<input type="hidden" id="hnum" name="hnum" value="${vo2.hnum}">
+				</td>
 			</tr>
 			<tr>
 				<td><label for="id">id:</label></td>
-				<td><span id="span_id">${vo2.id}</span></td>
+				<td>
+					<span id="span_id">${vo2.id}</span>
+					<input type="hidden" id="id" name="id" value="${vo2.id}">
+				</td>
 			</tr>
 			<tr>
 				<td><label for="title">title:</label></td>
@@ -34,14 +39,19 @@
 				<td><label for="miniaddr">miniaddr:</label></td>
 				<td>${vo2.miniaddr}</td>
 			</tr>
+
 			<tr>
 				<td><label for="backimg">backimg:</label></td>
-				<td><input type="file" id="file" name="file"> <input
-					type="hidden" id="save_name" name="save_name"
-					value="${vo2.save_name}"></td>
+				<td>
+					<img width="200px" src="resources/uploadimg/${vo2.backimg}">
+					<input type="file" id="file" name="file"> 
+					<input type="hidden" id="backimg" name="backimg" value="${vo2.backimg}">
+				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="프로필 수정완료"></td>
+				<td colspan="2">
+					<input type="submit" value="프로필 수정완료">
+				</td>
 			</tr>
 		</table>
 	</form>

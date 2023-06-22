@@ -88,8 +88,45 @@ function selectAll(page, limit){
 	});//end $.ajax()
 }//end selectAll()
 
+function searchListCount(){
+	console.log('searchListCount()');
+	$.ajax({
+		url : "json_b_searchList_count.do",
+		method : 'GET',
+		data : {
+			bname : '${param.bname}',
+			searchKey : $("#searchKey").val(),
+			searchWord : $("#searchWord").val()
+		},
+		dataType : 'json', 
+		success : function(result) {
+			console.log(result);
+			let tag_page = 0;
+			let tag_pages = '';
+			
+			while(result > 0){
+				tag_page++;
+				tag_pages += `
+					<button onclick=searchList(\${tag_page},\${limit})>\${tag_page}</button>
+				`;
+				
+				result -= limit;
+			}
+			
+// 			$("#board_name").text('${param.bname}');
+			$("#page").html(tag_pages);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr:', xhr.status);
+//			console.log('status:', status);
+//			console.log('error:', error);
+		}
+	});//end $.ajax()
+}//end searchListCount()
+
 function searchList(page, limit){
-	console.log('searchList()');
+// 	console.log('searchList()');
+	searchListCount();
 	$.ajax({
 		url : "json_b_searchList.do",
 		method : 'GET',
@@ -132,11 +169,21 @@ function searchList(page, limit){
 	});//end $.ajax()
 }//end searchList()
 
+function changeLimit(){
+	limit = $("#limit").val();
+	console.log(limit);
+}
+
 </script>
 </head>
 <body onload="selectAll(page, limit)">
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>${param.bname }</h1>
+	<select name="limit" id="limit" onchange="changeLimit()">
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+	</select>
 	<a href="b_insert.do?bname=${param.bname }">글쓰기</a>
 	<table border="1">
 		<thead>

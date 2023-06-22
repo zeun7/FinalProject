@@ -39,7 +39,7 @@
 		<tfoot>
 			<tr>
 				<td>
-					<button>취소</button>
+					<button type="button" onclick="history.back()">취소</button>
 					<input type="submit" value="등록">
 				</td>
 			</tr>

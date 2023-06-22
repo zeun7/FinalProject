@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.com.finalproject.comments">
+	<select id="C_SELECT_ALL" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments order by cnum desc
+	</select>
+	
+	<select id="C_SELECT_ONE" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments where cnum = #{cnum}
+	</select>
+	
+
+	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
+		insert into comments(cnum,bnum,content,writer) 
+		values(seq_comments.nextval,#{wnum},#{content},#{writer})
+	</insert>
+	
+	<update id="C_UPDATE" parameterType="multi.com.finalproject.comments.model.CommentsVO">
+		update comments set content=#{content} , cdate=sysdate
+		where cnum = #{cnum}
+	</update>
+	
+	<delete id="C_DELETE">
+		delete from comments where cnum = #{cnum}
+	</delete>
+	
+</mapper>
