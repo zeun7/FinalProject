@@ -21,8 +21,16 @@ public interface BoardDAO {
 	
 	public int like(Map<String, Integer> param);
 	
-	public int report(BoardVO vo);
+	public int report(Map<String, Object> map);
 
 	public int count(BoardVO vo);
+
+	public void likesUp(BoardVO vo);
+
+	public int searchCount(Map<String, Object> map);
+
+	public int deleteLike(Map<String, Integer> param);
+
+	public void likesDown(BoardVO vo);
 
 }

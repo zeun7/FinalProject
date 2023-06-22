@@ -70,21 +70,72 @@ public class BoardRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_b_searchList_count.do", method = RequestMethod.GET)
+	public int json_b_searchList_count(BoardVO vo, String searchKey, String searchWord) {
+		log.info("/json_b_searchList_count.do...{}", vo);
+		log.info("searchKey:{}", searchKey);
+		log.info("searchWord:{}", searchWord);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("searchKey", searchKey);
+		map.put("searchWord", "%"+searchWord+"%");
+		
+		int count = service.searchCount(map);
+		
+		return count;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_b_like.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_b_like(int num, int bnum) {
-		log.info("/json_b_searchList.do...");
+	public Map<String, Integer> json_b_like(int num, BoardVO vo) {
+		log.info("/json_b_like.do...");
 		log.info("num:{}", num);
-		log.info("bnum:{}", bnum);
+		log.info("vo:{}", vo);
 		
 		Map<String, Integer> param = new HashMap<String, Integer>();
 		param.put("num", num);
-		param.put("bnum", num);
+		param.put("bnum", vo.getBnum());
 		
 		int result = service.like(param);
 		log.info("result:{}", result);
 		
+		//좋아요 성공하면 카운트업
+		if(result == 1) {
+			service.likesUp(vo);
+		}
+		BoardVO vo2 = service.selectOne(vo);
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
+		map.put("likes", vo2.getLikes());	//좋아요 개수 반환
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_b_like_delete.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_b_like_delete(int num, BoardVO vo) {
+		log.info("/json_b_like_delete.do...");
+		log.info("num:{}", num);
+		log.info("vo:{}", vo);
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("num", num);
+		param.put("bnum", vo.getBnum());
+		
+		int result = service.deleteLike(param);
+		log.info("result:{}", result);
+		
+		//좋아요 삭제 성공하면 카운트다운
+		if(result == 1) {
+			service.likesDown(vo);
+		}
+		BoardVO vo2 = service.selectOne(vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		map.put("likes", vo2.getLikes());	//좋아요 개수 반환
 		
 		return map;
 	}
