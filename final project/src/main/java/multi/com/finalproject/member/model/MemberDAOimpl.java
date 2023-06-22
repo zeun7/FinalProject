@@ -87,4 +87,18 @@ public class MemberDAOimpl implements MemberDAO {
 		return sqlSession.selectOne("FIND_ID", email);
 	}
 
+	@Override
+	public List<MemberVO> friends(MemberVO vo) {
+		log.info("friends()...");
+		
+		return sqlSession.selectList("M_FRIENDS", vo);
+	}
+
+	@Override
+	public List<MemberVO> searchUser(String searchWord) {
+		log.info("searchUser()...{}", searchWord);
+		
+		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", "%"+searchWord+"%");
+	}
+
 }

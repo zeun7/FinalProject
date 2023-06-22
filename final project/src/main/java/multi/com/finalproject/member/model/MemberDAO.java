@@ -24,5 +24,9 @@ public interface MemberDAO {
 	
 	public String find_id(String email) throws Exception;
 
+	public List<MemberVO> friends(MemberVO vo);
+
+	public List<MemberVO> searchUser(String searchWord);
+
 
 }

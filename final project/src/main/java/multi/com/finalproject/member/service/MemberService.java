@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import multi.com.finalproject.member.model.MemberDAO;
 import multi.com.finalproject.member.model.MemberVO;
+
 @Service
 public class MemberService {
 @Autowired
@@ -99,4 +100,12 @@ MemberDAO dao;
 		        }
 		    }
 		}
+
+	public List<MemberVO> friends(MemberVO vo) {
+		return dao.friends(vo);
 	}
+
+	public List<MemberVO> searchUser(String searchWord) {
+		return dao.searchUser(searchWord);
+	}
+}

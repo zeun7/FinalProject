@@ -38,6 +38,11 @@
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select * from member where tel like #{searchWord}
 	</select>
+	
+	<select id="M_SEARCH_LIST_NICKNAME"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select * from member where nickname like #{searchWord}
+	</select>
 
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
@@ -61,5 +66,9 @@
 	<select id="FIND-ID" parameterType="String" resultType="String">
 		select id from member where email = #{email}
 	</select>
-
+	
+	<select id="M_FRIENDS"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select * from member where num in(select num2 from friends where num = #{num})
+	</select>
 </mapper>

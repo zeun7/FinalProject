@@ -10,6 +10,7 @@
 function friends_list(){
 	$.ajax({
 		url : "json_m_friends.do",
+		data:{num:1},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -21,7 +22,7 @@ function friends_list(){
 							<th>친구등급</th>
 							<th>닉네임</th>
 							<th>채팅</th>
-							<th>차단하기</th>
+							<th>차단</th>
 							<th>친구삭제</th>
 						</tr>
 					</thead>
@@ -29,10 +30,13 @@ function friends_list(){
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
-	 					<td>\${vo.nickname}</td>
 	 					<td>\${vo.grade}</td>
+	 					<td>\${vo.nickname}</td>
 	 					<td>
 	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname}">채팅</button>
+	 					</td>
+	 					<td>
+	 						<button onlick="location.href='m_ban?nickname=\${vo.nickname}'">차단</button>
 	 					</td>
 	 					<td>
 							<button onclick="del_friends()">친구삭제</button>
@@ -70,11 +74,11 @@ function friends_ban(){
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
- 					<td>\${vo.nickname}</td>
- 					<td>
- 						<button onclick="location.href='m_bansDel?nickname=\${vo.nickname}'">차단해제</button>
- 					</td>
- 				</tr>
+	 					<td>\${vo.nickname}</td>
+	 					<td>
+	 						<button onclick="location.href='m_bansDel?nickname=\${vo.nickname}'">차단해제</button>
+	 					</td>
+ 					</tr>
  				`;
  			});
 			
@@ -92,8 +96,10 @@ function friends_add(){
 	let tag_vos = `
 		<thead>
 			<tr>
-				<input type="text" name="nickname" id="nickname" />
-				<button onclick="searchUser()">검색</button>
+				<td colspan="2">
+					<input type="text" name="searchWord" id="searchWord" />
+					<button onclick="searchUser()">검색</button>
+				</td>
 			</tr>
 			<tr>
 				<th>닉네임</th>
@@ -110,28 +116,31 @@ function friends_add(){
 					
 function searchUser(){
 	$.ajax({
-		url : "json_mng_comments.do",
+		url : "json_m_searchUser.do",
+		data: {searchWord:$('#searchWord')},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
-					<thead>
- 						<tr>
-		 					<input type="text" name="nickname" id="nickname" />
+				<thead>
+					<tr>
+ 						<td>
+		 					<input type="text" name="searchWord" id="searchWord" />
 		 					<button onclick="searchUser()">검색</button>
- 						</tr>
-						<tr>
-							<th>닉네임</th>
-							<th>친구추가</th>
-							<th>차단</th>
+		 				</td>
 						</tr>
-					</thead>
-					<tbody>`; 			
+					<tr>
+						<th>닉네임</th>
+						<th>친구추가</th>
+						<th>차단</th>
+					</tr>
+				</thead>
+				<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
- 					<tr>
+				<tr>
  					<td>\${vo.nickname}</td>
  					<td>
  						<button onclick="location.href='m_friendsAdd.do?nickname=\${vo.nickname}'">친구추가</button>
