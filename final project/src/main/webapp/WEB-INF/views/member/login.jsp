@@ -24,33 +24,30 @@ $(function(){
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<div class="w3-content w3-container w3-margin-top">
 	<div class="w3-center w3-large w3-margin-top">
-	<h3>Log In</h3>
+		<h3>Log In</h3>
 	</div>
 	<div>
-	<form action="loginOK.do" method="post" >
-	<p>
-	<lable>ID</lable>
-	<span class="w3-rigth w3-button w3-hover-white" title="아이디 찾기"  id="find_id_btn">
-	<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
-	</span>
-	<input class="w3-input" type="text"  id="id" name="id" required>
-	</p>
-	
-	<p>
-	<lable>PW</lable>
-	<span class="w3-rigth w3-button w3-hover-white" title="비밀번호 찾기"  id="find_id_btn">
-	<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
-	</span>
-	<input class="w3-input" type="password"  id="pw" name="pw" required>
-	</p>
+		<form action="loginOK.do" method="post">
+			<p>
+				<label for="id">ID</label>
+				<span class="w3-rigth w3-button w3-hover-white" title="아이디 찾기"  id="find_id_btn">
+					<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
+				</span>
+				<input class="w3-input" type="text"  id="id" name="id" required>
+			</p>
+			
+			<p>
+				<label for="pw">PW</label>
+				<span class="w3-rigth w3-button w3-hover-white" title="비밀번호 찾기"  id="find_id_btn">
+					<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
+				</span>
+				<input class="w3-input" type="password"  id="pw" name="pw" required>
+			</p>
 			<tr>
-				<td colspan="2"><input type="submit" class="myButton"></td>
+				<td colspan="2"><input type="submit" class="myButton" value="로그인"></td>
 			</tr>
-
+		</form>
 	</div>
 	</div>
-	
-		
-	</form>
 </body>
 </html>
