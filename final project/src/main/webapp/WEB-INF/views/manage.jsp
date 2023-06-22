@@ -140,6 +140,7 @@ function manage_comments(){
 </script>
 </head>
 <body>
+	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul>
 		<li><button onclick="manage_member()">회원관리</button></li>
 		<li><button onclick="manage_board()">신고 게시글</button></li>
