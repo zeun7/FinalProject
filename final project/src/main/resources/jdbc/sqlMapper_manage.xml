@@ -6,10 +6,18 @@
 <mapper namespace="multi.com.finalproject">
 	
 	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
-		select * from board where report = 1
+		select * from report where bnum is not null
 	</select>
 	
 	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from comments where report = 1
+		select * from report where cnum is not null
+	</select>
+	
+	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.MiniBoardVO">
+		select * from report where mbnum is not null
+	</select>
+	
+	<select id="MC_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from report where mcnum is not null
 	</select>
 </mapper>
