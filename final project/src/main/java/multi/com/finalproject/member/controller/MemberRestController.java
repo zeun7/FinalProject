@@ -1,6 +1,8 @@
 package multi.com.finalproject.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +32,47 @@ public class MemberRestController {
 	
 	@RequestMapping(value = "/json_m_selectOne.do", method = RequestMethod.GET)
 	public MemberVO json_m_selectOne(MemberVO vo) {
-		log.info("/json_m_selectOne.do");
+		log.info("/json_mv_selectAll.do");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		if(vo2==null) vo2 = vo;
 		return vo2;
+	
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_m_idCheck.do", method = RequestMethod.GET)
+	public String json_m_idCheck(MemberVO vo) {
+		log.info("/json_m_idCheck.do...{}",vo);
+		
+		MemberVO vo2 = service.idCheck(vo);
+		log.info("{}",vo2);
+		if(vo2==null) {
+			return "{\"result\":\"OK\"}";
+		}else {
+			return "{\"result\":\"NotOK\"}";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_m_NickCheck.do", method = RequestMethod.GET)
+	public String json_m_NickCheck(MemberVO vo) {
+		log.info("/json_m_NickCheck.do...{}",vo);
+		
+		MemberVO vo2 = service.NickCheck(vo);
+		log.info("{}",vo2);
+		if(vo2==null) {
+			return "{\"result\":\"OK\"}";
+		}else {
+			return "{\"result\":\"NotOK\"}";
+		}
+	}
+
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_m_friends.do", method = RequestMethod.GET)
 	public List<MemberVO> json_m_friends(MemberVO vo) {
-		log.info("/json_m_friends.do");
+		log.info("/json_m_friends.do...");
 		
 		List<MemberVO> vos = service.friends(vo);
 		log.info("{}", vos);
@@ -51,11 +83,30 @@ public class MemberRestController {
 	@ResponseBody
 	@RequestMapping(value = "/json_m_searchUser.do", method = RequestMethod.GET)
 	public List<MemberVO> json_m_searchUser(String searchWord) {
-		log.info("/json_m_searchUser.do");
+		log.info("/json_m_searchUser.do...");
 		
 		List<MemberVO> vos = service.searchUser(searchWord);
 		log.info("{}", vos);
 		
 		return vos;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_m_friendsAdd.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_m_friendsAdd(String nickname1, String nickname2) {
+		log.info("/json_m_friendsAdd.do...");
+		
+		MemberVO vo = new MemberVO();
+		MemberVO vo2 = new MemberVO();
+		vo.setNickname(nickname1);
+		vo2.setNickname(nickname2);
+		
+		int result = service.addfriend(vo, vo2);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("result: {}", map);
+		
+		return map;
+	}
 }
+

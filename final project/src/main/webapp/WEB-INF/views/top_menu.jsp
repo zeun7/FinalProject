@@ -2,7 +2,7 @@
 <ol>
 	<li><a href="logout.do" id="logout">로그아웃</a></li>
 	<li><a href="m_insert.do" id="m_insert">회원가입</a>
-	<li><a href="m_selectOne.do" id="myinfo">내정보</a>
+	<li><a href="m_selectOne.do?num=${num}" id="myinfo">내정보</a>
 	<li><a href="login.do" id="login">로그인</a></li>
 </ol>
 
@@ -31,7 +31,7 @@
 		$('#login').hide();
 	}
 	
-	if(${mclass} === 1){		// 관리자
+	if('${mclass}' === '1'){		// 관리자
 		$('#manage').show();
 	}
 	else{						// 일반 유저

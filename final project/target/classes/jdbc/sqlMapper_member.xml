@@ -21,7 +21,7 @@
 
 	<select id="M_NICK_CHECK"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select id from member where nickname = #{nickname}
+		select nickname from member where nickname = #{nickname}
 	</select>
 
 	<select id="LOGIN"
@@ -43,32 +43,42 @@
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select * from member where nickname like #{searchWord}
 	</select>
-
+	
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		insert into
-		member(num,id,pw,nickname,profilepic,question,answer,miniaddr,name,tel,email)
-		values(seq_member.nextval,#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{miniaddr},#{name},#{tel},#{email})
+		member(num,id,pw,nickname,profilepic,question,answer,name,miniaddr,tel,email)
+		values(seq_member.nextval,#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},http://localhost:8088/finalproject/mini_home.do?id=user_id,#{tel},#{email})
 	</insert>
 
 	<update id="M_UPDATE"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		update member set pw=#{pw} , name=#{name} , tel=#{tel} ,
 		profilepic=#{profilepic} , nickname=#{nickname} , minaddr=#{minaddr} ,
-		email=#{email}
-		where num = #{num}
+		email=#{email} where num = #{num}
 	</update>
 
-	<delete id="M_DELETE">
-		delete from member where num = #{num}
-	</delete>
+	<delete id="M_DELETE"> delete from member where num = #{num} </delete>
 
-	<select id="FIND-ID" parameterType="String" resultType="String">
+	<select id="FIND_ID"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
 	</select>
-	
+
+	<select id="FIND_PW"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		select id from member where tel = #{tel}
+	</select>
+
 	<select id="M_FRIENDS"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where num in(select num2 from friends where num = #{num})
+		select * from member where num in(select num2 from friends
+		where num = #{num})
 	</select>
+
+	<insert id="M_ADD_FRIEND"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		insert into friends(nickname, nickname2)
+		values(#{nickname1}, #{nickname2})
+	</insert>
 </mapper>

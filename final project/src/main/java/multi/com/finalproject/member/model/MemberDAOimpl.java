@@ -1,6 +1,8 @@
 package multi.com.finalproject.member.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +23,19 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public int insert(MemberVO vo) {
 		log.info("insert()....",vo);
-		return sqlSession.insert("M_INSERT");
+		return sqlSession.insert("M_INSERT",vo);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
 		log.info("update()....",vo);
-		return sqlSession.update("M_UPDATE");
+		return sqlSession.update("M_UPDATE",vo);
 	}
 
 	@Override
 	public int delete(MemberVO vo) {
 		log.info("/delete()....",vo);
-		return sqlSession.delete("M_DELETE");
+		return sqlSession.delete("M_DELETE",vo);
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public MemberVO login(MemberVO vo) {
 		log.info("login()....",vo);
-		return sqlSession.selectOne("M_LOGIN");
+		return sqlSession.selectOne("LOGIN",vo);
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public MemberVO NickCheck(MemberVO vo) {
 		log.info("NickCheck()...{}", vo);
-		return sqlSession.selectOne("M_Nick_CHECK",vo);
+		return sqlSession.selectOne("M_NICK_CHECK",vo);
 	}
 	
 	@Override
@@ -87,11 +89,22 @@ public class MemberDAOimpl implements MemberDAO {
 		return sqlSession.selectOne("FIND_ID", email);
 	}
 
+
+	@Override
+	public String find_pw(String email) throws Exception {
+		return sqlSession.selectOne("FIND_PW", email);
+	}
+
+	@Override
+	public int update_pw(MemberVO member) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public List<MemberVO> friends(MemberVO vo) {
-		log.info("friends()...");
-		
-		return sqlSession.selectList("M_FRIENDS", vo);
+	
+		return sqlSession.selectOne("M_FRINDS",vo);
 	}
 
 	@Override
@@ -100,5 +113,16 @@ public class MemberDAOimpl implements MemberDAO {
 		
 		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", "%"+searchWord+"%");
 	}
-
+	
+	@Override
+	public int addfriend(MemberVO vo, MemberVO vo2) {
+		log.info("addfriend()...{}", vo);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname1", vo.getNickname());
+		map.put("nickname2", vo2.getNickname());
+		int result = sqlSession.insert("M_ADD_FRIEND",map);
+		
+		return result;
+	}
 }
+
