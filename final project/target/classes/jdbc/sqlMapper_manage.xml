@@ -13,7 +13,7 @@
 		select * from report where cnum is not null
 	</select>
 	
-	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.MiniBoardVO">
+	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		select * from report where mbnum is not null
 	</select>
 	
