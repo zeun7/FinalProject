@@ -310,7 +310,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/m_friends.do", method = RequestMethod.GET)
 	public String m_friends(MemberVO vo, Model model) {
-		log.info("/m_friends.do()....{}");
+		log.info("/m_friends.do()...{}");
 		
 		return "friends";
 	}

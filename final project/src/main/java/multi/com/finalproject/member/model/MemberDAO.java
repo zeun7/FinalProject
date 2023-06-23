@@ -30,7 +30,7 @@ public interface MemberDAO {
 
 	public List<MemberVO> friends(MemberVO vo);
 
-	public List<MemberVO> searchUser(String searchWord);
+	public List<MemberVO> searchUser(MemberVO vo, String searchWord);
 	
 	public int addfriend(MemberVO vo, MemberVO vo2);
 }

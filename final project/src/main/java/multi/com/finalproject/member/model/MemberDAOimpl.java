@@ -103,20 +103,23 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public List<MemberVO> friends(MemberVO vo) {
-	
-		return sqlSession.selectOne("M_FRINDS",vo);
+		log.info("friends()...{}", vo);
+		
+		return sqlSession.selectOne("M_FRIENDS",vo);
 	}
 
 	@Override
-	public List<MemberVO> searchUser(String searchWord) {
+	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
 		log.info("searchUser()...{}", searchWord);
-		
-		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", "%"+searchWord+"%");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("nickname", vo.getNickname());
+		map.put("searchWord", "%"+searchWord+"%");
+		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", map);
 	}
 	
 	@Override
 	public int addfriend(MemberVO vo, MemberVO vo2) {
-		log.info("addfriend()...{}", vo);
+		log.info("addfriend()...{}, {}", vo, vo2);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("nickname1", vo.getNickname());
 		map.put("nickname2", vo2.getNickname());

@@ -41,7 +41,8 @@
 	
 	<select id="M_SEARCH_LIST_NICKNAME"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where nickname like #{searchWord}
+		select nickname from member where nickname like #{searchWord} 
+		not in (select nickname2 from friends where nickname = #{nickname})
 	</select>
 	
 	<insert id="M_INSERT"
@@ -72,13 +73,13 @@
 
 	<select id="M_FRIENDS"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where num in(select num2 from friends
-		where num = #{num})
+		select * from member where nickname in(select nickname2 from friends
+		where nickname = #{nickname})
 	</select>
 
 	<insert id="M_ADD_FRIEND"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
-		insert into friends(nickname, nickname2)
-		values(#{nickname1}, #{nickname2})
+		insert into friends(fnum, nickname, nickname2)
+		values(seq_friends.nextval, #{nickname1}, #{nickname2})
 	</insert>
 </mapper>

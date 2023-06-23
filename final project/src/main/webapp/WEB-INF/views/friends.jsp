@@ -10,7 +10,7 @@
 function friends_list(){
 	$.ajax({
 		url : "json_m_friends.do",
-		data:{num:1},
+		data:{nickname: '${nickname}'},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -117,7 +117,8 @@ function friends_add(){
 function searchUser(){
 	$.ajax({
 		url : "json_m_searchUser.do",
-		data: {searchWord:$('#searchWord').val()},
+		data: {nickname: '${nickname}',
+			searchWord:$('#searchWord').val()},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -143,7 +144,7 @@ function searchUser(){
 				<tr>
  					<td id="nickname">\${vo.nickname}</td>
  					<td>
- 						<button onclick="addfriend()"><span id="add_bttn">친구추가</span></button>
+ 						<button onclick="addfriend('\${vo.nickname}')"><span id="add_bttn">친구추가</span></button>
  					</td>
  					<td>
  						<button onclick="location.href='json_m_ban?nickname=\${vo.nickname}'">차단</button>
@@ -162,19 +163,20 @@ function searchUser(){
 	});
 }
 
-function addfriend() {
+function addfriend(nickname) {
 	console.log('add friend()....');
 
 	$.ajax({
 		url : "json_m_friendsAdd.do",
-		data:{nickname:'${nickname}',
-			nickname2:$('#nickname').val()},
+		data:{nickname1:'${nickname}',
+			nickname2:nickname},
 		method:'GET',
 		dataType:'json',
 		success : function(response) {
 			console.log('ajax...success:', response);
 			let msg = response.result === 1?'등록완료':'친구추가'
 			$("#add_bttn").html(msg);
+			$("#add_bttn").disabled;
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);

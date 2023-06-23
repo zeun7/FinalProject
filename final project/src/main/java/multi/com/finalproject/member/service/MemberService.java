@@ -69,8 +69,8 @@ public class MemberService {
 		return dao.friends(vo);
 	}
 
-	public List<MemberVO> searchUser(String searchWord) {
-		return dao.searchUser(searchWord);
+	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
+		return dao.searchUser(vo, searchWord);
 	}
 
 	public int addfriend(MemberVO vo, MemberVO vo2) {
