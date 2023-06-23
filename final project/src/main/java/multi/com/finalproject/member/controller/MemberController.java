@@ -92,9 +92,9 @@ public class MemberController {
 	public String m_selectOne(MemberVO vo, Model model) {
 		log.info("/m_selectOne.do...{}", vo);
 
-		MemberVO vos = service.selectOne(vo);
+		MemberVO vo2 = service.selectOne(vo);
 
-		model.addAttribute("vos", vos);
+		model.addAttribute("vo2", vo2);
 
 		return "member/selectOne";
 	}
@@ -160,6 +160,7 @@ public class MemberController {
 		if (vo2 == null) {
 			return "redirect:login.do?message=fail";
 		} else {
+			session.setAttribute("num", vo2.getNum());
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());

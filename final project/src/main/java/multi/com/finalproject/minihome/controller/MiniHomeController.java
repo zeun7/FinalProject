@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class MiniHomeController {
 	@Autowired
 	ServletContext sContext;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping(value = "/mini_home.do", method = RequestMethod.GET)
 	public String mini_home(Model model, MiniHomeVO vo) {
 		log.info("mini_home(vo)...{}", vo);
@@ -35,6 +39,12 @@ public class MiniHomeController {
 		MiniHomeVO vo2 = service.selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
+		
+		log.info("vo2.getBackimg()...{}", vo2.getBackimg());
+		log.info("vo2.getBgm()...{}", vo2.getBgm());
+		
+		session.setAttribute("backimg", vo2.getBackimg());
+		session.setAttribute("bgm", vo2.getBgm());
 		
 		return "mini/minihome";
 	}
@@ -61,7 +71,7 @@ public class MiniHomeController {
 		int fileNameLength = vo.getFile().getOriginalFilename().length();
 		log.info("getOriginalFilename:{}", getOriginalFilename);
 		log.info("fileNameLength:{}", fileNameLength);
-
+		
 		if (getOriginalFilename.length() != 0) {
 
 			vo.setBackimg(getOriginalFilename);
@@ -83,13 +93,30 @@ public class MiniHomeController {
 			log.info("formatName : {}", formatName);
 			ImageIO.write(thumb_buffer_img, formatName, thumb_file);
 
-		} // end else
-		log.info("{}", vo);
+		} // end if
+		
+		String getOriginalMusicFilename = vo.getMusicFile().getOriginalFilename();
+		int musicFileNameLength = vo.getMusicFile().getOriginalFilename().length();
+		log.info("getOriginalMusicFilename:{}", getOriginalMusicFilename);
+		log.info("musicFileNameLength:{}", musicFileNameLength);
+		
+		if (getOriginalMusicFilename.length() != 0) {
+			
+			vo.setBgm(getOriginalMusicFilename);
+			// 웹 어플리케이션이 갖는 실제 경로: bgm을 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/uploadbgm");
+			log.info("realPath : {}", realPath);
+			
+			File f = new File(realPath + "\\" + vo.getBgm());
+			vo.getMusicFile().transferTo(f);
+		} // end if
+		
+		log.info("vo : {}", vo);
 
 		int result = service.update(vo);
 		
 		log.info("result : {}", result);
-
+		
 		if (result == 1) {
 			return "redirect:mini_home.do?id=" + vo.getId();
 		} else {

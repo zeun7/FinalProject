@@ -13,8 +13,9 @@ public class MiniHomeVO {
 	private String message;
 	private String miniaddr;
 	private String backimg;
-	private MultipartFile file;
 	private String bgm;
 	private int vtotal;
 	private int vtoday;
+	private MultipartFile file;
+	private MultipartFile musicFile;
 }

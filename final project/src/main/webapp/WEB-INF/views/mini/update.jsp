@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
 <html>
 <head>
 <title>프로필 수정</title>
@@ -22,8 +21,8 @@
 			<tr>
 				<td><label for="id">id:</label></td>
 				<td>
-					<span id="span_id">${vo2.id}</span>
-					<input type="hidden" id="id" name="id" value="${vo2.id}">
+					<span id="span_id">${user_id}</span>
+					<input type="hidden" id="id" name="id" value="${user_id}">
 				</td>
 			</tr>
 			<tr>
@@ -43,11 +42,22 @@
 			<tr>
 				<td><label for="backimg">backimg:</label></td>
 				<td>
-					<img width="200px" src="resources/uploadimg/${vo2.backimg}">
-					<input type="file" id="file" name="file"> 
+					<img src="resources/uploadimg/thumb_${vo2.backimg}">
+					<input type="file" id="file" name="file">
 					<input type="hidden" id="backimg" name="backimg" value="${vo2.backimg}">
 				</td>
 			</tr>
+			<tr>
+				<td><label for="bgm">bgm:</label></td>
+				<td>
+					<audio controls>
+				      <source src="resources/uploadbgm/${vo2.bgm}" type="audio/mp3">
+   					</audio>
+					<input type="file" id="musicFile" name="musicFile"> 
+					<input type="hidden" id="bgm" name="bgm" value="${vo2.bgm}">
+				</td>
+			</tr>
+			
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="프로필 수정완료">

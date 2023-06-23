@@ -1,6 +1,13 @@
 package multi.com.finalproject.miniboard.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,19 +26,29 @@ public class MiniBoardController {
 	@Autowired
 	MiniBoardService service;
 
+	@Autowired
+	ServletContext sContext;
+
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
-	public String mini_diary(Model model, Model models, MiniBoardVO vo) {
-		log.info("mini_diary(vo)...");
+	public String mini_diary(Model model) {
+		log.info("mini_diary()...{}");
 
-		MiniBoardVO vo2 = service.diary_selectOne(vo);
+		List<MiniBoardVO> vos = service.selectAll();
 
-		model.addAttribute("vo2", vo2);
-		
-		List<MiniBoardVO> vos = service.diary_selectAll();
-
-		models.addAttribute("vos", vos);
+		model.addAttribute("vos", vos);
 
 		return "mini/diary/selectAll";
+	}
+
+	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
+	public String mini_gallery(Model model) {
+		log.info("mini_gallery()...{}");
+
+		List<MiniBoardVO> vos = service.selectAll();
+
+		model.addAttribute("vos", vos);
+
+		return "mini/gallery/selectAll";
 	}
 
 	@RequestMapping(value = "/diary_selectOne.do", method = RequestMethod.GET)
@@ -49,24 +66,49 @@ public class MiniBoardController {
 	public String diary_insert(Model model, MiniBoardVO vo) {
 		log.info("diary_insert()...");
 
-		MiniBoardVO vo2 = service.diary_selectOne(vo);
-
-		model.addAttribute("vo2", vo2);
-
 		return "mini/diary/insert";
 	}
 
-	@RequestMapping(value = "/diary_insertOK.do", method = RequestMethod.POST)
-	public String diary_insertOK(MiniBoardVO vo) {
-		log.info("diary_insertOK(vo)...{}", vo);
+	@RequestMapping(value = "/mb_insertOK.do", method = RequestMethod.POST)
+	public String mb_insertOK(MiniBoardVO vo) throws IllegalStateException, IOException {
+		log.info("mb_insertOK(vo)...{}", vo);
 
-		int result = service.diary_insert(vo);
-		log.info("result...{}", result);
+		if (vo.getBfile() != null && !vo.getBfile().isEmpty()) {
+			String originalFilename = vo.getBfile().getOriginalFilename();
+			int fileNameLength = originalFilename.length();
+			log.info("originalFilename: {}", originalFilename);
+			log.info("fileNameLength: {}", fileNameLength);
+
+			vo.setFilepath(originalFilename);
+
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
+			String realPath = sContext.getRealPath("resources/uploadimg");
+			log.info("realPath: {}", realPath);
+
+			File f = new File(realPath + File.separator + vo.getFilepath());
+			vo.getBfile().transferTo(f);
+
+			// 썸네일 이미지 생성
+			BufferedImage originalBufferImg = ImageIO.read(f);
+			BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphic = thumbBufferImg.createGraphics();
+			graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
+
+			File thumbFile = new File(realPath + File.separator + "thumb_" + vo.getFilepath());
+			String formatName = vo.getFilepath().substring(vo.getFilepath().lastIndexOf(".") + 1);
+			log.info("formatName: {}", formatName);
+			ImageIO.write(thumbBufferImg, formatName, thumbFile);
+		}
+		
+		log.info("vo : {}", vo);
+		
+		int result = service.insert(vo);
+		log.info("result: {}", result);
 
 		if (result == 1) {
-			return "redirect:mini_diary.do";
+			return "redirect:mini_diary.do?writer=" + vo.getWriter();
 		} else {
-			return "redirect:diary_insert.do";
+			return "redirect:insert.do?writer=" + vo.getWriter();
 		}
 
 	}
@@ -77,11 +119,11 @@ public class MiniBoardController {
 
 		return "mini/diary/update";
 	}
-	
+
 	@RequestMapping(value = "/diary_updateOK.do", method = RequestMethod.GET)
 	public String diary_updateOK(Model model, MiniBoardVO vo) {
 		log.info("diary_updateOK()...");
-		
+
 		int result = service.diary_update(vo);
 		log.info("result...{}", result);
 
@@ -91,8 +133,8 @@ public class MiniBoardController {
 			return "redirect:diary_update.do";
 		}
 	}
-	
-	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
 	public String diary_deleteOK(MiniBoardVO vo) {
 		log.info("diary_deleteOK(vo)...{}", vo);
 
@@ -106,60 +148,35 @@ public class MiniBoardController {
 		}
 	}
 
-	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
-	public String mini_gallery(Model model, Model models, MiniBoardVO vo) {
-		log.info("mini_gallery()...");
-
-		MiniBoardVO vo2 = service.gallery_selectOne(vo);
-
-		model.addAttribute("vo2", vo2);
-		
-		List<MiniBoardVO> vos = service.gallery_selectAll();
-
-		models.addAttribute("vos", vos);
-		
-		return "mini/gallery/selectAll";
-	}
-
 	@RequestMapping(value = "/gallery_selectOne.do", method = RequestMethod.GET)
 	public String gallery_selectOne(Model model, MiniBoardVO vo) {
 		log.info("gallery_selectOne()...");
-		
+
 		MiniBoardVO vo2 = service.gallery_selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
-		
+
 		return "mini/gallery/selectOne";
 	}
-	
-	@RequestMapping(value = "/gallery_insertOK.do", method = RequestMethod.POST)
-	public String gallery_insertOK(MiniBoardVO vo) {
-		log.info("gallery_insertOK(vo)...{}", vo);
 
-		int result = service.gallery_insert(vo);
-		log.info("result...{}", result);
-
-		return "redirect:mini_gallery.do";
-	}
-	
 	@RequestMapping(value = "/gallery_updateOK.do", method = RequestMethod.POST)
 	public String gallery_updateOK(MiniBoardVO vo) {
 		log.info("gallery_updateOK(vo)...{}", vo);
-		
+
 		int result = service.gallery_update(vo);
 		log.info("result...{}", result);
-		
+
 		return "redirect:mini_gallery.do";
 	}
 
 	@RequestMapping(value = "/gallery_deleteOK.do", method = RequestMethod.GET)
 	public String gallery_deleteOK(MiniBoardVO vo) {
 		log.info("gallery_deleteOK(vo)...{}", vo);
-		
+
 		int result = service.gallery_delete(vo);
 		log.info("result...{}", result);
-		
+
 		return "redirect:mini_gallery.do";
 	}
-	
+
 }

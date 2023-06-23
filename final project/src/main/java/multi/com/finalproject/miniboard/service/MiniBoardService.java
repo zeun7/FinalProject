@@ -19,16 +19,16 @@ public class MiniBoardService {
 		log.info("MiniBoardService...");
 	}
 	
-	public List<MiniBoardVO> diary_selectAll() {
-		return dao.diary_selectAll();
+	public List<MiniBoardVO> selectAll() {
+		return dao.selectAll();
 	}
 
 	public MiniBoardVO diary_selectOne(MiniBoardVO vo) {
 		return dao.diary_selectOne(vo);
 	}
 
-	public int diary_insert(MiniBoardVO vo) {
-		return dao.diary_insert(vo);
+	public int insert(MiniBoardVO vo) {
+		return dao.insert(vo);
 	}
 	
 	public int diary_update(MiniBoardVO vo) {
@@ -55,16 +55,8 @@ public class MiniBoardService {
 		return dao.mongo_delete(vo);
 	}
 
-	public List<MiniBoardVO> gallery_selectAll() {
-		return dao.gallery_selectAll();
-	}
-	
 	public MiniBoardVO gallery_selectOne(MiniBoardVO vo) {
 		return dao.gallery_selectOne(vo);
-	}
-	
-	public int gallery_insert(MiniBoardVO vo) {
-		return dao.gallery_insert(vo);
 	}
 
 	public int gallery_update(MiniBoardVO vo) {
