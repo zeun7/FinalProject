@@ -10,10 +10,10 @@
 	<li><a href="home.do">HOME</a></li>
 	<li><a href="mini_home.do?id=tester1">미니홈피</a></li>
 	<li><a href="b_selectAll.do?bname=board1">게시판1</a></li>
-	<li><a href="b_selectAll.do?bname=">게시판2</a></li>
-	<li><a href="b_selectAll.do?bname=">게시판3</a></li>
-	<li><a href="b_selectAll.do?bname=">게시판4</a></li>
-	<li><a href="b_selectAll.do?bname=">게시판5</a></li>
+	<li><a href="b_selectAll.do?bname=board2">게시판2</a></li>
+	<li><a href="b_selectAll.do?bname=board3">게시판3</a></li>
+	<li><a href="b_selectAll.do?bname=board4">게시판4</a></li>
+	<li><a href="b_selectAll.do?bname=board5">게시판5</a></li>
 	<li><a href="m_friends.do">친구목록</a></li>
 	<li><a href="manage.do" id="manage">관리</a></li>
 </ul>

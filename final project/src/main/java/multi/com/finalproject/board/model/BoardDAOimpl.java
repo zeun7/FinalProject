@@ -130,4 +130,11 @@ public class BoardDAOimpl implements BoardDAO {
 		sqlSession.update("B_LIKES_DOWN", vo);
 	}
 
+	@Override
+	public LikesVO likeCheck(Map<String, Integer> param) {
+		log.info("likeCheck()...{}", param);
+		
+		return sqlSession.selectOne("B_LIKE_CHECK", param);
+	}
+
 }

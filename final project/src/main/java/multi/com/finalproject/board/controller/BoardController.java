@@ -89,6 +89,8 @@ public class BoardController {
 			
 			File f = new File(realPath + "\\" + getOriginalFilename);
 			vo.getFile().transferTo(f);
+		}else {
+			vo.setFilepath("");
 		}
 		log.info("{}", vo);
 		
@@ -104,8 +106,25 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.POST)
-	public String b_updateOK(BoardVO vo) {
+	public String b_updateOK(BoardVO vo) throws IllegalStateException, IOException {
 		log.info("/b_updateOK.do...{}", vo);
+		
+		String getOriginalFilename = vo.getFile().getOriginalFilename();
+		int fileNameLength = vo.getFile().getOriginalFilename().length();
+		log.info("getOriginalFilename:{}", getOriginalFilename);
+		log.info("fileNameLength:{}", fileNameLength);
+		
+		if (getOriginalFilename.length() != 0) {
+			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
+			vo.setFilepath(filepath);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/uploadimg_board");
+			log.info("realPath : {}", realPath);
+			
+			File f = new File(realPath + "\\" + getOriginalFilename);
+			vo.getFile().transferTo(f);
+		}
+		log.info("{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result:{}", result);

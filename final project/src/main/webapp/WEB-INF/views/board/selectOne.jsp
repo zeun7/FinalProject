@@ -11,6 +11,30 @@
 <script type="text/javascript">
 	$(function(){
 		//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
+		$.ajax({
+			url : "json_b_likeCheck.do",
+			method : 'GET',
+			data : {
+				num : ${num},
+				bnum : ${param.bnum}
+			},
+			dataType : 'json', 
+			success : function(map) {
+// 	 			console.log(map.result);
+				if(map.result == 0){		//좋아요를 안눌렀다면
+					$("#like_button").show();
+					$("#lcancel_button").hide();
+				}else{
+					$("#like_button").hide();
+					$("#lcancel_button").show();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+//				console.log('status:', status);
+//				console.log('error:', error);
+			}
+		});//end $.ajax()
 	});//end onload
 	
 	function like(){
@@ -18,7 +42,7 @@
 			url : "json_b_like.do",
 			method : 'GET',
 			data : {
-				num : 2,
+				num : ${num},
 				bnum : ${param.bnum}
 			},
 			dataType : 'json', 
@@ -43,7 +67,7 @@
 			url : "json_b_like_delete.do",
 			method : 'GET',
 			data : {
-				num : 2,
+				num : ${num},
 				bnum : ${param.bnum}
 			},
 			dataType : 'json', 
@@ -104,14 +128,24 @@
 					<button onclick="like()" id="like_button">좋아요</button>
 					<button onclick="like_cancel()" id="lcancel_button">좋아요 취소</button>
 					<span id="likes_count">${vo2.likes }</span>
-					<button onclick="share()" id="share_button">공유</button>
+<!-- 					<button onclick="share()" id="share_button">공유</button> -->
+					<a class="twitter-share-button"
+					  href="https://twitter.com/intent/tweet">
+					Tweet</a>
 					<button onclick="report()" id="report_button">신고</button>
 				</td>
-				<td><a href="b_update.do?bnum=${vo2.bnum }">수정</a> <a
+				<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum }">수정</a> <a
 					href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a></td>
 			</tr>
 		</tfoot>
 	</table>
 
+	<script type="text/javascript">
+		if('${nickname}' === '${vo2.writer}'){
+			$('#update_delete').show();
+		}else{
+			$('#update_delete').hide();
+		}
+	</script>
 </body>
 </html>

@@ -7,6 +7,29 @@
 <title>Insert title here</title>
 <jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		if('${vo2.filepath}' === ''){
+			$('#filepath_text').html('파일 업로드');
+			$('#del_file_button').hide();
+		}else{
+			let file_name = '${vo2.filepath}';
+			file_name = file_name.replace('resources/uploadimg_board/', '');
+			$('#filepath_text').html(file_name);
+			$('#del_file_button').show();
+		}
+	});//end onload
+	
+	function delete_file(){
+		$('#filepath').val('');
+		$('#filepath_text').html('파일 업로드');
+	}//end delete_file()
+	
+	function show_file(){
+		$('#filepath_text').html($('#file').val());
+		$('#del_file_button').show();
+	}//end show_file()
+</script>
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
@@ -35,8 +58,14 @@
 		<tbody>
 			<tr>
 				<td>
-					<input type="file" id="file" name="file">
-					<input type="hidden" id="file_name" name="file_name" value="">
+					<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath }">
+					<label for="file">
+						<span id="filepath_text" style="border: 1px solid black">${vo2.filepath }</span>
+					</label>
+					<button type="button" id="del_file_button" onclick=delete_file()>삭제</button>
+				</td>
+				<td>
+					<input type="file" id="file" name="file" style="display: none" onchange="show_file()">
 				</td>
 			</tr>
 			<tr>
@@ -49,7 +78,7 @@
 			<tr>
 				<td>
 					<button type="button" onclick="history.back()">취소</button>
-					<input type="submit" value="수정완료">
+					<button>수정완료</button>
 				</td>
 			</tr>
 		</tfoot>
@@ -60,10 +89,6 @@
 		let caname = document.querySelector('#${vo2.caname}');
 		caname.setAttribute('selected', true);
 		
-		let file_name = '${vo2.filepath}';
-		file_name = file_name.replace('resources/uploadimg_board/', '');
-		let tag_fname = document.querySelector('#file_name');
-		tag_fname.setAttribute('value', file_name);
 	</script>
 
 </body>
