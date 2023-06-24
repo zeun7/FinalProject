@@ -18,4 +18,5 @@ public class MiniHomeVO {
 	private int vtoday;
 	private MultipartFile file;
 	private MultipartFile musicFile;
+	
 }
