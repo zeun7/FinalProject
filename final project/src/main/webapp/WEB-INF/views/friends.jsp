@@ -6,11 +6,20 @@
 <title>Manage</title>
 <jsp:include page="css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<%
+	String nickname = "";
+	if(session.getAttribute("nickname") != null){
+		nickname = (String)session.getAttribute("nickname");
+	}
+%>
 <script type="text/javascript">
 function friends_list(){
+	let nickname = '<%=nickname%>';
+	console.log(nickname);
+	
 	$.ajax({
 		url : "json_m_friends.do",
-		data:{nickname: '${nickname}'},
+		data:{nickname: nickname},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -115,9 +124,11 @@ function friends_add(){
 }
 					
 function searchUser(){
+	let nickname = <%=nickname%>;
+	
 	$.ajax({
 		url : "json_m_searchUser.do",
-		data: {nickname: '${nickname}',
+		data: {nickname: nickname,
 			searchWord:$('#searchWord').val()},
 		method:'GET',
 		dataType:'json',
@@ -163,19 +174,20 @@ function searchUser(){
 	});
 }
 
-function addfriend(nickname) {
+function addfriend(nickname2) {
 	console.log('add friend()....');
+	let nickname = <%=nickname%>;
 
 	$.ajax({
 		url : "json_m_friendsAdd.do",
-		data:{nickname1:'${nickname}',
-			nickname2:nickname},
+		data:{nickname1:nickname,
+			nickname2:nickname2},
 		method:'GET',
 		dataType:'json',
 		success : function(response) {
 			console.log('ajax...success:', response);
 			let msg = response.result === 1?'등록완료':'친구추가'
-			$("#add_bttn").html(msg);
+			$("#add_bttn").text(msg);
 			$("#add_bttn").disabled;
 		},
 		error:function(xhr,status,error){

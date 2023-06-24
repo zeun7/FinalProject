@@ -65,15 +65,5 @@ public class MemberService {
 		return dao.find_pw(email);
 	}
 
-	public List<MemberVO> friends(MemberVO vo) {
-		return dao.friends(vo);
-	}
-
-	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
-		return dao.searchUser(vo, searchWord);
-	}
-
-	public int addfriend(MemberVO vo, MemberVO vo2) {
-		return dao.addfriend(vo, vo2);
-	}
+	
 }

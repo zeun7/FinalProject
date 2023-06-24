@@ -5,19 +5,31 @@
 
 <mapper namespace="multi.com.finalproject">
 	
-	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
+	<select id="M_FRIENDS"
+		resultType="multi.com.finalproject.manage.model.ManageFriendsVO">
+		select f.grade, m.nickname from member m, friends f 
+		where m.nickname = (select nickname2 from friends where nickname = #{nickname})
+	</select>
+
+	<insert id="M_ADD_FRIEND"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		insert into friends(fnum, nickname, nickname2)
+		values(seq_friends.nextval, #{nickname1}, #{nickname2})
+	</insert>
+	
+	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>
 	
-	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
+	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
 	</select>
 	
-	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum=r.mbnum
 	</select>
 	
-	<select id="MC_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
+	<select id="MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
 	</select>
 </mapper>

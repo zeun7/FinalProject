@@ -1,6 +1,8 @@
 package multi.com.finalproject.manage.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,33 @@ public class ManageDAOimpl implements ManageDAO {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Override
+	public List<ManageFriendsVO> friends(ManageFriendsVO vo) {
+		log.info("friends()...{}", vo);
+		
+		return sqlSession.selectList("M_FRIENDS",vo);
+	}
+
+	@Override
+	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
+		log.info("searchUser()...{}", searchWord);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("nickname", vo.getNickname());
+		map.put("searchWord", "%"+searchWord+"%");
+		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", map);
+	}
+	
+	@Override
+	public int addfriend(MemberVO vo, MemberVO vo2) {
+		log.info("addfriend()...{}, {}", vo, vo2);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname1", vo.getNickname());
+		map.put("nickname2", vo2.getNickname());
+		int result = sqlSession.insert("M_ADD_FRIEND",map);
+		
+		return result;
+	}
 	
 	@Override
 	public List<MemberVO> member() {

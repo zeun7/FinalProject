@@ -27,10 +27,4 @@ public interface MemberDAO {
 	public String find_pw(String email) throws Exception;
 
 	public int update_pw(MemberVO member) throws Exception;
-
-	public List<MemberVO> friends(MemberVO vo);
-
-	public List<MemberVO> searchUser(MemberVO vo, String searchWord);
-	
-	public int addfriend(MemberVO vo, MemberVO vo2);
 }
