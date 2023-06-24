@@ -5,8 +5,15 @@
 <head>
 <title>다이어리_selectAll</title>
 <jsp:include page="../../css.jsp"></jsp:include>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#backButton').on('click', function(e) {
+        e.preventDefault();
+        window.history.back();
+    });
+});
+</script>
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
@@ -48,8 +55,8 @@
 			</tr>
 		</tfoot>
 		</table>
+	<button id="backButton" class="myButton" style="margin-left : 300px">뒤로가기</button>
 	</div>
-	
 	
 </body>
 </html>
