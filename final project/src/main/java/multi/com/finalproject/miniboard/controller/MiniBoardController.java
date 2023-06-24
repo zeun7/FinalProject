@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class MiniBoardController {
 
 	@Autowired
 	ServletContext sContext;
+	
+	@Autowired
+	HttpSession session;
 
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
 	public String mini_diary(Model model) {
@@ -58,7 +62,9 @@ public class MiniBoardController {
 		MiniBoardVO vo2 = service.diary_selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
-
+		log.info("vo2 : {}",vo2);
+		session.setAttribute("mbnum", vo2.getMbnum());
+		
 		return "mini/diary/selectOne";
 	}
 
@@ -113,27 +119,6 @@ public class MiniBoardController {
 
 	}
 
-	@RequestMapping(value = "/diary_update.do", method = RequestMethod.GET)
-	public String diary_update(Model model, MiniBoardVO vo) {
-		log.info("diary_update()...");
-
-		return "mini/diary/update";
-	}
-
-	@RequestMapping(value = "/diary_updateOK.do", method = RequestMethod.GET)
-	public String diary_updateOK(Model model, MiniBoardVO vo) {
-		log.info("diary_updateOK()...");
-
-		int result = service.diary_update(vo);
-		log.info("result...{}", result);
-
-		if (result == 1) {
-			return "redirect:mini_diary.do";
-		} else {
-			return "redirect:diary_update.do";
-		}
-	}
-
 	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
 	public String diary_deleteOK(MiniBoardVO vo) {
 		log.info("diary_deleteOK(vo)...{}", vo);
@@ -155,7 +140,6 @@ public class MiniBoardController {
 		MiniBoardVO vo2 = service.gallery_selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
-
 		return "mini/gallery/selectOne";
 	}
 

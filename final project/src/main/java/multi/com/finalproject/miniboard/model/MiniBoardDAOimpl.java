@@ -40,7 +40,10 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	@Override
 	public int diary_update(MiniBoardVO vo) {
 		log.info("diary_update(vo)...{}", vo);
-		return sqlSession.insert("DIARY_UPDATE",vo);
+		log.info("bfile: {}", vo.getBfile().toString());
+		log.info("filepath: {}", vo.getFilepath().toString());
+		int flag = sqlSession.insert("DIARY_UPDATE",vo);
+		return flag;
 	}
 
 	@Override

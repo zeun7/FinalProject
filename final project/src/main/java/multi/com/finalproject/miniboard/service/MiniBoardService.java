@@ -67,4 +67,5 @@ public class MiniBoardService {
 		return dao.gallery_delete(vo);
 	}
 
+
 }
