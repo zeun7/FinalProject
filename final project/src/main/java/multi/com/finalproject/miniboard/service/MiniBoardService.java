@@ -19,8 +19,8 @@ public class MiniBoardService {
 		log.info("MiniBoardService...");
 	}
 	
-	public List<MiniBoardVO> selectAll() {
-		return dao.selectAll();
+	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo) {
+		return dao.mb_selectAll(vo);
 	}
 
 	public MiniBoardVO diary_selectOne(MiniBoardVO vo) {
@@ -66,6 +66,8 @@ public class MiniBoardService {
 	public int gallery_delete(MiniBoardVO vo) {
 		return dao.gallery_delete(vo);
 	}
+
+	
 
 
 }
