@@ -37,7 +37,7 @@ function manage_member(){
  					</td>
  					<td>\${vo.id}</td>
  					<td>\${vo.nickname}</td>
- 					<td>\${vo.profliepic}</td>
+ 					<td><img src="resources/uploadimg/thumb_\${vo.profilepic}"></td>
  					<td>\${vo.name}</td>
  					<td>\${vo.tel}</td>
  					<td>\${vo.miniaddr}</td>

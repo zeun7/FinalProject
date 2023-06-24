@@ -13,7 +13,7 @@
 	}
 %>
 <script type="text/javascript">
-function friends_list(){
+function friends_list(){		// 친구목록
 	let nickname = '<%=nickname%>';
 	console.log(nickname);
 	
@@ -40,12 +40,12 @@ function friends_list(){
  				tag_vos += `
  					<tr>
 	 					<td>\${vo.grade}</td>
-	 					<td>\${vo.nickname}</td>
+	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname}">채팅</button>
+	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname2}">채팅</button>
 	 					</td>
 	 					<td>
-	 						<button onlick="location.href='m_ban?nickname=\${vo.nickname}'">차단</button>
+	 						<button onlick="location.href='m_ban.do?nickname=\${vo.nickname2}'">차단</button>
 	 					</td>
 	 					<td>
 							<button onclick="del_friends()">친구삭제</button>
@@ -124,12 +124,12 @@ function friends_add(){
 }
 					
 function searchUser(){
-	let nickname = <%=nickname%>;
+	let nickname = '<%=nickname%>';
 	
 	$.ajax({
 		url : "json_m_searchUser.do",
 		data: {nickname: nickname,
-			searchWord:$('#searchWord').val()},
+			searchWord: $('#searchWord').val()},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -155,7 +155,8 @@ function searchUser(){
 				<tr>
  					<td id="nickname">\${vo.nickname}</td>
  					<td>
- 						<button onclick="addfriend('\${vo.nickname}')"><span id="add_bttn">친구추가</span></button>
+ 						<button onclick="addfriend('\${vo.nickname}')" id="bttn_\${vo.nickname}">
+ 							<span id="add_\${vo.nickname}">친구추가</span></button>
  					</td>
  					<td>
  						<button onclick="location.href='json_m_ban?nickname=\${vo.nickname}'">차단</button>
@@ -176,7 +177,7 @@ function searchUser(){
 
 function addfriend(nickname2) {
 	console.log('add friend()....');
-	let nickname = <%=nickname%>;
+	let nickname = '<%=nickname%>';
 
 	$.ajax({
 		url : "json_m_friendsAdd.do",
@@ -185,10 +186,12 @@ function addfriend(nickname2) {
 		method:'GET',
 		dataType:'json',
 		success : function(response) {
-			console.log('ajax...success:', response);
-			let msg = response.result === 1?'등록완료':'친구추가'
-			$("#add_bttn").text(msg);
-			$("#add_bttn").disabled;
+			console.log('ajax...success:', response.result);
+			let msg = response.result === 1?'등록완료':'친구추가';
+			if(response.result === 1){					// 친구등록 성공 시
+				$("#add_"+nickname2).text(msg);					// 등록완료로 변경
+				$("#bttn_"+nickname2).prop('disabled', true);	// 버튼 비활성화
+			}
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);

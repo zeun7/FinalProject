@@ -24,7 +24,7 @@ public class ManageDAOimpl implements ManageDAO {
 	public List<ManageFriendsVO> friends(ManageFriendsVO vo) {
 		log.info("friends()...{}", vo);
 		
-		return sqlSession.selectList("M_FRIENDS",vo);
+		return sqlSession.selectList("MNG_FRIENDS",vo);
 	}
 
 	@Override
@@ -33,16 +33,18 @@ public class ManageDAOimpl implements ManageDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("nickname", vo.getNickname());
 		map.put("searchWord", "%"+searchWord+"%");
-		return sqlSession.selectList("M_SEARCH_LIST_NICKNAME", map);
+		log.info("{}", map);
+		
+		return sqlSession.selectList("MNG_SEARCH_LIST_NICKNAME", map);
 	}
 	
 	@Override
 	public int addfriend(MemberVO vo, MemberVO vo2) {
-		log.info("addfriend()...{}, {}", vo, vo2);
+		log.info("addfriend()...{}, {}", vo.getNickname(), vo2.getNickname());
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("nickname1", vo.getNickname());
 		map.put("nickname2", vo2.getNickname());
-		int result = sqlSession.insert("M_ADD_FRIEND",map);
+		int result = sqlSession.insert("MNG_ADD_FRIEND",map);
 		
 		return result;
 	}
@@ -58,14 +60,14 @@ public class ManageDAOimpl implements ManageDAO {
 	public List<BoardVO> board() {
 		log.info("board select reported()...");
 		
-		return sqlSession.selectList("B_SELECT_REPORT");
+		return sqlSession.selectList("MNG_B_SELECT_REPORT");
 	}
 
 	@Override
 	public List<CommentsVO> comments() {
 		log.info("comments select reported()...");
 		
-		return sqlSession.selectList("C_SELECT_REPORT");
+		return sqlSession.selectList("MNG_C_SELECT_REPORT");
 	}
 
 }
