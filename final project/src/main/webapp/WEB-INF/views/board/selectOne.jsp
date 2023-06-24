@@ -90,6 +90,11 @@
 		</thead>
 		<tbody>
 			<tr>
+				<td colspan="3">
+					<img width="300px" src="${vo2.filepath}">
+				</td>
+			</tr>
+			<tr>
 				<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td>
 			</tr>
 		</tbody>
