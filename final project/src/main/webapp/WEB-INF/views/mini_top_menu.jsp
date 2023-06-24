@@ -7,9 +7,9 @@
 </ul>
 <ul>
 	<li><a href="mini_home.do?id=${user_id}&nickname=${nickname}">홈</a></li>
-	<li><a href="mini_diary.do?writer=${nickname}">다이어리</a></li>
+	<li><a href="mini_diary.do?mbname=diary&writer=${nickname}">다이어리</a></li>
 	<li><a href="mini_visit.do?id=${user_id}">방명록</a></li>
-	<li><a href="mini_gallery.do?writer=${nickname}">갤러리</a></li>
+	<li><a href="mini_gallery.do?mbname=gallery&writer=${nickname}">갤러리</a></li>
 	<li><a href="mini_game.do?id=${user_id}">게임</a></li>
 </ul>
 <script type="text/javascript">
