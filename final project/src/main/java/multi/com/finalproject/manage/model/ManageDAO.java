@@ -20,4 +20,6 @@ public interface ManageDAO {
 
 	public List<CommentsVO> comments();
 
+	public int delfriend(MemberVO vo, MemberVO vo2);
+
 }

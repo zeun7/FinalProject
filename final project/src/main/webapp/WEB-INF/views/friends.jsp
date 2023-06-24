@@ -42,13 +42,16 @@ function friends_list(){		// 친구목록
 	 					<td>\${vo.grade}</td>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname2}">채팅</button>
+	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname2}">
+	 						채팅</button>
 	 					</td>
 	 					<td>
-	 						<button onlick="location.href='m_ban.do?nickname=\${vo.nickname2}'">차단</button>
+	 						<button onlick="location.href='m_ban.do?nickname=\${vo.nickname2}'" id="ban_\${vo.nickname2}">
+	 						차단</button>
 	 					</td>
 	 					<td>
-							<button onclick="del_friends()">친구삭제</button>
+							<button onclick="del_friend('\${vo.nickname2}')" id="del_\${vo.nickname2}">
+							친구삭제</button>
 	 					</td>
 	 				</tr>
  					`;
@@ -155,8 +158,8 @@ function searchUser(){
 				<tr>
  					<td id="nickname">\${vo.nickname}</td>
  					<td>
- 						<button onclick="addfriend('\${vo.nickname}')" id="bttn_\${vo.nickname}">
- 							<span id="add_\${vo.nickname}">친구추가</span></button>
+ 						<button onclick="addfriend('\${vo.nickname}')" id="add_\${vo.nickname}">
+ 							<span id="txt_\${vo.nickname}">친구추가</span></button>
  					</td>
  					<td>
  						<button onclick="location.href='json_m_ban?nickname=\${vo.nickname}'">차단</button>
@@ -189,8 +192,30 @@ function addfriend(nickname2) {
 			console.log('ajax...success:', response.result);
 			let msg = response.result === 1?'등록완료':'친구추가';
 			if(response.result === 1){					// 친구등록 성공 시
-				$("#add_"+nickname2).text(msg);					// 등록완료로 변경
-				$("#bttn_"+nickname2).prop('disabled', true);	// 버튼 비활성화
+				$("#txt_"+nickname2).text(msg);					// 등록완료로 변경
+				$("#add_"+nickname2).prop('disabled', true);	// 버튼 비활성화
+			}
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function del_friend(nickname2) {
+	console.log('del friend()....');
+	let nickname = '<%=nickname%>';
+
+	$.ajax({
+		url : "json_m_friendsDel.do",
+		data:{nickname1:nickname,
+			nickname2:nickname2},
+		method:'GET',
+		dataType:'json',
+		success : function(response) {
+			console.log('ajax...success:', response.result);
+			if(response.result === 1){		// 친구삭제 성공 시
+				friends_list();
 			}
 		},
 		error:function(xhr,status,error){

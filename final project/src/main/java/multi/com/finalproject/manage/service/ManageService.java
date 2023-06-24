@@ -29,6 +29,10 @@ public class ManageService {
 		return dao.addfriend(vo, vo2);
 	}
 	
+	public int delfriend(MemberVO vo, MemberVO vo2) {
+		return dao.delfriend(vo, vo2);
+	}
+	
 	public List<MemberVO> member() {
 		return dao.member();
 	}
@@ -40,5 +44,4 @@ public class ManageService {
 	public List<CommentsVO> comments() {
 		return dao.comments();
 	}
-
 }

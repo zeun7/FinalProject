@@ -45,6 +45,19 @@ public class ManageDAOimpl implements ManageDAO {
 		map.put("nickname1", vo.getNickname());
 		map.put("nickname2", vo2.getNickname());
 		int result = sqlSession.insert("MNG_ADD_FRIEND",map);
+		log.info("result: {}", result);
+		
+		return result;
+	}
+	
+	@Override
+	public int delfriend(MemberVO vo, MemberVO vo2) {
+		log.info("delfrined()...{}, {}", vo.getNickname(), vo2.getNickname());
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname1", vo.getNickname());
+		map.put("nickname2", vo2.getNickname());
+		int result = sqlSession.delete("MNG_DEL_FRIEND", map);
+		log.info("result: {}", result);
 		
 		return result;
 	}
@@ -69,5 +82,4 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectList("MNG_C_SELECT_REPORT");
 	}
-
 }

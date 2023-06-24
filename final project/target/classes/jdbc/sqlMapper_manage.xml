@@ -17,11 +17,14 @@
 		minus select nickname from member where nickname = #{nickname}
 	</select>
 	
-	<insert id="MNG_ADD_FRIEND"
-		parameterType="multi.com.finalproject.member.model.MemberVO">
+	<insert id="MNG_ADD_FRIEND">
 		insert into friends(fnum, nickname, nickname2)
 		values(seq_friends.nextval, #{nickname1}, #{nickname2})
 	</insert>
+	
+	<delete id="MNG_DEL_FRIEND">
+		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2}
+	</delete>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
