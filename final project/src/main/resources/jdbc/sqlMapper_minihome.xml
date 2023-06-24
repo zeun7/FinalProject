@@ -10,7 +10,7 @@
 	</select>
 	
 	<update id="MINI_UPDATE" parameterType="multi.com.finalproject.minihome.model.MiniHomeVO">
-		update minihome set title=#{title}, message=#{message}, backimg=#{backimg} where id=#{id}
+		update minihome set title=#{title}, message=#{message}, backimg=#{backimg}, bgm=#{bgm} where id=#{id}
 	</update>
 	
 	<update id="MINI_VCOUNT_UP" parameterType="multi.com.finalproject.minihome.model.MiniHomeVO">
