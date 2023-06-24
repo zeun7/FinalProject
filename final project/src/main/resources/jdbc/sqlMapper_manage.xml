@@ -6,18 +6,18 @@
 <mapper namespace="multi.com.finalproject">
 	
 	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
-		select * from report where bnum is not null
+		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>
 	
 	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from report where cnum is not null
+		select r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
 	</select>
 	
 	<select id="MB_SELECT_REPORT" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		select * from report where mbnum is not null
+		select r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum=r.mbnum
 	</select>
 	
 	<select id="MC_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from report where mcnum is not null
+		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
 	</select>
 </mapper>
