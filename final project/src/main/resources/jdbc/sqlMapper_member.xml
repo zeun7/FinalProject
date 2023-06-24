@@ -39,12 +39,6 @@
 		select * from member where tel like #{searchWord}
 	</select>
 	
-	<select id="M_SEARCH_LIST_NICKNAME"
-		resultType="multi.com.finalproject.member.model.MemberVO">
-		select nickname from member where nickname like #{searchWord} 
-		not in (select nickname2 from friends where nickname = #{nickname})
-	</select>
-	
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		insert into
