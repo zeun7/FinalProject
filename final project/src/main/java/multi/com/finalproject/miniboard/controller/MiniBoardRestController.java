@@ -3,6 +3,7 @@ package multi.com.finalproject.miniboard.controller;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,10 @@ public class MiniBoardRestController {
 
 	@Autowired
 	MiniBoardService service;
-
+	
+	@Autowired
+	ServletContext sContext;
+	
 	@ResponseBody
 	@RequestMapping(value = "/diary_updateOK.do", method = RequestMethod.POST)
 	public Map<String, Object> diary_updateOK(
@@ -87,6 +91,59 @@ public class MiniBoardRestController {
 	    model.addAttribute("vo2", vo2);
 
 	    return resultMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/gallery_insertOK.do", method = RequestMethod.POST)
+	public String gallery_insertOK(@RequestParam("bfile") MultipartFile bfile, @RequestParam("mbname") String mbname, @RequestParam("writer") String writer) {
+	    // 파일이 업로드되지 않았을 경우 처리
+	    if (bfile.isEmpty()) {
+	        return "error";
+	    }
+
+	    // 원본 파일 이름
+	    String originalFilename = bfile.getOriginalFilename();
+	    
+	    log.info("bfile : {}", bfile.toString());
+	    log.info("mbname : {}", mbname);
+	    log.info("writer : {}", writer);
+	    
+	    // VO 객체 생성 및 데이터 설정
+	    MiniBoardVO vo = new MiniBoardVO();
+	    vo.setMbname(mbname);
+	    vo.setWriter(writer);
+	    vo.setFilepath(originalFilename);
+
+	    try {
+	        // 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
+	        String realPath = sContext.getRealPath("resources/uploadimg");
+	        File f = new File(realPath + File.separator + vo.getFilepath());
+	        bfile.transferTo(f);
+
+	        // 썸네일 이미지 생성
+	        BufferedImage originalBufferImg = ImageIO.read(f);
+	        BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+	        Graphics2D graphic = thumbBufferImg.createGraphics();
+	        graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
+
+	        File thumbFile = new File(realPath + File.separator + "thumb_" + vo.getFilepath());
+	        String formatName = vo.getFilepath().substring(vo.getFilepath().lastIndexOf(".") + 1);
+	        ImageIO.write(thumbBufferImg, formatName, thumbFile);
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
+
+	    // 서비스 호출
+	    int result = service.insert(vo);
+
+	    // 처리 결과에 따른 응답
+	    if (result > 0) {
+	        return "success";
+	    } else {
+	        return "error";
+	    }
 	}
 
 	
