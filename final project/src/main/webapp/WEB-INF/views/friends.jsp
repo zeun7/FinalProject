@@ -46,7 +46,7 @@ function friends_list(){		// 친구목록
 	 						채팅</button>
 	 					</td>
 	 					<td>
-	 						<button onlick="location.href='m_ban.do?nickname=\${vo.nickname2}'" id="ban_\${vo.nickname2}">
+	 						<button onclick="ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
 	 						차단</button>
 	 					</td>
 	 					<td>
@@ -67,7 +67,10 @@ function friends_list(){		// 친구목록
 	});
 }
 
-function friends_ban(){
+function friends_ban(){	// 차단 목록 출력
+	console.log('friends_ban()....');
+	let nickname = '<%=nickname%>';
+	
 	$.ajax({
 		url : "json_m_bans.do",
 		method:'GET',
@@ -88,7 +91,7 @@ function friends_ban(){
  					<tr>
 	 					<td>\${vo.nickname}</td>
 	 					<td>
-	 						<button onclick="location.href='m_bansDel?nickname=\${vo.nickname}'">차단해제</button>
+	 						<button onclick="del_ban('\${vo.nickname}')">차단해제</button>
 	 					</td>
  					</tr>
  				`;
@@ -104,7 +107,7 @@ function friends_ban(){
 	});
 }
 
-function friends_add(){
+function friends_add(){ // 친구추가 화면 출력
 	let tag_vos = `
 		<thead>
 			<tr>
@@ -126,57 +129,7 @@ function friends_add(){
 	$("#vos").html(tag_vos);
 }
 					
-function searchUser(){
-	let nickname = '<%=nickname%>';
-	
-	$.ajax({
-		url : "json_m_searchUser.do",
-		data: {nickname: nickname,
-			searchWord: $('#searchWord').val()},
-		method:'GET',
-		dataType:'json',
-		success : function(arr) {
-			console.log('ajax...success:', arr);
-			
- 			let tag_vos = `
-				<thead>
-					<tr>
- 						<td>
-		 					<input type="text" name="searchWord" id="searchWord" />
-		 					<button onclick="searchUser()">검색</button>
-		 				</td>
-						</tr>
-					<tr>
-						<th>닉네임</th>
-						<th>친구추가</th>
-						<th>차단</th>
-					</tr>
-				</thead>
-				<tbody>`; 			
- 			$.each(arr,function(index,vo){
- 				tag_vos += `
-				<tr>
- 					<td id="nickname">\${vo.nickname}</td>
- 					<td>
- 						<button onclick="addfriend('\${vo.nickname}')" id="add_\${vo.nickname}">
- 							<span id="txt_\${vo.nickname}">친구추가</span></button>
- 					</td>
- 					<td>
- 						<button onclick="location.href='json_m_ban?nickname=\${vo.nickname}'">차단</button>
- 					</td>
- 				</tr>
- 				`;
- 			});
-			
- 			tag_vos += `</tbody>
- 						`;
-			$("#vos").html(tag_vos);
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
-}
+
 
 function addfriend(nickname2) {
 	console.log('add friend()....');
@@ -215,6 +168,81 @@ function del_friend(nickname2) {
 		success : function(response) {
 			console.log('ajax...success:', response.result);
 			if(response.result === 1){		// 친구삭제 성공 시
+				friends_list();
+			}
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function searchUser(){	// 유저 검색 결과 출력
+	let nickname = '<%=nickname%>';
+	
+	$.ajax({
+		url : "json_m_searchUser.do",
+		data: {nickname: nickname,
+			searchWord: $('#searchWord').val()},
+		method:'GET',
+		dataType:'json',
+		success : function(arr) {
+			console.log('ajax...success:', arr);
+			
+ 			let tag_vos = `
+				<thead>
+					<tr>
+ 						<td>
+		 					<input type="text" name="searchWord" id="searchWord" />
+		 					<button onclick="searchUser()">검색</button>
+		 				</td>
+						</tr>
+					<tr>
+						<th>닉네임</th>
+						<th>친구추가</th>
+						<th>차단</th>
+					</tr>
+				</thead>
+				<tbody>`; 			
+ 			$.each(arr,function(index,vo){
+ 				tag_vos += `
+				<tr>
+ 					<td id="nickname">\${vo.nickname}</td>
+ 					<td>
+ 						<button onclick="addfriend('\${vo.nickname}')" id="add_\${vo.nickname}">
+ 							<span id="txt_\${vo.nickname}">친구추가</span></button>
+ 					</td>
+ 					<td>
+						<button onclick="ban('\${vo.nickname}')" id="ban_\${vo.nickname}">
+						차단</button>
+					</td>
+ 				</tr>
+ 				`;
+ 			});
+			
+ 			tag_vos += `</tbody>
+ 						`;
+			$("#vos").html(tag_vos);
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function add_ban(nickname2) {
+	console.log('ban()....');
+	let nickname = '<%=nickname%>';
+
+	$.ajax({
+		url : "json_m_addban.do",
+		data:{nickname1:nickname,
+			nickname2:nickname2},
+		method:'GET',
+		dataType:'json',
+		success : function(response) {
+			console.log('ajax...success:', response.result);
+			if(response.result === 1){		// 차단 성공 시
 				friends_list();
 			}
 		},

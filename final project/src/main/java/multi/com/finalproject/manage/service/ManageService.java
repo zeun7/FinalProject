@@ -44,4 +44,8 @@ public class ManageService {
 	public List<CommentsVO> comments() {
 		return dao.comments();
 	}
+
+	public int ban(MemberVO vo, MemberVO vo2) {
+		return dao.ban(vo, vo2);
+	}
 }

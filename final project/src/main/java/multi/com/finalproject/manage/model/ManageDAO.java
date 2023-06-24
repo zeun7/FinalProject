@@ -22,4 +22,6 @@ public interface ManageDAO {
 
 	public int delfriend(MemberVO vo, MemberVO vo2);
 
+	public int ban(MemberVO vo, MemberVO vo2);
+
 }

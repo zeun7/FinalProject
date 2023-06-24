@@ -85,6 +85,35 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_m_addban.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_m_addban(String nickname1, String nickname2) {
+		log.info("/json_m_addban.do...");
+		log.info("{}, {}", nickname1, nickname2);
+		MemberVO vo = new MemberVO();
+		MemberVO vo2 = new MemberVO();
+		vo.setNickname(nickname1);
+		vo2.setNickname(nickname2);
+		
+		int result = service.ban(vo, vo2);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("result: {}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_m_bans.do", method = RequestMethod.GET)
+	public List<ManageFriendsVO> json_m_bans(ManageFriendsVO vo) {
+		log.info("/json_m_bans.do...{}", vo);
+		
+		List<ManageFriendsVO> vos = service.friends(vo);
+		log.info("{}", vos);
+		
+		return vos;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_mng_member.do",  method = RequestMethod.GET)
 	public List<MemberVO> json_mng_member() {
 		log.info("/json_mng_member.do...testest");

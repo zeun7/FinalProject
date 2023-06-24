@@ -63,6 +63,19 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 	
 	@Override
+	public int ban(MemberVO vo, MemberVO vo2) {
+		log.info("ban()...{}, {}", vo.getNickname(), vo2.getNickname());
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname1", vo.getNickname());
+		map.put("nickname2", vo2.getNickname());
+		
+		int result = sqlSession.update("MNG_M_BAN", map);
+		log.info("result: {}", result);
+		
+		return result;
+	}
+	
+	@Override
 	public List<MemberVO> member() {
 		log.info("member selectAll()...");
 		
