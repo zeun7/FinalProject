@@ -16,7 +16,7 @@
 			<h1 style="font-size: 24px;">다이어리 ${nickname}</h1>
 		</div>
 		<div>
-			<input type="hidden" id="mbname" name="mbname" value="다이어리">
+			<input type="hidden" id="mbname" name="mbname" value="diary">
 		</div>
 		<div>
 			<input type="hidden" id="writer" name="writer"
@@ -32,7 +32,7 @@
 		<div>
 			이미지 추가 :
 			<input type="file" id="bfile" name="bfile"> 
-			<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath}">
+			<input type="hidden" id="filepath" name="filepath">
 		</div>
 		<div>
 			<input type="submit" class="myButton" value="다이어리 작성완료">

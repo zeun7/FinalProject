@@ -20,9 +20,9 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 	
 	@Override
-	public List<MiniBoardVO> selectAll() {
-		log.info("selectAll()....");
-		return sqlSession.selectList("MB_SELECT_ALL");
+	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo) {
+		log.info("mb_selectAll(vo)....{}", vo);
+		return sqlSession.selectList("MB_SELECT_ALL", vo);
 	}
 
 	@Override

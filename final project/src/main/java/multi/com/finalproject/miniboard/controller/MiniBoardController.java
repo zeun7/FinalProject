@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
@@ -34,10 +35,18 @@ public class MiniBoardController {
 	HttpSession session;
 
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
-	public String mini_diary(Model model) {
-		log.info("mini_diary()...{}");
-
-		List<MiniBoardVO> vos = service.selectAll();
+	public String mini_diary(@RequestParam("writer") String writer, @RequestParam("mbname") String mbname, Model model) {
+		log.info("mini_diary()...");
+		
+		log.info("Writer: " + writer); // 로그로 writer 값을 출력합니다
+		log.info("Mbname: " + mbname); // 로그로 mbname 값을 출력합니다
+		
+		MiniBoardVO vo = new MiniBoardVO();
+	    vo.setMbname(mbname);
+	    vo.setWriter(writer);
+		
+		List<MiniBoardVO> vos = service.mb_selectAll(vo);
+		log.info("vos: {}",vos);
 
 		model.addAttribute("vos", vos);
 
@@ -45,10 +54,17 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
-	public String mini_gallery(Model model) {
+	public String mini_gallery(@RequestParam("writer") String writer, @RequestParam("mbname") String mbname, Model model) {
 		log.info("mini_gallery()...{}");
 
-		List<MiniBoardVO> vos = service.selectAll();
+		log.info("Writer: " + writer); // 로그로 writer 값을 출력합니다
+		log.info("Mbname: " + mbname); // 로그로 mbname 값을 출력합니다
+		
+		MiniBoardVO vo = new MiniBoardVO();
+	    vo.setMbname(mbname);
+	    vo.setWriter(writer);
+		
+		List<MiniBoardVO> vos = service.mb_selectAll(vo);
 
 		model.addAttribute("vos", vos);
 
@@ -63,7 +79,7 @@ public class MiniBoardController {
 
 		model.addAttribute("vo2", vo2);
 		log.info("vo2 : {}",vo2);
-		session.setAttribute("mbnum", vo2.getMbnum());
+		session.setAttribute("mbname", vo2.getMbname());
 		
 		return "mini/diary/selectOne";
 	}
@@ -76,8 +92,8 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/mb_insertOK.do", method = RequestMethod.POST)
-	public String mb_insertOK(MiniBoardVO vo) throws IllegalStateException, IOException {
-		log.info("mb_insertOK(vo)...{}", vo);
+	public String diary_insertOK(MiniBoardVO vo) throws IllegalStateException, IOException {
+		log.info("diary_insertOK(vo)...{}", vo);
 
 		if (vo.getBfile() != null && !vo.getBfile().isEmpty()) {
 			String originalFilename = vo.getBfile().getOriginalFilename();
@@ -112,7 +128,7 @@ public class MiniBoardController {
 		log.info("result: {}", result);
 
 		if (result == 1) {
-			return "redirect:mini_diary.do?writer=" + vo.getWriter();
+			return "redirect:mini_diary.do?mbname=" + vo.getMbname()+"&writer=" + vo.getWriter();
 		} else {
 			return "redirect:insert.do?writer=" + vo.getWriter();
 		}
@@ -125,12 +141,14 @@ public class MiniBoardController {
 
 		int result = service.diary_delete(vo);
 		log.info("result...{}", result);
-
+		
+		String mbname = session.getAttribute("mbname").toString();
+		String writer = session.getAttribute("nickname").toString();
+		
 		if (result == 1) {
-			return "redirect:mini_diary.do";
-		} else {
-			return "redirect:diary_update.do";
+			return "redirect:mini_diary.do?mbname=" + mbname + "&writer=" + writer;
 		}
+		return null;
 	}
 
 	@RequestMapping(value = "/gallery_selectOne.do", method = RequestMethod.GET)
@@ -138,7 +156,8 @@ public class MiniBoardController {
 		log.info("gallery_selectOne()...");
 
 		MiniBoardVO vo2 = service.gallery_selectOne(vo);
-
+		session.setAttribute("mbname", vo2.getMbname());
+		
 		model.addAttribute("vo2", vo2);
 		return "mini/gallery/selectOne";
 	}
@@ -159,8 +178,14 @@ public class MiniBoardController {
 
 		int result = service.gallery_delete(vo);
 		log.info("result...{}", result);
-
-		return "redirect:mini_gallery.do";
+		
+		String mbname = session.getAttribute("mbname").toString();
+		String writer = session.getAttribute("nickname").toString();
+		
+		if (result == 1) {
+			return "redirect:mini_gallery.do?mbname=" + mbname + "&writer=" + writer;
+		}
+		return null;
 	}
 
 }
