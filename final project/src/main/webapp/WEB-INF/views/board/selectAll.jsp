@@ -11,9 +11,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
+let curPage = 1;
 let limit = 10;
+let isSelectAll = true;
 
-$(function(){
+function selectAllCount(){
+	console.log('selectAllCount()');
+	selectAll(curPage, limit);
+	isSelectAll = true;
+	console.log('isSelectAll:', isSelectAll);
 	$.ajax({
 		url : "json_b_count.do",
 		method : 'GET',
@@ -44,7 +50,7 @@ $(function(){
 //			console.log('error:', error);
 		}
 	});//end $.ajax()
-});//end onload
+}//end selectAllCount()
 
 function selectAll(page, limit){
 // 	console.log('onload...');
@@ -79,6 +85,7 @@ function selectAll(page, limit){
  			}
 			
 			$("#vos").html(tag_vos); 
+			curPage = page;
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -90,6 +97,9 @@ function selectAll(page, limit){
 
 function searchListCount(){
 	console.log('searchListCount()');
+	searchList(curPage, limit);
+	isSelectAll = false;
+	console.log('isSelectAll:', isSelectAll);
 	$.ajax({
 		url : "json_b_searchList_count.do",
 		method : 'GET',
@@ -126,7 +136,6 @@ function searchListCount(){
 
 function searchList(page, limit){
 // 	console.log('searchList()');
-	searchListCount();
 	$.ajax({
 		url : "json_b_searchList.do",
 		method : 'GET',
@@ -160,6 +169,7 @@ function searchList(page, limit){
  			}
 			
 			$("#vos").html(tag_vos); 
+			curPage = page;
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -171,12 +181,17 @@ function searchList(page, limit){
 
 function changeLimit(){
 	limit = $("#limit").val();
-	console.log(limit);
+// 	console.log(limit);
+	if(isSelectAll){
+		selectAllCount(curPage, limit);
+	}else{
+		searchListCount(curPage, limit);
+	}
 }
 
 </script>
 </head>
-<body onload="selectAll(page, limit)">
+<body onload="selectAllCount()">
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>${param.bname }</h1>
 	<select name="limit" id="limit" onchange="changeLimit()">
@@ -213,6 +228,6 @@ function changeLimit(){
 		<option value="writer">작성자</option>
 	</select>
 	<input type="text" name="searchWord" id="searchWord" value="1">
-	<button onclick="searchList(1, 10)">검색</button>
+	<button onclick="searchListCount()">검색</button>
 </body>
 </html>

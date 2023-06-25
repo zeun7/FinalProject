@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardDAO;
 import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.board.model.LikesVO;
 
 @Service
 @Slf4j
@@ -75,6 +76,10 @@ public class BoardService {
 
 	public void likesDown(BoardVO vo) {
 		dao.likesDown(vo);
+	}
+
+	public LikesVO likeCheck(Map<String, Integer> param) {
+		return dao.likeCheck(param);
 	}
 	
 }

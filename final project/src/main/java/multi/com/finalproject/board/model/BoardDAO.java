@@ -33,4 +33,6 @@ public interface BoardDAO {
 
 	public void likesDown(BoardVO vo);
 
+	public LikesVO likeCheck(Map<String, Integer> param);
+
 }

@@ -6,7 +6,7 @@
 <mapper namespace="multi.com.finalproject.miniboard">
 
 	<select id="MB_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		select * from miniboard order by mbnum desc
+		select * from miniboard where mbname = #{mbname} and writer=#{writer} order by mbnum desc
 	</select>
 	
 	<select id="DIARY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
@@ -15,7 +15,7 @@
 	
 	<insert id="MB_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		insert into miniboard(mbnum,mbname,writer,title,content,filepath) 
-		values(seq_miniboard.nextval,#{mbname},#{writer},#{title},#{content},#{filepath})
+		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath})
 	</insert>
 	
 	<update id="DIARY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
@@ -31,12 +31,14 @@
 	</delete>
 	
 	<select id="GALLERY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where mbnum=#{mbnum}
 	</select>
 	
 	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 	</update>
 	
 	<delete id="GALLERY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		delete from miniboard where mbnum=#{mbnum}
 	</delete>
 	
 </mapper>

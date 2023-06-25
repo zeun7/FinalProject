@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.board.model.LikesVO;
 import multi.com.finalproject.board.service.BoardService;
 
 @Controller
@@ -136,6 +137,30 @@ public class BoardRestController {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
 		map.put("likes", vo2.getLikes());	//좋아요 개수 반환
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_b_likeCheck.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_b_likeCheck(int num, BoardVO vo) {
+		log.info("/json_b_likeCheck.do...");
+		log.info("num:{}", num);
+		log.info("vo:{}", vo);
+		
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("num", num);
+		param.put("bnum", vo.getBnum());
+		
+		LikesVO vo2 = service.likeCheck(param);
+		log.info("vo2:{}", vo2);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		if(vo2 == null) {
+			map.put("result", 0);
+		}else {
+			map.put("result", 1);
+		}
 		
 		return map;
 	}

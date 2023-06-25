@@ -30,6 +30,10 @@
 	<select id="B_SELECT_ONE" resultType="multi.com.finalproject.board.model.BoardVO">
 		select * from board where bnum = #{bnum}
 	</select>
+	
+	<select id="B_LIKE_CHECK" resultType="multi.com.finalproject.board.model.LikesVO" parameterType="Map">
+		select * from likes where num=#{num} and bnum = #{bnum}
+	</select>
 
 	<select id="B_SEARCH_LIST_TITLE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
 		<![CDATA[
@@ -117,8 +121,8 @@
 	</select>
 
 	<insert id="B_INSERT" parameterType="multi.com.finalproject.board.model.BoardVO">
-		insert into board(bnum, bname, caname, writer, title, content) 
-		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content})
+		insert into board(bnum, bname, caname, writer, title, content, filepath) 
+		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content}, #{filepath})
 	</insert>
 
 	<insert id="B_LIKE" parameterType="Map">
@@ -130,7 +134,7 @@
 	</insert>
 
 	<update id="B_UPDATE" parameterType="multi.com.finalproject.board.model.BoardVO">
-		update board set title=#{title} , content=#{content} , 
+		update board set title=#{title} , content=#{content} , filepath=#{filepath}, 
 		wdate=sysdate
 		where bnum = #{bnum}
 	</update>
