@@ -6,13 +6,13 @@
   <mapper namespace="multi.com.finalproject.board">
   	<select id="B_SELECT_ALL" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
   		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -37,13 +37,13 @@
 
 	<select id="B_SEARCH_LIST_TITLE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -60,13 +60,13 @@
 
 	<select id="B_SEARCH_LIST_CONTENT" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -83,13 +83,13 @@
 
 	<select id="B_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *

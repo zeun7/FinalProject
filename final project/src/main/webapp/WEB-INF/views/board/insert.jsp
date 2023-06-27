@@ -7,13 +7,24 @@
 <title>Insert title here</title>
 <jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	function input_check(){
+		if($("#title").val() === ''){
+			alert('제목을 입력하세요');
+		}else if($("#content").val() === ''){
+			alert('내용을 입력하세요');
+		}else{
+			document.getElementById("insert_form").submit();
+		}
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>${param.bname }</h1>
 	
 	<h3>글쓰기</h3>
-	<form action="b_insertOK.do" method="post" enctype="multipart/form-data">
+	<form action="b_insertOK.do" method="post" enctype="multipart/form-data" id="insert_form">
 	<table>
 		<thead>
 			<tr>
@@ -47,7 +58,7 @@
 			<tr>
 				<td>
 					<button type="button" onclick="history.back()">취소</button>
-					<input type="submit" value="등록">
+					<button type="button" onclick="input_check()">등록</button>
 				</td>
 			</tr>
 		</tfoot>
