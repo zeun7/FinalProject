@@ -2,23 +2,23 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
   <mapper namespace="multi.com.finalproject.board">
   	<select id="B_SELECT_ALL" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
   		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount 
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount 
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount 
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
 		        FROM board
 		        where bname=#{vo.bname} 
-		        ORDER BY bnum DESC
+		        ORDER BY (case when caname = 'notice' then 1 else 2 end), bnum DESC
 		      )
 		  )
 		WHERE SEQ >= (#{page}-1)*#{limit}+1 
@@ -26,20 +26,24 @@
 		WHERE ROWNUM <= #{limit}
 		]]>
 	</select>
-	
+
 	<select id="B_SELECT_ONE" resultType="multi.com.finalproject.board.model.BoardVO">
 		select * from board where bnum = #{bnum}
 	</select>
 	
+	<select id="B_LIKE_CHECK" resultType="multi.com.finalproject.board.model.LikesVO" parameterType="Map">
+		select * from likes where num=#{num} and bnum = #{bnum}
+	</select>
+
 	<select id="B_SEARCH_LIST_TITLE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -53,16 +57,16 @@
 		WHERE ROWNUM <= #{limit}
 		]]>
 	</select>
-	
+
 	<select id="B_SEARCH_LIST_CONTENT" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -76,16 +80,16 @@
 		WHERE ROWNUM <= #{limit}
 		]]>
 	</select>
-	
+
 	<select id="B_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
 		    FROM
 		      (
 		        SELECT *
@@ -99,33 +103,63 @@
 		WHERE ROWNUM <= #{limit}
 		]]>
 	</select>
-	
+
 	<select id="B_COUNT" resultType="Integer">
 		select count(*) from board where bname=#{bname}
 	</select>
-	
-	
+
+	<select id="B_SEARCH_COUNT_TITLE" parameterType="Map" resultType="Integer">
+		select count(*) from board where bname=#{vo.bname} and title like #{searchWord}
+	</select>
+
+	<select id="B_SEARCH_COUNT_CONTENT" parameterType="Map" resultType="Integer">
+		select count(*) from board where bname=#{vo.bname} and content like #{searchWord}
+	</select>
+
+	<select id="B_SEARCH_COUNT_WRITER" parameterType="Map" resultType="Integer">
+		select count(*) from board where bname=#{vo.bname} and writer like #{searchWord}
+	</select>
+
 	<insert id="B_INSERT" parameterType="multi.com.finalproject.board.model.BoardVO">
-		insert into board(bnum, bname, caname, writer, title, content) 
-		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content})
+		insert into board(bnum, bname, caname, writer, title, content, filepath) 
+		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content}, #{filepath})
 	</insert>
-	
+
 	<insert id="B_LIKE" parameterType="Map">
 		insert into likes values(#{num}, #{bnum})
 	</insert>
-	
+
+	<insert id="B_REPORT" parameterType="Map">
+		insert into report(rnum, bnum, reason) values(seq_report.nextval, #{vo.bnum}, #{reason})
+	</insert>
+
 	<update id="B_UPDATE" parameterType="multi.com.finalproject.board.model.BoardVO">
-		update board set title=#{title} , content=#{content} , 
+		update board set title=#{title} , content=#{content} , filepath=#{filepath}, 
 		wdate=sysdate
 		where bnum = #{bnum}
 	</update>
-	
+
 	<update id="B_VCOUNT_UP" parameterType="multi.com.finalproject.board.model.BoardVO">
 		update board set vcount=vcount+1
 		where bnum = #{bnum}
 	</update>
-	
+
+	<update id="B_LIKES_UP" parameterType="multi.com.finalproject.board.model.BoardVO">
+		update board set likes=likes+1
+		where bnum = #{bnum}
+	</update>
+
+	<update id="B_LIKES_DOWN" parameterType="multi.com.finalproject.board.model.BoardVO">
+		update board set likes=likes-1
+		where bnum = #{bnum}
+	</update>
+
 	<delete id="B_DELETE">
 		delete from board where bnum = #{bnum}
 	</delete>
+
+	<delete id="B_DELETE_LIKE">
+		delete from likes where num = #{num} and bnum = #{bnum}
+	</delete>
+
   </mapper>

@@ -4,16 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<jsp:include page="../css.jsp"></jsp:include>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
+let curPage = 1;
 let limit = 10;
+let isSelectAll = true;
 
-$(function(){
+function selectAllCount(){
+	console.log('selectAllCount()');
+	isSelectAll = true;
+	console.log('isSelectAll:', isSelectAll);
 	$.ajax({
 		url : "json_b_count.do",
 		method : 'GET',
@@ -35,6 +41,11 @@ $(function(){
 				result -= limit;
 			}
 			
+			if(curPage > tag_page){
+				curPage = tag_page;
+			}
+			selectAll(curPage, limit);
+			
 // 			$("#board_name").text('${param.bname}');
 			$("#page").html(tag_pages);
 		},
@@ -44,7 +55,7 @@ $(function(){
 //			console.log('error:', error);
 		}
 	});//end $.ajax()
-});//end onload
+}//end selectAllCount()
 
 function selectAll(page, limit){
 // 	console.log('onload...');
@@ -65,20 +76,35 @@ function selectAll(page, limit){
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YYYY-MM-DD HH:mm:ss');
 //  				console.log(date);
+ 				if(vo.caname === 'general'){
+					vo.caname = '일반';
+				}else if(vo.caname === 'notice'){
+					vo.caname = '공지';
+				}else{
+					vo.caname = '질문';
+				}
  				tag_vos += `
  					<tr>
  						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.bnum}</a></td>
  						<td>\${vo.caname}</td>
- 						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
- 						<td>\${vo.writer}</td>
- 						<td>\${date}</td>
- 						<td>\${vo.vcount}</td>
- 						<td>\${vo.likes}</td>
- 					</tr>
+ 						<td>
+ 				`;
+ 				
+ 				if(vo.filepath != null){
+ 					tag_vos += `<i class="fa-regular fa-image">`;
+ 				}
+ 				tag_vos += `
+ 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+						<td>\${vo.writer}</td>
+						<td>\${date}</td>
+						<td>\${vo.vcount}</td>
+						<td>\${vo.likes}</td>
+					</tr>
  				`;
  			}
 			
 			$("#vos").html(tag_vos); 
+			curPage = page;
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -88,8 +114,52 @@ function selectAll(page, limit){
 	});//end $.ajax()
 }//end selectAll()
 
+function searchListCount(){
+	console.log('searchListCount()');
+	searchList(curPage, limit);
+	isSelectAll = false;
+	console.log('isSelectAll:', isSelectAll);
+	$.ajax({
+		url : "json_b_searchList_count.do",
+		method : 'GET',
+		data : {
+			bname : '${param.bname}',
+			searchKey : $("#searchKey").val(),
+			searchWord : $("#searchWord").val()
+		},
+		dataType : 'json', 
+		success : function(result) {
+			console.log(result);
+			let tag_page = 0;
+			let tag_pages = '';
+			
+			while(result > 0){
+				tag_page++;
+				tag_pages += `
+					<button onclick=searchList(\${tag_page},\${limit})>\${tag_page}</button>
+				`;
+				
+				result -= limit;
+			}
+			
+			if(curPage > tag_page){
+				curPage = tag_page;
+			}
+			selectAll(curPage, limit);
+			
+// 			$("#board_name").text('${param.bname}');
+			$("#page").html(tag_pages);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr:', xhr.status);
+//			console.log('status:', status);
+//			console.log('error:', error);
+		}
+	});//end $.ajax()
+}//end searchListCount()
+
 function searchList(page, limit){
-	console.log('searchList()');
+// 	console.log('searchList()');
 	$.ajax({
 		url : "json_b_searchList.do",
 		method : 'GET',
@@ -109,20 +179,35 @@ function searchList(page, limit){
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YYYY-MM-DD HH:mm:ss');
 //  				console.log(date);
- 				tag_vos += `
+				if(vo.caname === 'general'){
+					vo.caname = '일반';
+				}else if(vo.caname === 'notice'){
+					vo.caname = '공지';
+				}else{
+					vo.caname = '질문';
+				}
+				tag_vos += `
  					<tr>
  						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.bnum}</a></td>
  						<td>\${vo.caname}</td>
- 						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
- 						<td>\${vo.writer}</td>
- 						<td>\${date}</td>
- 						<td>\${vo.vcount}</td>
- 						<td>\${vo.likes}</td>
- 					</tr>
+ 						<td>
+ 				`;
+ 				
+ 				if(vo.filepath != null){
+ 					tag_vos += `<i class="fa-regular fa-image">`;
+ 				}
+ 				tag_vos += `
+ 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+						<td>\${vo.writer}</td>
+						<td>\${date}</td>
+						<td>\${vo.vcount}</td>
+						<td>\${vo.likes}</td>
+					</tr>
  				`;
  			}
 			
 			$("#vos").html(tag_vos); 
+			curPage = page;
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -132,46 +217,26 @@ function searchList(page, limit){
 	});//end $.ajax()
 }//end searchList()
 
-$(function(){
-	console.log("onload....");
-	
-	$.ajax({
-		url : "json_c_selectAll.do",
-		data:{
-			
-			},
-		}
-		method:'GET',
-		dataType:'json',
-		success : function(arr) {
-			console.log('ajax...success:', arr);
-			let vos = ``;
-			$.each(arr,function(index,vo){
-				console.log(index,vo);
-				let regdate = new Date(vo._id.time).toLocaleString();
-				vos += `
-					<tr>
-						<th>\${vo.cnum}</th>
-						<th>\${vo.content}</th>
-						<th>\${vo.writer}</th>
-						<th>\${vo.wdate}</th>
-					</tr>
-				`;
-				
-			});
-			$('#vos').html(vos);
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});//end $.ajax()...
-
+function changeLimit(){
+	limit = $("#limit").val();
+// 	console.log(limit);
+	if(isSelectAll){
+		selectAllCount();
+	}else{
+		searchListCount();
+	}
+}
 
 </script>
 </head>
-<body onload="selectAll(page, limit)">
+<body onload="selectAllCount()">
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>${param.bname }</h1>
+	<select name="limit" id="limit" onchange="changeLimit()">
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+	</select>
 	<a href="b_insert.do?bname=${param.bname }">글쓰기</a>
 	<table border="1">
 		<thead>
@@ -201,57 +266,6 @@ $(function(){
 		<option value="writer">작성자</option>
 	</select>
 	<input type="text" name="searchWord" id="searchWord" value="1">
-	<button onclick="searchList(1, 10)">검색</button>
-	
-	<hr>
-	<h1>댓글</h1>
-	<table>
-		<tr>
-			<th>content</th>
-			<th>writer</th>
-		</tr>
-		<tr>
-			<td>
-				<form id="form_insertOK">
-					<input type="hidden" name="writer" value="${user_id}">
-					<input type="text" name="content" value="댓글입니다.">
-					<input type="submit" value="입력완료" class="myButton">
-				</form>
-			</td>
-		</tr>
-	</table>	
-	
-	<hr>
-	<h1>댓글목록</h1>
-	<table>
-	<thead>
-		<tr>
-			<th>cnum</th>
-			<th>content</th>
-			<th>writer</th>
-			<th>wdate</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody id ="vos">
-	
-	</tbody>
-			<tr>
-				<td>
-					<form action="json_c_updateOK.do">
-						<input type="hidden" name="wnum" value="${com.wnum}">
-						<input type="hidden" name="cnum" value="${com.cnum}">
-						<input type="text" name="content" value="댓글입니다.">
-						<input type="submit" value="수정완료" class="myButton">
-					</form>
-				</td>
-				<td>
-						<a href="json_c_deleteOK.do?cnum=${com.cnum}&wnum=${com.wnum}" class="myButton">댓글삭제</a>
-				</td>
-			</tr>
-	</table>
-	
-	
-	
+	<button onclick="searchListCount()">검색</button>
 </body>
 </html>
