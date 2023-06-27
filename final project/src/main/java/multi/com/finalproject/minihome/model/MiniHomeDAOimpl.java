@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.member.model.MemberVO;
 
 @Slf4j
 @Repository
@@ -20,9 +21,7 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	@Override
 	public MiniHomeVO selectOne(MiniHomeVO vo) {
 		log.info("selectOne(vo)...{}", vo);
-		MiniHomeVO vo2 = sqlSession.selectOne("MINI_SELECT_ONE", vo);
-		log.info("{}", vo2);
-		return vo2;
+		return sqlSession.selectOne("MINI_SELECT_ONE", vo);
 	}
 	
 	@Override
@@ -35,6 +34,18 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	public void vcountUp(MiniHomeVO vo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public MemberVO selectProfilePic(MiniHomeVO vo) {
+		log.info("selectProfilePic(vo)...{}", vo);
+		return sqlSession.selectOne("PROFILE_PIC_SELECT", vo);
+	}
+
+	@Override
+	public void view_update(MiniHomeVO vo2) {
+		log.info("update(vo2)...{}", vo2);
+		sqlSession.update("VIEW_UPDATE",vo2);
 	}
 
 }

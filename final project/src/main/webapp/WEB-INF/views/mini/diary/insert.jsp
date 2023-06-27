@@ -5,6 +5,29 @@
 <head>
 <title>다이어리_insert</title>
 <jsp:include page="../../css.jsp"></jsp:include>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script type="text/javascript">
+	if('${user_id}' === ''){	// 로그아웃 상태
+		$('#logout').hide();
+		$('#m_insert').show();
+		$('#myinfo').hide();
+		$('#login').show();
+	}
+	else{						// 로그인 상태
+		$('#logout').show();
+		$('#m_insert').hide();
+		$('#myinfo').show();
+		$('#login').hide();
+	}
+	
+	if('${mclass}' === '1'){		// 관리자
+		$('#manage').show();
+	}
+	else{						// 일반 유저
+		$('#manage').hide();
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="../../top_menu.jsp"></jsp:include>

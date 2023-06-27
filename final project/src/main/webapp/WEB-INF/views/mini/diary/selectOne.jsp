@@ -94,6 +94,7 @@ $(document).ready(function() {
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
+<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
 <h1>mini/diary/selectOne.jsp ${mbnum}</h1>
 
 <div>${vo2.mbname}</div>

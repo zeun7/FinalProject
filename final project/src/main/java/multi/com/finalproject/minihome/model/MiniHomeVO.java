@@ -1,5 +1,7 @@
 package multi.com.finalproject.minihome.model;
 
+import java.sql.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -18,5 +20,6 @@ public class MiniHomeVO {
 	private int vtoday;
 	private MultipartFile file;
 	private MultipartFile musicFile;
+	private Date visit_date;
 	
 }
