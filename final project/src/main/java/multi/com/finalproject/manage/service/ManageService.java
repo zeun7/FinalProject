@@ -33,8 +33,8 @@ public class ManageService {
 		return dao.delfriend(vo, vo2);
 	}
 	
-	public List<MemberVO> member() {
-		return dao.member();
+	public List<MemberVO> member(Integer page) {
+		return dao.member(page);
 	}
 
 	public List<BoardVO> board() {
@@ -45,7 +45,20 @@ public class ManageService {
 		return dao.comments();
 	}
 
-	public int ban(MemberVO vo, MemberVO vo2) {
-		return dao.ban(vo, vo2);
+	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo) {
+		return dao.selectBan(vo);
 	}
+	
+	public int addBan(MemberVO vo, MemberVO vo2) {
+		return dao.addBan(vo, vo2);
+	}
+	
+	public int newBan(MemberVO vo, MemberVO vo2) {
+		return dao.newBan(vo, vo2);
+	}
+	
+	public int delBan(MemberVO vo, MemberVO vo2) {
+		return dao.delBan(vo, vo2);
+	}
+
 }

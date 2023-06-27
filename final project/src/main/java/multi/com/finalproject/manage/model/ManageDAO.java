@@ -14,7 +14,7 @@ public interface ManageDAO {
 	
 	public int addfriend(MemberVO vo, MemberVO vo2);
 	
-	public List<MemberVO> member();
+	public List<MemberVO> member(Integer page);
 
 	public List<BoardVO> board();
 
@@ -22,6 +22,12 @@ public interface ManageDAO {
 
 	public int delfriend(MemberVO vo, MemberVO vo2);
 
-	public int ban(MemberVO vo, MemberVO vo2);
+	public int addBan(MemberVO vo, MemberVO vo2);
+
+	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo);
+
+	public int delBan(MemberVO vo, MemberVO vo2);
+
+	public int newBan(MemberVO vo, MemberVO vo2);
 
 }

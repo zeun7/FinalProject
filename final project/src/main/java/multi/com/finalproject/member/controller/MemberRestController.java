@@ -30,7 +30,7 @@ public class MemberRestController {
 	
 	@RequestMapping(value = "/json_m_selectOne.do", method = RequestMethod.GET)
 	public MemberVO json_m_selectOne(MemberVO vo) {
-		log.info("/json_mv_selectAll.do");
+		log.info("/json_m_selectOne.do");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		if(vo2==null) vo2 = vo;

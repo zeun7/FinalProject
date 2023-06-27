@@ -15,7 +15,7 @@
 
 	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
 		insert into comments(cnum,bnum,content,writer) 
-		values(seq_comments.nextval,#{wnum},#{content},#{writer})
+		values(seq_comments.nextval,#{bnum},#{content},#{writer})
 	</insert>
 	
 	<update id="C_UPDATE" parameterType="multi.com.finalproject.comments.model.CommentsVO">
