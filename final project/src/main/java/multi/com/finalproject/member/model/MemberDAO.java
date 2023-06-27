@@ -8,7 +8,7 @@ public interface MemberDAO {
 
 	public int update(MemberVO vo);
 
-	public int delete(MemberVO vo);
+	public int delete(MemberVO vo)throws Exception;
 
 	public List<MemberVO> selectAll();
 
