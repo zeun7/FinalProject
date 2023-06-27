@@ -22,6 +22,10 @@ public interface ManageDAO {
 
 	public int delfriend(MemberVO vo, MemberVO vo2);
 
-	public int ban(MemberVO vo, MemberVO vo2);
+	public int addBan(MemberVO vo, MemberVO vo2);
+
+	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo);
+
+	public int delBan(MemberVO vo, MemberVO vo2);
 
 }

@@ -26,9 +26,17 @@
 		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</delete>
 	
-	<update id="MNG_M_BAN">
+	<select id="MNG_M_SELECT_BAN" resultType="multi.com.finalproject.manage.model.ManageFriendsVO">
+		select * from friends where nickname = #{nickname} and grade = 3
+	</select>
+	
+	<update id="MNG_M_ADD_BAN">
 		update friends set grade = 3 where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</update>
+	
+	<delete id="MNG_M_DEL_BAN">
+		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2} and grade = 3
+	</delete>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum

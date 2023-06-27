@@ -45,7 +45,16 @@ public class ManageService {
 		return dao.comments();
 	}
 
-	public int ban(MemberVO vo, MemberVO vo2) {
-		return dao.ban(vo, vo2);
+	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo) {
+		return dao.selectBan(vo);
 	}
+	
+	public int addBan(MemberVO vo, MemberVO vo2) {
+		return dao.addBan(vo, vo2);
+	}
+
+	public int delBan(MemberVO vo, MemberVO vo2) {
+		return dao.delBan(vo, vo2);
+	}
+
 }
