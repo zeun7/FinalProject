@@ -43,6 +43,14 @@
 		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2} and grade = 3
 	</delete>
 	
+	<select id="MNG_M_SELECT_MEMBER" resultType="multi.com.finalproject.member.model.MemberVO">
+		<![CDATA[
+			select * from (select * from 
+			(select rownum seq, member.* from member order by num desc) 
+			where seq >= (#{page} - 1) * 10 + 1) where rownum <= 10
+		]]>
+	</select>
+	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>

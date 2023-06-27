@@ -151,10 +151,10 @@ public class ManageRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mng_member.do",  method = RequestMethod.GET)
-	public List<MemberVO> json_mng_member() {
-		log.info("/json_mng_member.do...");
+	public List<MemberVO> json_mng_member(Integer page) {
+		log.info("/json_mng_member.do...{}", page);
 		
-		List<MemberVO> vos = service.member();
+		List<MemberVO> vos = service.member(page);
 		
 		return vos;
 	}

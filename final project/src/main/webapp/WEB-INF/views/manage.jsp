@@ -7,9 +7,10 @@
 <jsp:include page="css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-function manage_member(){
+function manage_member(page){
 	$.ajax({
 		url : "json_mng_member.do",
+		data: {page: page},
 		method:'GET',
 		dataType:'json',
 		success : function(arr) {
@@ -24,7 +25,6 @@ function manage_member(){
 							<th>프로필 이미지</th>
 							<th>이름</th>
 							<th>전화번호</th>
-							<th>미니홈피 주소</th>
 							<th>사용자 등급</th>
 							</tr>
 						</thead>
@@ -40,15 +40,32 @@ function manage_member(){
  					<td><img src="resources/uploadimg/thumb_\${vo.profilepic}"></td>
  					<td>\${vo.name}</td>
  					<td>\${vo.tel}</td>
- 					<td>\${vo.miniaddr}</td>
  					<td>\${vo.mclass}</td>
  				</tr>
  				`;
  			});
 			
  			tag_vos += `</tbody>
+ 						<tfoot style="text-align:center">
+ 							<tr>
+ 								<td colsapn="6" id="pages">
+ 						`;
+ 			
+ 			let page_bttn = '';
+ 			let index = 1;
+ 			while(index <= 5/10 + 1){
+ 				page_bttn += `<button onclick="manage_member(\${index})">
+ 								\${index}
+ 							</button>`;
+ 				index += 1;
+ 			}
+ 			
+ 			tag_vos += `</td>
+ 							</tr>
+ 						</tfoot>
  						`;
 			$("#vos").html(tag_vos);
+			$("#pages").html(page_bttn);
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -122,7 +139,7 @@ function manage_comments(){
  					<td>\${vo.cnum}</td>
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.content}</a></td>
  					<td>\${vo.writer}</td>
- 					<td>\${vo.reportreason}</td>
+ 					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='c_deleteOK.do?cnum=\${vo.cnum}'">삭제</button></td>
  				</tr>
  				`;
@@ -142,7 +159,7 @@ function manage_comments(){
 <body>
 	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul>
-		<li><button onclick="manage_member()">회원관리</button></li>
+		<li><button onclick="manage_member(1)">회원관리</button></li>
 		<li><button onclick="manage_board()">신고 게시글</button></li>
 		<li><button onclick="manage_comments()">신고 댓글</button></li>
 	</ul>

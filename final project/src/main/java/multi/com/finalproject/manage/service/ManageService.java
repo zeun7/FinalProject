@@ -33,8 +33,8 @@ public class ManageService {
 		return dao.delfriend(vo, vo2);
 	}
 	
-	public List<MemberVO> member() {
-		return dao.member();
+	public List<MemberVO> member(Integer page) {
+		return dao.member(page);
 	}
 
 	public List<BoardVO> board() {

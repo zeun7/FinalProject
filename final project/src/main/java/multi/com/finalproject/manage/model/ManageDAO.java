@@ -14,7 +14,7 @@ public interface ManageDAO {
 	
 	public int addfriend(MemberVO vo, MemberVO vo2);
 	
-	public List<MemberVO> member();
+	public List<MemberVO> member(Integer page);
 
 	public List<BoardVO> board();
 

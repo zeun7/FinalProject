@@ -109,10 +109,10 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 	
 	@Override
-	public List<MemberVO> member() {
-		log.info("member selectAll()...");
+	public List<MemberVO> member(Integer page) {
+		log.info("member selectAll()...{}", page);
 		
-		return sqlSession.selectList("M_SELECT_ALL");
+		return sqlSession.selectList("MNG_M_SELECT_MEMBER", page);
 	}
 
 	@Override
