@@ -52,7 +52,11 @@ public class ManageService {
 	public int addBan(MemberVO vo, MemberVO vo2) {
 		return dao.addBan(vo, vo2);
 	}
-
+	
+	public int newBan(MemberVO vo, MemberVO vo2) {
+		return dao.newBan(vo, vo2);
+	}
+	
 	public int delBan(MemberVO vo, MemberVO vo2) {
 		return dao.delBan(vo, vo2);
 	}

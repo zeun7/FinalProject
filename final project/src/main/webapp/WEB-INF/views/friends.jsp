@@ -46,7 +46,7 @@ function friends_list(){		// 친구목록
 	 						채팅</button>
 	 					</td>
 	 					<td>
-	 						<button onclick="add_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
+	 						<button onclick="new_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
 	 						차단</button>
 	 					</td>
 	 					<td>
@@ -214,7 +214,7 @@ function searchUser(){	// 유저 검색 결과 출력
  							<span id="txt_\${vo.nickname}">친구추가</span></button>
  					</td>
  					<td>
-						<button onclick="add_ban('\${vo.nickname}')" id="ban_\${vo.nickname}">
+						<button onclick="new_ban('\${vo.nickname}')" id="ban_\${vo.nickname}">
 						차단</button>
 					</td>
  				</tr>
@@ -231,7 +231,7 @@ function searchUser(){	// 유저 검색 결과 출력
 	});
 }
 
-function add_ban(nickname2) {	// 사용자 차단
+function add_ban(nickname2) {	// 친구목록에서 차단
 	console.log('ban()....');
 	let nickname = '<%=nickname%>';
 
@@ -245,6 +245,28 @@ function add_ban(nickname2) {	// 사용자 차단
 			console.log('ajax...success:', response.result);
 			if(response.result === 1){		// 차단 성공 시
 				friends_list();
+			}
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function new_ban(nickname2) {	// 사용자 검색에서 차단
+	console.log('ban()....');
+	let nickname = '<%=nickname%>';
+
+	$.ajax({
+		url : "json_m_newban.do",
+		data:{nickname1:nickname,
+			nickname2:nickname2},
+		method:'GET',
+		dataType:'json',
+		success : function(response) {
+			console.log('ajax...success:', response.result);
+			if(response.result === 1){		// 차단 성공 시
+				$("#ban_"+nickname2).prop('disabled', true);
 			}
 		},
 		error:function(xhr,status,error){

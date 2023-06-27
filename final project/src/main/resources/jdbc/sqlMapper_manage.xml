@@ -34,6 +34,11 @@
 		update friends set grade = 3 where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</update>
 	
+	<insert id="MNG_M_NEW_BAN">
+		insert into friends(fnum, nickname, nickname2, grade) 
+		values(seq_friends.nextval, #{nickname1}, #{nickname2}, 3)
+	</insert>
+	
 	<delete id="MNG_M_DEL_BAN">
 		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2} and grade = 3
 	</delete>

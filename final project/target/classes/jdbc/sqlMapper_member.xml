@@ -42,8 +42,8 @@
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		insert into
-		member(num,id,pw,nickname,profilepic,question,answer,name,miniaddr,tel,email)
-		values(seq_member.nextval,#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},http://localhost:8088/finalproject/mini_home.do?id=user_id,#{tel},#{email})
+		member(num,id,pw,nickname,profilepic,question,answer,name,tel,email)
+		values(seq_member.nextval,#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},#{tel},#{email})
 	</insert>
 
 	<update id="M_UPDATE"

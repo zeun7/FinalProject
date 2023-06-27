@@ -81,7 +81,7 @@ function manage_board(){
  					<td>\${vo.bnum}</td>
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
  					<td>\${vo.writer}</td>
- 					<td>\${vo.reportreason}</td>
+ 					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='b_deleteOK.do?bnum=\${vo.bnum}'">삭제</button></td>
  				</tr>
  				`;

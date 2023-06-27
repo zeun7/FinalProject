@@ -114,6 +114,24 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_m_newban.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_m_newban(String nickname1, String nickname2) {
+		log.info("/json_m_newban.do...");
+		log.info("{}, {}", nickname1, nickname2);
+		MemberVO vo = new MemberVO();
+		MemberVO vo2 = new MemberVO();
+		vo.setNickname(nickname1);
+		vo2.setNickname(nickname2);
+		
+		int result = service.newBan(vo, vo2);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("result: {}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_m_delban.do", method = RequestMethod.GET)
 	public Map<String, Integer> json_m_delban(String nickname1, String nickname2) {
 		log.info("/json_m_delban.do...");

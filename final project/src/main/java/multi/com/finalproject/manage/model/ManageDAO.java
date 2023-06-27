@@ -28,4 +28,6 @@ public interface ManageDAO {
 
 	public int delBan(MemberVO vo, MemberVO vo2);
 
+	public int newBan(MemberVO vo, MemberVO vo2);
+
 }
