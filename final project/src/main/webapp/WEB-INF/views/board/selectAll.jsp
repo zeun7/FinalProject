@@ -132,6 +132,41 @@ function searchList(page, limit){
 	});//end $.ajax()
 }//end searchList()
 
+$(function(){
+	console.log("onload....");
+	
+	$.ajax({
+		url : "json_c_selectAll.do",
+		data:{
+			
+			},
+		}
+		method:'GET',
+		dataType:'json',
+		success : function(arr) {
+			console.log('ajax...success:', arr);
+			let vos = ``;
+			$.each(arr,function(index,vo){
+				console.log(index,vo);
+				let regdate = new Date(vo._id.time).toLocaleString();
+				vos += `
+					<tr>
+						<th>\${vo.cnum}</th>
+						<th>\${vo.content}</th>
+						<th>\${vo.writer}</th>
+						<th>\${vo.wdate}</th>
+					</tr>
+				`;
+				
+			});
+			$('#vos').html(vos);
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});//end $.ajax()...
+
+
 </script>
 </head>
 <body onload="selectAll(page, limit)">
@@ -167,5 +202,56 @@ function searchList(page, limit){
 	</select>
 	<input type="text" name="searchWord" id="searchWord" value="1">
 	<button onclick="searchList(1, 10)">검색</button>
+	
+	<hr>
+	<h1>댓글</h1>
+	<table>
+		<tr>
+			<th>content</th>
+			<th>writer</th>
+		</tr>
+		<tr>
+			<td>
+				<form id="form_insertOK">
+					<input type="hidden" name="writer" value="${user_id}">
+					<input type="text" name="content" value="댓글입니다.">
+					<input type="submit" value="입력완료" class="myButton">
+				</form>
+			</td>
+		</tr>
+	</table>	
+	
+	<hr>
+	<h1>댓글목록</h1>
+	<table>
+	<thead>
+		<tr>
+			<th>cnum</th>
+			<th>content</th>
+			<th>writer</th>
+			<th>wdate</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody id ="vos">
+	
+	</tbody>
+			<tr>
+				<td>
+					<form action="json_c_updateOK.do">
+						<input type="hidden" name="wnum" value="${com.wnum}">
+						<input type="hidden" name="cnum" value="${com.cnum}">
+						<input type="text" name="content" value="댓글입니다.">
+						<input type="submit" value="수정완료" class="myButton">
+					</form>
+				</td>
+				<td>
+						<a href="json_c_deleteOK.do?cnum=${com.cnum}&wnum=${com.wnum}" class="myButton">댓글삭제</a>
+				</td>
+			</tr>
+	</table>
+	
+	
+	
 </body>
 </html>

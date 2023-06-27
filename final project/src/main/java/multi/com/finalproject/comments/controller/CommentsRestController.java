@@ -1,5 +1,7 @@
 package multi.com.finalproject.comments.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,17 @@ public class CommentsRestController {
 	
 	@Autowired
 	CommentsService service;
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_c_selectAll.do", method = RequestMethod.GET)
+	public List<CommentsVO> json_c_selectAll() {
+		log.info("json_c_selectAll.do...");
+		
+		List<CommentsVO> list = service.selectAll();
+			
+		return list;
+	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)

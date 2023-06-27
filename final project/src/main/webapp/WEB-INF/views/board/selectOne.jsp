@@ -59,6 +59,5 @@
 		</tfoot>
 	</table>
 
-	
 </body>
 </html>
