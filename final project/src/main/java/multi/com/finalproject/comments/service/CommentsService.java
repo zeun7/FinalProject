@@ -29,4 +29,8 @@ public class CommentsService {
 	public List<CommentsVO> selectAll() {
 		return dao.selectAll();
 	}
+
+	public List<CommentsVO> findByBnum(Long bNum) {
+		return dao.findByBnum(bNum);
+	}
 }

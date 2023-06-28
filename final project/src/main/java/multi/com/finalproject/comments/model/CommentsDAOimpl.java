@@ -43,4 +43,9 @@ public class CommentsDAOimpl implements CommentsDAO {
 		return sqlSession.selectList("C_SELECT_ALL");
 	}
 
+	@Override
+	public List<CommentsVO> findByBnum(Long bNum) {
+		return sqlSession.selectList("findByBnum");
+	}
+
 }
