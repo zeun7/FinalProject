@@ -52,7 +52,13 @@
 					<td colspan="2"><input type="submit"
 						class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"></td>
 				</tr>
-
+				<div class="col-xs-8">
+					<div class="checkbox idcheck">
+						<label> <input type="checkbox" name="userCookie">
+							로그인유지
+						</label>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

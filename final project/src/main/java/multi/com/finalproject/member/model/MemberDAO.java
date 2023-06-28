@@ -8,7 +8,7 @@ public interface MemberDAO {
 
 	public int update(MemberVO vo);
 
-	public int delete(MemberVO vo)throws Exception;
+	public int delete(MemberVO vo);
 
 	public List<MemberVO> selectAll();
 
@@ -27,4 +27,6 @@ public interface MemberDAO {
 	public String find_pw(String email) throws Exception;
 
 	public int update_pw(MemberVO member) throws Exception;
+
+	public MemberVO user(MemberVO vo);
 }

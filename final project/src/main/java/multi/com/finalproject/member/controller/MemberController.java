@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,7 @@ public class MemberController {
 	@Autowired
 	HttpSession session;
 
+
 	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
 		log.info("insert()....", vo);
@@ -49,7 +51,6 @@ public class MemberController {
 
 	@RequestMapping(value = "/m_insertOK.do", method = RequestMethod.POST)
 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
-		log.info("insertOK()....", vo);
 		String getOriginalFilename = vo.getM_file().getOriginalFilename();
 		int fileNameLength = vo.getM_file().getOriginalFilename().length();
 		log.info("getOriginalFilename:{}", getOriginalFilename);
@@ -83,7 +84,7 @@ public class MemberController {
 		int result = service.insert(vo);
 
 		if (result == 1) {
-			return "redirect:login.do";
+			return "redirect:home.do";
 		} else {
 			return "redirect:m_insert.do";
 		}
@@ -99,6 +100,7 @@ public class MemberController {
 
 		return "member/selectOne";
 	}
+
 	@RequestMapping(value = "/m_update.do", method = RequestMethod.GET)
 	public String m_update(MemberVO vo, Model model) {
 		log.info("/m_update.do...{}", vo);
@@ -109,6 +111,7 @@ public class MemberController {
 
 		return "member/update";
 	}
+
 	@RequestMapping(value = "/m_updateOK.do", method = RequestMethod.POST)
 	public String m_updateOK(MemberVO vo, Model model) throws IllegalStateException, IOException {
 		log.info("/m_updateOK.do...{}", vo);
@@ -118,7 +121,9 @@ public class MemberController {
 		log.info("getOriginalFilename:{}", getOriginalFilename);
 		log.info("fileNameLength:{}", fileNameLength);
 
-		if (getOriginalFilename.length() != 0) {
+		if (getOriginalFilename.length() == 0) {
+			vo.setProfilepic(vo.getProfilepic());
+		} else {
 
 			vo.setProfilepic(getOriginalFilename);
 			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
@@ -150,62 +155,63 @@ public class MemberController {
 			return "redirect:m_update.do?num=" + vo.getNum();
 		}
 	}
-	
-	@RequestMapping(value="/delete.do", method = RequestMethod.GET)
-	public String delete() throws Exception{
-		return "member/delete";
-	}
-	
-	// 회원 탈퇴 post
-	@RequestMapping(value="/deleteOK.do", method = RequestMethod.POST)
-	public String deleteOK(MemberVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
-		
-		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
-		MemberVO vo2 = (MemberVO) session.getAttribute("member");
-		// 세션에있는 비밀번호
-		String sessionPass = vo2.getPw();
-		// vo로 들어오는 비밀번호
-		String voPass = vo.getPw();
-		
-		if(!(sessionPass.equals(voPass))) {
-			rttr.addFlashAttribute("msg", false);
-			return "member/delete";
-		}
-		service.delete(vo);
-		session.invalidate();
-		return "redirect:/m_update.do";
-	}
-//	@RequestMapping(value = "/m_deleteOK.do", method = RequestMethod.GET)
-//		public String m_deleteOK(MemberVO vo) {
-//			log.info("/m_deleteOK.do");
-//
-//			int result = service.delete(vo);
-//
-//			if (result == 1) {
-//				return "redirect:logout.do";
-//			} else {
-//				return "redirect:m_selectOne.do?num=" + vo.getNum();
-//			}
-//	}
 
-	
+//	 @RequestMapping(value = "/delete.do", method = RequestMethod.GET)
+//	    public String deleteForm(Model model) {
+//	        
+//			MemberVO vo2 = service.user(vo); // 사용자 정보 가져오는 서비스 호출
+//	        model.addAttribute("vo2", vo2); // 모델에 사용자 정보 추가
+//	        return "member/delete"; // delete.jsp 뷰 반환
+//	    }
+//
+//	    @RequestMapping(value = "/deleteOK.do", method = RequestMethod.POST)
+//	    public String delete(MemberVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
+//	        MemberVO member = (MemberVO) session.getAttribute("member");
+//	        String sessionPass = member.getPw();
+//	        String voPass = vo.getPw();
+//
+//	        if (!sessionPass.equals(voPass)) {
+//	            rttr.addFlashAttribute("msg", false);
+//	            return "redirect:/delete.do";
+//	        }
+//
+//	        service.delete(vo);
+//	        session.invalidate();
+//	        return "redirect:/";
+//	    }
+
+	@RequestMapping(value = "/m_deleteOK.do", method = RequestMethod.GET)
+	public String m_deleteOK(MemberVO vo) {
+		log.info("/m_deleteOK.do");
+		log.info("vo:{}", vo);
+		int result = service.delete(vo);
+		log.info("result:{}", result);
+		if (result == 1) {
+			return "redirect:home.do";
+		} else {
+			log.info("false");
+			return "redirect:m_selectOne.do?num=" + vo.getNum();
+		}
+
+	}
+
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public String logout(MemberVO vo) {
-		log.info("/m_logout.do...{}",vo);
-		
-		session.invalidate();	// 세션 만료시킴
-		
+		log.info("/m_logout.do...{}", vo);
+
+		session.invalidate(); // 세션 만료시킴
+
 		return "redirect:home.do";
 	}
-	
+
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String login(String message, Model model) {
 		log.info("/login.do....{}", message);
-		
+
 		if (message != null)
 			message = "아이디/비번 을 확인하세요";
 		model.addAttribute("message", message);
-		
+
 		return "member/login";
 	}
 
@@ -229,103 +235,105 @@ public class MemberController {
 
 	@RequestMapping(value = "/find_id.do", method = RequestMethod.GET)
 	public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model model) {
-	    try {
-	        response.setContentType("text/html;charset=utf-8");
-	        PrintWriter out = response.getWriter();
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
 
-	        Connection conn = null;
-	        PreparedStatement pstmt = null;
-	        ResultSet rs = null;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 
-	        try {
-	            // Oracle JDBC 드라이버 로드
-	            Class.forName("oracle.jdbc.driver.OracleDriver");
+			try {
+				// Oracle JDBC 드라이버 로드
+				Class.forName("oracle.jdbc.driver.OracleDriver");
 
-	            // 데이터베이스 연결 설정
-	            String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스 URL
-	            String username = "admin"; // 데이터베이스 사용자명
-	            String password = "Final123456!"; // 데이터베이스 비밀번호
+				// 데이터베이스 연결 설정
+				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
+																																																																								// URL
+				String username = "admin"; // 데이터베이스 사용자명
+				String password = "Final123456!"; // 데이터베이스 비밀번호
 
-	            conn = DriverManager.getConnection(url, username, password);
+				conn = DriverManager.getConnection(url, username, password);
 
-	            // SQL 문장 준비
-	            String sql = "select id from member where email = ?";
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, email);
+				// SQL 문장 준비
+				String sql = "select id from member where email = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, email);
 
-	            // 쿼리 실행
-	            rs = pstmt.executeQuery();
+				// 쿼리 실행
+				rs = pstmt.executeQuery();
 
-	            // 결과 처리
-	            if (rs.next()) {
-	                String id = rs.getString("id");
-	                model.addAttribute("id", id);
-	            } else {
-	                out.println("<script>");
-	                out.println("alert('가입된 아이디가 없습니다.');");
-	                out.println("history.go(-1);");
-	                out.println("</script>");
-	                out.close();
-	                return null;
-	            }
-	        } finally {
-	            // 리소스 해제
-	            if (rs != null) {
-	                rs.close();
-	            }
+				// 결과 처리
+				if (rs.next()) {
+					String id = rs.getString("id");
+					model.addAttribute("id", id);
+				} else {
+					out.println("<script>");
+					out.println("alert('가입된 아이디가 없습니다.');");
+					out.println("history.go(-1);");
+					out.println("</script>");
+					out.close();
+					return null;
+				}
+			} finally {
+				// 리소스 해제
+				if (rs != null) {
+					rs.close();
+				}
 
-	            if (pstmt != null) {
-	                pstmt.close();
-	            }
+				if (pstmt != null) {
+					pstmt.close();
+				}
 
-	            if (conn != null) {
-	                conn.close();
-	            }
-	        }
+				if (conn != null) {
+					conn.close();
+				}
+			}
 
-	        return "member/find_id";
-	    } catch (Exception e) {
-	        // 예외 처리
-	        e.printStackTrace();
-	        return null;
-	    }
+			return "member/find_id";
+		} catch (Exception e) {
+			// 예외 처리
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	@RequestMapping(value = "/find_id_from.do")
-	public String find_id_from() throws Exception{
-		
+	public String find_id_from() throws Exception {
+
 		return "member/find_id_from";
 	}
-	
+
 	@RequestMapping(value = "/find_pw.do", method = RequestMethod.GET)
 	public String find_pw(HttpServletResponse response, @RequestParam("email") String email, Model model) {
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
-			
+
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			
+
 			try {
 				// Oracle JDBC 드라이버 로드
 				Class.forName("oracle.jdbc.driver.OracleDriver");
-				
+
 				// 데이터베이스 연결 설정
-				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스 URL
+				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
+																																																																								// URL
 				String username = "admin"; // 데이터베이스 사용자명
 				String password = "Final123456!"; // 데이터베이스 비밀번호
-				
+
 				conn = DriverManager.getConnection(url, username, password);
-				
+
 				// SQL 문장 준비
 				String sql = "select pw from member where email = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, email);
-				
+
 				// 쿼리 실행
 				rs = pstmt.executeQuery();
-				
+
 				// 결과 처리
 				if (rs.next()) {
 					String pw = rs.getString("pw");
@@ -343,16 +351,16 @@ public class MemberController {
 				if (rs != null) {
 					rs.close();
 				}
-				
+
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				
+
 				if (conn != null) {
 					conn.close();
 				}
 			}
-			
+
 			return "member/find_pw";
 		} catch (Exception e) {
 			// 예외 처리
@@ -360,12 +368,11 @@ public class MemberController {
 			return null;
 		}
 	}
-	
+
 	@RequestMapping(value = "/find_pw_from.do")
-	public String find_pw_from() throws Exception{
-		
+	public String find_pw_from() throws Exception {
+
 		return "member/find_pw_from";
 	}
-	
-	
+
 }

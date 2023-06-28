@@ -28,7 +28,7 @@ public class MemberService {
 		return dao.update(vo);
 	}
 
-	public int delete(MemberVO vo) throws Exception {	
+	public int delete(MemberVO vo)  {	
 		return dao.delete(vo);
 	}
 
@@ -63,6 +63,10 @@ public class MemberService {
 
 	public String find_pw(HttpServletResponse response, String email) throws Exception {
 		return dao.find_pw(email);
+	}
+
+	public MemberVO user(MemberVO vo) {
+		return dao.user(vo);
 	}
 
 	

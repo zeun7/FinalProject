@@ -34,7 +34,7 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public int delete(MemberVO vo) {
-		log.info("/delete()....",vo);
+		log.info("delete()....{}",vo);
 		return sqlSession.delete("M_DELETE",vo);
 	}
 
@@ -48,7 +48,6 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public MemberVO selectOne(MemberVO vo) {
 		log.info("selectOne()....",vo);
-		
 		return sqlSession.selectOne("M_SELECT_ONE",vo);
 	}
 
@@ -96,10 +95,15 @@ public class MemberDAOimpl implements MemberDAO {
 		return sqlSession.selectOne("FIND_PW", email);
 	}
 
-	@Override
+@Override
 	public int update_pw(MemberVO member) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public MemberVO user(MemberVO vo) {
+		return sqlSession.selectOne("USER", vo);
 	}
 
 	
