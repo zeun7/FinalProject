@@ -90,6 +90,9 @@ function update_grade(fnum, grade){
 			success: function(result){
 				console.log(result);
 				friends_list();
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
 		});
 	}

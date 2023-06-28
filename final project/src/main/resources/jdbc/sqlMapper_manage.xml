@@ -68,7 +68,7 @@
 	</select>
 	
 	<select id="MNG_BCOUNT" resultType="Integer">
-		select count(*) from report where bnum is not null
+		select count(*) from report where bnum is not null and cnum is null
 	</select>
 	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
