@@ -46,7 +46,7 @@ function friends_list(){		// 친구목록
 	 						채팅</button>
 	 					</td>
 	 					<td>
-	 						<button onclick="new_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
+	 						<button onclick="add_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
 	 						차단</button>
 	 					</td>
 	 					<td>
@@ -79,17 +79,20 @@ function friends_list(){		// 친구목록
 
 function update_grade(fnum, grade){
 	console.log(fnum, grade);
-	$.ajax({
-		url: "json_mng_grade.do",
-		data: {fnum: fnum,
-			grade: grade},
-		method: "GET",
-		dataType: "json",
-		success: function(result){
-			console.log(result);
-			friends_list();
-		}
-	});
+	
+	if(window.confirm("적용하시겠습니까?")){
+		$.ajax({
+			url: "json_mng_grade.do",
+			data: {fnum: fnum,
+				grade: grade},
+			method: "GET",
+			dataType: "json",
+			success: function(result){
+				console.log(result);
+				friends_list();
+			}
+		});
+	}
 }
 
 function friends_ban(){	// 차단 목록 출력
@@ -157,50 +160,55 @@ function friends_add(){ // 친구추가 화면 출력
 					
 
 
-function addfriend(nickname2) {
+function add_friend(nickname2) {	// 친구추가 버튼
 	console.log('add friend()....');
 	let nickname = '<%=nickname%>';
-
-	$.ajax({
-		url : "json_m_friendsAdd.do",
-		data:{nickname1:nickname,
-			nickname2:nickname2},
-		method:'GET',
-		dataType:'json',
-		success : function(response) {
-			console.log('ajax...success:', response.result);
-			let msg = response.result === 1?'등록완료':'친구추가';
-			if(response.result === 1){					// 친구등록 성공 시
-				$("#txt_"+nickname2).text(msg);					// 등록완료로 변경
-				$("#add_"+nickname2).prop('disabled', true);	// 버튼 비활성화
+	
+	if(window.confirm("친구추가 하시겠습니까?")){
+		$.ajax({
+			url : "json_m_friendsAdd.do",
+			data:{nickname1:nickname,
+				nickname2:nickname2},
+			method:'GET',
+			dataType:'json',
+			success : function(response) {
+				console.log('ajax...success:', response.result);
+				let msg = response.result === 1?'등록완료':'친구추가';
+				if(response.result === 1){					// 친구등록 성공 시
+					$("#txt_"+nickname2).text(msg);					// 등록완료로 변경
+					$("#add_"+nickname2).prop('disabled', true);	// 친구추가 버튼 비활성화
+					$("#ban_"+nickname2).prop('disabled', true);	// 차단 버튼 비활성화
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
+		});
+	}
 }
 
-function del_friend(nickname2) {
+function del_friend(nickname2) {	// 친구삭제 버튼
 	console.log('del friend()....');
 	let nickname = '<%=nickname%>';
-
-	$.ajax({
-		url : "json_m_friendsDel.do",
-		data:{nickname1:nickname,
-			nickname2:nickname2},
-		method:'GET',
-		dataType:'json',
-		success : function(response) {
-			console.log('ajax...success:', response.result);
-			if(response.result === 1){		// 친구삭제 성공 시
-				friends_list();
+	
+	if(window.confirm("친구목록에서 삭제하시겠습니까?")){
+		$.ajax({
+			url : "json_m_friendsDel.do",
+			data:{nickname1:nickname,
+				nickname2:nickname2},
+			method:'GET',
+			dataType:'json',
+			success : function(response) {
+				console.log('ajax...success:', response.result);
+				if(response.result === 1){		// 친구삭제 성공 시
+					friends_list();
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
+		});
+	}
 }
 
 function searchUser(){	// 유저 검색 결과 출력
@@ -235,7 +243,7 @@ function searchUser(){	// 유저 검색 결과 출력
 				<tr>
  					<td id="nickname">\${vo.nickname}</td>
  					<td>
- 						<button onclick="addfriend('\${vo.nickname}')" id="add_\${vo.nickname}">
+ 						<button onclick="add_friend('\${vo.nickname}')" id="add_\${vo.nickname}">
  							<span id="txt_\${vo.nickname}">친구추가</span></button>
  					</td>
  					<td>
@@ -259,67 +267,74 @@ function searchUser(){	// 유저 검색 결과 출력
 function add_ban(nickname2) {	// 친구목록에서 차단
 	console.log('ban()....');
 	let nickname = '<%=nickname%>';
-
-	$.ajax({
-		url : "json_m_addban.do",
-		data:{nickname1:nickname,
-			nickname2:nickname2},
-		method:'GET',
-		dataType:'json',
-		success : function(response) {
-			console.log('ajax...success:', response.result);
-			if(response.result === 1){		// 차단 성공 시
-				friends_list();
+	
+	if(window.confirm("사용자를 차단하시겠습니까?")){
+		$.ajax({
+			url : "json_m_addban.do",
+			data:{nickname1:nickname,
+				nickname2:nickname2},
+			method:'GET',
+			dataType:'json',
+			success : function(response) {
+				console.log('ajax...success:', response.result);
+				if(response.result === 1){		// 차단 성공 시
+					friends_list();
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
+		});
+	}
 }
 
 function new_ban(nickname2) {	// 사용자 검색에서 차단
 	console.log('ban()....');
 	let nickname = '<%=nickname%>';
-
-	$.ajax({
-		url : "json_m_newban.do",
-		data:{nickname1:nickname,
-			nickname2:nickname2},
-		method:'GET',
-		dataType:'json',
-		success : function(response) {
-			console.log('ajax...success:', response.result);
-			if(response.result === 1){		// 차단 성공 시
-				$("#ban_"+nickname2).prop('disabled', true);
+	
+	if(window.confirm("사용자를 차단하시겠습니까?")){
+		$.ajax({
+			url : "json_m_newban.do",
+			data:{nickname1:nickname,
+				nickname2:nickname2},
+			method:'GET',
+			dataType:'json',
+			success : function(response) {
+				console.log('ajax...success:', response.result);
+				if(response.result === 1){		// 차단 성공 시
+					$("#ban_"+nickname2).prop('disabled', true);	// 차단 버튼 비활성화
+					$("#add_"+nickname2).prop('disabled', true);	// 친구추가 버튼 비활성화
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
+		});
+	}
 }
 
 function del_ban(nickname2) {	// 차단 해제
 	console.log('ban()....');
 	let nickname = '<%=nickname%>';
-
-	$.ajax({
-		url : "json_m_delban.do",
-		data:{nickname1:nickname,
-			nickname2:nickname2},
-		method:'GET',
-		dataType:'json',
-		success : function(response) {
-			console.log('ajax...success:', response.result);
-			if(response.result === 1){		// 차단 해제 성공 시
-				friends_ban();
+	
+	if(window.confirm("차단을 해제하시겠습니까?")){
+		$.ajax({
+			url : "json_m_delban.do",
+			data:{nickname1:nickname,
+				nickname2:nickname2},
+			method:'GET',
+			dataType:'json',
+			success : function(response) {
+				console.log('ajax...success:', response.result);
+				if(response.result === 1){		// 차단 해제 성공 시
+					friends_ban();
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
 			}
-		},
-		error:function(xhr,status,error){
-			console.log('xhr.status:', xhr.status);
-		}
-	});
+		});
+	}
 }
 </script>
 </head>
