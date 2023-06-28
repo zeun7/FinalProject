@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalproject.board.model.BoardVO;
-import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.manage.model.ReportVO;
 import multi.com.finalproject.manage.service.ManageService;
@@ -32,7 +30,9 @@ public class ManageRestController {
 		log.info("/json_m_friends.do...{}", vo);
 		
 		List<FriendsVO> vos = service.friends(vo);
-		log.info("{}", vos);
+		for (FriendsVO x : vos) {
+			log.info(x.toString());
+		}
 		
 		return vos;
 	}
@@ -91,7 +91,9 @@ public class ManageRestController {
 		log.info("/json_m_bans.do...{}", vo);
 		
 		List<FriendsVO> vos = service.selectBan(vo);
-		log.info("{}", vos);
+		for (FriendsVO x : vos) {
+			log.info(x.toString());
+		}
 		
 		return vos;
 	}
@@ -156,6 +158,9 @@ public class ManageRestController {
 		log.info("/json_mng_member.do...{}", page);
 		
 		List<MemberVO> vos = service.member(page);
+		for (MemberVO x : vos) {
+			log.info(x.toString());
+		}
 		
 		return vos;
 	}
@@ -176,6 +181,9 @@ public class ManageRestController {
 		log.info("/json_mng_board.do...");
 		
 		List<ReportVO> vos = service.board();
+		for (ReportVO x : vos) {
+			log.info(x.toString());
+		}
 		
 		return vos;
 	}
@@ -196,6 +204,9 @@ public class ManageRestController {
 		log.info("/json_mng_comments.do...");
 		
 		List<ReportVO> vos = service.comments();
+		for (ReportVO x : vos) {
+			log.info(x.toString());
+		}
 		
 		return vos;
 	}
