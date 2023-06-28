@@ -27,4 +27,10 @@
 		delete from comments where cnum = #{cnum}
 	</delete>
 	
+	<select id="findByBnum" parameterType="Long"  resultType="multi.com.finalproject.comments.model.CommentsVO">
+		SELECT * FROM COMMENTS
+		WHERE BNUM = #{bNum}
+
+	</select>
+	
 </mapper>

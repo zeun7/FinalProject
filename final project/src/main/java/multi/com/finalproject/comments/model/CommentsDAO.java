@@ -11,5 +11,7 @@ public interface CommentsDAO {
 		public int update(CommentsVO vo);
 		
 		public int delete(CommentsVO vo);
+
+		public List<CommentsVO> findByBnum(Long bNum);
 		
 }
