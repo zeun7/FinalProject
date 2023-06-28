@@ -36,4 +36,6 @@ public interface ManageDAO {
 
 	public int del_report(ReportVO vo);
 
+	public int mclass(MemberVO vo);
+
 }

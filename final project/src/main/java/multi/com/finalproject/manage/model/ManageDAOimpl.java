@@ -119,6 +119,13 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectOne("MNG_MCOUNT");
 	}
+	
+	@Override
+	public int mclass(MemberVO vo) {
+		log.info("mclass update()...");
+		
+		return sqlSession.update("MNG_MCLASS", vo);
+	}
 
 	@Override
 	public List<ReportVO> board() {
@@ -154,5 +161,7 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.delete("MNG_DEL_REPORT", vo);
 	}
+
+	
 	
 }

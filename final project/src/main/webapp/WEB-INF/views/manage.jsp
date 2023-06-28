@@ -26,6 +26,7 @@ function manage_member(page){
 							<th>이름</th>
 							<th>전화번호</th>
 							<th>사용자 등급</th>
+							<th>적용</th>
 							</tr>
 						</thead>
 						<tbody>`; 			
@@ -40,7 +41,14 @@ function manage_member(page){
  					<td><img src="resources/uploadimg/thumb_\${vo.profilepic}"></td>
  					<td>\${vo.name}</td>
  					<td>\${vo.tel}</td>
- 					<td>\${vo.mclass}</td>
+ 					<td>
+						<select name="mclass" id="mclass" value="\${vo.mclass}">
+							<option value="\${vo.mclass}" class="option_\${vo.mclass}" selected hidden></option>
+							<option value="1">관리자</option>
+							<option value="2">일반 사용자</option>
+						</select>
+ 					</td>
+ 					<td><button onclick="update_mclass('\${vo.id}', \$('#mclass :selected').val(), \${page})">적용</button></td>
  				</tr>
  				`;
  			});
@@ -54,10 +62,26 @@ function manage_member(page){
  						</tfoot>
  						`;
 			$("#vos").html(tag_vos);
+			$(".option_1").html("관리자");
+			$(".option_2").html("일반 사용자");
 			member_pages(page);	// 페이징 버튼 출력, 현재 페이지 넘겨줌
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function update_mclass(id, mclass, page){
+	console.log(id, mclass, page);
+	$.ajax({
+		url: "json_mng_mclass.do",
+		data: {id: id,
+			mclass: mclass},
+		method: "GET",
+		dataType: "json",
+		success: function(result){
+			manage_member(page);
 		}
 	});
 }
@@ -101,7 +125,7 @@ function manage_board(page){
 							<th>작성자</th>
 							<th>신고사유</th>
 							<th>게시글 삭제</th>
-							<ht>완료</th>
+							<th>완료</th>
 							</tr>
 						</thead>
 						<tbody>`; 			
@@ -113,7 +137,7 @@ function manage_board(page){
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='b_deleteOK.do?bnum=\${vo.bnum}'">삭제</button></td>
- 					<td><button onclick="location.href='report_deleteOK.do?rnum=\${vo.rnum}'">완료</button></td>
+ 					<td><button onclick="del_report(\${vo.rnum}, 'board')">완료</button></td>
  				</tr>
  				`;
  			});
@@ -186,7 +210,7 @@ function manage_comments(page){
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='c_deleteOK.do?cnum=\${vo.cnum}'">삭제</button></td>
- 					<td><button onclick="location.href='report_deleteOK.do?rnum=\${vo.rnum}'">완료</button></td>
+ 					<td><button onclick="del_report(\${vo.rnum}, 'comments')">완료</button></td>
  				</tr>
  				`;
  			});
@@ -197,6 +221,22 @@ function manage_comments(page){
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function del_report(rnum, category){
+	$.ajax({
+		url: 'json_report_deleteOK.do',
+		data: {rnum: rnum},
+		method: 'GET',
+		dataType: 'json',
+		success: function(result){
+			console.log(result);
+			if(category === 'board')
+				manage_board(1);
+			else
+				manage_comments(1);
 		}
 	});
 }

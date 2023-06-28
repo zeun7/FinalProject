@@ -76,6 +76,10 @@ public class ManageService {
 		return dao.del_report(vo);
 	}
 
+	public int mclass(MemberVO vo) {
+		return dao.mclass(vo);
+	}
+
 	
 
 }

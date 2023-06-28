@@ -176,6 +176,16 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_mng_mclass.do",  method = RequestMethod.GET)
+	public Integer json_mng_mclass(MemberVO vo) {
+		log.info("/json_mng_mclass.do...");
+		
+		int result = service.mclass(vo);
+		
+		return result;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_mng_board.do",  method = RequestMethod.GET)
 	public List<ReportVO> json_mng_board() {
 		log.info("/json_mng_board.do...");

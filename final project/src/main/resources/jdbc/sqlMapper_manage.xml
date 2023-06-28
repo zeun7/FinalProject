@@ -46,7 +46,7 @@
 	<select id="MNG_M_SELECT_MEMBER" resultType="multi.com.finalproject.member.model.MemberVO">
 		<![CDATA[
 			select * from (select * from 
-			(select rownum seq, member.* from member order by num desc) 
+			(select rownum seq, member.* from member) 
 			where seq >= (#{page} - 1) * 10 + 1) where rownum <= 10
 		]]>
 	</select>
@@ -54,6 +54,10 @@
 	<select id="MNG_MCOUNT" resultType="Integer">
 		select count(*) from member
 	</select>
+	
+	<update id="MNG_MCLASS">
+		update member set mclass = #{mclass} where id = #{id}
+	</update>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
@@ -64,7 +68,7 @@
 	</select>
 	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.rum, r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
+		select r.rnum, r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
 	</select>
 	
 	<select id="MNG_CCOUNT" resultType="Integer">
