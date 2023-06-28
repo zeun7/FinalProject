@@ -2,6 +2,8 @@ package multi.com.finalproject.board.model;
 
 import java.sql.Timestamp;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -19,4 +21,5 @@ public class BoardVO {
 	private int likes;
 	private int report;
 	private String reason;
+	private MultipartFile file;
 }

@@ -1,5 +1,12 @@
 package multi.com.finalproject.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +23,9 @@ public class BoardController {
 	
 	@Autowired
 	BoardService service;
+	
+	@Autowired
+	ServletContext sContext;
 	
 	@RequestMapping(value = "/b_selectAll.do", method = RequestMethod.GET)
 	public String b_selectAll() {
@@ -54,9 +64,35 @@ public class BoardController {
 		return "board/update";
 	}
 	
+	@RequestMapping(value = "/b_report.do", method = RequestMethod.GET)
+	public String b_report() {
+		log.info("/b_report.do...");
+		
+		return "board/report";
+	}
+
 	@RequestMapping(value = "/b_insertOK.do", method = RequestMethod.POST)
-	public String b_insertOK(BoardVO vo) {
+	public String b_insertOK(BoardVO vo) throws IllegalStateException, IOException {
 		log.info("/b_insertOK.do...{}", vo);
+		
+		String getOriginalFilename = vo.getFile().getOriginalFilename();
+		int fileNameLength = vo.getFile().getOriginalFilename().length();
+		log.info("getOriginalFilename:{}", getOriginalFilename);
+		log.info("fileNameLength:{}", fileNameLength);
+		
+		if (getOriginalFilename.length() != 0) {
+			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
+			vo.setFilepath(filepath);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/uploadimg_board");
+			log.info("realPath : {}", realPath);
+			
+			File f = new File(realPath + "\\" + getOriginalFilename);
+			vo.getFile().transferTo(f);
+		}else {
+			vo.setFilepath("");
+		}
+		log.info("{}", vo);
 		
 		int result = service.insert(vo);
 		log.info("result:{}", result);
@@ -66,11 +102,29 @@ public class BoardController {
 		}else {
 			return "redirect:b_insert.do?bname="+vo.getBname();
 		}
+		
 	}
 	
 	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.POST)
-	public String b_updateOK(BoardVO vo) {
+	public String b_updateOK(BoardVO vo) throws IllegalStateException, IOException {
 		log.info("/b_updateOK.do...{}", vo);
+		
+		String getOriginalFilename = vo.getFile().getOriginalFilename();
+		int fileNameLength = vo.getFile().getOriginalFilename().length();
+		log.info("getOriginalFilename:{}", getOriginalFilename);
+		log.info("fileNameLength:{}", fileNameLength);
+		
+		if (getOriginalFilename.length() != 0) {
+			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
+			vo.setFilepath(filepath);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/uploadimg_board");
+			log.info("realPath : {}", realPath);
+			
+			File f = new File(realPath + "\\" + getOriginalFilename);
+			vo.getFile().transferTo(f);
+		}
+		log.info("{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result:{}", result);
@@ -78,7 +132,7 @@ public class BoardController {
 		if(result == 1) {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		}else {
-			return "redirect:b_update.do";
+			return "redirect:b_update.do?bnum="+vo.getBnum();
 		}
 	}
 	
@@ -95,4 +149,24 @@ public class BoardController {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		}
 	}
+	
+	@RequestMapping(value = "/b_reportOK.do", method = RequestMethod.POST)
+	public String b_reportOK(BoardVO vo, String reason) {
+		log.info("/b_reportOK.do...{}", vo);
+		log.info("reason:{}", reason);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("reason", reason);
+		
+		int result = service.report(map);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:b_report.do?bnum=0";
+		}else {
+			return "redirect:b_report.do?bnum="+vo.getBnum();
+		}
+	}
+		
 }

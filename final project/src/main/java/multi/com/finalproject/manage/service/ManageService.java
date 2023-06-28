@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import multi.com.finalproject.board.model.BoardVO;
-import multi.com.finalproject.comments.model.CommentsVO;
+import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.manage.model.ManageDAO;
+import multi.com.finalproject.manage.model.ReportVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Service
@@ -16,16 +16,74 @@ public class ManageService {
 	@Autowired
 	ManageDAO dao;
 
-	public List<MemberVO> member() {
-		return dao.member();
+	public List<FriendsVO> friends(FriendsVO vo) {
+		return dao.friends(vo);
 	}
 
-	public List<BoardVO> board() {
+	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
+		return dao.searchUser(vo, searchWord);
+	}
+
+	public int addfriend(MemberVO vo, MemberVO vo2) {
+		return dao.addfriend(vo, vo2);
+	}
+	
+	public int delfriend(MemberVO vo, MemberVO vo2) {
+		return dao.delfriend(vo, vo2);
+	}
+	
+	public List<MemberVO> member(Integer page) {
+		return dao.member(page);
+	}
+	
+	public int mcount() {
+		return dao.mcount();
+	}
+
+	public List<ReportVO> board() {
 		return dao.board();
 	}
+	
+	public int bcount() {
+		return dao.bcount();
+	}
 
-	public List<CommentsVO> comments() {
+	public List<ReportVO> comments() {
 		return dao.comments();
 	}
+	
+	public int ccount() {
+		return dao.ccount();
+	}
+
+	public List<FriendsVO> selectBan(FriendsVO vo) {
+		return dao.selectBan(vo);
+	}
+	
+	public int addBan(MemberVO vo, MemberVO vo2) {
+		return dao.addBan(vo, vo2);
+	}
+	
+	public int newBan(MemberVO vo, MemberVO vo2) {
+		return dao.newBan(vo, vo2);
+	}
+	
+	public int delBan(MemberVO vo, MemberVO vo2) {
+		return dao.delBan(vo, vo2);
+	}
+
+	public int del_report(ReportVO vo) {
+		return dao.del_report(vo);
+	}
+
+	public int mclass(MemberVO vo) {
+		return dao.mclass(vo);
+	}
+
+	public int grade(FriendsVO vo) {
+		return dao.grade(vo);
+	}
+
+	
 
 }

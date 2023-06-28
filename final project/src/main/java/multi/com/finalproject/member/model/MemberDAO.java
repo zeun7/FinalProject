@@ -23,6 +23,10 @@ public interface MemberDAO {
 	public MemberVO NickCheck(MemberVO vo);
 	
 	public String find_id(String email) throws Exception;
+	
+	public String find_pw(String email) throws Exception;
 
+	public int update_pw(MemberVO member) throws Exception;
 
+	public MemberVO user(MemberVO vo);
 }

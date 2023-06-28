@@ -5,11 +5,89 @@
 
 <mapper namespace="multi.com.finalproject">
 	
-	<select id="B_SELECT_REPORT" resultType="multi.com.finalproject.board.model.BoardVO">
-		select * from board where report = 1
+	<select id="MNG_FRIENDS"
+		resultType="multi.com.finalproject.manage.model.FriendsVO">
+		select fnum, grade, nickname2 from friends where nickname = #{nickname} and grade != 3
 	</select>
 	
-	<select id="C_SELECT_REPORT" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from comments where report = 1
+	<update id="MNG_GRADE">
+		update friends set grade = #{grade} where fnum = #{fnum}
+	</update>
+	
+	<select id="MNG_SEARCH_LIST_NICKNAME"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select nickname from member where nickname like #{searchWord} 
+		minus select nickname2 from friends where nickname = #{nickname} 
+		minus select nickname from member where nickname = #{nickname}
 	</select>
+	
+	<insert id="MNG_ADD_FRIEND">
+		insert into friends(fnum, nickname, nickname2)
+		values(seq_friends.nextval, #{nickname1}, #{nickname2})
+	</insert>
+	
+	<delete id="MNG_DEL_FRIEND">
+		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2}
+	</delete>
+	
+	<select id="MNG_M_SELECT_BAN" resultType="multi.com.finalproject.manage.model.FriendsVO">
+		select * from friends where nickname = #{nickname} and grade = 3
+	</select>
+	
+	<update id="MNG_M_ADD_BAN">
+		update friends set grade = 3 where nickname = #{nickname1} and nickname2 = #{nickname2}
+	</update>
+	
+	<insert id="MNG_M_NEW_BAN">
+		insert into friends(fnum, nickname, nickname2, grade) 
+		values(seq_friends.nextval, #{nickname1}, #{nickname2}, 3)
+	</insert>
+	
+	<delete id="MNG_M_DEL_BAN">
+		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2} and grade = 3
+	</delete>
+	
+	<select id="MNG_M_SELECT_MEMBER" resultType="multi.com.finalproject.member.model.MemberVO">
+		<![CDATA[
+			select * from (select * from 
+			(select rownum seq, member.* from member) 
+			where seq >= (#{page} - 1) * 10 + 1) where rownum <= 10
+		]]>
+	</select>
+	
+	<select id="MNG_MCOUNT" resultType="Integer">
+		select count(*) from member
+	</select>
+	
+	<update id="MNG_MCLASS">
+		update member set mclass = #{mclass} where id = #{id}
+	</update>
+	
+	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
+	</select>
+	
+	<select id="MNG_BCOUNT" resultType="Integer">
+		select count(*) from report where bnum is not null and cnum is null
+	</select>
+	
+	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select r.rnum, r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
+	</select>
+	
+	<select id="MNG_CCOUNT" resultType="Integer">
+		select count(*) from report where cnum is not null
+	</select>
+	
+	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum=r.mbnum
+	</select>
+	
+	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
+	</select>
+	
+	<delete id="MNG_DEL_REPORT">
+		delete from report where rnum = #{rnum}
+	</delete>
 </mapper>

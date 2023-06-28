@@ -2,6 +2,8 @@ package multi.com.finalproject.miniboard.model;
 
 import java.sql.Timestamp;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -14,5 +16,7 @@ public class MiniBoardVO {
 	private String content;
 	private Timestamp wdate;
 	private String filepath;
+	private int report;
+	private MultipartFile bfile;
 	
 }

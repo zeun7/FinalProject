@@ -20,9 +20,9 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 	
 	@Override
-	public List<MiniBoardVO> diary_selectAll() {
-		log.info("diary_selectAll()....");
-		return sqlSession.selectList("DIARY_SELECT_ALL");
+	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo) {
+		log.info("mb_selectAll(vo)....{}", vo);
+		return sqlSession.selectList("MB_SELECT_ALL", vo);
 	}
 
 	@Override
@@ -32,15 +32,18 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 
 	@Override
-	public int diary_insert(MiniBoardVO vo) {
-		log.info("diary_insert(vo)...{}", vo);
-		return sqlSession.insert("DIARY_INSERT",vo);
+	public int insert(MiniBoardVO vo) {
+		log.info("insert(vo)...{}", vo);
+		return sqlSession.insert("MB_INSERT",vo);
 	}
 	
 	@Override
 	public int diary_update(MiniBoardVO vo) {
 		log.info("diary_update(vo)...{}", vo);
-		return sqlSession.insert("DIARY_UPDATE",vo);
+		log.info("bfile: {}", vo.getBfile().toString());
+		log.info("filepath: {}", vo.getFilepath().toString());
+		int flag = sqlSession.insert("DIARY_UPDATE",vo);
+		return flag;
 	}
 
 	@Override
@@ -74,21 +77,9 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 	
 	@Override
-	public List<MiniBoardVO> gallery_selectAll() {
-		log.info("gallery_selectAll()....");
-		return sqlSession.selectList("GALLERY_SELECT_ALL");
-	}
-	
-	@Override
 	public MiniBoardVO gallery_selectOne(MiniBoardVO vo) {
 		log.info("gallery_selectOne(vo)...{}", vo);
 		return sqlSession.selectOne("GALLERY_SELECT_ONE", vo);
-	}
-	
-	@Override
-	public int gallery_insert(MiniBoardVO vo) {
-		log.info("gallery_insert(vo)...{}", vo);
-		return sqlSession.insert("GALLERY_INSERT",vo);
 	}
 
 	@Override
