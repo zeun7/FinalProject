@@ -2,8 +2,6 @@ package multi.com.finalproject.manage.model;
 
 import java.util.List;
 
-import multi.com.finalproject.board.model.BoardVO;
-import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 public interface ManageDAO {
@@ -16,9 +14,9 @@ public interface ManageDAO {
 	
 	public List<MemberVO> member(Integer page);
 
-	public List<BoardVO> board();
+	public List<ReportVO> board();
 
-	public List<CommentsVO> comments();
+	public List<ReportVO> comments();
 
 	public int delfriend(MemberVO vo, MemberVO vo2);
 

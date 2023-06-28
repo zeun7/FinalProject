@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalproject.board.model.BoardVO;
-import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Slf4j
@@ -123,7 +121,7 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 
 	@Override
-	public List<BoardVO> board() {
+	public List<ReportVO> board() {
 		log.info("board select reported()...");
 		
 		return sqlSession.selectList("MNG_B_SELECT_REPORT");
@@ -137,7 +135,7 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 
 	@Override
-	public List<CommentsVO> comments() {
+	public List<ReportVO> comments() {
 		log.info("comments select reported()...");
 		
 		return sqlSession.selectList("MNG_C_SELECT_REPORT");

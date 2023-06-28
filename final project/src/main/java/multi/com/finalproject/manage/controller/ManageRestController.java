@@ -172,10 +172,10 @@ public class ManageRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mng_board.do",  method = RequestMethod.GET)
-	public List<BoardVO> json_mng_board() {
+	public List<ReportVO> json_mng_board() {
 		log.info("/json_mng_board.do...");
 		
-		List<BoardVO> vos = service.board();
+		List<ReportVO> vos = service.board();
 		
 		return vos;
 	}
@@ -192,10 +192,10 @@ public class ManageRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mng_comments.do",  method = RequestMethod.GET)
-	public List<CommentsVO> json_mng_comments() {
+	public List<ReportVO> json_mng_comments() {
 		log.info("/json_mng_comments.do...");
 		
-		List<CommentsVO> vos = service.comments();
+		List<ReportVO> vos = service.comments();
 		
 		return vos;
 	}

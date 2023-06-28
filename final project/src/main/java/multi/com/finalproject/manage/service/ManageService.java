@@ -5,11 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import multi.com.finalproject.board.model.BoardVO;
-import multi.com.finalproject.comments.model.CommentsVO;
+import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.manage.model.ManageDAO;
 import multi.com.finalproject.manage.model.ReportVO;
-import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Service
@@ -42,7 +40,7 @@ public class ManageService {
 		return dao.mcount();
 	}
 
-	public List<BoardVO> board() {
+	public List<ReportVO> board() {
 		return dao.board();
 	}
 	
@@ -50,7 +48,7 @@ public class ManageService {
 		return dao.bcount();
 	}
 
-	public List<CommentsVO> comments() {
+	public List<ReportVO> comments() {
 		return dao.comments();
 	}
 	
