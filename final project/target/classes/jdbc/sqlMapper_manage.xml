@@ -6,7 +6,7 @@
 <mapper namespace="multi.com.finalproject">
 	
 	<select id="MNG_FRIENDS"
-		resultType="multi.com.finalproject.manage.model.ManageFriendsVO">
+		resultType="multi.com.finalproject.manage.model.FriendsVO">
 		select grade, nickname2 from friends where nickname = #{nickname} and grade != 3
 	</select>
 	
@@ -26,7 +26,7 @@
 		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</delete>
 	
-	<select id="MNG_M_SELECT_BAN" resultType="multi.com.finalproject.manage.model.ManageFriendsVO">
+	<select id="MNG_M_SELECT_BAN" resultType="multi.com.finalproject.manage.model.FriendsVO">
 		select * from friends where nickname = #{nickname} and grade = 3
 	</select>
 	
@@ -55,7 +55,7 @@
 		select count(*) from member
 	</select>
 	
-	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
+	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>
 	
@@ -63,7 +63,7 @@
 		select count(*) from report where bnum is not null
 	</select>
 	
-	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
+	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
 	</select>
 	
@@ -71,11 +71,11 @@
 		select count(*) from report where cnum is not null
 	</select>
 	
-	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
+	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum=r.mbnum
 	</select>
 	
-	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
+	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
 	</select>
 	
