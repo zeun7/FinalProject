@@ -146,7 +146,7 @@ function manage_board(page){	// 신고 게시글 목록
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_board=(\${vo.bnum}, \${page}">삭제</button></td>
- 					<td><button onclick="del_report(\${vo.rnum}, 'board', \${page})">완료</button></td>
+ 					<td><button onclick="del_report(\${vo.bnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -239,7 +239,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_comments(\${vo.cnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_report(\${vo.rnum}, 'comments', \${page})">완료</button></td>
+ 					<td><button onclick="del_report(\${vo.cnum}, \${vo.ccnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -304,19 +304,35 @@ function del_comments(cnum, page){	// 신고 댓글 삭제 버튼
 	}
 }
 
-function del_report(rnum, category, page){	// 신고 대응 완료 버튼
+function del_b_report(bnum, page){	// 신고 대응 완료 버튼
 	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
 		$.ajax({
-			url: 'json_report_deleteOK.do',
-			data: {rnum: rnum},
+			url: 'json_b_report_deleteOK.do',
+			data: {bnum: bnum},
 			method: 'GET',
 			dataType: 'json',
 			success: function(result){
 				console.log(result);
-				if(category === 'board')
-					manage_board(page);
-				else
-					manage_comments(page);
+				manage_board(page);
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+			}
+		});
+	}
+}
+
+function del_c_report(cnum, ccnum, page){	// 신고 대응 완료 버튼
+	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
+		$.ajax({
+			url: 'json_c_report_deleteOK.do',
+			data: {cnum: cnum,
+				ccnum: ccnum},
+			method: 'GET',
+			dataType: 'json',
+			success: function(result){
+				console.log(result);
+				manage_comments(page);
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
