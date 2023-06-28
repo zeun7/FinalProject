@@ -8,7 +8,7 @@ import multi.com.finalproject.member.model.MemberVO;
 
 public interface ManageDAO {
 	
-	public List<ManageFriendsVO> friends(ManageFriendsVO vo);
+	public List<FriendsVO> friends(FriendsVO vo);
 
 	public List<MemberVO> searchUser(MemberVO vo, String searchWord);
 	
@@ -24,10 +24,18 @@ public interface ManageDAO {
 
 	public int addBan(MemberVO vo, MemberVO vo2);
 
-	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo);
+	public List<FriendsVO> selectBan(FriendsVO vo);
 
 	public int delBan(MemberVO vo, MemberVO vo2);
 
 	public int newBan(MemberVO vo, MemberVO vo2);
+
+	public int mcount();
+
+	public int bcount();
+
+	public int ccount();
+
+	public int del_report(ReportVO vo);
 
 }

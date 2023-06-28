@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.manage.model.ManageDAO;
-import multi.com.finalproject.manage.model.ManageFriendsVO;
+import multi.com.finalproject.manage.model.ReportVO;
+import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Service
@@ -17,7 +18,7 @@ public class ManageService {
 	@Autowired
 	ManageDAO dao;
 
-	public List<ManageFriendsVO> friends(ManageFriendsVO vo) {
+	public List<FriendsVO> friends(FriendsVO vo) {
 		return dao.friends(vo);
 	}
 
@@ -36,16 +37,28 @@ public class ManageService {
 	public List<MemberVO> member(Integer page) {
 		return dao.member(page);
 	}
+	
+	public int mcount() {
+		return dao.mcount();
+	}
 
 	public List<BoardVO> board() {
 		return dao.board();
+	}
+	
+	public int bcount() {
+		return dao.bcount();
 	}
 
 	public List<CommentsVO> comments() {
 		return dao.comments();
 	}
+	
+	public int ccount() {
+		return dao.ccount();
+	}
 
-	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo) {
+	public List<FriendsVO> selectBan(FriendsVO vo) {
 		return dao.selectBan(vo);
 	}
 	
@@ -60,5 +73,11 @@ public class ManageService {
 	public int delBan(MemberVO vo, MemberVO vo2) {
 		return dao.delBan(vo, vo2);
 	}
+
+	public int del_report(ReportVO vo) {
+		return dao.del_report(vo);
+	}
+
+	
 
 }

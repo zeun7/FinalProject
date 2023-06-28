@@ -3,7 +3,7 @@ package multi.com.finalproject.manage.model;
 import lombok.Data;
 
 @Data
-public class ManageReportVO {
+public class ReportVO {
 	private int rnum;
 	private int bnum;
 	private int cnum;

@@ -21,7 +21,7 @@ public class ManageDAOimpl implements ManageDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public List<ManageFriendsVO> friends(ManageFriendsVO vo) {
+	public List<FriendsVO> friends(FriendsVO vo) {
 		log.info("friends()...{}", vo);
 		
 		return sqlSession.selectList("MNG_FRIENDS",vo);
@@ -63,7 +63,7 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 	
 	@Override
-	public List<ManageFriendsVO> selectBan(ManageFriendsVO vo) {
+	public List<FriendsVO> selectBan(FriendsVO vo) {
 		log.info("selectBan()...{}", vo);
 		
 		return sqlSession.selectList("MNG_M_SELECT_BAN", vo);
@@ -114,12 +114,26 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectList("MNG_M_SELECT_MEMBER", page);
 	}
+	
+	@Override
+	public int mcount() {
+		log.info("member count()...");
+		
+		return sqlSession.selectOne("MNG_MCOUNT");
+	}
 
 	@Override
 	public List<BoardVO> board() {
 		log.info("board select reported()...");
 		
 		return sqlSession.selectList("MNG_B_SELECT_REPORT");
+	}
+	
+	@Override
+	public int bcount() {
+		log.info("board count()...");
+		
+		return sqlSession.selectOne("MNG_BCOUNT");
 	}
 
 	@Override
@@ -129,6 +143,18 @@ public class ManageDAOimpl implements ManageDAO {
 		return sqlSession.selectList("MNG_C_SELECT_REPORT");
 	}
 
-	
+	@Override
+	public int ccount() {
+		log.info("comments count()...");
+		
+		return sqlSession.selectOne("MNG_CCOUNT");
+	}
+
+	@Override
+	public int del_report(ReportVO vo) {
+		log.info("delete report()...{}", vo);
+		
+		return sqlSession.delete("MNG_DEL_REPORT", vo);
+	}
 	
 }

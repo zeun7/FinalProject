@@ -51,12 +51,24 @@
 		]]>
 	</select>
 	
+	<select id="MNG_MCOUNT" resultType="Integer">
+		select count(*) from member
+	</select>
+	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>
 	
+	<select id="MNG_BCOUNT" resultType="Integer">
+		select count(*) from report where bnum is not null
+	</select>
+	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
+	</select>
+	
+	<select id="MNG_CCOUNT" resultType="Integer">
+		select count(*) from report where cnum is not null
 	</select>
 	
 	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
@@ -66,4 +78,8 @@
 	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ManageReportVO">
 		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
 	</select>
+	
+	<delete id="MNG_DEL_REPORT">
+		delete from report where rnum = #{rnum}
+	</delete>
 </mapper>

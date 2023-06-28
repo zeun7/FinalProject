@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.comments.model.CommentsVO;
-import multi.com.finalproject.manage.model.ManageFriendsVO;
+import multi.com.finalproject.manage.model.FriendsVO;
+import multi.com.finalproject.manage.model.ReportVO;
 import multi.com.finalproject.manage.service.ManageService;
 import multi.com.finalproject.member.model.MemberVO;
 
@@ -27,10 +28,10 @@ public class ManageRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_m_friends.do", method = RequestMethod.GET)
-	public List<ManageFriendsVO> json_m_friends(ManageFriendsVO vo) {
+	public List<FriendsVO> json_m_friends(FriendsVO vo) {
 		log.info("/json_m_friends.do...{}", vo);
 		
-		List<ManageFriendsVO> vos = service.friends(vo);
+		List<FriendsVO> vos = service.friends(vo);
 		log.info("{}", vos);
 		
 		return vos;
@@ -86,10 +87,10 @@ public class ManageRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_m_bans.do", method = RequestMethod.GET)
-	public List<ManageFriendsVO> json_m_bans(ManageFriendsVO vo) {
+	public List<FriendsVO> json_m_bans(FriendsVO vo) {
 		log.info("/json_m_bans.do...{}", vo);
 		
-		List<ManageFriendsVO> vos = service.selectBan(vo);
+		List<FriendsVO> vos = service.selectBan(vo);
 		log.info("{}", vos);
 		
 		return vos;
@@ -160,6 +161,16 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_mng_mcount.do",  method = RequestMethod.GET)
+	public Integer json_mng_mcount() {
+		log.info("/json_mng_mcount.do...");
+		
+		int count = service.mcount();
+		
+		return count;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_mng_board.do",  method = RequestMethod.GET)
 	public List<BoardVO> json_mng_board() {
 		log.info("/json_mng_board.do...");
@@ -167,6 +178,16 @@ public class ManageRestController {
 		List<BoardVO> vos = service.board();
 		
 		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mng_bcount.do",  method = RequestMethod.GET)
+	public Integer json_mng_bcount() {
+		log.info("/json_mng_bcount.do...");
+		
+		int count = service.bcount();
+		
+		return count;
 	}
 	
 	@ResponseBody
@@ -178,4 +199,28 @@ public class ManageRestController {
 		
 		return vos;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mng_ccount.do",  method = RequestMethod.GET)
+	public Integer json_mng_ccount() {
+		log.info("/json_mng_ccount.do...");
+		
+		int count = service.ccount();
+		
+		return count;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_report_deleteOK.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_report_deleteOK(ReportVO vo) {
+		log.info("/json_m_delban.do...{}", vo);
+		
+		int result = service.del_report(vo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("result: {}", map);
+		
+		return map;
+	}
+	
 }

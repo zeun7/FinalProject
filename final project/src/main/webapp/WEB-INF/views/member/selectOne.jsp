@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td colspan="8"><img width="300px"
-					src="resources/uploadimg/${vo2.profilepic}"></td>
+					src="https://drive.google.com/file/d/1r9rQTz2M_TbrR24xm0ZZ5HpfhSZxiRLS/view?usp=drive_link"></td>
 			</tr>
 
 		</tbody>

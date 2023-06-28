@@ -46,26 +46,15 @@ function manage_member(page){
  			});
 			
  			tag_vos += `</tbody>
- 						<tfoot style="text-align:center">
+ 						<tfoot>
  							<tr>
  								<td colsapn="6" id="pages">
- 						`;
- 			
- 			let page_bttn = '';
- 			let index = 1;
- 			while(index <= 5/10 + 1){
- 				page_bttn += `<button onclick="manage_member(\${index})">
- 								\${index}
- 							</button>`;
- 				index += 1;
- 			}
- 			
- 			tag_vos += `</td>
+ 								</td>
  							</tr>
  						</tfoot>
  						`;
 			$("#vos").html(tag_vos);
-			$("#pages").html(page_bttn);
+			member_pages(page);	// 페이징 버튼 출력, 현재 페이지 넘겨줌
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -73,7 +62,30 @@ function manage_member(page){
 	});
 }
 
-function manage_board(){
+function member_pages(page){
+	$.ajax({
+		url: "json_mng_mcount.do",
+		method: 'GET',
+		dataType: 'json',
+		success: function(count){
+			console.log('ajax...success', count);
+			
+			let page_bttn = '';
+ 			let index = 1;
+ 			while(count > 0){
+ 				page_bttn += `<button onclick="manage_member(\${index})" id="page_\${index}">
+ 								\${index}
+ 							</button>`;
+ 				index++;
+ 				count -= 10;	// 한 페이지에 10개씩 출력
+ 			}
+ 			$("#pages").html(page_bttn);
+ 			$("#page_"+page).css("background-color", "skyblue");
+		}
+	});
+}
+
+function manage_board(page){
 	$.ajax({
 		url : "json_mng_board.do",
 		method:'GET',
@@ -88,7 +100,8 @@ function manage_board(){
 							<th>제목</th>
 							<th>작성자</th>
 							<th>신고사유</th>
-							<th>삭제</th>
+							<th>게시글 삭제</th>
+							<ht>완료</th>
 							</tr>
 						</thead>
 						<tbody>`; 			
@@ -100,13 +113,21 @@ function manage_board(){
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='b_deleteOK.do?bnum=\${vo.bnum}'">삭제</button></td>
+ 					<td><button onclick="location.href='report_deleteOK.do?rnum=\${vo.rnum}'">완료</button></td>
  				</tr>
  				`;
  			});
 			
  			tag_vos += `</tbody>
- 						`;
+		 				<tfoot>
+							<tr>
+								<td colsapn="6" id="pages">
+								</td>
+							</tr>
+						</tfoot>
+						`;
 			$("#vos").html(tag_vos);
+			board_pages(page);
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -114,7 +135,30 @@ function manage_board(){
 	});
 }
 
-function manage_comments(){
+function board_pages(page){
+	$.ajax({
+		url: "json_mng_bcount.do",
+		method: 'GET',
+		dataType: 'json',
+		success: function(count){
+			console.log('ajax...success', count);
+			
+			let page_bttn = '';
+ 			let index = 1;
+ 			while(count > 0){
+ 				page_bttn += `<button onclick="manage_board(\${index})" id="page_\${index}">
+ 								\${index}
+ 							</button>`;
+ 				index++;
+ 				count -= 20;	// 한 페이지에 20개씩 출력
+ 			}
+ 			$("#pages").html(page_bttn);
+ 			$("#page_"+page).css("background-color", "skyblue");
+		}
+	});
+}
+
+function manage_comments(page){
 	$.ajax({
 		url : "json_mng_comments.do",
 		method:'GET',
@@ -129,7 +173,8 @@ function manage_comments(){
 							<th>댓글 내용</th>
 							<th>작성자</th>
 							<th>신고사유</th>
-							<th>삭제</th>
+							<th>댓글 삭제</th>
+							<th>완료</th>
 							</tr>
 						</thead>
 						<tbody>`; 			
@@ -141,6 +186,7 @@ function manage_comments(){
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="location.href='c_deleteOK.do?cnum=\${vo.cnum}'">삭제</button></td>
+ 					<td><button onclick="location.href='report_deleteOK.do?rnum=\${vo.rnum}'">완료</button></td>
  				</tr>
  				`;
  			});
@@ -160,8 +206,8 @@ function manage_comments(){
 	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul>
 		<li><button onclick="manage_member(1)">회원관리</button></li>
-		<li><button onclick="manage_board()">신고 게시글</button></li>
-		<li><button onclick="manage_comments()">신고 댓글</button></li>
+		<li><button onclick="manage_board(1)">신고 게시글</button></li>
+		<li><button onclick="manage_comments(1)">신고 댓글</button></li>
 	</ul>
 	<table id="vos">
 	</table>
