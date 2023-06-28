@@ -17,6 +17,7 @@ $(document).ready(function() {
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
+<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/gallery/selectOne.jsp</h1>
 	<h1>사진첩</h1>
 	 <div style="background-image: url('resources/uploadimg/${backimg}'); background-size: cover; width: 100%; height: 100vh;">

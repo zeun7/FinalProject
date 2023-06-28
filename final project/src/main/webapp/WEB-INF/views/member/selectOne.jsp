@@ -15,9 +15,7 @@
 			<tr>
 				<th>num</th>
 				<th>id</th>
-				<th>pw</th>
 				<th>nickname</th>
-				<th>miniaddr</th>
 				<th>name</th>
 				<th>tel</th>
 				<th>email</th>
@@ -27,9 +25,7 @@
 			<tr>
 				<td>${vo2.num}</td>
 				<td>${vo2.id}</td>
-				<td>${vo2.pw}</td>
 				<td>${vo2.nickname}</td>
-				<td>${vo2.miniaddr}</td>
 				<td>${vo2.name}</td>
 				<td>${vo2.tel}</td>
 				<td>${vo2.email}</td>
@@ -42,8 +38,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8"><a href="m_update.do?num=${param.num}">내정보
-						수정</a> <a href="m_deleteOK.do?num=${param.num}">탈퇴</a></td>
+				<td colspan="8"><a href="m_update.do?num=${param.num}">내정보 수정</a> 
 			</tr>
 		</tfoot>
 	</table>

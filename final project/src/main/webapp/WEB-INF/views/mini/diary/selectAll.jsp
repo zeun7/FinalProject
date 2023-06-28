@@ -17,11 +17,13 @@ $(document).ready(function() {
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
+<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectAll.jsp</h1>
 	<div
 		style="background-image: url('resources/uploadimg/${backimg}'); background-size: cover; width: 100%; height: 100vh;">
 			<h1>다이어리</h1>
-		<audio id="bgmPlayer" controls autoplay>
+		<div><img src="resources/uploadimg/${profilepic}"></div>
+		<audio id="bgmPlayer" controls>
 			<source src="resources/uploadbgm/${bgm}" type="audio/mp3">
 		</audio>
 		<a href="diary_insert.do" class="myButton">다이어리 작성</a>

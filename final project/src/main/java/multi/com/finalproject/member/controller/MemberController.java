@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
@@ -49,8 +50,8 @@ public class MemberController {
 	@RequestMapping(value = "/m_insertOK.do", method = RequestMethod.POST)
 	public String insertOK(MemberVO vo) throws IllegalStateException, IOException {
 		log.info("insertOK()....", vo);
-		String getOriginalFilename = vo.getFile().getOriginalFilename();
-		int fileNameLength = vo.getFile().getOriginalFilename().length();
+		String getOriginalFilename = vo.getM_file().getOriginalFilename();
+		int fileNameLength = vo.getM_file().getOriginalFilename().length();
 		log.info("getOriginalFilename:{}", getOriginalFilename);
 		log.info("fileNameLength:{}", fileNameLength);
 
@@ -63,7 +64,7 @@ public class MemberController {
 			log.info("realPath : {}", realPath);
 
 			File f = new File(realPath + "\\" + vo.getProfilepic());
-			vo.getFile().transferTo(f);
+			vo.getM_file().transferTo(f);
 
 			//// create thumbnail image/////////
 			BufferedImage original_buffer_img = ImageIO.read(f);
@@ -100,34 +101,92 @@ public class MemberController {
 	}
 	@RequestMapping(value = "/m_update.do", method = RequestMethod.GET)
 	public String m_update(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
-		
+		log.info("/m_update.do...{}", vo);
+
 		MemberVO vo2 = service.selectOne(vo);
-		
+
 		model.addAttribute("vo2", vo2);
-		
-		return "member/selectOne";
+
+		return "member/update";
 	}
 	@RequestMapping(value = "/m_updateOK.do", method = RequestMethod.POST)
-	public String m_updateOK(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
-		
-		MemberVO vo2 = service.selectOne(vo);
-		
-		model.addAttribute("vo2", vo2);
-		
-		return "member/selectOne";
+	public String m_updateOK(MemberVO vo, Model model) throws IllegalStateException, IOException {
+		log.info("/m_updateOK.do...{}", vo);
+
+		String getOriginalFilename = vo.getM_file().getOriginalFilename();
+		int fileNameLength = vo.getM_file().getOriginalFilename().length();
+		log.info("getOriginalFilename:{}", getOriginalFilename);
+		log.info("fileNameLength:{}", fileNameLength);
+
+		if (getOriginalFilename.length() != 0) {
+
+			vo.setProfilepic(getOriginalFilename);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/uploadimg");
+			log.info("realPath : {}", realPath);
+
+			File f = new File(realPath + "\\" + vo.getProfilepic());
+			vo.getM_file().transferTo(f);
+
+			//// create thumbnail image/////////
+			BufferedImage original_buffer_img = ImageIO.read(f);
+			BufferedImage thumb_buffer_img = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphic = thumb_buffer_img.createGraphics();
+			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
+
+			File thumb_file = new File(realPath + "/thumb_" + vo.getProfilepic());
+			String formatName = vo.getProfilepic().substring(vo.getProfilepic().lastIndexOf(".") + 1);
+			log.info("formatName : {}", formatName);
+			ImageIO.write(thumb_buffer_img, formatName, thumb_file);
+
+		} // end else
+		log.info("{}", vo);
+
+		int result = service.update(vo);
+
+		if (result == 1) {
+			return "redirect:m_selectOne.do?num=" + vo.getNum();
+		} else {
+			return "redirect:m_update.do?num=" + vo.getNum();
+		}
 	}
-	@RequestMapping(value = "/m_delete.do", method = RequestMethod.GET)
-	public String m_delete(MemberVO vo, Model model) {
-		log.info("selectAll()....{}");
-		
-		MemberVO vo2 = service.selectOne(vo);
-		
-		model.addAttribute("vo2", vo2);
-		
-		return "member/selectOne";
+	
+	@RequestMapping(value="/delete.do", method = RequestMethod.GET)
+	public String delete() throws Exception{
+		return "member/delete";
 	}
+	
+	// 회원 탈퇴 post
+	@RequestMapping(value="/deleteOK.do", method = RequestMethod.POST)
+	public String deleteOK(MemberVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
+		MemberVO vo2 = (MemberVO) session.getAttribute("member");
+		// 세션에있는 비밀번호
+		String sessionPass = vo2.getPw();
+		// vo로 들어오는 비밀번호
+		String voPass = vo.getPw();
+		
+		if(!(sessionPass.equals(voPass))) {
+			rttr.addFlashAttribute("msg", false);
+			return "member/delete";
+		}
+		service.delete(vo);
+		session.invalidate();
+		return "redirect:/m_update.do";
+	}
+//	@RequestMapping(value = "/m_deleteOK.do", method = RequestMethod.GET)
+//		public String m_deleteOK(MemberVO vo) {
+//			log.info("/m_deleteOK.do");
+//
+//			int result = service.delete(vo);
+//
+//			if (result == 1) {
+//				return "redirect:logout.do";
+//			} else {
+//				return "redirect:m_selectOne.do?num=" + vo.getNum();
+//			}
+//	}
 
 	
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
@@ -310,4 +369,3 @@ public class MemberController {
 	
 	
 }
-

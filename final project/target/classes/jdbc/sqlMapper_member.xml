@@ -26,7 +26,7 @@
 
 	<select id="LOGIN"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where id = #{id} and pw = #{pw}
+		select * from member where id = #{id} and pw = #{pw} 
 	</select>
 
 	<select id="M_SEARCH_LIST_NAME"
@@ -49,11 +49,13 @@
 	<update id="M_UPDATE"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		update member set pw=#{pw} , name=#{name} , tel=#{tel} ,
-		profilepic=#{profilepic} , nickname=#{nickname} , minaddr=#{minaddr} ,
+		profilepic=#{profilepic} , nickname=#{nickname} ,
 		email=#{email} where num = #{num}
 	</update>
 
-	<delete id="M_DELETE"> delete from member where num = #{num} </delete>
+	<delete id="M_DELETE"> delete from member where id  = #{Id} and pw=#{pw}
+<!-- 	update member  where num=#{num} -->
+ </delete>
 
 	<select id="FIND_ID"
 		parameterType="multi.com.finalproject.member.model.MemberVO">

@@ -81,6 +81,7 @@
 </head>
 <body>
 	<jsp:include page="../../top_menu.jsp"></jsp:include>
+	<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/game/game.jsp</h1>
 	<button id="backButton" class="myButton" style="margin-left: 300px">뒤로가기</button>
 	<div id="gameContainer">

@@ -20,5 +20,5 @@ public class MemberVO {
 	private String email;
 	private int peach;
 	private int mclass;
-	private MultipartFile file;
+	private MultipartFile m_file;
 }

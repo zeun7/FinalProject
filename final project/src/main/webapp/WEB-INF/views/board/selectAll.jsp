@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <title>Insert title here</title>
@@ -17,7 +18,6 @@ let isSelectAll = true;
 
 function selectAllCount(){
 	console.log('selectAllCount()');
-	selectAll(curPage, limit);
 	isSelectAll = true;
 	console.log('isSelectAll:', isSelectAll);
 	$.ajax({
@@ -40,6 +40,11 @@ function selectAllCount(){
 				
 				result -= limit;
 			}
+			
+			if(curPage > tag_page){
+				curPage = tag_page;
+			}
+			selectAll(curPage, limit);
 			
 // 			$("#board_name").text('${param.bname}');
 			$("#page").html(tag_pages);
@@ -71,16 +76,30 @@ function selectAll(page, limit){
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YYYY-MM-DD HH:mm:ss');
 //  				console.log(date);
+ 				if(vo.caname === 'general'){
+					vo.caname = '일반';
+				}else if(vo.caname === 'notice'){
+					vo.caname = '공지';
+				}else{
+					vo.caname = '질문';
+				}
  				tag_vos += `
  					<tr>
  						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.bnum}</a></td>
  						<td>\${vo.caname}</td>
- 						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
- 						<td>\${vo.writer}</td>
- 						<td>\${date}</td>
- 						<td>\${vo.vcount}</td>
- 						<td>\${vo.likes}</td>
- 					</tr>
+ 						<td>
+ 				`;
+ 				
+ 				if(vo.filepath != null){
+ 					tag_vos += `<i class="fa-regular fa-image">`;
+ 				}
+ 				tag_vos += `
+ 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+						<td>\${vo.writer}</td>
+						<td>\${date}</td>
+						<td>\${vo.vcount}</td>
+						<td>\${vo.likes}</td>
+					</tr>
  				`;
  			}
 			
@@ -123,6 +142,11 @@ function searchListCount(){
 				result -= limit;
 			}
 			
+			if(curPage > tag_page){
+				curPage = tag_page;
+			}
+			selectAll(curPage, limit);
+			
 // 			$("#board_name").text('${param.bname}');
 			$("#page").html(tag_pages);
 		},
@@ -155,16 +179,30 @@ function searchList(page, limit){
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YYYY-MM-DD HH:mm:ss');
 //  				console.log(date);
- 				tag_vos += `
+				if(vo.caname === 'general'){
+					vo.caname = '일반';
+				}else if(vo.caname === 'notice'){
+					vo.caname = '공지';
+				}else{
+					vo.caname = '질문';
+				}
+				tag_vos += `
  					<tr>
  						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.bnum}</a></td>
  						<td>\${vo.caname}</td>
- 						<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
- 						<td>\${vo.writer}</td>
- 						<td>\${date}</td>
- 						<td>\${vo.vcount}</td>
- 						<td>\${vo.likes}</td>
- 					</tr>
+ 						<td>
+ 				`;
+ 				
+ 				if(vo.filepath != null){
+ 					tag_vos += `<i class="fa-regular fa-image">`;
+ 				}
+ 				tag_vos += `
+ 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+						<td>\${vo.writer}</td>
+						<td>\${date}</td>
+						<td>\${vo.vcount}</td>
+						<td>\${vo.likes}</td>
+					</tr>
  				`;
  			}
 			
@@ -183,9 +221,9 @@ function changeLimit(){
 	limit = $("#limit").val();
 // 	console.log(limit);
 	if(isSelectAll){
-		selectAllCount(curPage, limit);
+		selectAllCount();
 	}else{
-		searchListCount(curPage, limit);
+		searchListCount();
 	}
 }
 

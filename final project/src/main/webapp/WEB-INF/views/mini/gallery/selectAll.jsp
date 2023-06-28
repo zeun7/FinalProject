@@ -52,11 +52,13 @@ $(document).ready(function() {
 </head>
 <body>
     <jsp:include page="../../top_menu.jsp"></jsp:include>
+    <jsp:include page="../../mini_top_menu.jsp"></jsp:include>
     <h1>mini/gallery/selectAll.jsp</h1>
     
     <div style="background-image: url('resources/uploadimg/${backimg}'); background-size: cover; width: 100%; height: 100vh;">
         <h1>사진첩</h1>
-        <audio id="bgmPlayer" controls autoplay>
+        <div><img src="resources/uploadimg/${profilepic}"></div>
+        <audio id="bgmPlayer" controls>
             <source src="resources/uploadbgm/${bgm}" type="audio/mp3">
         </audio>
         <br>
