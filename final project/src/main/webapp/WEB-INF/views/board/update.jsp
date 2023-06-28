@@ -29,6 +29,19 @@
 		$('#filepath_text').html($('#file').val());
 		$('#del_file_button').show();
 	}//end show_file()
+	
+	function input_check(){
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		console.log($("#content").val());
+		
+		if($("#title").val() === ''){
+			alert('제목을 입력하세요');
+		}else if($("#content").val() === ''){
+			alert('내용을 입력하세요');
+		}else{
+			document.getElementById("update_form").submit();
+		}
+	}//end input_check()
 </script>
 </head>
 <body>
@@ -36,8 +49,8 @@
 	<h1>${param.bname }</h1>
 	
 	<h3>글수정</h3>
-	<form action="b_updateOK.do" method="post" enctype="multipart/form-data">
-	<table>
+	<form action="b_updateOK.do" method="post" enctype="multipart/form-data" id="update_form" style="width:800px">
+	<table style="width: 100%">
 		<thead>
 			<tr>
 				<td>
@@ -78,18 +91,26 @@
 			<tr>
 				<td>
 					<button type="button" onclick="history.back()">취소</button>
-					<button>수정완료</button>
+					<button type="button" onclick="input_check()">수정완료</button>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
 	</form>
 	
-	<script type="text/javascript">
-		let caname = document.querySelector('#${vo2.caname}');
-		caname.setAttribute('selected', true);
-		
-	</script>
+<script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+	let caname = document.querySelector('#${vo2.caname}');
+	caname.setAttribute('selected', true);
+	
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "content",
+		sSkinURI: "./resources/smarteditor2/SmartEditor2Skin.html",
+		fCreator: "createSEditor2"
+	});
+</script>
 
 </body>
 </html>

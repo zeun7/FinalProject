@@ -5,7 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/modal.css">
 <jsp:include page="../css.jsp"></jsp:include>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -115,6 +117,17 @@ console.log(encodeUrl);
 	        alert("복사완료");
 	      });
 	}
+	
+	$(function(){
+		Kakao.init('8b87b1c63625a7c92d74e9e4019cc90f');
+		if(Kakao.isInitialized()){
+			Kakao.Share.createScrapButton({
+			    container: '#kakaotalk-sharing-btn',
+			    requestUrl: window.location.href
+			});
+		}
+	});
+	
 </script>
 </head>
 <body>
@@ -136,11 +149,13 @@ console.log(encodeUrl);
 		<tbody>
 			<tr>
 				<td colspan="3">
+					<hr>
 					<img width="300px" src="${vo2.filepath}">
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td>
+<%-- 				<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td> --%>
+				<td colspan="3"><div>${vo2.content }<hr></div></td>
 			</tr>
 		</tbody>
 		<tfoot>
@@ -149,9 +164,7 @@ console.log(encodeUrl);
 					<button onclick="like()" id="like_button">좋아요</button>
 					<button onclick="like_cancel()" id="lcancel_button">좋아요 취소</button>
 					<span id="likes_count">${vo2.likes }</span>
-					<button onclick="copy_url()">링크복사</button>
-					<button onclick="share_twitter()" id="share_button">트위터로 공유</button>
-<!-- 					<button onclick="share_facebook()" id="share_button">페이스북으로 공유</button> -->
+					<button onclick="open_modal()">공유</button>					
 					<button onclick="report()" id="report_button">신고</button>
 				</td>
 				<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum }">수정</a> <a
@@ -159,12 +172,41 @@ console.log(encodeUrl);
 			</tr>
 		</tfoot>
 	</table>
+	
+	<div id="modal">
+		<div class="modal-content">
+			<h6>공유하기</h6>
+			<button onclick="share_twitter()" id="share_button">트위터로 공유</button>
+			<button onclick="share_facebook()" id="share_button">페이스북으로 공유</button>
+			<button id="kakaotalk-sharing-btn">카카오톡으로 공유</button>
+			<div>
+				<label for="copy_url_btn" id="url"></label>			
+				<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
+			</div>
+			<div>
+				<button onclick="close_modal()">닫기</button>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		if('${nickname}' === '${vo2.writer}'){
 			$('#update_delete').show();
 		}else{
 			$('#update_delete').hide();
+		}
+		
+		$('#url').html(url);
+		let modal = document.getElementById("modal");
+		
+		function open_modal(){
+			modal.style.display = "block";
+			document.body.style.overflow = "hidden"; // 스크롤바 제거
+		}
+		
+		function close_modal(){
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바
 		}
 	</script>
 </body>
