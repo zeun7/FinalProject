@@ -80,6 +80,10 @@ public class ManageService {
 		return dao.mclass(vo);
 	}
 
+	public int grade(FriendsVO vo) {
+		return dao.grade(vo);
+	}
+
 	
 
 }

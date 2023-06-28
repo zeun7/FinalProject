@@ -38,6 +38,19 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_mng_grade.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_mng_grade(FriendsVO vo) {
+		log.info("/json_mng_grade.do...{}", vo);
+		
+		int result = service.grade(vo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/json_m_searchUser.do", method = RequestMethod.GET)
 	public List<MemberVO> json_m_searchUser(MemberVO vo, String searchWord) {
 		log.info("/json_m_searchUser.do...{}", vo);

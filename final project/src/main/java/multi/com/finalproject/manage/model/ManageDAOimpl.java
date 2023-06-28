@@ -24,6 +24,13 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectList("MNG_FRIENDS",vo);
 	}
+	
+	@Override
+	public int grade(FriendsVO vo) {
+		log.info("update grade()...");
+		
+		return sqlSession.update("MNG_GRADE", vo);
+	}
 
 	@Override
 	public List<MemberVO> searchUser(MemberVO vo, String searchWord) {
@@ -161,7 +168,5 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.delete("MNG_DEL_REPORT", vo);
 	}
-
-	
 	
 }

@@ -38,4 +38,6 @@ public interface ManageDAO {
 
 	public int mclass(MemberVO vo);
 
+	public int grade(FriendsVO vo);
+
 }

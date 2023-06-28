@@ -42,13 +42,13 @@ function manage_member(page){
  					<td>\${vo.name}</td>
  					<td>\${vo.tel}</td>
  					<td>
-						<select name="mclass" id="mclass" value="\${vo.mclass}">
+						<select id="\${vo.id}">
 							<option value="\${vo.mclass}" class="option_\${vo.mclass}" selected hidden></option>
 							<option value="1">관리자</option>
 							<option value="2">일반 사용자</option>
 						</select>
  					</td>
- 					<td><button onclick="update_mclass('\${vo.id}', \$('#mclass :selected').val(), \${page})">적용</button></td>
+ 					<td><button onclick="update_mclass('\${vo.id}', \$('#\${vo.id} :selected').val(), \${page})">적용</button></td>
  				</tr>
  				`;
  			});

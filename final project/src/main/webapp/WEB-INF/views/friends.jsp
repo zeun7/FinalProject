@@ -28,18 +28,18 @@ function friends_list(){		// 친구목록
  			let tag_vos = `
 					<thead>
 						<tr>
-							<th>친구등급</th>
 							<th>닉네임</th>
 							<th>채팅</th>
 							<th>차단</th>
 							<th>친구삭제</th>
+							<th>친구등급</th>
+							<th>적용</th>
 						</tr>
 					</thead>
 					<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
-	 					<td>\${vo.grade}</td>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
 	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname2}">
@@ -53,6 +53,14 @@ function friends_list(){		// 친구목록
 							<button onclick="del_friend('\${vo.nickname2}')" id="del_\${vo.nickname2}">
 							친구삭제</button>
 	 					</td>
+	 					<td>
+							<select id="\${vo.fnum}">
+								<option value="\${vo.grade}" class="option_\${vo.grade}" selected hidden></option>
+								<option value="1">1촌</option>
+								<option value="2">친구</option>
+							</select>
+	 					</td>
+	 					<td><button onclick="update_grade(\${vo.fnum}, \$('#\${vo.fnum} :selected').val())">적용</button></td>
 	 				</tr>
  					`;
  			});
@@ -60,9 +68,26 @@ function friends_list(){		// 친구목록
  			tag_vos += `</tbody>
  						`;
 			$("#vos").html(tag_vos);
+			$(".option_1").html("1촌");
+			$(".option_2").html("친구");
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function update_grade(fnum, grade){
+	console.log(fnum, grade);
+	$.ajax({
+		url: "json_mng_grade.do",
+		data: {fnum: fnum,
+			grade: grade},
+		method: "GET",
+		dataType: "json",
+		success: function(result){
+			console.log(result);
+			friends_list();
 		}
 	});
 }

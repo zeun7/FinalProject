@@ -7,8 +7,12 @@
 	
 	<select id="MNG_FRIENDS"
 		resultType="multi.com.finalproject.manage.model.FriendsVO">
-		select grade, nickname2 from friends where nickname = #{nickname} and grade != 3
+		select fnum, grade, nickname2 from friends where nickname = #{nickname} and grade != 3
 	</select>
+	
+	<update id="MNG_GRADE">
+		update friends set grade = #{grade} where fnum = #{fnum}
+	</update>
 	
 	<select id="MNG_SEARCH_LIST_NICKNAME"
 		resultType="multi.com.finalproject.member.model.MemberVO">
