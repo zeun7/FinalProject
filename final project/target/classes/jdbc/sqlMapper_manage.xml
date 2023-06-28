@@ -56,7 +56,7 @@
 	</select>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
+		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
 	</select>
 	
 	<select id="MNG_BCOUNT" resultType="Integer">
@@ -64,7 +64,7 @@
 	</select>
 	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
+		select r.rum, r.cnum, c.content, c.writer, r.reason from comments c, report r where c.cnum=r.cnum
 	</select>
 	
 	<select id="MNG_CCOUNT" resultType="Integer">
