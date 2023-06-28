@@ -7,14 +7,28 @@
 <title>Insert title here</title>
 <jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	function input_check(){
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		console.log($("#content").val());
+		
+		if($("#title").val() === ''){
+			alert('제목을 입력하세요');
+		}else if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
+			alert('내용을 입력하세요');
+		}else{
+			document.getElementById("insert_form").submit();
+		}
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<h1>${param.bname }</h1>
 	
 	<h3>글쓰기</h3>
-	<form action="b_insertOK.do" method="post" enctype="multipart/form-data">
-	<table>
+	<form action="b_insertOK.do" method="post" enctype="multipart/form-data" id="insert_form" style="width:800px">
+	<table style="width: 100%">
 		<thead>
 			<tr>
 				<td>
@@ -38,7 +52,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td colspan="2">
 					<textarea rows="20" cols="50" name="content" id="content"></textarea>
 				</td>
 			</tr>
@@ -47,12 +61,26 @@
 			<tr>
 				<td>
 					<button type="button" onclick="history.back()">취소</button>
-					<input type="submit" value="등록">
+					<button type="button" onclick="input_check()">등록</button>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
 	</form>
+
+<script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "content",
+	sSkinURI: "./resources/smarteditor2/SmartEditor2Skin.html",
+	htParams : {
+		bSkipXssFilter : true
+	},
+	fCreator: "createSEditor2"
+});
+</script>
 
 </body>
 </html>
