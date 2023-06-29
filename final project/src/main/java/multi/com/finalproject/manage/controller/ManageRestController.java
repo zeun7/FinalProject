@@ -194,6 +194,7 @@ public class ManageRestController {
 		log.info("/json_mng_mclass.do...");
 		
 		int result = service.mclass(vo);
+		log.info("result: {}", result);
 		
 		return result;
 	}
@@ -204,8 +205,9 @@ public class ManageRestController {
 		log.info("/json_mng_board.do...");
 		
 		List<ReportVO> vos = service.board();
-		for (ReportVO x : vos) {
-			log.info(x.toString());
+		
+		for(ReportVO vo : vos) {
+			log.info("{}", vo.toString());
 		}
 		
 		return vos;
@@ -217,8 +219,20 @@ public class ManageRestController {
 		log.info("/json_mng_bcount.do...");
 		
 		int count = service.bcount();
+		log.info("board & miniboard count: {}", count);
 		
 		return count;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mng_b_deleteOK.do",  method = RequestMethod.GET)
+	public Integer json_mng_b_deleteOK(ReportVO vo) {
+		log.info("/json_mng_b_deleteOK.do...{}", vo.getBnum());
+		
+		int result = service.del_board(vo);
+		log.info("result: {}", result);
+		
+		return result;
 	}
 	
 	@ResponseBody
@@ -245,11 +259,35 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_report_deleteOK.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_report_deleteOK(ReportVO vo) {
-		log.info("/json_m_delban.do...{}", vo);
+	@RequestMapping(value = "/json_mng_c_deleteOK.do",  method = RequestMethod.GET)
+	public Integer json_mng_c_deleteOK(ReportVO vo) {
+		log.info("/json_mng_c_deleteOK.do...");
 		
-		int result = service.del_report(vo);
+		int result = service.del_comments(vo);
+		log.info("result: {}", result);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_b_report_deleteOK.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_b_report_deleteOK(ReportVO vo) {
+		log.info("/json_b_report_deleteOK.do...{}", vo);
+		
+		int result = service.del_b_report(vo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		log.info("result: {}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_c_report_deleteOK.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_c_report_deleteOK(ReportVO vo) {
+		log.info("/json_c_report_deleteOK.do...{}", vo);
+		
+		int result = service.del_b_report(vo);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
 		log.info("result: {}", map);

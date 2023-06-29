@@ -138,14 +138,42 @@ public class ManageDAOimpl implements ManageDAO {
 	public List<ReportVO> board() {
 		log.info("board select reported()...");
 		
-		return sqlSession.selectList("MNG_B_SELECT_REPORT");
+		List<ReportVO> vos = sqlSession.selectList("MNG_B_SELECT_REPORT");
+		List<ReportVO> vos2 = sqlSession.selectList("MNG_MB_SELECT_REPORT");
+		
+		for(ReportVO vo : vos2) {
+			vos.add(vo);
+		}
+		
+		return vos;
 	}
 	
 	@Override
 	public int bcount() {
 		log.info("board count()...");
+		int count1 = sqlSession.selectOne("MNG_BCOUNT");
+		int count2 = sqlSession.selectOne("MNG_MBCOUNT");
 		
-		return sqlSession.selectOne("MNG_BCOUNT");
+		log.info("count1: {}, count2: {}", count1, count2);
+		
+		return count1 + count2;
+	}
+	
+	@Override
+	public int del_board(ReportVO vo) {
+		log.info("delete board()...{}", vo);
+		
+		int result = sqlSession.delete("B_DELETE", vo);
+		log.info("delete board result: {}", result);
+		
+		if(result == 1){
+			if(vo.getBnum() != 0)
+				return sqlSession.delete("MNG_DEL_B_REPORT", vo);
+			else
+				return sqlSession.delete("MNG_DEL_MB_REPORT", vo);
+		}
+		else
+			return 0;
 	}
 
 	@Override
@@ -159,14 +187,49 @@ public class ManageDAOimpl implements ManageDAO {
 	public int ccount() {
 		log.info("comments count()...");
 		
-		return sqlSession.selectOne("MNG_CCOUNT");
+		int count1 = sqlSession.selectOne("MNG_CCOUNT"); 
+		
+		return count1; 
+	}
+	
+	@Override
+	public int del_comments(ReportVO vo) {
+		log.info("delete comments()...{}", vo);
+		int result = 0;
+		
+		if(vo.getCcnum() != 0)
+			result = sqlSession.delete("C_DELETE", vo);
+		else
+			result = sqlSession.delete("CC_DELETE", vo);
+		
+		if(result == 1) {
+			if(vo.getCcnum() == 0)
+				return sqlSession.delete("MNG_DEL_C_REPORT", vo);
+			else
+				return sqlSession.delete("MNG_DEL_CC_REPORT", vo);
+		}
+		else
+			return 0;
 	}
 
 	@Override
-	public int del_report(ReportVO vo) {
-		log.info("delete report()...{}", vo);
+	public int del_b_report(ReportVO vo) {
+		log.info("delete board report()...{}", vo);
 		
-		return sqlSession.delete("MNG_DEL_REPORT", vo);
+		if(vo.getBnum() != 0)
+			return sqlSession.delete("MNG_DEL_B_REPORT", vo);
+		else
+			return sqlSession.delete("MNG_DEL_MB_REPORT", vo);
+	}
+	
+	@Override
+	public int del_c_report(ReportVO vo) {
+		log.info("delete comments report()...{}", vo);
+		
+		if(vo.getCcnum() == 0)
+			return sqlSession.delete("MNG_DEL_C_REPORT", vo);
+		else
+			return sqlSession.delete("MNG_DEL_CC_REPORT", vo);
 	}
 	
 }

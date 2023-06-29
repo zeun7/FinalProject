@@ -15,7 +15,7 @@ public interface ManageDAO {
 	public List<MemberVO> member(Integer page);
 
 	public List<ReportVO> board();
-
+	
 	public List<ReportVO> comments();
 
 	public int delfriend(MemberVO vo, MemberVO vo2);
@@ -34,10 +34,16 @@ public interface ManageDAO {
 
 	public int ccount();
 
-	public int del_report(ReportVO vo);
+	public int del_b_report(ReportVO vo);
+	
+	public int del_c_report(ReportVO vo);
 
 	public int mclass(MemberVO vo);
 
 	public int grade(FriendsVO vo);
+
+	public int del_board(ReportVO vo);
+
+	public int del_comments(ReportVO vo);
 
 }

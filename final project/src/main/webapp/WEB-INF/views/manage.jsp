@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function manage_member(page){	// 회원목록 출력
+	console.log('manage member...');
 	$.ajax({
 		url : "json_mng_member.do",
 		data: {page: page},
@@ -73,9 +74,9 @@ function manage_member(page){	// 회원목록 출력
 }
 
 function update_mclass(id, mclass, page){	// 회원등급 변경 버튼
-	console.log(id, mclass, page);
+	console.log('update mclass...id:', id, 'mclass:', mclass, 'page:',page);
 	
-	if(wondow.confirm("적용하시겠습니까?")){
+	if(window.confirm("적용하시겠습니까?")){
 		$.ajax({
 			url: "json_mng_mclass.do",
 			data: {id: id,
@@ -93,6 +94,7 @@ function update_mclass(id, mclass, page){	// 회원등급 변경 버튼
 }
 
 function member_pages(page){	// 회원목록의 페이징 버튼 출력
+	console.log('print manage member page button...');
 	$.ajax({
 		url: "json_mng_mcount.do",
 		method: 'GET',
@@ -119,6 +121,7 @@ function member_pages(page){	// 회원목록의 페이징 버튼 출력
 }
 
 function manage_board(page){	// 신고 게시글 목록
+	console.log('manage board...');
 	$.ajax({
 		url : "json_mng_board.do",
 		method:'GET',
@@ -145,8 +148,8 @@ function manage_board(page){	// 신고 게시글 목록
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
- 					<td><button onclick="del_board=(\${vo.bnum}, \${page}">삭제</button></td>
- 					<td><button onclick="del_report(\${vo.bnum}, \${page})">완료</button></td>
+ 					<td><button onclick="del_board(\${vo.bnum}, \${page})">삭제</button></td>
+ 					<td><button onclick="del_b_report(\${vo.bnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -169,6 +172,7 @@ function manage_board(page){	// 신고 게시글 목록
 }
 
 function board_pages(page){	// 신고 게시글 목록 페이징 버튼 출력
+	console.log('print manage board page button...');
 	$.ajax({
 		url: "json_mng_bcount.do",
 		method: 'GET',
@@ -195,14 +199,15 @@ function board_pages(page){	// 신고 게시글 목록 페이징 버튼 출력
 }
 
 function del_board(bnum, page){	// 신고 게시글 삭제 버튼
+	console.log('delete board... bnum:', bnum, 'page:', page);
 	if(window.confirm("해당 게시글을 삭제하시겠습니까?")){
 		$.ajax({
-			url: "b_deletOK",
-			data: {bnum, bnum},
+			url: "json_mng_b_deleteOK.do",
+			data: {bnum: bnum},
 			method: "GET",
 			dataType: "json",
-			success: function(){
-				board_pages(page);
+			success: function(result){
+				manage_board(page);
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -212,6 +217,7 @@ function del_board(bnum, page){	// 신고 게시글 삭제 버튼
 }
 
 function manage_comments(page){	// 신고 댓글 목록 출력
+	console.log('manage comments...');
 	$.ajax({
 		url : "json_mng_comments.do",
 		method:'GET',
@@ -238,8 +244,8 @@ function manage_comments(page){	// 신고 댓글 목록 출력
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.content}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
- 					<td><button onclick="del_comments(\${vo.cnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_report(\${vo.cnum}, \${vo.ccnum}, \${page})">완료</button></td>
+ 					<td><button onclick="del_comments(\${vo.cnum}, \${vo.ccnum}, \${page})">삭제</button></td>
+ 					<td><button onclick="del_c_report(\${vo.cnum}, \${vo.ccnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -262,6 +268,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
 }
 
 function comments_pages(page){	// 신고 댓글 목록 페이징 버튼 출력
+	console.log('print manage comments page button...');
 	$.ajax({
 		url: "json_mng_ccount.do",
 		method: 'GET',
@@ -287,15 +294,17 @@ function comments_pages(page){	// 신고 댓글 목록 페이징 버튼 출력
 	});
 }
 
-function del_comments(cnum, page){	// 신고 댓글 삭제 버튼
+function del_comments(cnum, ccnum, page){	// 신고 댓글 삭제 버튼
+	console.log('delete comments cnum:', cnum, 'ccnum:', ccnum, 'page:', page);
 	if(window.confirm("해당 댓글을 삭제하시겠습니까?")){
 		$.ajax({
-			url: "c_deletOK",
-			data: {cnum, cnum},
+			url: "json_mng_c_deleteOK.do",
+			data: {cnum: cnum,
+				ccnum: ccnum},
 			method: "GET",
 			dataType: "json",
 			success: function(){
-				comments_pages(page);
+				manage_comments(page);
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -304,7 +313,8 @@ function del_comments(cnum, page){	// 신고 댓글 삭제 버튼
 	}
 }
 
-function del_b_report(bnum, page){	// 신고 대응 완료 버튼
+function del_b_report(bnum, page){	// 게시글 신고 대응 완료 버튼
+	console.log('delete board report... bnum:', bnum, 'page:', page);
 	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
 		$.ajax({
 			url: 'json_b_report_deleteOK.do',
@@ -322,7 +332,8 @@ function del_b_report(bnum, page){	// 신고 대응 완료 버튼
 	}
 }
 
-function del_c_report(cnum, ccnum, page){	// 신고 대응 완료 버튼
+function del_c_report(cnum, ccnum, page){	// 댓글 신고 대응 완료 버튼
+	console.log('delete comments report... cnum:', cnum, 'ccnum:', ccnum, 'page:', page);
 	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
 		$.ajax({
 			url: 'json_c_report_deleteOK.do',

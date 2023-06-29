@@ -72,8 +72,12 @@ public class ManageService {
 		return dao.delBan(vo, vo2);
 	}
 
-	public int del_report(ReportVO vo) {
-		return dao.del_report(vo);
+	public int del_b_report(ReportVO vo) {
+		return dao.del_b_report(vo);
+	}
+	
+	public int del_c_report(ReportVO vo) {
+		return dao.del_c_report(vo);
 	}
 
 	public int mclass(MemberVO vo) {
@@ -82,6 +86,14 @@ public class ManageService {
 
 	public int grade(FriendsVO vo) {
 		return dao.grade(vo);
+	}
+
+	public int del_board(ReportVO vo) {
+		return dao.del_board(vo);
+	}
+
+	public int del_comments(ReportVO vo) {
+		return dao.del_comments(vo);
 	}
 
 	

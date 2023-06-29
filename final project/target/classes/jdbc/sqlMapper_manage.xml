@@ -5,8 +5,7 @@
 
 <mapper namespace="multi.com.finalproject">
 	
-	<select id="MNG_FRIENDS"
-		resultType="multi.com.finalproject.manage.model.FriendsVO">
+	<select id="MNG_FRIENDS" resultType="multi.com.finalproject.manage.model.FriendsVO">
 		select fnum, grade, nickname2 from friends where nickname = #{nickname} and grade != 3
 	</select>
 	
@@ -14,8 +13,7 @@
 		update friends set grade = #{grade} where fnum = #{fnum}
 	</update>
 	
-	<select id="MNG_SEARCH_LIST_NICKNAME"
-		resultType="multi.com.finalproject.member.model.MemberVO">
+	<select id="MNG_SEARCH_LIST_NICKNAME" resultType="multi.com.finalproject.member.model.MemberVO">
 		select nickname from member where nickname like #{searchWord} 
 		minus select nickname2 from friends where nickname = #{nickname} 
 		minus select nickname from member where nickname = #{nickname}
@@ -64,11 +62,19 @@
 	</update>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum=r.bnum
+		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r where b.bnum = r.bnum
+	</select>
+	
+	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select r.rnum, r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum = r.mbnum
 	</select>
 	
 	<select id="MNG_BCOUNT" resultType="Integer">
-		select count(*) from report where bnum is not null and cnum is null
+		select count(*) from report where bnum != 0 and cnum = 0
+	</select>
+	
+	<select id="MNG_MBCOUNT" resultType="Integer">
+		select count(*) from report where mbnum != 0 and mcnum = 0
 	</select>
 	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
@@ -76,18 +82,22 @@
 	</select>
 	
 	<select id="MNG_CCOUNT" resultType="Integer">
-		select count(*) from report where cnum is not null
+		select count(*) from report where cnum != 0
 	</select>
 	
-	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r where mb.mbnum=r.mbnum
-	</select>
+	<delete id="MNG_DEL_B_REPORT">
+		delete from report where bnum = #{bnum}
+	</delete>
 	
-	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.cnum, mc.content, mc.writer, r.reason from minicomments mc, report r where mc.mcnum=r.mcnum
-	</select>
+	<delete id="MNG_DEL_MB_REPORT">
+		delete from report where mbnum = #{mbnum}
+	</delete>
 	
-	<delete id="MNG_DEL_REPORT">
-		delete from report where rnum = #{rnum}
+	<delete id="MNG_DEL_C_REPORT">
+		delete from report where cnum = #{cnum}
+	</delete>
+	
+	<delete id="MNG_DEL_CC_REPORT">
+		delete from report where cnum = #{cnum} and ccnum = #{ccnum}
 	</delete>
 </mapper>
