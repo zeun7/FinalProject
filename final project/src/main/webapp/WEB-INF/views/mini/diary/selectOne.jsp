@@ -84,19 +84,19 @@ $(document).ready(function() {
       });
     }
   });
-  
-  $('#backButton').on('click',function(e){
-    e.preventDefault();
-    window.history.back();
-  });
+  // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
+  if('${user_id}' != '${mh_attr.id}'){	
+      $('#buttonContainer').hide();
+  }
 });
 </script>
 </head>
 <body>
 <jsp:include page="../../top_menu.jsp"></jsp:include>
-<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
-<h1>mini/diary/selectOne.jsp ${mbnum}</h1>
-
+<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+<h1>mini/diary/selectOne.jsp</h1>
+<h1>${user_id}</h1>
+<h1>${mh_attr.id}</h1>
 <div>${vo2.mbname}</div>
 <div id="title">제목 : <span id="titleSpan">${vo2.title}</span></div>
 <div>닉네임 : ${vo2.writer}</div>
@@ -107,9 +107,7 @@ $(document).ready(function() {
 <div id="imageContainer"></div>
 <div id="buttonContainer">
   <button id="editButton" class="myButton">수정</button>
-  <a href="diary_deleteOK.do?mbnum=${param.mbnum}" class="myButton">삭제</a>
+  <a href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}" class="myButton">삭제</a>
 </div>
-<button id="backButton" class="myButton" style="margin-left : 300px">뒤로가기</button>
-<div>1 2 3 4 5</div>
 </body>
 </html>

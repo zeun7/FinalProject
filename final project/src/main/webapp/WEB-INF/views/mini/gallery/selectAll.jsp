@@ -12,11 +12,13 @@ $(document).ready(function () {
 
         var fileInput = document.getElementById('bfile');
         var file = fileInput.files[0];
+        var title = document.getElementById('title').value;
         var formData = new FormData();
 
-        formData.append('bfile', file); 
         formData.append('mbname', 'gallery');
-        formData.append('writer', '${nickname}'); 
+        formData.append('writer', '${m_attr.nickname}'); 
+        formData.append('title', title);
+        formData.append('bfile', file);
 
         $.ajax({
             url: 'gallery_insertOK.do', 
@@ -39,40 +41,34 @@ $(document).ready(function () {
             }
         });
     });
+    
+    // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
+    if('${user_id}' != '${mh_attr.id}'){	
+        $('#buttonContainer').hide();
+    }
 });
 
-$(document).ready(function() {
-    $('#backButton').on('click', function(e) {
-        e.preventDefault();
-        window.history.back();
-    });
-});
 </script>
 
 </head>
 <body>
     <jsp:include page="../../top_menu.jsp"></jsp:include>
-    <jsp:include page="../../mini_top_menu.jsp"></jsp:include>
+    <jsp:include page="../mini_top_menu.jsp"></jsp:include>
     <h1>mini/gallery/selectAll.jsp</h1>
-    
-    <div style="background-image: url('resources/uploadimg/${backimg}'); background-size: cover; width: 100%; height: 100vh;">
+    <div style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
         <h1>사진첩</h1>
-        <div><img src="resources/uploadimg/${profilepic}"></div>
-        <audio id="bgmPlayer" controls>
-            <source src="resources/uploadbgm/${bgm}" type="audio/mp3">
-        </audio>
-        <br>
         <c:forEach var="vo" items="${vos}">
-	        <a href="gallery_selectOne.do?mbnum=${vo.mbnum}">
+	        <a href="gallery_selectOne.do?id=${mh_attr.id}&mbnum=${vo.mbnum}">
 	  			<img src="resources/uploadimg/thumb_${vo.filepath}">
 		    </a>
         </c:forEach>
         <h2>이미지추가</h2><br>
-        <input type="file" id="bfile">
-        <button id="uploadButton">사진올리기</button>
-        
+        <div id="buttonContainer">
+	        <input type="file" id="bfile" name="bfile"><br>
+	        제목 :<input type="text" id="title" name="title">
+	        <button id="uploadButton">사진올리기</button>
+        </div>
         <div>1 2 3 4 5</div>
-        <button id="backButton" class="myButton" style="margin-left: 300px">뒤로가기</button>
     </div>
 </body>
 </html>

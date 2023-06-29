@@ -39,60 +39,61 @@
 	}
 </style>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#backButton').on('click', function(e) {
-			e.preventDefault();
-			window.history.back();
-		});
+    $(document).ready(function() {
+        var currentWord = '사과'; // 시작 단어
 
-		var currentWord = '광대'; // 시작 단어
+        $('#startButton').on('click', function() {
+            addWord();
+        });
 
-		$('#startButton').on('click', function() {
-			addWord();
-		});
+        $('#inputWord').on('keyup', function(event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                addWord();
+            }
+        });
 
-		$('#inputWord').on('keydown', function(event) {
-			if (event.which === 13) {
-				event.preventDefault();
-				addWord();
-			}
-		});
+        function addWord() {
+            var inputWord = $('#inputWord').val(); // 입력한 단어
+            var hangulWord = /^[가-힣]+$/; // 한글 단어 유효성 검사
 
-		function addWord() {
-			var inputWord = $('#inputWord').val(); // 입력한 단어
+            // 입력한 단어가 비어 있지 않고, 한글 단어이며, 그리고 입력한 단어의 첫 글자가 현재 참조 단어의 마지막 글자와 같다면
+            if (inputWord !== '' && hangulWord.test(inputWord) && inputWord.charAt(0) === currentWord.charAt(currentWord.length - 1)) {
+                var formattedWord = inputWord.trim(); // 입력한 단어에서 앞뒤 공백 제거
+                $('#wordList').empty(); // 리스트 비우기
+                var listItem = $('<li>').text('입력한 단어: ' + formattedWord); 
+                $('#wordList').append(listItem); // 단어 리스트에 추가
 
-			if (inputWord !== '' && inputWord.charAt(0) === currentWord.charAt(currentWord.length - 1)) {
-				var formattedWord = inputWord.trim(); // 입력한 단어에서 앞뒤 공백 제거
-				$('#wordList').empty(); // 리스트 비우기
-				var listItem = $('<li>').text('입력한 단어: ' + formattedWord); 
-				$('#wordList').append(listItem); // 단어 리스트에 추가
+                // 다음 차례 설정
+                currentWord = formattedWord;
 
-				// 다음 차례 설정
-				currentWord = formattedWord;
-
-				// 입력 필드 초기화
-				$('#inputWord').val('');
-			} else {
-				alert('땡!'); // '땡!' 알림창 표시
-			}
-		}
-	});
+                // 입력 필드 초기화
+                $('#inputWord').val('');
+            } else if (!hangulWord.test(inputWord)) {
+                alert('한글만 입력!'); // '한글만 입력!' 알림창 표시
+            } else {
+                alert('땡!'); // '땡!' 알림창 표시
+            }
+        }
+    });
 </script>
 </head>
 <body>
 	<jsp:include page="../../top_menu.jsp"></jsp:include>
-	<jsp:include page="../../mini_top_menu.jsp"></jsp:include>
+	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/game/game.jsp</h1>
-	<button id="backButton" class="myButton" style="margin-left: 300px">뒤로가기</button>
+	<div
+		style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
 	<div id="gameContainer">
 		<div id="gameBackground"></div>
 		<div id="gameContent">
 			<h2>끝말잇기 게임</h2>
-			<p>시작 단어: 광대</p>
+			<p>시작 단어: 사과</p>
 			<ul id="wordList"></ul>
 			<input type="text" id="inputWord" placeholder="단어를 입력하세요">
 			<button id="startButton">다음 단어</button>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

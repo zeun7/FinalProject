@@ -3,12 +3,12 @@
 	pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>프로필 수정</title>
+<title>미니홈피 수정</title>
 <jsp:include page="../css.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="../top_menu.jsp"></jsp:include>
-<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+<jsp:include page="mini_top_menu.jsp"></jsp:include>
 	<h1>mini/update.jsp</h1>
 	<form action="mini_updateOK.do" method="post" enctype="multipart/form-data">
 		<table id="memberList">
@@ -61,7 +61,7 @@
 			
 			<tr>
 				<td colspan="2">
-					<input type="submit" value="프로필 수정완료">
+					<input type="submit" value="미니홈피 수정완료">
 				</td>
 			</tr>
 		</table>

@@ -7,22 +7,24 @@
 <jsp:include page="../../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+
 </head>
 <body>
 	<jsp:include page="../../top_menu.jsp"></jsp:include>
+	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/diary/insert.jsp</h1>
 
-	<form action="mb_insertOK.do" method="post" enctype="multipart/form-data">
+	<form action="mb_insertOK.do?id=${mh_attr.id}" method="post" enctype="multipart/form-data">
 
 		<div>
-			<h1 style="font-size: 24px;">다이어리 ${nickname}</h1>
+			<h1 style="font-size: 24px;">다이어리 ${m_attr.nickname}</h1>
 		</div>
 		<div>
 			<input type="hidden" id="mbname" name="mbname" value="diary">
 		</div>
 		<div>
 			<input type="hidden" id="writer" name="writer"
-				value="${nickname}">
+				value="${m_attr.nickname}">
 		</div>
 		<div>
 			제목 :<input type="text" style="border: none;" id="title" name="title"

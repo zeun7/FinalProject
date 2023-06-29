@@ -9,11 +9,11 @@
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
-	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+	<jsp:include page="mini_top_menu.jsp"></jsp:include>
 	<h1>mini/minihome.jsp</h1>
 	<div
-		style="background-image: url('resources/uploadimg/${vo2.backimg}'); background-size: cover; width: 100%; height: 100vh;">
-		<div>${vo2.title}</div>
+		style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
+		<h1>미니홈피 제목 : ${mh_attr.title}</h1>
 	</div>
 </body>
 </html>

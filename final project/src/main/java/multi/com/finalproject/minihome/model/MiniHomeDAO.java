@@ -8,9 +8,18 @@ public interface MiniHomeDAO {
 	
 	public int update(MiniHomeVO vo);
 	
-	public void vcountUp(MiniHomeVO vo);
-
-	public MemberVO selectProfilePic(MiniHomeVO vo);
+	public MemberVO selectNickPic(MiniHomeVO vo);
 
 	public void view_update(MiniHomeVO vo2);
+
+	public int hasVisitedToday(VisitHistoryVO v_vo);
+
+	public void vcountUp(MiniHomeVO vo);
+
+	public void addVisitHistory(VisitHistoryVO v_vo);
+
+	public void resetVTodayForALL();
+
+	public MiniHomeVO getRandomMiniHome();
+
 }

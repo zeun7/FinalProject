@@ -31,21 +31,44 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	}
 
 	@Override
-	public void vcountUp(MiniHomeVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public MemberVO selectProfilePic(MiniHomeVO vo) {
-		log.info("selectProfilePic(vo)...{}", vo);
-		return sqlSession.selectOne("PROFILE_PIC_SELECT", vo);
+	public MemberVO selectNickPic(MiniHomeVO vo) {
+		log.info("selectNickPic(vo)...{}", vo);
+		return sqlSession.selectOne("SELECT_NICK_PIC", vo);
 	}
 
 	@Override
 	public void view_update(MiniHomeVO vo2) {
 		log.info("update(vo2)...{}", vo2);
 		sqlSession.update("VIEW_UPDATE",vo2);
+	}
+
+	@Override
+	public int hasVisitedToday(VisitHistoryVO v_vo) {
+		log.info("hasVisitedToday(v_vo)...{}", v_vo);
+		return sqlSession.selectOne("HAS_VISITED_TODAY", v_vo);
+	}
+
+	@Override
+	public void vcountUp(MiniHomeVO vo) {
+		log.info("vcountUp(vo)...{}", vo);
+		sqlSession.update("VCOUNT_UP", vo);
+	}
+
+	@Override
+	public void addVisitHistory(VisitHistoryVO v_vo) {
+		log.info("addVisitHistory(v_vo)...{}", v_vo);
+		sqlSession.insert("ADD_VISIT_HISTORY", v_vo);
+	}
+
+	@Override
+	public void resetVTodayForALL() {
+		sqlSession.update("RESET_VTODAY_ALL");
+	}
+
+	@Override
+	public MiniHomeVO getRandomMiniHome() {
+		log.info("getRandomMiniHome()...");
+		return sqlSession.selectOne("RANDOM_MINI_HOME");
 	}
 
 }
