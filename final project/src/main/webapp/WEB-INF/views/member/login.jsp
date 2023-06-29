@@ -13,6 +13,29 @@
 <jsp:include page="../css.jsp"></jsp:include>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+// $ajax({
+// 	type :" post",
+// 	url : "loginOK.do",
+// 	data : {
+// 		[[${_csrf.paramterName}]] : [[${_csrf.token}]],
+// 		username: username,
+// 		password: password,
+// 		rememberMe: rememberMe
+// 	},
+// 	success : function(data, state, xhr){
+// 		if(xhr.getResponseHeader("isSuccess") == "true"){
+// 			location.replace("home.do");
+// 		}else if(xhr.getResponseHeader("isSuccess") == "false"){
+// 			alert("접근권한이 없습니다");
+// 	}
+// 		else{
+// 		alert('로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인 하세요.');	
+// 		}
+// 		},
+// 		error : function(){
+			
+// 		}
+// })
 	$(function() {
 
 		$("#find_id_btn").click(function() {
@@ -52,13 +75,7 @@
 					<td colspan="2"><input type="submit"
 						class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"></td>
 				</tr>
-				<div class="col-xs-8">
-					<div class="checkbox idcheck">
-						<label> <input type="checkbox" name="userCookie">
-							로그인유지
-						</label>
-					</div>
-				</div>
+				 <input type="checkbox" name="rememberMe" id="rememberMe"/>로그인 유지<br>
 			</form>
 		</div>
 	</div>

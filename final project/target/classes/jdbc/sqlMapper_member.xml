@@ -4,10 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.com.finalproject">
-	<select id="M_SELECT_ALL"
-		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member order by num desc
-	</select>
 
 	<select id="M_SELECT_ONE"
 		resultType="multi.com.finalproject.member.model.MemberVO">
@@ -61,13 +57,22 @@
 	delete from member where num = #{num} 
  </delete>
 
-	<select id="FIND_ID"
+	<select id="FIND_ID_EMAIL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
 	</select>
+	
+	<select id="FIND_ID_TEL"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		select id from member where tel = #{tel}
+	</select>
 
-	<select id="FIND_PW"
+	<select id="FIND_PW_EMAIL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
+	</select>
+	<select id="FIND_PW_TEL"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		select id from member where tel = #{tel}
 	</select>
 </mapper>

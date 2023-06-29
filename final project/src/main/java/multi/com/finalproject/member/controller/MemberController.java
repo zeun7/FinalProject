@@ -233,8 +233,8 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping(value = "/find_id.do", method = RequestMethod.GET)
-	public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model model) {
+	@RequestMapping(value = "/find_id_email.do", method = RequestMethod.GET)
+	public String find_id_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -297,15 +297,90 @@ public class MemberController {
 			return null;
 		}
 	}
+	@RequestMapping(value = "/find_id_tel.do", method = RequestMethod.GET)
+	public String find_id_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				// Oracle JDBC 드라이버 로드
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				
+				// 데이터베이스 연결 설정
+				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
+				// URL
+				String username = "admin"; // 데이터베이스 사용자명
+				String password = "Final123456!"; // 데이터베이스 비밀번호
+				
+				conn = DriverManager.getConnection(url, username, password);
+				
+				// SQL 문장 준비
+				String sql = "select id from member where tel = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, tel);
+				
+				// 쿼리 실행
+				rs = pstmt.executeQuery();
+				
+				// 결과 처리
+				if (rs.next()) {
+					String id = rs.getString("id");
+					model.addAttribute("id", id);
+				} else {
+					out.println("<script>");
+					out.println("alert('가입된 아이디가 없습니다.');");
+					out.println("history.go(-1);");
+					out.println("</script>");
+					out.close();
+					return null;
+				}
+			} finally {
+				// 리소스 해제
+				if (rs != null) {
+					rs.close();
+				}
+				
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			
+			return "member/find_id";
+		} catch (Exception e) {
+			// 예외 처리
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@RequestMapping(value = "/find_id_from.do")
 	public String find_id_from() throws Exception {
 
 		return "member/find_id_from";
 	}
+	@RequestMapping(value = "/find_id_from_tel.do")
+	public String find_id_from_tel() throws Exception {
+		
+		return "member/find_id_from_tel";
+	}
+	
+	@RequestMapping(value = "/find_id_from_email.do")
+	public String find_id_from_email() throws Exception {
+		
+		return "member/find_id_from_email";
+	}
 
-	@RequestMapping(value = "/find_pw.do", method = RequestMethod.GET)
-	public String find_pw(HttpServletResponse response, @RequestParam("email") String email, Model model) {
+	@RequestMapping(value = "/find_pw_email.do", method = RequestMethod.GET)
+	public String find_pw_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -368,10 +443,84 @@ public class MemberController {
 			return null;
 		}
 	}
+	@RequestMapping(value = "/find_pw_tel.do", method = RequestMethod.GET)
+	public String find_pw_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				// Oracle JDBC 드라이버 로드
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				
+				// 데이터베이스 연결 설정
+				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
+				// URL
+				String username = "admin"; // 데이터베이스 사용자명
+				String password = "Final123456!"; // 데이터베이스 비밀번호
+				
+				conn = DriverManager.getConnection(url, username, password);
+				
+				// SQL 문장 준비
+				String sql = "select pw from member where tel = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, tel);
+				
+				// 쿼리 실행
+				rs = pstmt.executeQuery();
+				
+				// 결과 처리
+				if (rs.next()) {
+					String pw = rs.getString("pw");
+					model.addAttribute("pw", pw);
+				} else {
+					out.println("<script>");
+					out.println("alert('가입된 비밀번호가 없습니다.');");
+					out.println("history.go(-1);");
+					out.println("</script>");
+					out.close();
+					return null;
+				}
+			} finally {
+				// 리소스 해제
+				if (rs != null) {
+					rs.close();
+				}
+				
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			
+			return "member/find_pw";
+		} catch (Exception e) {
+			// 예외 처리
+			e.printStackTrace();
+			return null;
+		}
+	}
 
+	@RequestMapping(value = "/find_pw_from_email.do")
+	public String find_pw_from_email() throws Exception {
+
+		return "member/find_pw_from_email";
+	}
+	@RequestMapping(value = "/find_pw_from_tel.do")
+	public String find_pw_from_tel() throws Exception {
+		
+		return "member/find_pw_from_tel";
+	}
 	@RequestMapping(value = "/find_pw_from.do")
 	public String find_pw_from() throws Exception {
-
+		
 		return "member/find_pw_from";
 	}
 

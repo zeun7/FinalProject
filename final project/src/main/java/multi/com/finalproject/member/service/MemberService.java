@@ -1,10 +1,5 @@
 package multi.com.finalproject.member.service;
 
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -60,14 +55,16 @@ public class MemberService {
 
 		return dao.find_id(email);
 	}
+	public String find_id_tel(HttpServletResponse response, String tel) throws Exception {
+		
+		return dao.find_id_tel(tel);
+	}
 
 	public String find_pw(HttpServletResponse response, String email) throws Exception {
 		return dao.find_pw(email);
 	}
-
-	public MemberVO user(MemberVO vo) {
-		return dao.user(vo);
+	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
+		return dao.find_pw_tel(tel);
 	}
 
-	
 }

@@ -14,16 +14,13 @@
 			<form action="find_id.do" method="get">
 				<div class="w3-center w3-large w3-margin-top">
 					<h3>아이디 찾기</h3>
-				</div>
-				<div>
-					<p>
-						<label>Email</label>
-						<input class="w3-input" type="text" id="email" name="email" required>
-					</p>
-					<p class="w3-center">
-						<button type="submit" id=findBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">find</button>
-						<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-					</p>
+					
+				<div style="padding:5px">
+
+		<button type="button"  class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"><a href="find_id_from_email.do">이메일로 찾기</a></button>
+		<button type="button"  class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"><a href="find_id_from_tel.do">전화 번호로 찾기</a></button>
+		<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
+					
 				</div>
 			</form>
 		</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.com.finalproject">
+<resultMap id="MemberVOResultMap" type="multi.com.finalproject.member.model.MemberVO">
+<result property="id" column="ID"/>
+<result property="pw" column="PW"/>
+<result property="name" column="NAME"/>
+<result property="email" column="EMAIL"/>
+<result property="nickname" column="NICKNAME"/>
+<result property="profilepic" column="PROFILEPIC"/>
+<result property="tel" column="tel"/>
+
+</resultMap>
+	<update id="KEEPLOGIN">
+update member  set session_key = #{sessionid}, session_limit = #{sessionlimit} where id=#{id}
+</update>
+
+<select id="CHECK" resultMap="MemberVOResultMap">
+select *from member where session_key = #{value}
+</select>
+</mapper>
