@@ -9,77 +9,77 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalproject.comments.model.CommentsVO;
-import multi.com.finalproject.comments.service.CommentsService;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 
 @Slf4j
 @Controller
 public class MiniCommentsRestController {
 	
 	@Autowired
-	CommentsService service;
+	MiniCommentsService service;
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_selectAll.do", method = RequestMethod.GET)
-	public List<CommentsVO> json_c_selectAll() {
-		log.info("json_c_selectAll.do...");
+	@RequestMapping(value = "/json_mc_selectAll.do", method = RequestMethod.GET)
+	public List<MiniCommentsVO> json_mc_selectAll() {
+		log.info("json_mc_selectAll.do...");
 		
-		List<CommentsVO> list = service.selectAll();
+		List<MiniCommentsVO> list = service.selectAll();
 			
 		return list;
 	}
 
 
 	@ResponseBody
-	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_insertOK(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_insertOK.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_insertOK(MiniCommentsVO vo) {
 		
-		log.info("json_c_insertOK.do...{}",vo);
+		log.info("json_mc_insertOK.do...{}",vo);
 			
 		return vo;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/json_c_reinsertOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_reinsertOK(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_reinsertOK.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_reinsertOK(MiniCommentsVO vo) {
 		
-		log.info("json_c_reinsertOK.do...{}",vo);
+		log.info("json_mc_reinsertOK.do...{}",vo);
 			
 		return vo;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_updateOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_updateOK(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_updateOK.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_updateOK(MiniCommentsVO vo) {
 		
-		log.info("json_c_updateOK.do...{}",vo);
+		log.info("json_mc_updateOK.do...{}",vo);
 			
 		return vo;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/json_c_deleteOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_deleteOK(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_deleteOK.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_deleteOK(MiniCommentsVO vo) {
 		
-		log.info("json_c_deleteOK.do...{}",vo);
+		log.info("json_mc_deleteOK.do...{}",vo);
 			
 		return vo;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_report.do", method = RequestMethod.GET)
-	public CommentsVO json_c_report(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_report.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_report(MiniCommentsVO vo) {
 		
-		log.info("json_c_report.do...{}",vo);
+		log.info("json_mc_report.do...{}",vo);
 			
 		return vo;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_like.do", method = RequestMethod.GET)
-	public CommentsVO json_c_like(CommentsVO vo) {
+	@RequestMapping(value = "/json_mc_like.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_like(MiniCommentsVO vo) {
 		
-		log.info("json_c_like.do...{}",vo);
+		log.info("json_mc_like.do...{}",vo);
 			
 		return vo;
 	}

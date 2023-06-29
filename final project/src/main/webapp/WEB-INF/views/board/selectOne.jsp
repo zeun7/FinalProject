@@ -4,6 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="finalproject" />
+<meta name="twitter:title" content="FinalProject" />
+<meta name="twitter:description" content="1조 파이널프로젝트" />
+<meta name="twitter:image" content="https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg" />
+<meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/modal.css">
 <jsp:include page="../css.jsp"></jsp:include>
@@ -11,44 +17,50 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-let url = location.href;
+let url = 'https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
 console.log(encodeUrl);
 
 	$(function(){
 		//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
-		$.ajax({
-			url : "json_b_likeCheck.do",
-			method : 'GET',
-			data : {
-				num : ${num},
-				bnum : ${param.bnum}
-			},
-			dataType : 'json', 
-			success : function(map) {
-// 	 			console.log(map.result);
-				if(map.result == 0){		//좋아요를 안눌렀다면
-					$("#like_button").show();
-					$("#lcancel_button").hide();
-				}else{
-					$("#like_button").hide();
-					$("#lcancel_button").show();
+		let snum = '';
+		snum = '${num}';
+		if(snum != ''){
+			$.ajax({
+				url : "json_b_likeCheck.do",
+				method : 'GET',
+				data : {
+					num : snum,
+					bnum : ${param.bnum}
+				},
+				dataType : 'json', 
+				success : function(map) {
+	// 	 			console.log(map.result);
+					if(map.result == 0){		//좋아요를 안눌렀다면
+						$("#like_button").show();
+						$("#lcancel_button").hide();
+					}else{
+						$("#like_button").hide();
+						$("#lcancel_button").show();
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log('xhr:', xhr.status);
+	//				console.log('status:', status);
+	//				console.log('error:', error);
 				}
-			},
-			error : function(xhr, status, error) {
-				console.log('xhr:', xhr.status);
-//				console.log('status:', status);
-//				console.log('error:', error);
-			}
-		});//end $.ajax()
+			});//end $.ajax()
+		}
 	});//end onload
 	
 	function like(){
+		let snum = '';
+		snum = '${num}';
 		$.ajax({
 			url : "json_b_like.do",
 			method : 'GET',
 			data : {
-				num : ${num},
+				num : snum,
 				bnum : ${param.bnum}
 			},
 			dataType : 'json', 
@@ -69,11 +81,13 @@ console.log(encodeUrl);
 	}//end like()
 	
 	function like_cancel(){
+		let snum = '';
+		snum = '${num}';
 		$.ajax({
 			url : "json_b_like_delete.do",
 			method : 'GET',
 			data : {
-				num : ${num},
+				num : snum,
 				bnum : ${param.bnum}
 			},
 			dataType : 'json', 
@@ -103,17 +117,17 @@ console.log(encodeUrl);
 	function share_twitter(){
 		let option = "width = 500, height = 500";
 		let name = "트위터로 공유";
-	    window.open("http://twitter.com/share?url=" + encodeURIComponent(location.href) +"&text=" + encodeURIComponent(document.title), name, option);
+	    window.open("http://twitter.com/share?url=" + encodeURIComponent('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}) +"&text=" + encodeURIComponent(document.title), name, option);
 	}//end share_twitter()
 	
 	function share_facebook(){
 		let option = "width = 500, height = 500";
 		let name = "페이스북으로 공유";
-	    window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent(location.href), name, option);
+	    window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}), name, option);
 	}//end share_facebook()
 	
 	function copy_url(){
-		navigator.clipboard.writeText(location.href).then(() => {
+		navigator.clipboard.writeText('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}).then(() => {
 	        alert("복사완료");
 	      });
 	}
@@ -123,7 +137,7 @@ console.log(encodeUrl);
 		if(Kakao.isInitialized()){
 			Kakao.Share.createScrapButton({
 			    container: '#kakaotalk-sharing-btn',
-			    requestUrl: window.location.href
+			    requestUrl: 'https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}
 			});
 		}
 	});
@@ -150,7 +164,8 @@ console.log(encodeUrl);
 			<tr>
 				<td colspan="3">
 					<hr>
-					<img width="300px" src="${vo2.filepath}">
+					<video src="${vo2.filepath}" width="300" controls id="video"></video>
+					<img width="300px" src="${vo2.filepath}" id="img">
 				</td>
 			</tr>
 			<tr>
@@ -162,7 +177,7 @@ console.log(encodeUrl);
 			<tr>
 				<td>
 					<button onclick="like()" id="like_button">좋아요</button>
-					<button onclick="like_cancel()" id="lcancel_button">좋아요 취소</button>
+					<button onclick="like_cancel()" id="lcancel_button" style="display: none">좋아요 취소</button>
 					<span id="likes_count">${vo2.likes }</span>
 					<button onclick="open_modal()">공유</button>					
 					<button onclick="report()" id="report_button">신고</button>
@@ -194,6 +209,14 @@ console.log(encodeUrl);
 			$('#update_delete').show();
 		}else{
 			$('#update_delete').hide();
+		}
+		
+		//첨부파일이 video인지 img인지
+		let str = '${vo2.filepath}'.substr(-3);
+		if(str === 'mp4'){
+			$('#img').hide();
+		}else{
+			$('#video').hide();
 		}
 		
 		$('#url').html(url);

@@ -48,7 +48,8 @@
 		<tbody>
 			<tr>
 				<td>
-					<input type="file" id="file" name="file">
+					<input type="file" id="file" name="file" multiple="multiple" onchange="file_change(event)">
+					<div id="file_content"></div>
 				</td>
 			</tr>
 			<tr>
@@ -80,6 +81,28 @@ nhn.husky.EZCreator.createInIFrame({
 	},
 	fCreator: "createSEditor2"
 });
+
+//다중 파일 업로드
+let files = new Array();
+
+function file_change(event){
+	console.log('file_change()');
+	
+	for(var image of event.target.files){
+		var reader = new FileReader();
+		
+		reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("width", "400px");
+            var tag_img = '<img width="400px" src="'+event.target.result+'" id="img">';
+	        oEditors.getById["content"].exec("PASTE_HTML", [tag_img]);
+          };
+          
+        reader.readAsDataURL(image);
+	}
+	
+}
 </script>
 
 </body>

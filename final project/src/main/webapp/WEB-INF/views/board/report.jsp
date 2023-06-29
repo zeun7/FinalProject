@@ -22,7 +22,7 @@
 		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br>
 		<input type="radio" id="reason6" name="reason" value="불쾌한 표현이 있습니다">
 		<label for="reason6">불쾌한 표현이 있습니다</label><br>
-		<input type="submit" value="신고">
+		<button type="button" onclick="submitReport()">신고</button>
 	</form>
 	
 	<div id="reportOK_txt">
@@ -40,6 +40,14 @@
 		}else{
 			$("#report_form").hide();
 			$("#reportOK_txt").show();
+		}
+		
+		function submitReport(){
+			if($('input:radio[name=reason]').is(":checked")){
+				document.getElementById("report_form").submit();
+			}else{
+				alert('신고사유를 선택하세요.');
+			}
 		}
 	</script>
 </body>
