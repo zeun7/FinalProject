@@ -13,6 +13,10 @@ public class CommentsService {
 	
 	@Autowired
 	CommentsDAO dao;
+	
+	public List<CommentsVO> selectAll(CommentsVO vo) {
+		return dao.selectAll(vo);
+	}
 
 	public int insert(CommentsVO vo) {
 		return dao.insert(vo);
@@ -26,9 +30,6 @@ public class CommentsService {
 		return dao.delete(vo);
 	}
 
-	public List<CommentsVO> selectAll() {
-		return dao.selectAll();
-	}
 
 	public List<CommentsVO> findByBnum(Long bNum) {
 		return dao.findByBnum(bNum);

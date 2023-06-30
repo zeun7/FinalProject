@@ -18,30 +18,36 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public CommentsDAOimpl() {
 		log.info("CommentsDAOimpl()...");
 	}
-
+	
+	@Override
+	public List<CommentsVO> selectAll(CommentsVO vo) {
+		log.info("selectAll()...{}");
+		
+		return sqlSession.selectList("C_SELECT_ALL", vo);
+	}
+	
 	@Override
 	public int insert(CommentsVO vo) {
 		log.info("insert()...{}",vo);
+		
 		return sqlSession.update("C_INSERT",vo);
 	}
 
 	@Override
 	public int update(CommentsVO vo) {
 		log.info("update()...{}",vo);
+		
 		return sqlSession.update("C_UPDATE",vo);
 	}
 
 	@Override
 	public int delete(CommentsVO vo) {
 		log.info("delete()...{}",vo);
+		
 		return sqlSession.delete("C_DELETE",vo);
 	}
 
-	@Override
-	public List<CommentsVO> selectAll() {
-		log.info("selectAll()...{}");
-		return sqlSession.selectList("C_SELECT_ALL");
-	}
+	
 
 	@Override
 	public List<CommentsVO> findByBnum(Long bNum) {

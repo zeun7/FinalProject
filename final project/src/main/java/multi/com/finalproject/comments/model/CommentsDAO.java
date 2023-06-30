@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CommentsDAO {
 		
-		List<CommentsVO> selectAll();
+		public List<CommentsVO> selectAll(CommentsVO vo);
 
 		public int insert(CommentsVO vo);
 

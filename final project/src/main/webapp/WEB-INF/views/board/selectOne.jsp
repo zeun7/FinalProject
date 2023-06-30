@@ -142,6 +142,64 @@ console.log(encodeUrl);
 		}
 	});
 	
+	function comments(bnum){
+		console.log("print comments...");
+		$.ajax({
+			url: 'json_c_selectAll.do',
+			data: {bnum: bnum},
+			method: 'GET',
+			dataType: 'json',
+			success: function(arr){
+				let tag_comments = '';
+				
+				$.each(arr, function(index, vo){
+					tag_comments += `
+						<hr />
+						<tr rowspan="2">
+							<td>\${vo.writer}</td>
+							<td>\${vo.content}</td>
+							<td><button onclick="clike(\${vo.cnum}, \${vo.ccnum}, \${bnum})">clike</button>
+							<td><button onclick="cocoment(\${vo.cnum}, \${vo.ccnum}, \${bnum})">답글</button>
+							<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
+						</tr>
+						<tr>
+							<td></td>
+							<td><button onclick="c_update(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update">수정</button>
+							<td><button onclick="c_delete(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_delete">삭제</button>
+						</tr>
+						<div id="cocoment"></div>	// 대댓글 출력
+						<div id="insert_comment"></div>`; // 대댓글 입력창 출력
+				});
+				
+				tag_comments += `
+					<div id="insert_comment">
+					</div>
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+			}
+			
+			$('#comments').html(tag_comments);
+		});
+	}
+	
+	function insert_comment(cnum, ccnum=0, bnum){
+		console.log('insert comments...');
+		
+		let tag_insert_comment = '';
+		
+		if(ccnum != 0){
+			tag_insert_comment += `<image width="100px" src="/resource/icon/cocoment.png">
+		}
+		
+		tag_insert_comment += `
+			<div>
+				<intput type="text" id="comm_content" />
+				<button onclick="c_insertOK(\${cnum}, \${ccnum}, \${bnum})">등록</button>
+			</div>`;
+			
+		$('#insert_comment').html(tag_insert_comment);
+	}
 </script>
 </head>
 <body>
@@ -203,7 +261,11 @@ console.log(encodeUrl);
 			</div>
 		</div>
 	</div>
-
+	
+	<table id="comments">
+		
+	</table>
+	
 	<script type="text/javascript">
 		if('${nickname}' === '${vo2.writer}'){
 			$('#update_delete').show();

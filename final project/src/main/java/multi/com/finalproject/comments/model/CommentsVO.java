@@ -14,5 +14,4 @@ public class CommentsVO {
 	private Timestamp cdate;
 	private int secret;
 	private int report;
-	private String reason;
 }

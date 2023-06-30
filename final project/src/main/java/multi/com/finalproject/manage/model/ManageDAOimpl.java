@@ -18,6 +18,10 @@ public class ManageDAOimpl implements ManageDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
+	public ManageDAOimpl() {
+		log.info("ManageDAOimpl()...");
+	}
+	
 	@Override
 	public List<FriendsVO> friends(FriendsVO vo) {
 		log.info("friends()...{}", vo);

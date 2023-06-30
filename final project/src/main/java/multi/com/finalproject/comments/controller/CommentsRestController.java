@@ -21,10 +21,10 @@ public class CommentsRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_c_selectAll.do", method = RequestMethod.GET)
-	public List<CommentsVO> json_c_selectAll() {
+	public List<CommentsVO> json_c_selectAll(CommentsVO vo) {
 		log.info("json_c_selectAll.do...");
 		
-		List<CommentsVO> list = service.selectAll();
+		List<CommentsVO> list = service.selectAll(vo);
 			
 		return list;
 	}
@@ -33,7 +33,6 @@ public class CommentsRestController {
 	@ResponseBody
 	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)
 	public CommentsVO json_c_insertOK(CommentsVO vo) {
-		
 		log.info("json_c_insertOK.do...{}",vo);
 			
 		return vo;
