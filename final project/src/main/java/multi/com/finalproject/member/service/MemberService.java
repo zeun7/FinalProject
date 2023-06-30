@@ -1,5 +1,11 @@
 package multi.com.finalproject.member.service;
 
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -66,5 +72,13 @@ public class MemberService {
 	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
 		return dao.find_pw_tel(tel);
 	}
-
+	
+	public void keepLogin(String id, String sessionId, Date next) {
+ 
+        dao.keepLogin(id, sessionId, next);
+    }
+ 
+    public MemberVO checkUserWithSessionKey(String sessionId) {
+        return dao.checkUserWithSessionKey(sessionId);
+    }
 }

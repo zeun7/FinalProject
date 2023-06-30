@@ -21,4 +21,6 @@ public class MemberVO {
 	private int peach;
 	private int mclass;
 	private MultipartFile m_file;
+	public boolean isUseCookie ;
+		
 }

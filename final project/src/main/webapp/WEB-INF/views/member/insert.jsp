@@ -101,37 +101,54 @@
 	//   	});//end $.ajax()...
 
 	//   }//end EmailCheck()...
-	$(document).ready(function() {
-		$("#join").click(function() {
-			var gubun = $('#btnOverlapped').prop('disabled');
-			if (!gubun) {
-				alert('중복체크를 클릭해주세요.');
-				return;
-			}
-			if (!compare_result) {
-				alert('비밀번호가 일치하지 않습니다.');
-				return;
-			}
-			$("#joinForm").submit();
+	// 	$(document).ready(function() {
+	// 		$("#join").click(function() {
+	// 			var gubun = $('#btnOverlapped').prop('disabled');
+	// 			if (!gubun) {
+	// 				alert('중복체크를 클릭해주세요.');
+	// 				return;
+	// 			}
+	// 			if (!compare_result) {
+	// 				alert('비밀번호가 일치하지 않습니다.');
+	// 				return;
+	// 			}
+	// 			$("#joinForm").submit();
 
-		});
+	// 		});
 
-	});
-	var compare_result = false;
-	function fn_compare_pwd() {
-		var pwd1 = $("#member_pwd1").val();
-		var pwd2 = $("#member_pwd2").val();
-		var $s_result = $("#s_result");
-		if (pwd1 == pwd2) {
+	// 	});
+	// 	var compare_result = false;
+	// 	function fn_compare_pwd() {
+	// 		var pwd1 = $("#member_pwd1").val();
+	// 		var pwd2 = $("#member_pwd2").val();
+	// 		var $s_result = $("#s_result");
+	// 		if (pwd1 == pwd2) {
 
-			compare_result = true;
-			$s_result.text("비밀번호가 일치합니다.");
-			return;
+	// 			compare_result = true;
+	// 			$s_result.text("비밀번호가 일치합니다.");
+	// 			return;
 
+	// 		}
+	// 		compare_result = false;
+
+	// 		$s_result.text("비밀번호가 일치하지 않습니다.");
+	// 	}
+	function test() {
+		var p1 = document.getElementById('pw1').value;
+		var p2 = document.getElementById('pw2').value;
+
+		if (p1.length < 6) {
+			alert('입력한 글자가 6글자 이상이어야 합니다.');
+			return false;
 		}
-		compare_result = false;
 
-		$s_result.text("비밀번호가 일치하지 않습니다.");
+		if (p1 != p2) {
+			alert("비밀번호불일치");
+			return false;
+		} else {
+			alert("비밀번호가 일치합니다");
+			return true;
+		}
 	}
 </script>
 </head>
@@ -153,24 +170,34 @@
 								<button type="button" onclick="idCheck()" class="myButton">ID중복체크</button>
 								<span id="demo1"></span></td>
 						</tr>
-						<!-- 						<tr> -->
-						<!-- 							<td><label for="pw">pw:</label></td> -->
-						<!-- 							<td><input class="w3-input" type="password" id="pw" -->
-						<!-- 								name="pw" placeholder="비밀번호"></td> -->
-						<!-- 						</tr> -->
-						<tr>
-						<tr>
-							<td><label for="pw">pw:</label></td>
-							<td><input class="w3-input" name="member_pw1"
-								id="member_pw1" type="password" size="20" placeholder="비밀번호"></td>
+<!-- 						<tr> -->
+<!-- 							<td><input type="password" id="pw1">비밀번호 :</td> -->
+<!-- 							<td><input type="password" id="pw2">비밀번호 확인:</td> -->
+<!-- 							<td><input type="button" onclick="test()" value="확인"></td> -->
+<!-- 						</tr> -->
+
+<!-- 						<tr> -->
+<!-- 							<td><label for="pw">pw:</label></td> -->
+<!-- 							<td><input class="w3-input" type="password" id="pw2" -->
+<!-- 								name="pw" placeholder="비밀번호"></td> -->
+<!-- 						</tr> -->
+<tr> 
+							<td><label for ="pw">pw:</label></td>
+							<td><input type="password" id="pw1"></br>
+							<input type="password" id="pw2">비밀번호 확인:</td>
+							<td><input type="button" onclick="test()" value="확인"></td>
 						</tr>
-						<tr>
-							<td><label for="pw">비밀번호 확인:</label></td>
-							<td><input class="w3-input" name="member_pw2"
-								id="member_pw2" type="password" size="20"
-								placeholder="비밀번호 한 번 더 입력" onKeyUp="fn_compare_pwd();" /> <span
-								id="s_result" style="font-size: 12px;">비밀번호가 일치하지 않습니다.</span></td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 							<td><label for="pw">pw:</label></td> -->
+<!-- 							<td><input class="w3-input"  -->
+<!-- 								id="pw1" type="password"  placeholder="비밀번호"></td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td><label for="pw">비밀번호 확인:</label></td> -->
+<!-- 							<td><input class="w3-input"  -->
+<!-- 								id="pw1" type="password" placeholder="비밀번호 한 번 더 입력"> -->
+<!-- 							<input type="button" onclick="test()" value="확인"> -->
+<!-- 						</tr> -->
 						<tr>
 							<td><label for="nickname">nickname:</label></td>
 							<td><input class="w3-input" type="text" id="nickname"

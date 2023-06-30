@@ -1,6 +1,8 @@
 package multi.com.finalproject.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,7 @@ public class MemberRestController {
 	
 	@RequestMapping(value = "/json_m_selectOne.do", method = RequestMethod.GET)
 	public MemberVO json_m_selectOne(MemberVO vo) {
-		log.info("/json_m_selectOne.do");
+		log.info("/json_mv_selectAll.do");
 		
 		MemberVO vo2 = service.selectOne(vo);
 		if(vo2==null) vo2 = vo;
@@ -65,7 +67,4 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
-
-	
-	
 }

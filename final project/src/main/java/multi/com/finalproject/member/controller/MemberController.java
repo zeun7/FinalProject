@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
@@ -195,13 +199,33 @@ public class MemberController {
 
 	}
 
+//	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+//	public String logout(MemberVO vo) {
+//		log.info("/m_logout.do...{}", vo);
+//
+//		session.invalidate(); // 세션 만료시킴
+//
+//		return "redirect:home.do";
+//	}
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public String logout(MemberVO vo) {
-		log.info("/m_logout.do...{}", vo);
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	    Object obj = session.getAttribute("login");
+	    if (obj != null) {
+	        MemberVO vo = (MemberVO) obj;
+	        session.removeAttribute("login");
+	        session.invalidate();
 
-		session.invalidate(); // 세션 만료시킴
+	        Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+	        if (loginCookie != null) {
+	            loginCookie.setPath("/");
+	            loginCookie.setMaxAge(0);
+	            response.addCookie(loginCookie);
 
-		return "redirect:home.do";
+	            Date date = new Date(System.currentTimeMillis());
+	            service.keepLogin(vo.getId(), session.getId(), date);
+	        }
+	    }
+	    return "redirect:home.do";
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
@@ -215,23 +239,89 @@ public class MemberController {
 		return "member/login";
 	}
 
+//	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
+//	public String loginOK(MemberVO vo) {
+//		log.info("/loginOK.do...{}", vo);
+//
+//		MemberVO vo2 = service.login(vo);
+//		log.info("vo2...{}", vo2);
+//
+//		if (vo2 == null) {
+//			return "redirect:login.do?message=fail";
+//		} else {
+//			session.setAttribute("num", vo2.getNum());
+//			session.setAttribute("user_id", vo2.getId());
+//			session.setAttribute("nickname", vo2.getNickname());
+//			session.setAttribute("mclass", vo2.getMclass());
+//			return "redirect:home.do";
+//		}
+//	}
 	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
-	public String loginOK(MemberVO vo) {
-		log.info("/loginOK.do...{}", vo);
-
-		MemberVO vo2 = service.login(vo);
-		log.info("vo2...{}", vo2);
-
-		if (vo2 == null) {
-			return "redirect:login.do?message=fail";
-		} else {
-			session.setAttribute("num", vo2.getNum());
-			session.setAttribute("user_id", vo2.getId());
-			session.setAttribute("nickname", vo2.getNickname());
-			session.setAttribute("mclass", vo2.getMclass());
-			return "redirect:home.do";
-		}
-	}
+//	public String loginOK(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+//	    log.info("/loginOK.do...{}", vo);
+//
+//	    MemberVO vo2 = service.login(vo);
+//	    log.info("vo2...{}", vo2);
+//
+//	    if (vo2 == null) {
+//	        return "redirect:login.do?message=fail";
+//	    } else {
+//	        session.setAttribute("num", vo2.getNum());
+//	        session.setAttribute("user_id", vo2.getId());
+//	        session.setAttribute("nickname", vo2.getNickname());
+//	        session.setAttribute("mclass", vo2.getMclass());
+//
+//	        if (vo.isUseCookie()) {
+//	            Cookie cookie = new Cookie("loginCookie", session.getId());
+//	            cookie.setPath("/");
+//	            cookie.setMaxAge(60*60*24*7);
+//	            response.addCookie(cookie);
+//	            
+//	            Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+//	            service.keepLogin(vo.getId(), session.getId(), sessionLimit);
+//	        }
+//	        }
+//
+//	        return "redirect:home.do";
+//	    }
+	public String loginProcess(HttpSession session,MemberVO vo, HttpServletResponse response){
+        String returnURL = "";
+        if ( session.getAttribute("login") != null ){
+            // 기존에 login이란 세션 값이 존재한다면
+            session.removeAttribute("login"); // 기존값을 제거해 준다.
+        }
+         
+        // 로그인이 성공하면 MemberVO 객체를 반환함.
+        MemberVO vo2 = service.login(vo);
+         
+        if ( vo != null ){ // 로그인 성공
+            session.setAttribute("login", vo); // 세션에 login인이란 이름으로 MemberVO 객체를 저장해 놈.
+            returnURL = "redirect:/home.do"; // 로그인 성공시 홈으로 이동
+         
+            // 1. 로그인이 성공하면, 그 다음으로 로그인 폼에서 쿠키가 체크된 상태로 로그인 요청이 왔는지를 확인한다.
+            if ( vo.isUseCookie() ){ // vo 클래스 안에 useCookie 항목에 폼에서 넘어온 쿠키사용 여부(true/false)가 들어있을 것임
+                // 쿠키 사용한다는게 체크되어 있으면...
+                // 쿠키를 생성하고 현재 로그인되어 있을 때 생성되었던 세션의 id를 쿠키에 저장한다.
+                Cookie cookie = new Cookie("loginCookie", session.getId());
+                // 쿠키를 찾을 경로를 컨텍스트 경로로 변경해 주고...
+                cookie.setPath("/");
+                int amount = 60 * 60 * 24 * 7;
+                cookie.setMaxAge(amount); // 단위는 (초)임으로 7일정도로 유효시간을 설정해 준다.
+                // 쿠키를 적용해 준다.
+                response.addCookie(cookie);
+                 
+                // currentTimeMills()가 1/1000초 단위임으로 1000곱해서 더해야함
+                Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
+                // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+                service.keepLogin(vo.getId(), session.getId(), sessionLimit);
+            }
+        }else { // 로그인에 실패한 경우
+            returnURL = "redirect:/login.do"; // 로그인 폼으로 다시 가도록 함
+        }
+         
+        return returnURL; // 위에서 설정한 returnURL 을 반환해서 이동시킴
+    }
+	
 
 	@RequestMapping(value = "/find_id_email.do", method = RequestMethod.GET)
 	public String find_id_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
