@@ -23,8 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minihome.model.MiniHomeVO;
+import multi.com.finalproject.minihome.service.MiniHomeService;
 
 @Slf4j
 @Controller
@@ -32,6 +35,9 @@ public class MiniBoardRestController {
 
 	@Autowired
 	MiniBoardService service;
+	
+	@Autowired
+	MiniHomeService minihome_service;
 	
 	@Autowired
 	ServletContext sContext;
@@ -95,7 +101,12 @@ public class MiniBoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/gallery_insertOK.do", method = RequestMethod.POST)
-	public String gallery_insertOK(@RequestParam("bfile") MultipartFile bfile, @RequestParam("mbname") String mbname, @RequestParam("writer") String writer) {
+	public String gallery_insertOK(@RequestParam("mbname") String mbname,
+			@RequestParam("writer") String writer,
+			@RequestParam("title") String title, 
+			@RequestParam("bfile") MultipartFile bfile 
+			) {
+		log.info("gallery_insertOK.do...");
 	    // 파일이 업로드되지 않았을 경우 처리
 	    if (bfile.isEmpty()) {
 	        return "error";
@@ -105,15 +116,14 @@ public class MiniBoardRestController {
 	    String originalFilename = bfile.getOriginalFilename();
 	    
 	    log.info("bfile : {}", bfile.toString());
-	    log.info("mbname : {}", mbname);
-	    log.info("writer : {}", writer);
 	    
 	    // VO 객체 생성 및 데이터 설정
 	    MiniBoardVO vo = new MiniBoardVO();
 	    vo.setMbname(mbname);
 	    vo.setWriter(writer);
 	    vo.setFilepath(originalFilename);
-
+	    vo.setTitle(title);
+	    
 	    try {
 	        // 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
 	        String realPath = sContext.getRealPath("resources/uploadimg");

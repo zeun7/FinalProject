@@ -8,18 +8,21 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minihome.model.MiniHomeVO;
+import multi.com.finalproject.minihome.service.MiniHomeService;
 
 @Slf4j
 @Controller
@@ -32,21 +35,36 @@ public class MiniBoardController {
 	ServletContext sContext;
 	
 	@Autowired
-	HttpSession session;
+	MiniHomeService minihome_service;
 
+	@ModelAttribute("mh_attr")
+	public MiniHomeVO getMh_attr(MiniHomeVO vo) {
+		log.info("getMh_attr(MiniHomeVO vo)...{}", vo);
+		MiniHomeVO mh_attr = minihome_service.selectOne(vo);
+		log.info("mh_attr : {}", mh_attr);
+		return mh_attr;
+	}
+
+	@ModelAttribute("m_attr")
+	public MemberVO getM_attr(MiniHomeVO vo) {
+		log.info("getM_attr(MiniHomeVO vo)...{}", vo);
+		MemberVO m_attr = minihome_service.selectNickPic(vo);
+		log.info("m_attr : {}", m_attr);
+		return m_attr;
+	}
+	
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
-	public String mini_diary(@RequestParam("writer") String writer, @RequestParam("mbname") String mbname, Model model) {
-		log.info("mini_diary()...");
+	public String mini_diary(Model model, MiniHomeVO idvo) {
+		log.info("mini_diary(idvo)...{}", idvo);
 		
-		log.info("Writer: " + writer); // 로그로 writer 값을 출력합니다
-		log.info("Mbname: " + mbname); // 로그로 mbname 값을 출력합니다
+		MemberVO m_vo = minihome_service.selectNickPic(idvo);
 		
 		MiniBoardVO vo = new MiniBoardVO();
-	    vo.setMbname(mbname);
-	    vo.setWriter(writer);
+	    vo.setMbname("diary");
+	    vo.setWriter(m_vo.getNickname());
 		
 		List<MiniBoardVO> vos = service.mb_selectAll(vo);
-		log.info("vos: {}",vos);
+		log.info("vos : {}",vos);
 
 		model.addAttribute("vos", vos);
 
@@ -54,18 +72,18 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
-	public String mini_gallery(@RequestParam("writer") String writer, @RequestParam("mbname") String mbname, Model model) {
-		log.info("mini_gallery()...{}");
-
-		log.info("Writer: " + writer); // 로그로 writer 값을 출력합니다
-		log.info("Mbname: " + mbname); // 로그로 mbname 값을 출력합니다
+	public String mini_gallery(Model model, MiniHomeVO idvo) {
+		log.info("mini_gallery(idvo)...{}", idvo);
+		
+		MemberVO m_vo = minihome_service.selectNickPic(idvo);
 		
 		MiniBoardVO vo = new MiniBoardVO();
-	    vo.setMbname(mbname);
-	    vo.setWriter(writer);
+	    vo.setMbname("gallery");
+	    vo.setWriter(m_vo.getNickname());
 		
 		List<MiniBoardVO> vos = service.mb_selectAll(vo);
-
+		log.info("vos : {}",vos);
+		
 		model.addAttribute("vos", vos);
 
 		return "mini/gallery/selectAll";
@@ -79,7 +97,6 @@ public class MiniBoardController {
 
 		model.addAttribute("vo2", vo2);
 		log.info("vo2 : {}",vo2);
-		session.setAttribute("mbname", vo2.getMbname());
 		
 		return "mini/diary/selectOne";
 	}
@@ -92,7 +109,7 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/mb_insertOK.do", method = RequestMethod.POST)
-	public String diary_insertOK(MiniBoardVO vo) throws IllegalStateException, IOException {
+	public String diary_insertOK(@RequestParam("id") String id, MiniBoardVO vo) throws IllegalStateException, IOException {
 		log.info("diary_insertOK(vo)...{}", vo);
 
 		if (vo.getBfile() != null && !vo.getBfile().isEmpty()) {
@@ -128,35 +145,32 @@ public class MiniBoardController {
 		log.info("result: {}", result);
 
 		if (result == 1) {
-			return "redirect:mini_diary.do?mbname=" + vo.getMbname()+"&writer=" + vo.getWriter();
+			return "redirect:mini_diary.do?id=" + id;
 		} else {
-			return "redirect:insert.do?writer=" + vo.getWriter();
+			return "redirect:insert.do?id=" + id;
 		}
 
 	}
 
 	@RequestMapping(value = "/diary_deleteOK.do", method = RequestMethod.GET)
-	public String diary_deleteOK(MiniBoardVO vo) {
+	public String diary_deleteOK(@RequestParam("id") String id, @RequestParam("mbnum") String mbnum, MiniBoardVO vo) {
 		log.info("diary_deleteOK(vo)...{}", vo);
 
 		int result = service.diary_delete(vo);
 		log.info("result...{}", result);
 		
-		String mbname = session.getAttribute("mbname").toString();
-		String writer = session.getAttribute("nickname").toString();
-		
 		if (result == 1) {
-			return "redirect:mini_diary.do?mbname=" + mbname + "&writer=" + writer;
+			return "redirect:mini_diary.do?id=" + id;
+		}else {
+			return "redirect:diary_selectOne.do?id=" + id + "&mbnum=" + mbnum;
 		}
-		return null;
 	}
-
+	
 	@RequestMapping(value = "/gallery_selectOne.do", method = RequestMethod.GET)
 	public String gallery_selectOne(Model model, MiniBoardVO vo) {
 		log.info("gallery_selectOne()...");
 
 		MiniBoardVO vo2 = service.gallery_selectOne(vo);
-		session.setAttribute("mbname", vo2.getMbname());
 		
 		model.addAttribute("vo2", vo2);
 		return "mini/gallery/selectOne";
@@ -173,19 +187,17 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/gallery_deleteOK.do", method = RequestMethod.GET)
-	public String gallery_deleteOK(MiniBoardVO vo) {
+	public String gallery_deleteOK(@RequestParam("id") String id, @RequestParam("mbnum") String mbnum, MiniBoardVO vo) {
 		log.info("gallery_deleteOK(vo)...{}", vo);
 
 		int result = service.gallery_delete(vo);
 		log.info("result...{}", result);
 		
-		String mbname = session.getAttribute("mbname").toString();
-		String writer = session.getAttribute("nickname").toString();
-		
 		if (result == 1) {
-			return "redirect:mini_gallery.do?mbname=" + mbname + "&writer=" + writer;
+			return "redirect:mini_gallery.do?id=" + id;
+		}else {
+			return "redirect:gallery_selectOne.do?id=" + id + "&mbnum=" + mbnum;
 		}
-		return null;
 	}
 
 }
