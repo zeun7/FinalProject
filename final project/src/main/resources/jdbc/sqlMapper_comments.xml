@@ -5,17 +5,21 @@
 
 <mapper namespace="multi.com.finalproject.comments">
 	<select id="C_SELECT_ALL" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from comments where bnum = #{bnum} order by cnum desc
+		select * from comments where bnum = #{bnum} and ccnum = 0 order by cnum asc
+	</select>
+	
+	<select id="CC_SELECT_ALL" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments where ccnum = #{cnum} order by cnum asc
 	</select>
 	
 	<select id="C_SELECT_ONE" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from comments where cnum = #{cnum} and ccnum = #{ccnum}
+		select * from comments where cnum = #{cnum}
 	</select>
 	
 
 	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
-		insert into comments(cnum,ccnum, bnum,content,writer) 
-		values(seq_comments.nextval,#{ccnum},#{bnum},#{content},#{writer})
+		insert into comments(cnum, ccnum, bnum, content, writer) 
+		values(seq_comments.nextval, #{ccnum}, #{bnum}, #{content}, #{writer})
 	</insert>
 	
 	<update id="C_UPDATE" parameterType="multi.com.finalproject.comments.model.CommentsVO">

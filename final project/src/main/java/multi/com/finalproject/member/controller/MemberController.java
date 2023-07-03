@@ -45,7 +45,6 @@ public class MemberController {
 	@Autowired
 	HttpSession session;
 
-
 	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
 		log.info("insert()....", vo);
@@ -199,34 +198,34 @@ public class MemberController {
 
 	}
 
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(MemberVO vo) {
+		log.info("/m_logout.do...{}", vo);
+
+		session.invalidate(); // 세션 만료시킴
+
+		return "redirect:home.do";
+	}
 //	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-//	public String logout(MemberVO vo) {
-//		log.info("/m_logout.do...{}", vo);
+//	public String logout(HttpServletRequest request, HttpServletResponse response) {
+//		Object obj = session.getAttribute("login");
+//		if (obj != null) {
+//			MemberVO vo = (MemberVO) obj;
+//			session.removeAttribute("login");
+//			session.invalidate();
 //
-//		session.invalidate(); // 세션 만료시킴
+//			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+//			if (loginCookie != null) {
+//				loginCookie.setPath("/");
+//				loginCookie.setMaxAge(0);
+//				response.addCookie(loginCookie);
 //
+//				Date date = new Date(System.currentTimeMillis());
+//				service.keepLogin(vo.getId(), session.getId(), date);
+//			}
+//		}
 //		return "redirect:home.do";
 //	}
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
-	    Object obj = session.getAttribute("login");
-	    if (obj != null) {
-	        MemberVO vo = (MemberVO) obj;
-	        session.removeAttribute("login");
-	        session.invalidate();
-
-	        Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-	        if (loginCookie != null) {
-	            loginCookie.setPath("/");
-	            loginCookie.setMaxAge(0);
-	            response.addCookie(loginCookie);
-
-	            Date date = new Date(System.currentTimeMillis());
-	            service.keepLogin(vo.getId(), session.getId(), date);
-	        }
-	    }
-	    return "redirect:home.do";
-	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String login(String message, Model model) {
@@ -239,8 +238,25 @@ public class MemberController {
 		return "member/login";
 	}
 
+	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
+	public String loginOK(MemberVO vo) {
+		log.info("/loginOK.do...{}", vo);
+
+		MemberVO vo2 = service.login(vo);
+		log.info("vo2...{}", vo2);
+
+		if (vo2 == null) {
+			return "redirect:login.do?message=fail";
+		} else {
+			session.setAttribute("num", vo2.getNum());
+			session.setAttribute("user_id", vo2.getId());
+			session.setAttribute("nickname", vo2.getNickname());
+			session.setAttribute("mclass", vo2.getMclass());
+			return "redirect:home.do";
+		}
+	}
 //	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
-//	public String loginOK(MemberVO vo) {
+//	public String loginOK(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
 //		log.info("/loginOK.do...{}", vo);
 //
 //		MemberVO vo2 = service.login(vo);
@@ -253,75 +269,58 @@ public class MemberController {
 //			session.setAttribute("user_id", vo2.getId());
 //			session.setAttribute("nickname", vo2.getNickname());
 //			session.setAttribute("mclass", vo2.getMclass());
-//			return "redirect:home.do";
+//
+//			if (vo.isUseCookie()) {
+//				Cookie cookie = new Cookie("loginCookie", session.getId());
+//				cookie.setPath("/");
+//				cookie.setMaxAge(60 * 60 * 24 * 7);
+//				response.addCookie(cookie);
+//
+//				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+//				service.keepLogin(vo.getId(), session.getId(), sessionLimit);
+//			}
 //		}
+//
+//		return "redirect:home.do";
 //	}
-	@RequestMapping(value = "/loginOK.do", method = RequestMethod.POST)
-//	public String loginOK(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
-//	    log.info("/loginOK.do...{}", vo);
-//
-//	    MemberVO vo2 = service.login(vo);
-//	    log.info("vo2...{}", vo2);
-//
-//	    if (vo2 == null) {
-//	        return "redirect:login.do?message=fail";
-//	    } else {
-//	        session.setAttribute("num", vo2.getNum());
-//	        session.setAttribute("user_id", vo2.getId());
-//	        session.setAttribute("nickname", vo2.getNickname());
-//	        session.setAttribute("mclass", vo2.getMclass());
-//
-//	        if (vo.isUseCookie()) {
-//	            Cookie cookie = new Cookie("loginCookie", session.getId());
-//	            cookie.setPath("/");
-//	            cookie.setMaxAge(60*60*24*7);
-//	            response.addCookie(cookie);
-//	            
-//	            Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-//	            service.keepLogin(vo.getId(), session.getId(), sessionLimit);
-//	        }
-//	        }
-//
-//	        return "redirect:home.do";
-//	    }
-	public String loginProcess(HttpSession session,MemberVO vo, HttpServletResponse response){
-        String returnURL = "";
-        if ( session.getAttribute("login") != null ){
-            // 기존에 login이란 세션 값이 존재한다면
-            session.removeAttribute("login"); // 기존값을 제거해 준다.
-        }
-         
-        // 로그인이 성공하면 MemberVO 객체를 반환함.
-        MemberVO vo2 = service.login(vo);
-         
-        if ( vo != null ){ // 로그인 성공
-            session.setAttribute("login", vo); // 세션에 login인이란 이름으로 MemberVO 객체를 저장해 놈.
-            returnURL = "redirect:/home.do"; // 로그인 성공시 홈으로 이동
-         
-            // 1. 로그인이 성공하면, 그 다음으로 로그인 폼에서 쿠키가 체크된 상태로 로그인 요청이 왔는지를 확인한다.
-            if ( vo.isUseCookie() ){ // vo 클래스 안에 useCookie 항목에 폼에서 넘어온 쿠키사용 여부(true/false)가 들어있을 것임
-                // 쿠키 사용한다는게 체크되어 있으면...
-                // 쿠키를 생성하고 현재 로그인되어 있을 때 생성되었던 세션의 id를 쿠키에 저장한다.
-                Cookie cookie = new Cookie("loginCookie", session.getId());
-                // 쿠키를 찾을 경로를 컨텍스트 경로로 변경해 주고...
-                cookie.setPath("/");
-                int amount = 60 * 60 * 24 * 7;
-                cookie.setMaxAge(amount); // 단위는 (초)임으로 7일정도로 유효시간을 설정해 준다.
-                // 쿠키를 적용해 준다.
-                response.addCookie(cookie);
-                 
-                // currentTimeMills()가 1/1000초 단위임으로 1000곱해서 더해야함
-                Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-                // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
-                service.keepLogin(vo.getId(), session.getId(), sessionLimit);
-            }
-        }else { // 로그인에 실패한 경우
-            returnURL = "redirect:/login.do"; // 로그인 폼으로 다시 가도록 함
-        }
-         
-        return returnURL; // 위에서 설정한 returnURL 을 반환해서 이동시킴
-    }
-	
+
+	public String loginProcess(HttpSession session, MemberVO vo, HttpServletResponse response) {
+		String returnURL = "";
+		if (session.getAttribute("login") != null) {
+			// 기존에 login이란 세션 값이 존재한다면
+			session.removeAttribute("login"); // 기존값을 제거해 준다.
+		}
+
+		// 로그인이 성공하면 MemberVO 객체를 반환함.
+		MemberVO vo2 = service.login(vo);
+
+		if (vo2 != null) { // 로그인 성공
+			session.setAttribute("login", vo); // 세션에 login인이란 이름으로 MemberVO 객체를 저장해 놈.
+			returnURL = "redirect:/home.do"; // 로그인 성공시 홈으로 이동
+
+			// 1. 로그인이 성공하면, 그 다음으로 로그인 폼에서 쿠키가 체크된 상태로 로그인 요청이 왔는지를 확인한다.
+			if (vo2.isUseCookie()) { // vo 클래스 안에 useCookie 항목에 폼에서 넘어온 쿠키사용 여부(true/false)가 들어있을 것임
+				// 쿠키 사용한다는게 체크되어 있으면...
+				// 쿠키를 생성하고 현재 로그인되어 있을 때 생성되었던 세션의 id를 쿠키에 저장한다.
+				Cookie cookie = new Cookie("loginCookie", session.getId());
+				// 쿠키를 찾을 경로를 컨텍스트 경로로 변경해 주고...
+				cookie.setPath("/");
+				int amount = 60 * 60 * 24 * 7;
+				cookie.setMaxAge(amount); // 단위는 (초)임으로 7일정도로 유효시간을 설정해 준다.
+				// 쿠키를 적용해 준다.
+				response.addCookie(cookie);
+
+				// currentTimeMills()가 1/1000초 단위임으로 1000곱해서 더해야함
+				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+				// 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+				service.keepLogin(vo2.getId(), session.getId(), sessionLimit);
+			}
+		} else { // 로그인에 실패한 경우
+			returnURL = "redirect:/login.do"; // 로그인 폼으로 다시 가도록 함
+		}
+
+		return returnURL; // 위에서 설정한 returnURL 을 반환해서 이동시킴
+	}
 
 	@RequestMapping(value = "/find_id_email.do", method = RequestMethod.GET)
 	public String find_id_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
@@ -387,36 +386,37 @@ public class MemberController {
 			return null;
 		}
 	}
+
 	@RequestMapping(value = "/find_id_tel.do", method = RequestMethod.GET)
 	public String find_id_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
-			
+
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			
+
 			try {
 				// Oracle JDBC 드라이버 로드
 				Class.forName("oracle.jdbc.driver.OracleDriver");
-				
+
 				// 데이터베이스 연결 설정
 				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
 				// URL
 				String username = "admin"; // 데이터베이스 사용자명
 				String password = "Final123456!"; // 데이터베이스 비밀번호
-				
+
 				conn = DriverManager.getConnection(url, username, password);
-				
+
 				// SQL 문장 준비
 				String sql = "select id from member where tel = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, tel);
-				
+
 				// 쿼리 실행
 				rs = pstmt.executeQuery();
-				
+
 				// 결과 처리
 				if (rs.next()) {
 					String id = rs.getString("id");
@@ -434,16 +434,16 @@ public class MemberController {
 				if (rs != null) {
 					rs.close();
 				}
-				
+
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				
+
 				if (conn != null) {
 					conn.close();
 				}
 			}
-			
+
 			return "member/find_id";
 		} catch (Exception e) {
 			// 예외 처리
@@ -457,15 +457,16 @@ public class MemberController {
 
 		return "member/find_id_from";
 	}
+
 	@RequestMapping(value = "/find_id_from_tel.do")
 	public String find_id_from_tel() throws Exception {
-		
+
 		return "member/find_id_from_tel";
 	}
-	
+
 	@RequestMapping(value = "/find_id_from_email.do")
 	public String find_id_from_email() throws Exception {
-		
+
 		return "member/find_id_from_email";
 	}
 
@@ -533,36 +534,37 @@ public class MemberController {
 			return null;
 		}
 	}
+
 	@RequestMapping(value = "/find_pw_tel.do", method = RequestMethod.GET)
 	public String find_pw_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
-			
+
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			
+
 			try {
 				// Oracle JDBC 드라이버 로드
 				Class.forName("oracle.jdbc.driver.OracleDriver");
-				
+
 				// 데이터베이스 연결 설정
 				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
 				// URL
 				String username = "admin"; // 데이터베이스 사용자명
 				String password = "Final123456!"; // 데이터베이스 비밀번호
-				
+
 				conn = DriverManager.getConnection(url, username, password);
-				
+
 				// SQL 문장 준비
 				String sql = "select pw from member where tel = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, tel);
-				
+
 				// 쿼리 실행
 				rs = pstmt.executeQuery();
-				
+
 				// 결과 처리
 				if (rs.next()) {
 					String pw = rs.getString("pw");
@@ -580,16 +582,16 @@ public class MemberController {
 				if (rs != null) {
 					rs.close();
 				}
-				
+
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				
+
 				if (conn != null) {
 					conn.close();
 				}
 			}
-			
+
 			return "member/find_pw";
 		} catch (Exception e) {
 			// 예외 처리
@@ -603,14 +605,16 @@ public class MemberController {
 
 		return "member/find_pw_from_email";
 	}
+
 	@RequestMapping(value = "/find_pw_from_tel.do")
 	public String find_pw_from_tel() throws Exception {
-		
+
 		return "member/find_pw_from_tel";
 	}
+
 	@RequestMapping(value = "/find_pw_from.do")
 	public String find_pw_from() throws Exception {
-		
+
 		return "member/find_pw_from";
 	}
 

@@ -21,9 +21,15 @@ public class CommentsDAOimpl implements CommentsDAO {
 	
 	@Override
 	public List<CommentsVO> selectAll(CommentsVO vo) {
-		log.info("selectAll()...{}");
+		log.info("selectAll()...{}", vo.getBnum());
 		
 		return sqlSession.selectList("C_SELECT_ALL", vo);
+	}
+	
+	@Override
+	public List<CommentsVO> cc_selectAll(CommentsVO vo) {
+		log.info("cc_selectAll()...{}", vo.getCnum());
+		return sqlSession.selectList("CC_SELECT_ALL", vo);
 	}
 	
 	@Override
@@ -53,5 +59,4 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public List<CommentsVO> findByBnum(Long bNum) {
 		return sqlSession.selectList("findByBnum");
 	}
-
 }

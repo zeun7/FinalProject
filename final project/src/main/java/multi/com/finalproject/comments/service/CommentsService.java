@@ -17,6 +17,10 @@ public class CommentsService {
 	public List<CommentsVO> selectAll(CommentsVO vo) {
 		return dao.selectAll(vo);
 	}
+	
+	public List<CommentsVO> cc_selectAll(CommentsVO vo) {
+		return dao.cc_selectAll(vo);
+	}
 
 	public int insert(CommentsVO vo) {
 		return dao.insert(vo);
@@ -34,4 +38,5 @@ public class CommentsService {
 	public List<CommentsVO> findByBnum(Long bNum) {
 		return dao.findByBnum(bNum);
 	}
+
 }

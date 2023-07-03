@@ -142,8 +142,8 @@ console.log(encodeUrl);
 		}
 	});
 	
-	function comments(bnum){
-		console.log("print comments...");
+	function comments(cnum=0, ccnum=0, bnum=${param.bnum}){	// 댓글 출력 함수
+		console.log("print comments...bnum: ", bnum);
 		$.ajax({
 			url: 'json_c_selectAll.do',
 			data: {bnum: bnum},
@@ -154,55 +154,121 @@ console.log(encodeUrl);
 				
 				$.each(arr, function(index, vo){
 					tag_comments += `
-						<hr />
-						<tr rowspan="2">
-							<td>\${vo.writer}</td>
-							<td>\${vo.content}</td>
-							<td><button onclick="clike(\${vo.cnum}, \${vo.ccnum}, \${bnum})">clike</button>
-							<td><button onclick="cocoment(\${vo.cnum}, \${vo.ccnum}, \${bnum})">답글</button>
-							<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
+						<tr>
+							<td colspan="6"><hr /></td>
 						</tr>
 						<tr>
-							<td></td>
-							<td><button onclick="c_update(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update">수정</button>
-							<td><button onclick="c_delete(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_delete">삭제</button>
+							<td rowspan="2">\${vo.writer}</td>`;
+						
+						if(cnum === vo.cnum){
+							tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
+								<td rowspan="2"><button onclick="c_insertOK(\${cnum})">수정완료</button></td>`;
+						}
+						else{
+							tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+						}
+						
+						tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
+							<td><button onclick="insert_comment(\${vo.cnum})">답글</button>
+							<td><button onclick="c_report(\${vo.cnum})">신고</button>
 						</tr>
-						<div id="cocoment"></div>	// 대댓글 출력
-						<div id="insert_comment"></div>`; // 대댓글 입력창 출력
+						<tr>
+							<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update">수정</button>
+							<td><button onclick="c_delete(\${vo.cnum})" id="c_delete">삭제</button>
+							<td>\${vo.cdate}</td>
+						</tr>
+						<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>	// 대댓글 출력 위치
+						<tr><td colspan="6"><div id="insert_comment_\${vo.cnum}"></div></td></tr>`; // 대댓글 입력창 출력 위치
 				});
 				
-				tag_comments += `
-					<div id="insert_comment">
-					</div>
+				if(cnum === 0){	// 답글 버튼을 누르지 않았을 경우
+					tag_comments += `<tr><td colspan="5"><div id="insert_comment_0"></div></td></tr>`;
+				}
+				
+				$("#comments").html(tag_comments);
+				
+				$.each(arr, function(index, vo){
+					cocomments(vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
+				});
+				insert_comment();	//	댓글 입력 창 호출 
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
 			}
-			
-			$('#comments').html(tag_comments);
 		});
 	}
 	
-	function insert_comment(cnum, ccnum=0, bnum){
-		console.log('insert comments...');
-		
-		let tag_insert_comment = '';
-		
-		if(ccnum != 0){
-			tag_insert_comment += `<image width="100px" src="/resource/icon/cocoment.png">
-		}
-		
-		tag_insert_comment += `
-			<div>
-				<intput type="text" id="comm_content" />
-				<button onclick="c_insertOK(\${cnum}, \${ccnum}, \${bnum})">등록</button>
-			</div>`;
-			
-		$('#insert_comment').html(tag_insert_comment);
+	function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 함수
+		console.log('print cocomments...cnum:', cnum, 'bnum: ', bnum);
+		$.ajax({
+			url: 'json_cc_selectAll.do',
+			data: {cnum: cnum},
+			method: 'GET',
+			dataType: 'json',
+			success: function(arr){
+				let tag_cocomments = '';
+				
+				$.each(arr, function(index, vo){
+					tag_cocomments += `
+						<tr><td colspan="6"><hr /></td></tr>
+						<tr>
+							<td><img width="15px" src="resources/icon/cocomment.png" /></td>
+							<td>
+								<table>
+									<tbody>
+										<tr>
+											<td rowspan="2">\${vo.writer}</td>`;
+					if(update_num === vo.cnum){
+						tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
+						<td rowspan="2"><button onclick="c_insertOK(\${vo.cnum}, \${vo.ccnum})">수정완료</button></td>`;
+					}
+					else{
+						tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+					}
+					
+					tag_cocomments += `		<td colspan="2"><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
+											<td><button onclick="c_report(\${vo.cnum})">신고</button>
+										</tr>
+										<tr>
+											<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update">수정</button>
+											<td><button onclick="c_delete(\${vo.cnum})" id="c_delete">삭제</button>
+											<td>\${vo.cdate}</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>`;
+					if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+						$("#c_update").show();
+						$("#c_delete").show();
+					}
+					else{
+						$("#c_update").hide();
+						$("#c_delete").hide();
+					}
+				});
+				
+				$("#cocomments_"+cnum).html(tag_cocomments);
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+			}
+		});
 	}
+	
+	function insert_comment(cnum=0){	// 댓글 입력창 출력
+		console.log('insert comments...cnum: ', cnum);
+		
+		let tag_insert_comment = `
+			<td><input type="text" id="comm_content" /><td>
+			<td><button onclick="c_insertOK(\${cnum})">등록</button></td>`;
+		
+		$("#insert_comment_"+cnum).html(tag_insert_comment);
+	}
+	
 </script>
 </head>
-<body>
+<body onload="comments()">
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 <!-- 	페이스북 공유 sdk -->
 	<div id="fb-root"></div>
@@ -263,7 +329,6 @@ console.log(encodeUrl);
 	</div>
 	
 	<table id="comments">
-		
 	</table>
 	
 	<script type="text/javascript">

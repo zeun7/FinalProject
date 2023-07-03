@@ -22,18 +22,35 @@ public class CommentsRestController {
 	@ResponseBody
 	@RequestMapping(value = "/json_c_selectAll.do", method = RequestMethod.GET)
 	public List<CommentsVO> json_c_selectAll(CommentsVO vo) {
-		log.info("json_c_selectAll.do...");
+		log.info("/json_c_selectAll.do...");
 		
-		List<CommentsVO> list = service.selectAll(vo);
-			
-		return list;
-	}
+		List<CommentsVO> vos = service.selectAll(vo);
 
+		for (CommentsVO x : vos) {
+			log.info(x.toString());
+		}
+		
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_cc_selectAll.do", method = RequestMethod.GET)
+	public List<CommentsVO> json_cc_selectAll(CommentsVO vo) {
+		log.info("/json_cc_selectAll.do...");
+		
+		List<CommentsVO> vos = service.cc_selectAll(vo);
+		
+		for (CommentsVO x : vos) {
+			log.info(x.toString());
+		}
+		
+		return vos;
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)
 	public CommentsVO json_c_insertOK(CommentsVO vo) {
-		log.info("json_c_insertOK.do...{}",vo);
+		log.info("/json_c_insertOK.do...{}",vo);
 			
 		return vo;
 	}
@@ -42,7 +59,7 @@ public class CommentsRestController {
 	@RequestMapping(value = "/json_c_reinsertOK.do", method = RequestMethod.GET)
 	public CommentsVO json_c_reinsertOK(CommentsVO vo) {
 		
-		log.info("json_c_reinsertOK.do...{}",vo);
+		log.info("/json_c_reinsertOK.do...{}",vo);
 			
 		return vo;
 	}
@@ -51,7 +68,7 @@ public class CommentsRestController {
 	@RequestMapping(value = "/json_c_updateOK.do", method = RequestMethod.GET)
 	public CommentsVO json_c_updateOK(CommentsVO vo) {
 		
-		log.info("json_c_updateOK.do...{}",vo);
+		log.info("/json_c_updateOK.do...{}",vo);
 			
 		return vo;
 	}
@@ -60,7 +77,7 @@ public class CommentsRestController {
 	@RequestMapping(value = "/json_c_deleteOK.do", method = RequestMethod.GET)
 	public CommentsVO json_c_deleteOK(CommentsVO vo) {
 		
-		log.info("json_c_deleteOK.do...{}",vo);
+		log.info("/json_c_deleteOK.do...{}",vo);
 			
 		return vo;
 	}
@@ -69,7 +86,7 @@ public class CommentsRestController {
 	@RequestMapping(value = "/json_c_report.do", method = RequestMethod.GET)
 	public CommentsVO json_c_report(CommentsVO vo) {
 		
-		log.info("json_c_report.do...{}",vo);
+		log.info("/json_c_report.do...{}",vo);
 			
 		return vo;
 	}
@@ -78,7 +95,7 @@ public class CommentsRestController {
 	@RequestMapping(value = "/json_c_like.do", method = RequestMethod.GET)
 	public CommentsVO json_c_like(CommentsVO vo) {
 		
-		log.info("json_c_like.do...{}",vo);
+		log.info("/json_c_like.do...{}",vo);
 			
 		return vo;
 	}
