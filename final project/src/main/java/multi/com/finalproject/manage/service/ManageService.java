@@ -96,6 +96,10 @@ public class ManageService {
 		return dao.del_comments(vo);
 	}
 
+	public ReportVO select_report(ReportVO vo) {
+		return dao.select_report(vo);
+	}
+
 	
 
 }

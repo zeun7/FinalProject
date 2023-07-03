@@ -35,4 +35,8 @@
 		delete from comments where cnum = #{cnum}
 	</delete>
 	
+	<insert id="C_REPORT">
+		insert into report(rnum, bnum, cnum, ccnum, reason) 
+		values(seq_report.nextval, #{vo.bnum}, #{vo.cnum}, #{vo.ccnum}, #{reason})
+	</insert>
 </mapper>

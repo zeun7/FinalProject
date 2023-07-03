@@ -46,4 +46,6 @@ public interface ManageDAO {
 
 	public int del_comments(ReportVO vo);
 
+	public ReportVO select_report(ReportVO vo);
+
 }

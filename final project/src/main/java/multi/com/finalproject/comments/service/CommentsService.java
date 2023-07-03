@@ -1,6 +1,7 @@
 package multi.com.finalproject.comments.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +35,7 @@ public class CommentsService {
 		return dao.delete(vo);
 	}
 
-
-	public List<CommentsVO> findByBnum(Long bNum) {
-		return dao.findByBnum(bNum);
+	public int report(Map<String, Object> map) {
+		return dao.report(map);
 	}
-
 }

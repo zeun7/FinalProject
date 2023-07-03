@@ -274,7 +274,9 @@ public class ManageRestController {
 	public Map<String, Integer> json_b_report_deleteOK(ReportVO vo) {
 		log.info("/json_b_report_deleteOK.do...{}", vo);
 		
-		int result = service.del_b_report(vo);
+		ReportVO vo2 = service.select_report(vo);
+		
+		int result = service.del_b_report(vo2);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
 		log.info("result: {}", map);
@@ -287,7 +289,9 @@ public class ManageRestController {
 	public Map<String, Integer> json_c_report_deleteOK(ReportVO vo) {
 		log.info("/json_c_report_deleteOK.do...{}", vo);
 		
-		int result = service.del_b_report(vo);
+		ReportVO vo2 = service.select_report(vo);
+		
+		int result = service.del_c_report(vo2);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
 		log.info("result: {}", map);

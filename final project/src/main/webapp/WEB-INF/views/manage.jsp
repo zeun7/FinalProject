@@ -149,7 +149,7 @@ function manage_board(page){	// 신고 게시글 목록
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_board(\${vo.bnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_b_report(\${vo.bnum}, \${page})">완료</button></td>
+ 					<td><button onclick="del_b_report(\${vo.rnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -245,7 +245,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_comments(\${vo.cnum}, \${vo.ccnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_c_report(\${vo.cnum}, \${vo.ccnum}, \${page})">완료</button></td>
+ 					<td><button onclick="del_c_report(\${vo.rnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -313,12 +313,12 @@ function del_comments(cnum, ccnum, page){	// 신고 댓글 삭제 버튼
 	}
 }
 
-function del_b_report(bnum, page){	// 게시글 신고 대응 완료 버튼
-	console.log('delete board report... bnum:', bnum, 'page:', page);
+function del_b_report(rnum, page){	// 게시글 신고 대응 완료 버튼
+	console.log('delete board report... rnum:', rnum, 'page:', page);
 	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
 		$.ajax({
 			url: 'json_b_report_deleteOK.do',
-			data: {bnum: bnum},
+			data: {rnum: rnum},
 			method: 'GET',
 			dataType: 'json',
 			success: function(result){
@@ -332,13 +332,12 @@ function del_b_report(bnum, page){	// 게시글 신고 대응 완료 버튼
 	}
 }
 
-function del_c_report(cnum, ccnum, page){	// 댓글 신고 대응 완료 버튼
-	console.log('delete comments report... cnum:', cnum, 'ccnum:', ccnum, 'page:', page);
+function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
+	console.log('delete comments report... rnum:', rnum, 'page:', page);
 	if(window.confirm("해당 신고를 완료처리하시겠습니까?")){
 		$.ajax({
 			url: 'json_c_report_deleteOK.do',
-			data: {cnum: cnum,
-				ccnum: ccnum},
+			data: {rnum: rnum},
 			method: 'GET',
 			dataType: 'json',
 			success: function(result){

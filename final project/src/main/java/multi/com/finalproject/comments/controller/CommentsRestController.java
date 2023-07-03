@@ -50,7 +50,7 @@ public class CommentsRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.POST)
 	public Map<String, Integer> json_c_insertOK(CommentsVO vo) {
 		log.info("/json_c_insertOK.do...{}",vo);
 		
@@ -78,21 +78,44 @@ public class CommentsRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/json_c_deleteOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_deleteOK(CommentsVO vo) {
-		
+	@RequestMapping(value = "/json_c_deleteOK.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_c_deleteOK(CommentsVO vo) {
 		log.info("/json_c_deleteOK.do...{}",vo);
-			
-		return vo;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.delete(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/json_c_report.do", method = RequestMethod.GET)
-	public CommentsVO json_c_report(CommentsVO vo) {
-		
-		log.info("/json_c_report.do...{}",vo);
+	@RequestMapping(value = "/c_report.do", method = RequestMethod.GET)
+	public String json_c_report(CommentsVO vo) {
+		log.info("/c_report.do...{}",vo);
 			
-		return vo;
+		return "board/report_comments";
+	}
+	
+	@RequestMapping(value = "/c_reportOK.do", method = RequestMethod.POST)
+	public String c_reportOK(CommentsVO vo, String reason) {
+		log.info("/c_reportOK.do...{}",vo);
+		log.info("reason: {}", reason);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("reason", reason);
+		
+		int result = service.report(map);
+		log.info("result: {}", result);
+		
+		if(result == 1) {
+			return "redirect:c_report.do?cnum=0";
+		}
+		else {
+			return "Redirect:c_report.do?cnum="+vo.getCnum();
+		}
 	}
 	
 	@ResponseBody

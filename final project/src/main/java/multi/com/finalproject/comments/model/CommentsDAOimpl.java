@@ -1,6 +1,7 @@
 package multi.com.finalproject.comments.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,11 @@ public class CommentsDAOimpl implements CommentsDAO {
 		return sqlSession.delete("C_DELETE",vo);
 	}
 
-	
-
 	@Override
-	public List<CommentsVO> findByBnum(Long bNum) {
-		return sqlSession.selectList("findByBnum");
+	public int report(Map<String, Object> map) {
+		log.info("report()...{}", map.get("vo"));
+		
+		return sqlSession.insert("C_REPORT", map);
 	}
+
 }

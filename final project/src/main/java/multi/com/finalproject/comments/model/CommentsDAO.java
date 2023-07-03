@@ -1,6 +1,7 @@
 package multi.com.finalproject.comments.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CommentsDAO {
 		
@@ -14,5 +15,5 @@ public interface CommentsDAO {
 		
 		public int delete(CommentsVO vo);
 
-		public List<CommentsVO> findByBnum(Long bNum);
+		public int report(Map<String, Object> map);
 }

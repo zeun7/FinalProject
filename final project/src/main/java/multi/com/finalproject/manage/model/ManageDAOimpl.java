@@ -230,10 +230,14 @@ public class ManageDAOimpl implements ManageDAO {
 	public int del_c_report(ReportVO vo) {
 		log.info("delete comments report()...{}", vo);
 		
-		if(vo.getCcnum() == 0)
-			return sqlSession.delete("MNG_DEL_C_REPORT", vo);
-		else
-			return sqlSession.delete("MNG_DEL_CC_REPORT", vo);
+		return sqlSession.delete("MNG_DEL_C_REPORT", vo);
+	}
+
+	@Override
+	public ReportVO select_report(ReportVO vo) {
+		log.info("select report()...{}", vo);
+		
+		return sqlSession.selectOne("MNG_SELECT_REPORT", vo);
 	}
 	
 }

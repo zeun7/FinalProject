@@ -170,11 +170,11 @@ console.log(encodeUrl);
 						
 					tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
 							<td><button onclick="comments(0, 0, \${bnum}, \${vo.cnum})">답글</button>
-							<td><button onclick="c_report(\${vo.cnum})">신고</button>
+							<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
 						</tr>
 						<tr>
 							<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update">수정</button>
-							<td><button onclick="c_delete(\${vo.cnum})" id="c_delete">삭제</button>
+							<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete">삭제</button>
 							<td>\${vo.cdate}</td>
 						</tr>
 						<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
@@ -237,11 +237,11 @@ console.log(encodeUrl);
 					}
 					
 					tag_cocomments += `		<td colspan="2"><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
-											<td><button onclick="c_report(\${vo.cnum})">신고</button>
+											<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
 										</tr>
 										<tr>
 											<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update">수정</button>
-											<td><button onclick="c_delete(\${vo.cnum})" id="c_delete">삭제</button>
+											<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete">삭제</button>
 											<td>\${vo.cdate}</td>
 										</tr>
 									</tbody>
@@ -306,6 +306,36 @@ console.log(encodeUrl);
 				console.log('xhr:', xhr.status);
 			}
 		});
+	}
+	
+	function c_deleteOK(cnum){
+		console.log('delete comment...cnum: ', cnum);
+		
+		if(window.confirm("댓글을 삭제하시겠습니까?")){
+			$.ajax({
+				url: 'json_c_deleteOK.do',
+				data: {cnum: cnum},
+				method: 'POST',
+				dataType: 'json',
+				success: function(response){
+					if(response.result === 1){
+						comments();
+					}
+				},
+				error: function(xhr, status, error){
+					console.log('xhr:', xhr.status);
+				}
+			});
+		}
+	}
+	
+	function c_report(cnum, ccnum, bnum){
+		console.log('report comment...cnum: ', cnum, 'ccnum: ', ccnum, 'bnum: ', bnum);
+		
+		let url = "c_report.do?cnum="+cnum+'&ccnum='+ccnum+'&bnum='+bnum;
+		let name = "신고하기";
+		let option = "width = 400, height = 500";
+		window.open(url, name, option);
 	}
 </script>
 </head>
