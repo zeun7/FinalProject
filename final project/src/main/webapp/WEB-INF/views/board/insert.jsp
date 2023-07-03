@@ -10,7 +10,16 @@
 <script type="text/javascript">
 	function input_check(){
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-		console.log($("#content").val());
+		let content_val = $("#content").val();
+		
+		//파일이 첨부되어있는지 확인
+		if(content_val.indexOf('<img') == -1 && content_val.indexOf('<video') == -1){
+			let input = document.getElementById("file");
+			input.files.length = 0;
+		}
+		console.log(content_val);
+		content_val = content_val.replaceAll('src="../../', 'src="');
+		$("#content").val(content_val);
 		
 		if($("#title").val() === ''){
 			alert('제목을 입력하세요');
@@ -48,7 +57,10 @@
 		<tbody>
 			<tr>
 				<td>
-					<input type="file" id="file" name="file" multiple="multiple" onchange="file_change(event)">
+					<label for="file">
+						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+					</label>
+					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
 					<div id="file_content"></div>
 				</td>
 			</tr>
@@ -83,26 +95,56 @@ nhn.husky.EZCreator.createInIFrame({
 });
 
 //다중 파일 업로드
-let files = new Array();
-
-function file_change(event){
-	console.log('file_change()');
+function uploadFile(){
+	console.log('uploadFile()');
 	
-	for(var image of event.target.files){
-		var reader = new FileReader();
+	let input = document.getElementById("file");
+	console.log(input.files);
+	if(input.files[0] != null){
+		var formData = new FormData();
 		
-		reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            img.setAttribute("width", "400px");
-            var tag_img = '<img width="400px" src="'+event.target.result+'" id="img">';
-	        oEditors.getById["content"].exec("PASTE_HTML", [tag_img]);
-          };
-          
-        reader.readAsDataURL(image);
-	}
-	
-}
+		for(let i = 0; i < input.files.length; i++){
+			formData.append('file', input.files[i]);
+		}
+		
+		$.ajax({
+			url : "json_b_file_insertOK.do",
+			method : 'POST',
+			data : formData,
+			processData: false,
+	        contentType: false,
+			dataType : 'json', 
+			success : function(result) {
+	 			if(result.filepathList != null){
+	 				for(var i = 0; i < result.filepathList.length; i++){
+		 				console.log(result.filepathList[i]);
+		 				var ext = result.filepathList[i].split('.').pop().toLowerCase();
+		 				console.log(ext);
+		 				
+		 				if(ext === 'png' || ext === 'jpg'){
+			 				var img = document.createElement("img");
+				            img.setAttribute("src", result.filepathList[i]);
+				            img.setAttribute("width", "400px");
+				            var tag_img = '<img width="400px" src="../../'+result.filepathList[i]+'" class="img">';
+				 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_img]);
+		 				}else{
+		 					var video = document.createElement("video");
+		 					video.setAttribute("src", result.filepathList[i]);
+		 					video.setAttribute("width", "400px");
+				            var tag_video = '<video width="400px" src="../../'+result.filepathList[i]+'" controls class="video">';
+				 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_video]);
+		 				}
+	 				}
+	 			}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+	//			console.log('status:', status);
+	//			console.log('error:', error);
+			}
+		});//end $.ajax()
+	}//end if
+}//end uploadFile()
 </script>
 
 </body>

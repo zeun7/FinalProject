@@ -8,31 +8,48 @@
 <jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+// 	$(function(){
+// 		if('${vo2.filepath}' === ''){
+// 			$('#filepath_text').html('파일 업로드');
+// 			$('#del_file_button').hide();
+// 		}else{
+// 			let file_name = '${vo2.filepath}';
+// 			file_name = file_name.replace('resources/uploadimg_board/', '');
+// 			$('#filepath_text').html(file_name);
+// 			$('#del_file_button').show();
+// 		}
+// 	});//end onload
+	
+// 	function delete_file(){
+// 		$('#filepath').val('');
+// 		$('#filepath_text').html('파일 업로드');
+// 	}//end delete_file()
+	
+// 	function show_file(){
+// 		$('#filepath_text').html($('#file').val());
+// 		$('#del_file_button').show();
+// 	}//end show_file()
+	
 	$(function(){
-		if('${vo2.filepath}' === ''){
-			$('#filepath_text').html('파일 업로드');
-			$('#del_file_button').hide();
-		}else{
-			let file_name = '${vo2.filepath}';
-			file_name = file_name.replace('resources/uploadimg_board/', '');
-			$('#filepath_text').html(file_name);
-			$('#del_file_button').show();
-		}
+		let content_val = '${vo2.content}';
+		content_val = content_val.replaceAll('src="', 'src="../../');
+		$("#content").val(content_val);
 	});//end onload
-	
-	function delete_file(){
-		$('#filepath').val('');
-		$('#filepath_text').html('파일 업로드');
-	}//end delete_file()
-	
-	function show_file(){
-		$('#filepath_text').html($('#file').val());
-		$('#del_file_button').show();
-	}//end show_file()
 	
 	function input_check(){
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-		console.log($("#content").val());
+		let content_val = $("#content").val();
+		
+		//파일이 첨부되어있는지 확인
+		if(content_val.indexOf('<img') == -1 && content_val.indexOf('<video') == -1){
+			let input = document.getElementById("file");
+			input.files.length = 0;
+			$("#filepath").val("");
+		}
+		
+		console.log(content_val);
+		content_val = content_val.replaceAll('src="../../', 'src="');
+		$("#content").val(content_val);
 		
 		if($("#title").val() === ''){
 			alert('제목을 입력하세요');
@@ -73,17 +90,16 @@
 				<td>
 					<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath }">
 					<label for="file">
-						<span id="filepath_text" style="border: 1px solid black">${vo2.filepath }</span>
+						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
 					</label>
-					<button type="button" id="del_file_button" onclick=delete_file()>삭제</button>
 				</td>
 				<td>
-					<input type="file" id="file" name="file" style="display: none" onchange="show_file()">
+					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<textarea rows="20" cols="50" name="content" id="content">${vo2.content }</textarea>
+					<textarea rows="20" cols="50" name="content" id="content"></textarea>
 				</td>
 			</tr>
 		</tbody>
@@ -108,8 +124,63 @@
 		oAppRef: oEditors,
 		elPlaceHolder: "content",
 		sSkinURI: "./resources/smarteditor2/SmartEditor2Skin.html",
+		htParams : {
+			bSkipXssFilter : true
+		},
 		fCreator: "createSEditor2"
 	});
+	
+	//다중 파일 업로드
+	function uploadFile(){
+		console.log('uploadFile()');
+		
+		let input = document.getElementById("file");
+		console.log(input.files);
+		if(input.files[0] != null){
+			var formData = new FormData();
+			
+			for(let i = 0; i < input.files.length; i++){
+				formData.append('file', input.files[i]);
+			}
+			
+			$.ajax({
+				url : "json_b_file_insertOK.do",
+				method : 'POST',
+				data : formData,
+				processData: false,
+		        contentType: false,
+				dataType : 'json', 
+				success : function(result) {
+		 			if(result.filepathList != null){
+		 				for(var i = 0; i < result.filepathList.length; i++){
+			 				console.log(result.filepathList[i]);
+			 				var ext = result.filepathList[i].split('.').pop().toLowerCase();
+			 				console.log(ext);
+			 				
+			 				if(ext === 'png' || ext === 'jpg'){
+				 				var img = document.createElement("img");
+					            img.setAttribute("src", result.filepathList[i]);
+					            img.setAttribute("width", "400px");
+					            var tag_img = '<img width="400px" src="../../'+result.filepathList[i]+'" class="img">';
+					 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_img]);
+			 				}else{
+			 					var video = document.createElement("video");
+			 					video.setAttribute("src", result.filepathList[i]);
+			 					video.setAttribute("width", "400px");
+					            var tag_video = '<video width="400px" src="../../'+result.filepathList[i]+'" controls class="video">';
+					 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_video]);
+			 				}
+		 				}
+		 			}
+				},
+				error : function(xhr, status, error) {
+					console.log('xhr:', xhr.status);
+		//			console.log('status:', status);
+		//			console.log('error:', error);
+				}
+			});//end $.ajax()
+		}//end if
+	}//end uploadFile()
 </script>
 
 </body>
