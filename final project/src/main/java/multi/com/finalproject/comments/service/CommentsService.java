@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import multi.com.finalproject.comments.model.ClikesVO;
 import multi.com.finalproject.comments.model.CommentsDAO;
 import multi.com.finalproject.comments.model.CommentsVO;
 
@@ -38,4 +39,13 @@ public class CommentsService {
 	public int report(Map<String, Object> map) {
 		return dao.report(map);
 	}
+
+	public ClikesVO is_clike(ClikesVO vo) {
+		return dao.is_clike(vo);
+	}
+
+	public int count_clikes(ClikesVO vo) {
+		return dao.count_clikes(vo);
+	}
+
 }

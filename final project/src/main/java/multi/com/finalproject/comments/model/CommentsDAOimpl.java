@@ -66,4 +66,19 @@ public class CommentsDAOimpl implements CommentsDAO {
 		return sqlSession.insert("C_REPORT", map);
 	}
 
+	@Override
+	public ClikesVO is_clike(ClikesVO vo) {
+		log.info("check clike...{}", vo);
+		
+		return sqlSession.selectOne("C_IS_CLIKE", vo);
+	}
+
+	@Override
+	public int count_clikes(ClikesVO vo) {
+		log.info("count clikes...{}", vo);
+		
+		return sqlSession.selectOne("C_COUNT_CLIKES", vo);
+	}
+
+
 }

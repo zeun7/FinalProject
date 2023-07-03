@@ -16,4 +16,9 @@ public interface CommentsDAO {
 		public int delete(CommentsVO vo);
 
 		public int report(Map<String, Object> map);
+
+		public ClikesVO is_clike(ClikesVO vo);
+
+		public int count_clikes(ClikesVO vo);
+
 }

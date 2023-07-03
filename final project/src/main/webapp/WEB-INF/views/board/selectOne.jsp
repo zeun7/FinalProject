@@ -168,13 +168,15 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					tag_comments += `<td rowspan="2">\${vo.content}</td>`;
 				}
 					
-				tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
-						<td><button onclick="comments(0, 0, \${bnum}, \${vo.cnum})">답글</button>
-						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
+				tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+						<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+						<td><div id="count_clikes_\${vo.cnum}"></div></td>
+						<td><button onclick="comments(0, 0, \${bnum}, \${vo.cnum})">답글</button></td>
+						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button></td>
 					</tr>
 					<tr>
-						<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update">수정</button>
-						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete">삭제</button>
+						<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
+						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
 						<td>\${vo.cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
@@ -196,10 +198,27 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 				</tr>`;
 			}
 			
+			
+			
 			$("#comments").html(tag_comments);
 			
 			$.each(arr, function(index, vo){
 				cocomments(vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
+				is_clike(vo.cnum);					// 댓글 좋아요 확인
+				count_clikes(vo.cnum);				// 좋아요 카운트
+				
+				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+					$("#c_update_"+vo.cnum).show();
+					$("#c_delete_"+vo.cnum).show();
+				}
+				else{
+					$("#c_update_"+vo.cnum).hide();
+					$("#c_delete_"+vo.cnum).hide();
+				}
+				
+				if(cnum === vo.cnum){				// 수정중에는 수정버튼 숨김
+					$("#c_update_"+vo.cnum).hide();
+				}
 			});
 		},
 		error : function(xhr, status, error) {
@@ -230,35 +249,48 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 										<td rowspan="2">\${vo.writer}</td>`;
 				if(update_num === vo.cnum){
 					tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-					<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
+						<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
 				}
 				else{
 					tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
 				}
 				
-				tag_cocomments += `		<td colspan="2"><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
-										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button>
+				tag_cocomments += `		<td><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+										<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+										<td><div id="count_clikes_\${vo.cnum}"></div></td>
+										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button></td>
 									</tr>
 									<tr>
-										<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update">수정</button>
-										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete">삭제</button>
+										<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
+										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
 										<td>\${vo.cdate}</td>
 									</tr>
 								</tbody>
 							</table>
 						</td>
 					</tr>`;
-				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
-					$("#c_update").show();
-					$("#c_delete").show();
-				}
-				else{
-					$("#c_update").hide();
-					$("#c_delete").hide();
-				}
+				
 			});
 			
 			$("#cocomments_"+cnum).html(tag_cocomments);
+			
+			$.each(arr, function(index, vo){
+				is_clike(vo.cnum);		// 댓글 좋아요 확인
+				count_clikes(vo.cnum);	// 좋아요 카운트
+				
+				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+					$("#c_update_"+vo.cnum).show();
+					$("#c_delete_"+vo.cnum).show();
+				}
+				else{
+					$("#c_update_"+vo.cnum).hide();
+					$("#c_delete_"+vo.cnum).hide();
+				}
+				
+				if(update_num === vo.cnum){		// 수정중에는 수정 버튼 숨김
+					$("#c_update_"+vo.cnum).hide();
+				}
+			});
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -336,6 +368,59 @@ function c_report(cnum, ccnum, bnum){
 	let name = "신고하기";
 	let option = "width = 400, height = 500";
 	window.open(url, name, option);
+}
+
+function is_clike(cnum){
+	console.log('check clikes...cnum: ', cnum);
+	
+	$.ajax({
+		url: 'json_c_is_clike.do',
+		data: {cnum: cnum,
+			id: '${user_id}'},
+		method: 'GET',
+		dataType: 'json',
+		success: function(result){
+			if(result === 0){
+				$("#clike_"+cnum).show();
+				$("#cancel_clike_"+cnum).hide();
+			}
+			else{
+				$("#clike_"+cnum).hide();
+				$("#cancel_clike_"+cnum).show();
+			}
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+	});
+}
+
+function count_clikes(cnum){
+	console.log('count clikes...cnum: ', cnum);
+	
+	$.ajax({
+		url: 'json_c_count_clikes.do',
+		data: {cnum: cnum},
+		method: 'GET',
+		dataType: 'json',
+		success: function(count){
+			console.log('', cnum, ': ', count);
+			$("#count_clikes_"+cnum).html(count);
+		},
+		error: function(xhr, status, error){
+			console.log('xhr: ', xhr.status);
+		}
+	});
+}
+
+function clike(cum){
+	console.log('like comment...cnum: ', cnum);
+	
+}
+
+function cancel_clike(cnum){
+	console.log('cancel cilkes...cnum: ', cnum);
+	
 }
 </script>
 </head>

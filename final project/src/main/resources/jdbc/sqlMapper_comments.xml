@@ -39,4 +39,12 @@
 		insert into report(rnum, bnum, cnum, ccnum, reason) 
 		values(seq_report.nextval, #{vo.bnum}, #{vo.cnum}, #{vo.ccnum}, #{reason})
 	</insert>
+	
+	<select id="C_IS_CLIKE" resultType="multi.com.finalproject.comments.model.ClikesVO">
+		select * from clikes where id = #{id} and cnum = #{cnum}
+	</select>
+	
+	<select id="C_COUNT_CLIKES" resultType="Integer">
+		select count(*) from clikes where cnum = #{cnum}
+	</select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.comments.model.ClikesVO;
 import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.comments.service.CommentsService;
 
@@ -119,12 +120,33 @@ public class CommentsRestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_like.do", method = RequestMethod.GET)
-	public CommentsVO json_c_like(CommentsVO vo) {
+	@RequestMapping(value = "/json_c_is_clike.do", method = RequestMethod.GET)
+	public Integer json_c_is_clike(ClikesVO vo) {
+		log.info("/json_c_is_clike.do...{}",vo);
 		
-		log.info("/json_c_like.do...{}",vo);
-			
-		return vo;
+		int result = 0;
+		ClikesVO vo2 = service.is_clike(vo);
+		
+		if(vo2 != null) {
+			result = 1;
+		}
+		
+		log.info("result: {}", result);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_c_count_clikes.do", method = RequestMethod.GET)
+	public Integer json_c_count_clikes(ClikesVO vo) {
+		log.info("/json_c_count_clikes.do...{}",vo);
+		
+		int count = service.count_clikes(vo);
+		
+		
+		log.info("count: {}", count);
+		
+		return count;
 	}
 	
 }
