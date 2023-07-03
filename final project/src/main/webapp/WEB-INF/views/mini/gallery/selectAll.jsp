@@ -10,15 +10,25 @@ $(document).ready(function () {
     $("#uploadButton").on("click", function(e) {
         e.preventDefault();
 
-        var fileInput = document.getElementById('bfile');
+        var fileInput = document.getElementById('file');
         var file = fileInput.files[0];
         var title = document.getElementById('title').value;
         var formData = new FormData();
-
+		
+        if(title === ''){
+            alert('제목을 입력해주세요.');
+            return;
+        }
+        
+        if(!file){
+            alert('파일을 업로드해주세요.');
+            return;
+        }
+        
         formData.append('mbname', 'gallery');
         formData.append('writer', '${m_attr.nickname}'); 
         formData.append('title', title);
-        formData.append('bfile', file);
+        formData.append('file', file);
 
         $.ajax({
             url: 'gallery_insertOK.do', 
@@ -30,13 +40,15 @@ $(document).ready(function () {
                 // 서버에서 응답을 받았을 때의 처리
                 console.log(response);
                 
-                // 0.05초 지연 후 페이지 새로고침
-                setTimeout(function() {
-                    location.reload();
-                }, 50);
+//                 // 0.05초 지연 후 페이지 새로고침
+//                 setTimeout(function() {
+//                     location.reload();
+//                 }, 50);
+
+                alert('사진올리기 완료');
+                location.href='./mini_gallery.do?id=' + '${mh_attr.id}';
             },
             error: function(xhr, status, error) {
-                // 오류가 발생했을 때의 처리
                 console.log(error);
             }
         });
@@ -64,11 +76,10 @@ $(document).ready(function () {
         </c:forEach>
         <h2>이미지추가</h2><br>
         <div id="buttonContainer">
-	        <input type="file" id="bfile" name="bfile"><br>
+	        <input type="file" id="file" name="file"><br>
 	        제목 :<input type="text" id="title" name="title">
 	        <button id="uploadButton">사진올리기</button>
         </div>
-        <div>1 2 3 4 5</div>
     </div>
 </body>
 </html>

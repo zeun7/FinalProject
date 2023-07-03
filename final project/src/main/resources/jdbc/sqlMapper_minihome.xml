@@ -17,6 +17,10 @@
 		select profilepic, nickname from member where id=#{id}
 	</select>
 		
+	<select id="SELECT_PIC" resultType="multi.com.finalproject.member.model.MemberVO">
+		select id, profilepic from member where nickname=#{nickname}
+	</select>
+		
 	<select id="HAS_VISITED_TODAY" resultType="Integer">
 		select count(*) from visit_history where to_char(visit_date, 'YYYYMMDD')=#{visit_date} 
 		and (user_id=#{user_id}) and (minihome_id=#{minihome_id})

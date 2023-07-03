@@ -240,4 +240,10 @@ public class ManageDAOimpl implements ManageDAO {
 		return sqlSession.selectOne("MNG_SELECT_REPORT", vo);
 	}
 	
+	@Override
+	public List<FriendsVO> ilchon_selectAll(MemberVO m_attr) {
+		log.info("ilchon_selectAll(m_attr)...", m_attr);
+		return sqlSession.selectList("ILCHON_SELECT_ALL", m_attr);
+	}
+	
 }

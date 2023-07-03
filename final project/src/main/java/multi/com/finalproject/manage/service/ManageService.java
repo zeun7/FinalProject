@@ -100,6 +100,8 @@ public class ManageService {
 		return dao.select_report(vo);
 	}
 
-	
+	public List<FriendsVO> ilchon_selectAll(MemberVO m_attr) {
+		return dao.ilchon_selectAll(m_attr);
+	}
 
 }

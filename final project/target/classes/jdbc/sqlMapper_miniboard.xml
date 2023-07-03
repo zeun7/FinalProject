@@ -9,7 +9,7 @@
 		select * from miniboard where mbname = #{mbname} and writer=#{writer} order by mbnum desc
 	</select>
 	
-	<select id="DIARY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	<select id="MB_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		select * from miniboard where mbnum=#{mbnum}
 	</select>
 	
@@ -22,23 +22,12 @@
 		update miniboard set title=#{title}, content=#{content}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
 	
-	<update id="DIARY_UPDATE_2" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		update miniboard set title=#{title}, content=#{content}, wdate=sysdate where mbnum=#{mbnum}
-	</update>
-	
-	<delete id="DIARY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+	<delete id="MB_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		delete from miniboard where mbnum=#{mbnum}
 	</delete>
-	
-	<select id="GALLERY_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		select * from miniboard where mbnum=#{mbnum}
-	</select>
 	
 	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		update miniboard set title=#{title}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
-	
-	<delete id="GALLERY_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		delete from miniboard where mbnum=#{mbnum}
-	</delete>
 	
 </mapper>
