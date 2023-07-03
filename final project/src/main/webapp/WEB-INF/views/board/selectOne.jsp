@@ -142,7 +142,7 @@ console.log(encodeUrl);
 		}
 	});
 	
-	function comments(cnum=0, ccnum=0, bnum=${param.bnum}){	// 댓글 출력 함수
+	function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 출력 함수
 		console.log("print comments...bnum: ", bnum);
 		$.ajax({
 			url: 'json_c_selectAll.do',
@@ -160,16 +160,16 @@ console.log(encodeUrl);
 						<tr>
 							<td rowspan="2">\${vo.writer}</td>`;
 						
-						if(cnum === vo.cnum){
-							tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-								<td rowspan="2"><button onclick="c_insertOK(\${cnum})">수정완료</button></td>`;
-						}
-						else{
-							tag_comments += `<td rowspan="2">\${vo.content}</td>`;
-						}
+					if(cnum === vo.cnum){
+						tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
+							<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
+					}
+					else{
+						tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+					}
 						
-						tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
-							<td><button onclick="insert_comment(\${vo.cnum})">답글</button>
+					tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike">clike</button>
+							<td><button onclick="comments(0, 0, \${bnum}, \${vo.cnum})">답글</button>
 							<td><button onclick="c_report(\${vo.cnum})">신고</button>
 						</tr>
 						<tr>
@@ -177,12 +177,23 @@ console.log(encodeUrl);
 							<td><button onclick="c_delete(\${vo.cnum})" id="c_delete">삭제</button>
 							<td>\${vo.cdate}</td>
 						</tr>
-						<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>	// 대댓글 출력 위치
-						<tr><td colspan="6"><div id="insert_comment_\${vo.cnum}"></div></td></tr>`; // 대댓글 입력창 출력 위치
+						<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
+					
+					if(insert_num === vo.cnum){	// 대댓글 작성
+						tag_comments += `<tr>
+							<td><img width="15px" src="resources/icon/cocomment.png" /></td>
+							<td colspan="3"><input type="text" id="comm_content" /></td>
+							<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
+							<td><button onclick="comments(0, 0, \${bnum}, 0)">취소</button></td>
+						</tr>`; // 대댓글 입력창 출력 위치
+					}
 				});
 				
-				if(cnum === 0){	// 답글 버튼을 누르지 않았을 경우
-					tag_comments += `<tr><td colspan="5"><div id="insert_comment_0"></div></td></tr>`;
+				if(insert_num === 0){	// 답글을 누르지 않았을 때
+					tag_comments += `<tr>
+						<td colspan="5"><input type="text" id="comm_content" /></td>
+						<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
+					</tr>`;
 				}
 				
 				$("#comments").html(tag_comments);
@@ -190,7 +201,6 @@ console.log(encodeUrl);
 				$.each(arr, function(index, vo){
 					cocomments(vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
 				});
-				insert_comment();	//	댓글 입력 창 호출 
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
@@ -220,7 +230,7 @@ console.log(encodeUrl);
 											<td rowspan="2">\${vo.writer}</td>`;
 					if(update_num === vo.cnum){
 						tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-						<td rowspan="2"><button onclick="c_insertOK(\${vo.cnum}, \${vo.ccnum})">수정완료</button></td>`;
+						<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
 					}
 					else{
 						tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
@@ -256,16 +266,47 @@ console.log(encodeUrl);
 		});
 	}
 	
-	function insert_comment(cnum=0){	// 댓글 입력창 출력
-		console.log('insert comments...cnum: ', cnum);
+	function c_insertOK(cnum, bnum){
+		console.log('insert comment...');
 		
-		let tag_insert_comment = `
-			<td><input type="text" id="comm_content" /><td>
-			<td><button onclick="c_insertOK(\${cnum})">등록</button></td>`;
-		
-		$("#insert_comment_"+cnum).html(tag_insert_comment);
+		$.ajax({
+			url: 'json_c_insertOK.do',
+			data: {cnum: cnum,
+				bnum: bnum,
+				writer: '${user_id}',
+				content: $("#comm_content").val()},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result == 1){
+					comments();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+			}
+		});
 	}
 	
+	function c_updateOK(cnum){
+		console.log('update comment...cnum: ', cnum);
+		
+		$.ajax({
+			url: 'json_c_updateOK.do',
+			data:{cnum: cnum,
+				content: $("#comm_content").val()},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result == 1){
+					comments();
+				}
+			},
+			error: function(xhr, status, error){
+				console.log('xhr:', xhr.status);
+			}
+		});
+	}
 </script>
 </head>
 <body onload="comments()">

@@ -1,6 +1,8 @@
 package multi.com.finalproject.comments.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,28 +51,30 @@ public class CommentsRestController {
 
 	@ResponseBody
 	@RequestMapping(value = "/json_c_insertOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_insertOK(CommentsVO vo) {
+	public Map<String, Integer> json_c_insertOK(CommentsVO vo) {
 		log.info("/json_c_insertOK.do...{}",vo);
-			
-		return vo;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/json_c_reinsertOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_reinsertOK(CommentsVO vo) {
 		
-		log.info("/json_c_reinsertOK.do...{}",vo);
-			
-		return vo;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.insert(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_updateOK.do", method = RequestMethod.GET)
-	public CommentsVO json_c_updateOK(CommentsVO vo) {
-		
+	@RequestMapping(value = "/json_c_updateOK.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_c_updateOK(CommentsVO vo) {
 		log.info("/json_c_updateOK.do...{}",vo);
-			
-		return vo;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.update(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
 	}
 
 	@ResponseBody

@@ -36,7 +36,12 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public int insert(CommentsVO vo) {
 		log.info("insert()...{}",vo);
 		
-		return sqlSession.update("C_INSERT",vo);
+		if(vo.getCnum() == 0) {	// 댓글 작성
+			return sqlSession.update("C_INSERT",vo);
+		}
+		else {					// 대댓글 작성
+			return sqlSession.update("CC_INSERT", vo);
+		}
 	}
 
 	@Override
