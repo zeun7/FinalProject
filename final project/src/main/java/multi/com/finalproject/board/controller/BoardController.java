@@ -83,12 +83,6 @@ public class BoardController {
 		if (getOriginalFilename.length() != 0) {
 			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
 			vo.setFilepath(filepath);
-			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
-			String realPath = sContext.getRealPath("resources/uploadimg_board");
-			log.info("realPath : {}", realPath);
-			
-			File f = new File(realPath + "\\" + getOriginalFilename);
-			vo.getFile().transferTo(f);
 		}else {
 			vo.setFilepath("");
 		}
@@ -117,12 +111,6 @@ public class BoardController {
 		if (getOriginalFilename.length() != 0) {
 			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
 			vo.setFilepath(filepath);
-			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
-			String realPath = sContext.getRealPath("resources/uploadimg_board");
-			log.info("realPath : {}", realPath);
-			
-			File f = new File(realPath + "\\" + getOriginalFilename);
-			vo.getFile().transferTo(f);
 		}
 		log.info("{}", vo);
 		
@@ -168,5 +156,5 @@ public class BoardController {
 			return "redirect:b_report.do?bnum="+vo.getBnum();
 		}
 	}
-		
+	
 }
