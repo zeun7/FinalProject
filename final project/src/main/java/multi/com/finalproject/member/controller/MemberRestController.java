@@ -1,10 +1,9 @@
 package multi.com.finalproject.member.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +59,20 @@ public class MemberRestController {
 		log.info("/json_m_NickCheck.do...{}", vo);
 
 		MemberVO vo2 = service.NickCheck(vo);
+		log.info("{}", vo2);
+		if (vo2 == null) {
+			return "{\"result\":\"OK\"}";
+		} else {
+			return "{\"result\":\"NotOK\"}";
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/json_m_TelCheck.do", method = RequestMethod.GET)
+	public String json_m_TelCheck(MemberVO vo) {
+		log.info("/json_m_TelCheck.do...{}", vo);
+
+		MemberVO vo2 = service.TelCheck(vo);
 		log.info("{}", vo2);
 		if (vo2 == null) {
 			return "{\"result\":\"OK\"}";

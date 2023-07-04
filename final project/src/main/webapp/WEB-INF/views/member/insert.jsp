@@ -48,6 +48,33 @@
 
 	}//end idCheck()...
 
+	function TelCheck() {
+		console.log("TelCheck....", $('#tel').val());
+
+		$.ajax({
+			url : "json_m_TelCheck.do",
+			data : {
+				tel : $('#tel').val()
+			},
+			method : 'GET',
+			dataType : 'json',
+			success : function(obj) {
+				console.log('ajax...success:', obj);
+				console.log('ajax...success:', obj.result);
+				let msg = '';
+				if (obj.result === 'OK') {
+					msg = '사용가능 합니다 ';
+				} else {
+					msg = '로그인 되어있는 전화번호입니다.'
+				}
+				$('#demo3').text(msg);
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr.status:', xhr.status);
+			}
+		});//end $.ajax()...
+
+	}//end NickCheck()...
 	function NickCheck() {
 		console.log("NickCheck....", $('#nickname').val());
 
@@ -63,9 +90,10 @@
 				console.log('ajax...success:', obj.result);
 				let msg = '';
 				if (obj.result === 'OK') {
-					msg = '사용가능한 닉네임입니다.';
+					msg = ' 사용 가능한 닉네임 입니다';
 				} else {
-					msg = '사용중인 닉네임입니다.';
+					msg = '사용중인 닉네임 입니다'
+
 				}
 				$('#demo2').text(msg);
 			},
@@ -170,34 +198,35 @@
 								<button type="button" onclick="idCheck()" class="myButton">ID중복체크</button>
 								<span id="demo1"></span></td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<td><input type="password" id="pw1">비밀번호 :</td> -->
-<!-- 							<td><input type="password" id="pw2">비밀번호 확인:</td> -->
-<!-- 							<td><input type="button" onclick="test()" value="확인"></td> -->
-<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td><input type="password" id="pw1">비밀번호 :</td> -->
+						<!-- 							<td><input type="password" id="pw2">비밀번호 확인:</td> -->
+						<!-- 							<td><input type="button" onclick="test()" value="확인"></td> -->
+						<!-- 						</tr> -->
 
-<!-- 						<tr> -->
-<!-- 							<td><label for="pw">pw:</label></td> -->
-<!-- 							<td><input class="w3-input" type="password" id="pw2" -->
-<!-- 								name="pw" placeholder="비밀번호"></td> -->
-<!-- 						</tr> -->
-<tr> 
-							<td><label for ="pw">pw:</label></td>
-							<td><input type="password" id="pw1"></br>
-							<input type="password" id="pw2">비밀번호 확인:</td>
-							<td><input type="button" onclick="test()" value="확인"></td>
+						<!-- 						<tr> -->
+						<!-- 							<td><label for="pw">pw:</label></td> -->
+						<!-- 							<td><input class="w3-input" type="password" id="pw2" -->
+						<!-- 								name="pw" placeholder="비밀번호"></td> -->
+						<!-- 						</tr> -->
+						<tr>
+							<td><label for="pw">pw:</label></td>
+							<td><input type="password" id="pw1"
+								placeholder="비밀번호를 입력하세요"></br> <input type="password"
+								id="pw2" placeholder="비밀번호 한 번더 입력"></br> <input
+								type="button" onclick="test()" value="확인"></td>
 						</tr>
-<!-- 						<tr> -->
-<!-- 							<td><label for="pw">pw:</label></td> -->
-<!-- 							<td><input class="w3-input"  -->
-<!-- 								id="pw1" type="password"  placeholder="비밀번호"></td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td><label for="pw">비밀번호 확인:</label></td> -->
-<!-- 							<td><input class="w3-input"  -->
-<!-- 								id="pw1" type="password" placeholder="비밀번호 한 번 더 입력"> -->
-<!-- 							<input type="button" onclick="test()" value="확인"> -->
-<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td><label for="pw">pw:</label></td> -->
+						<!-- 							<td><input class="w3-input"  -->
+						<!-- 								id="pw1" type="password"  placeholder="비밀번호"></td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td><label for="pw">비밀번호 확인:</label></td> -->
+						<!-- 							<td><input class="w3-input"  -->
+						<!-- 								id="pw1" type="password" placeholder="비밀번호 한 번 더 입력"> -->
+						<!-- 							<input type="button" onclick="test()" value="확인"> -->
+						<!-- 						</tr> -->
 						<tr>
 							<td><label for="nickname">nickname:</label></td>
 							<td><input class="w3-input" type="text" id="nickname"
@@ -224,7 +253,9 @@
 						<tr>
 							<td><label for="tel">tel:</label></td>
 							<td><input class="w3-input" type="text" id="tel" name="tel"
-								placeholder="010-0000-0000"></td>
+								placeholder="010-0000-0000">
+								<button type="button" onclick="TelCheck()" class="myButton">전화번호
+									중복체크</button> <span id="demo3"></span></td>
 						</tr>
 						<tr>
 							<td><label for="email">email:</label></td>

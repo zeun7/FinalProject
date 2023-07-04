@@ -29,7 +29,7 @@ public class MemberService {
 		return dao.update(vo);
 	}
 
-	public int delete(MemberVO vo)  {	
+	public int delete(MemberVO vo) {
 		return dao.delete(vo);
 	}
 
@@ -57,28 +57,25 @@ public class MemberService {
 		return dao.NickCheck(vo);
 	}
 
+	public MemberVO TelCheck(MemberVO vo) {
+		return dao.TelCheck(vo);
+	}
+
 	public String find_id(HttpServletResponse response, String email) throws Exception {
 
 		return dao.find_id(email);
 	}
+
 	public String find_id_tel(HttpServletResponse response, String tel) throws Exception {
-		
+
 		return dao.find_id_tel(tel);
 	}
 
 	public String find_pw(HttpServletResponse response, String email) throws Exception {
 		return dao.find_pw(email);
 	}
+
 	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
 		return dao.find_pw_tel(tel);
 	}
-	
-	public void keepLogin(String id, String sessionId, Date next) {
- 
-        dao.keepLogin(id, sessionId, next);
-    }
- 
-    public MemberVO checkUserWithSessionKey(String sessionId) {
-        return dao.checkUserWithSessionKey(sessionId);
-    }
 }

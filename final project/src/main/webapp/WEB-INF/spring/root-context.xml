@@ -48,19 +48,4 @@
 		<property name="maxUploadSize" value="-1" />
 		<!-- -1 이면 크기제한 없음 -->
 	</bean>
-
-	<!-- 이메일 보내기 -->
-	<!-- gmail 로그인 후 로그인 &보안 ====보안 수준이 낮은 앱 허용: 사용으로 변경 -->
-	<bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="아이디@gmail.com" />
-		<property name="password" value="비번" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-			</props>
-		</property>
-	</bean>
 </beans>

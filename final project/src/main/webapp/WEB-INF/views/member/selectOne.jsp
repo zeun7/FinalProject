@@ -30,13 +30,13 @@
 			</tr>
 			<tr>
 				<td colspan="8"><img width="300px"
-					src="https://drive.google.com/file/d/1r9rQTz2M_TbrR24xm0ZZ5HpfhSZxiRLS/view?usp=drive_link"></td>
+					src="resources/uploadimg/${vo2.profilepic}"></td>
 			</tr>
 
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8"><a href="m_update.do?id=${user_id}">내정보 수정</a> 
+				<td colspan="8"><a href="m_update.do?id=${param.id}">내정보 수정</a> 
 			</tr>
 		</tfoot>
 	</table>
