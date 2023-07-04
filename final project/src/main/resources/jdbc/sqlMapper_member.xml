@@ -42,8 +42,8 @@
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		insert into
-		member(num,id,pw,nickname,profilepic,question,answer,name,tel,email)
-		values(seq_member.nextval,#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},#{tel},#{email})
+		member(id,pw,nickname,profilepic,question,answer,name,tel,email)
+		values(#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},#{tel},#{email})
 	</insert>
 
 	<update id="M_UPDATE"
@@ -54,8 +54,8 @@
 	</update>
 
 	<delete id="M_DELETE" parameterType="multi.com.finalproject.member.model.MemberVO"> 
-	delete from member where num = #{num} 
- </delete>
+		delete from member where num = #{num} 
+ 	</delete>
 
 	<select id="FIND_ID_EMAIL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">

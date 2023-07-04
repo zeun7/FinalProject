@@ -56,11 +56,6 @@
 					enctype="multipart/form-data">
 					<table id="memberList">
 						<tr>
-							<td><label for="num">num:</label></td>
-							<td><span id="span_num">${vo2.num}</span><input
-								type="hidden" id="num" name="num" value="${vo2.num}"></td>
-						</tr>
-						<tr>
 							<td><label for="id">id:</label></td>
 							<td><span id="span_id">${vo2.id}</span></td>
 						</tr>
@@ -109,7 +104,7 @@
 	<script>
 		function m_deleteOK() {
 			if (window.confirm("탈퇴하시겠습니까?")) {
-				location.href = "m_deleteOK.do?num=${vo2.num}";
+				location.href = "m_deleteOK.do?id=${vo2.id}";
 			}
 
 		}

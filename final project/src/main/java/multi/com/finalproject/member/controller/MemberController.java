@@ -153,9 +153,9 @@ public class MemberController {
 		int result = service.update(vo);
 
 		if (result == 1) {
-			return "redirect:m_selectOne.do?num=" + vo.getNum();
+			return "redirect:m_selectOne.do?id=" + vo.getId();
 		} else {
-			return "redirect:m_update.do?num=" + vo.getNum();
+			return "redirect:m_update.do?id=" + vo.getId();
 		}
 	}
 
@@ -193,7 +193,7 @@ public class MemberController {
 			return "redirect:home.do";
 		} else {
 			log.info("false");
-			return "redirect:m_selectOne.do?num=" + vo.getNum();
+			return "redirect:m_selectOne.do?id=" + vo.getId();
 		}
 
 	}
@@ -248,7 +248,6 @@ public class MemberController {
 		if (vo2 == null) {
 			return "redirect:login.do?message=fail";
 		} else {
-			session.setAttribute("num", vo2.getNum());
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());

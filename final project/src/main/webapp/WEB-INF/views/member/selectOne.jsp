@@ -13,7 +13,6 @@
 	<table id="myinfo">
 		<thead>
 			<tr>
-				<th>num</th>
 				<th>id</th>
 				<th>nickname</th>
 				<th>name</th>
@@ -23,7 +22,6 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>${vo2.num}</td>
 				<td>${vo2.id}</td>
 				<td>${vo2.nickname}</td>
 				<td>${vo2.name}</td>
@@ -38,7 +36,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8"><a href="m_update.do?num=${param.num}">내정보 수정</a> 
+				<td colspan="8"><a href="m_update.do?id=${user_id}">내정보 수정</a> 
 			</tr>
 		</tfoot>
 	</table>

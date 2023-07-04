@@ -71,7 +71,6 @@ function post_friends(){
 <body>
 <jsp:include page="top_menu.jsp"></jsp:include>
 	<h1>Hello world!</h1>
-	user num: ${num}<br />
 	user_id: ${user_id}<br/>
 	nickname: ${nickname}<br />
 	mclass: ${mclass}
