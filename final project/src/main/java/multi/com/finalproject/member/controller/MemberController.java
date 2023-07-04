@@ -264,7 +264,6 @@ public class MemberController {
 //		if (vo2 == null) {
 //			return "redirect:login.do?message=fail";
 //		} else {
-//			session.setAttribute("num", vo2.getNum());
 //			session.setAttribute("user_id", vo2.getId());
 //			session.setAttribute("nickname", vo2.getNickname());
 //			session.setAttribute("mclass", vo2.getMclass());
