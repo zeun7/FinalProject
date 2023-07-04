@@ -10,7 +10,7 @@
 <ul>
 	<li><a href="home.do">HOME</a></li>
 
-	<li><a href="mini_home.do?id=tester1">미니홈피</a></li>
+	<li><a href="mini_home.do?id=${user_id}">미니홈피</a></li>
 	<li><a href="b_selectAll.do?bname=board1">게시판1</a></li>
 	<li><a href="b_selectAll.do?bname=board2">게시판2</a></li>
 	<li><a href="b_selectAll.do?bname=board3">게시판3</a></li>

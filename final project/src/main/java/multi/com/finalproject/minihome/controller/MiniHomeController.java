@@ -89,6 +89,8 @@ public class MiniHomeController {
 		MemberVO id_vo = new MemberVO();
 		id_vo.setNickname(nickname);
 		MemberVO user_vo = member_service.selectOne(id_vo);
+		log.info("{}", user_vo);
+		
 		List<FriendsVO> vos = manage_service.ilchon_selectAll(user_vo);
 		model.addAttribute("vos", vos);
 		

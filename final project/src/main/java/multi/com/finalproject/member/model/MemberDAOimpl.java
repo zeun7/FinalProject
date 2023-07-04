@@ -21,13 +21,13 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public int insert(MemberVO vo) {
-		log.info("insert()....", vo);
+		log.info("insert()....{}", vo);
 		return sqlSession.insert("M_INSERT", vo);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		log.info("update()....", vo);
+		log.info("update()....{}", vo);
 		return sqlSession.update("M_UPDATE", vo);
 	}
 
@@ -46,13 +46,14 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public MemberVO selectOne(MemberVO vo) {
-		log.info("selectOne()....", vo);
+		log.info("selectOne()....{}", vo);
+		
 		return sqlSession.selectOne("M_SELECT_ONE", vo);
 	}
 
 	@Override
 	public MemberVO login(MemberVO vo) {
-		log.info("login()....", vo);
+		log.info("login()....{}", vo);
 		return sqlSession.selectOne("LOGIN", vo);
 	}
 
