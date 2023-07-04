@@ -20,7 +20,6 @@ function manage_member(page){	// 회원목록 출력
  			let tag_vos = `
  						<thead>
 							<tr>
-							<th>No.</th>
 							<th>ID</th>
 							<th>닉네임</th>
 							<th>프로필 이미지</th>
@@ -35,9 +34,8 @@ function manage_member(page){	// 회원목록 출력
  				tag_vos += `
  					<tr>
  					<td>				
- 						<a href="m_selectOne.do?num=\${vo.num}">\${vo.num}</a>
+ 						<a href="m_selectOne.do?id=\${vo.id}">\${vo.id}</a>
  					</td>
- 					<td>\${vo.id}</td>
  					<td>\${vo.nickname}</td>
  					<td><img src="resources/uploadimg/thumb_\${vo.profilepic}"></td>
  					<td>\${vo.name}</td>

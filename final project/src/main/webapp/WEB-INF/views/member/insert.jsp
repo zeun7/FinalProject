@@ -16,168 +16,168 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		console.log("onload....");
-	});
+$(function() {
+	console.log("onload....");
+});
 
-	function idCheck() {
-		console.log("idCheck....", $('#id').val());
+function idCheck() {
+	console.log("idCheck....", $('#id').val());
 
-		$.ajax({
-			url : "json_m_idCheck.do",
-			data : {
-				id : $('#id').val()
-			},
-			method : 'GET',
-			dataType : 'json',
-			success : function(obj) {
-				console.log('ajax...success:', obj);
-				console.log('ajax...success:', obj.result);
-				let msg = '';
-				if (obj.result === 'OK') {
-					msg = '사용가능한 아이디입니다.';
-				} else {
-					msg = '사용중인 아이디입니다.';
-				}
-				$('#demo1').text(msg);
-			},
-			error : function(xhr, status, error) {
-				console.log('xhr.status:', xhr.status);
+	$.ajax({
+		url : "json_m_idCheck.do",
+		data : {
+			id : $('#id').val()
+		},
+		method : 'GET',
+		dataType : 'json',
+		success : function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = '사용가능한 아이디입니다.';
+			} else {
+				msg = '사용중인 아이디입니다.';
 			}
-		});//end $.ajax()...
-
-	}//end idCheck()...
-
-	function TelCheck() {
-		console.log("TelCheck....", $('#tel').val());
-
-		$.ajax({
-			url : "json_m_TelCheck.do",
-			data : {
-				tel : $('#tel').val()
-			},
-			method : 'GET',
-			dataType : 'json',
-			success : function(obj) {
-				console.log('ajax...success:', obj);
-				console.log('ajax...success:', obj.result);
-				let msg = '';
-				if (obj.result === 'OK') {
-					msg = '사용가능 합니다 ';
-				} else {
-					msg = '로그인 되어있는 전화번호입니다.'
-				}
-				$('#demo3').text(msg);
-			},
-			error : function(xhr, status, error) {
-				console.log('xhr.status:', xhr.status);
-			}
-		});//end $.ajax()...
-
-	}//end NickCheck()...
-	function NickCheck() {
-		console.log("NickCheck....", $('#nickname').val());
-
-		$.ajax({
-			url : "json_m_NickCheck.do",
-			data : {
-				nickname : $('#nickname').val()
-			},
-			method : 'GET',
-			dataType : 'json',
-			success : function(obj) {
-				console.log('ajax...success:', obj);
-				console.log('ajax...success:', obj.result);
-				let msg = '';
-				if (obj.result === 'OK') {
-					msg = ' 사용 가능한 닉네임 입니다';
-				} else {
-					msg = '사용중인 닉네임 입니다'
-
-				}
-				$('#demo2').text(msg);
-			},
-			error : function(xhr, status, error) {
-				console.log('xhr.status:', xhr.status);
-			}
-		});//end $.ajax()...
-
-	}//end NickCheck()...
-
-	//  function EmailCheck(){
-	//   	console.log("EmailCheck....",$('#EmailCheck').val());
-
-	//  	$.ajax({
-	//   		url : "json_m_EmailCheck.do",
-	//   		data:{nickname:$('#nickname').val()},
-	//   		method:'GET',
-	//   		dataType:'json',
-	//   		success : function(obj) {
-	//   			console.log('ajax...success:', obj);
-	//   			console.log('ajax...success:', obj.result);
-	//   			let msg = '';
-	//  			if(obj.result==='OK'){
-	//   				msg = '사용가능한 이메일입니다.';
-	//  			}else{
-	//   				msg = '사용중인 이메일입니다.';
-	//   			}
-	//  			$('#demo3').text(msg);
-	//   		},
-	//  		error:function(xhr,status,error){
-	//   			console.log('xhr.status:', xhr.status);
-	//   		}
-	//   	});//end $.ajax()...
-
-	//   }//end EmailCheck()...
-	// 	$(document).ready(function() {
-	// 		$("#join").click(function() {
-	// 			var gubun = $('#btnOverlapped').prop('disabled');
-	// 			if (!gubun) {
-	// 				alert('중복체크를 클릭해주세요.');
-	// 				return;
-	// 			}
-	// 			if (!compare_result) {
-	// 				alert('비밀번호가 일치하지 않습니다.');
-	// 				return;
-	// 			}
-	// 			$("#joinForm").submit();
-
-	// 		});
-
-	// 	});
-	// 	var compare_result = false;
-	// 	function fn_compare_pwd() {
-	// 		var pwd1 = $("#member_pwd1").val();
-	// 		var pwd2 = $("#member_pwd2").val();
-	// 		var $s_result = $("#s_result");
-	// 		if (pwd1 == pwd2) {
-
-	// 			compare_result = true;
-	// 			$s_result.text("비밀번호가 일치합니다.");
-	// 			return;
-
-	// 		}
-	// 		compare_result = false;
-
-	// 		$s_result.text("비밀번호가 일치하지 않습니다.");
-	// 	}
-	function test() {
-		var p1 = document.getElementById('pw1').value;
-		var p2 = document.getElementById('pw2').value;
-
-		if (p1.length < 6) {
-			alert('입력한 글자가 6글자 이상이어야 합니다.');
-			return false;
+			$('#demo1').text(msg);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
 		}
+	});//end $.ajax()...
 
-		if (p1 != p2) {
-			alert("비밀번호불일치");
-			return false;
-		} else {
-			alert("비밀번호가 일치합니다");
-			return true;
+}//end idCheck()...
+
+function TelCheck() {
+	console.log("TelCheck....", $('#tel').val());
+
+	$.ajax({
+		url : "json_m_TelCheck.do",
+		data : {
+			tel : $('#tel').val()
+		},
+		method : 'GET',
+		dataType : 'json',
+		success : function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = '사용가능 합니다 ';
+			} else {
+				msg = '로그인 되어있는 전화번호입니다.'
+			}
+			$('#demo3').text(msg);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
 		}
+	});//end $.ajax()...
+
+}//end NickCheck()...
+function NickCheck() {
+	console.log("NickCheck....", $('#nickname').val());
+
+	$.ajax({
+		url : "json_m_NickCheck.do",
+		data : {
+			nickname : $('#nickname').val()
+		},
+		method : 'GET',
+		dataType : 'json',
+		success : function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = ' 사용 가능한 닉네임 입니다';
+			} else {
+				msg = '사용중인 닉네임 입니다'
+
+			}
+			$('#demo2').text(msg);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
+		}
+	});//end $.ajax()...
+
+}//end NickCheck()...
+
+//  function EmailCheck(){
+//   	console.log("EmailCheck....",$('#EmailCheck').val());
+
+//  	$.ajax({
+//   		url : "json_m_EmailCheck.do",
+//   		data:{nickname:$('#nickname').val()},
+//   		method:'GET',
+//   		dataType:'json',
+//   		success : function(obj) {
+//   			console.log('ajax...success:', obj);
+//   			console.log('ajax...success:', obj.result);
+//   			let msg = '';
+//  			if(obj.result==='OK'){
+//   				msg = '사용가능한 이메일입니다.';
+//  			}else{
+//   				msg = '사용중인 이메일입니다.';
+//   			}
+//  			$('#demo3').text(msg);
+//   		},
+//  		error:function(xhr,status,error){
+//   			console.log('xhr.status:', xhr.status);
+//   		}
+//   	});//end $.ajax()...
+
+//   }//end EmailCheck()...
+// 	$(document).ready(function() {
+// 		$("#join").click(function() {
+// 			var gubun = $('#btnOverlapped').prop('disabled');
+// 			if (!gubun) {
+// 				alert('중복체크를 클릭해주세요.');
+// 				return;
+// 			}
+// 			if (!compare_result) {
+// 				alert('비밀번호가 일치하지 않습니다.');
+// 				return;
+// 			}
+// 			$("#joinForm").submit();
+
+// 		});
+
+// 	});
+// 	var compare_result = false;
+// 	function fn_compare_pwd() {
+// 		var pwd1 = $("#member_pwd1").val();
+// 		var pwd2 = $("#member_pwd2").val();
+// 		var $s_result = $("#s_result");
+// 		if (pwd1 == pwd2) {
+
+// 			compare_result = true;
+// 			$s_result.text("비밀번호가 일치합니다.");
+// 			return;
+
+// 		}
+// 		compare_result = false;
+
+// 		$s_result.text("비밀번호가 일치하지 않습니다.");
+// 	}
+function test() {
+	var p1 = document.getElementById('pw1').value;
+	var p2 = document.getElementById('pw2').value;
+
+	if (p1.length < 6) {
+		alert('입력한 글자가 6글자 이상이어야 합니다.');
+		return false;
 	}
+
+	if (p1 != p2) {
+		alert("비밀번호 불일치");
+		return false;
+	} else {
+		alert("비밀번호가 일치합니다");
+		return true;
+	}
+}
 </script>
 </head>
 <body>
@@ -212,8 +212,9 @@
 						<tr>
 							<td><label for="pw">pw:</label></td>
 							<td><input type="password" id="pw1"
-								placeholder="비밀번호를 입력하세요"></br> <input type="password"
-								id="pw2" placeholder="비밀번호 한 번더 입력"></br> <input
+								placeholder="비밀번호를 입력하세요"><br/>
+								<input type="password"
+								id="pw2" placeholder="비밀번호 한 번더 입력"><br/> <input
 								type="button" onclick="test()" value="확인"></td>
 						</tr>
 						<!-- 						<tr> -->
@@ -261,8 +262,8 @@
 							<td><label for="email">email:</label></td>
 							<td><input class="w3-input" type="email" id="email"
 								name="email" placeholder="aaaaa@naver.com"></td>
-							<!-- 				<button type="button" onclick="EmailCheck()" class="myButton">이메일 중복체크</button> -->
-							<!-- 					<span id="demo3"></span></td> -->
+							<!-- <button type="button" onclick="EmailCheck()" class="myButton">이메일 중복체크</button> -->
+							<!-- <span id="demo3"></span></td> -->
 						</tr>
 						<tr>
 							<td><label for="m_file">프로필 사진선택:</label></td>
