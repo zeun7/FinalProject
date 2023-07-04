@@ -7,7 +7,7 @@
 
 	<select id="M_SELECT_ONE"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where id = #{id}
+		select * from member where id = #{id} or nickname = #{nickname, jdbcType=VARCHAR}
 	</select>
 
 	<select id="M_ID_CHECK"
