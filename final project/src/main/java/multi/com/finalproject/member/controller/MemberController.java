@@ -196,7 +196,7 @@ public class MemberController {
 
 		} else {
 			log.info("false");
-			return "redirect:m_selectOne.do?num=" + vo.getNum();
+			return "redirect:m_selectOne.do?id=" + vo.getId();
 		}
 
 	}
@@ -240,7 +240,6 @@ public class MemberController {
 			model.addAttribute("message", "아이디 또는 비밀번호가 틀렸습니다.");
 			return "redirect:login.do?message=fail";
 		} else {
-			session.setAttribute("num", vo2.getNum());
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
