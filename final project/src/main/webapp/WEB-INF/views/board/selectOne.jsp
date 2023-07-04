@@ -247,6 +247,7 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 								<tbody>
 									<tr>
 										<td rowspan="2">\${vo.writer}</td>`;
+										
 				if(update_num === vo.cnum){
 					tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
 						<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
@@ -298,7 +299,7 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 	});
 }
 
-function c_insertOK(cnum, bnum){
+function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 	console.log('insert comment...');
 	
 	$.ajax({
@@ -320,7 +321,7 @@ function c_insertOK(cnum, bnum){
 	});
 }
 
-function c_updateOK(cnum){
+function c_updateOK(cnum){		// 댓글 수정 완료 버튼
 	console.log('update comment...cnum: ', cnum);
 	
 	$.ajax({
@@ -340,7 +341,7 @@ function c_updateOK(cnum){
 	});
 }
 
-function c_deleteOK(cnum){
+function c_deleteOK(cnum){		// 댓글 삭제
 	console.log('delete comment...cnum: ', cnum);
 	
 	if(window.confirm("댓글을 삭제하시겠습니까?")){
@@ -361,7 +362,7 @@ function c_deleteOK(cnum){
 	}
 }
 
-function c_report(cnum, ccnum, bnum){
+function c_report(cnum, ccnum, bnum){	// 댓글 신고하기
 	console.log('report comment...cnum: ', cnum, 'ccnum: ', ccnum, 'bnum: ');
 	
 	let url = "c_report.do?cnum="+cnum+'&ccnum='+ccnum+'&bnum='+bnum;
@@ -370,14 +371,14 @@ function c_report(cnum, ccnum, bnum){
 	window.open(url, name, option);
 }
 
-function is_clike(cnum){
+function is_clike(cnum){		// 유저가 해당 댓글의 좋아요를 눌렀는지 체크
 	console.log('check clikes...cnum: ', cnum);
 	
 	$.ajax({
 		url: 'json_c_is_clike.do',
 		data: {cnum: cnum,
 			id: '${user_id}'},
-		method: 'GET',
+		method: 'POST',
 		dataType: 'json',
 		success: function(result){
 			if(result === 0){
@@ -395,13 +396,13 @@ function is_clike(cnum){
 	});
 }
 
-function count_clikes(cnum){
+function count_clikes(cnum){		// 댓글 좋아요 카운트 함수
 	console.log('count clikes...cnum: ', cnum);
 	
 	$.ajax({
 		url: 'json_c_count_clikes.do',
 		data: {cnum: cnum},
-		method: 'GET',
+		method: 'POST',
 		dataType: 'json',
 		success: function(count){
 			console.log('', cnum, ': ', count);
@@ -413,14 +414,40 @@ function count_clikes(cnum){
 	});
 }
 
-function clike(cum){
+function clike(cnum){		// 댓글 좋아요 함수
 	console.log('like comment...cnum: ', cnum);
 	
+	$.ajax({
+		url: 'json_c_clike.do',
+		data:{cnum: cnum,
+			id: '${user_id}'},
+		method:'POST',
+		dataType: 'json',
+		success: function(response){
+			comments();
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+	});
 }
 
-function cancel_clike(cnum){
-	console.log('cancel cilkes...cnum: ', cnum);
+function cancel_clike(cnum){	// 댓글 좋아요 취소 함수
+	console.log('cancel clikes...cnum: ', cnum);
 	
+	$.ajax({
+		url: 'json_c_cancel_clike.do',
+		data:{cnum: cnum,
+			id: '${user_id}'},
+		method: 'POST',
+		dataType: 'json',
+		success: function(response){
+			comments();
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+	});
 }
 </script>
 </head>

@@ -120,7 +120,7 @@ public class CommentsRestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_is_clike.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/json_c_is_clike.do", method = RequestMethod.POST)
 	public Integer json_c_is_clike(ClikesVO vo) {
 		log.info("/json_c_is_clike.do...{}",vo);
 		
@@ -131,22 +131,44 @@ public class CommentsRestController {
 			result = 1;
 		}
 		
-		log.info("result: {}", result);
-		
 		return result;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_c_count_clikes.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/json_c_count_clikes.do", method = RequestMethod.POST)
 	public Integer json_c_count_clikes(ClikesVO vo) {
 		log.info("/json_c_count_clikes.do...{}",vo);
 		
 		int count = service.count_clikes(vo);
 		
-		
-		log.info("count: {}", count);
-		
 		return count;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/json_c_clike.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_c_clike(ClikesVO vo) {
+		log.info("/json_c_clike.do...{}",vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.clike(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_c_cancel_clike.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_c_cancel_clike(ClikesVO vo) {
+		log.info("/json_c_cancel_clike.do...{}",vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.cancel_clike(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
 }

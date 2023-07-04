@@ -80,5 +80,19 @@ public class CommentsDAOimpl implements CommentsDAO {
 		return sqlSession.selectOne("C_COUNT_CLIKES", vo);
 	}
 
+	@Override
+	public int clike(ClikesVO vo) {
+		log.info("clike...{}", vo);
+		
+		return sqlSession.insert("C_CLIKE", vo);
+	}
+
+	@Override
+	public int cancel_clike(ClikesVO vo) {
+		log.info("cancel clike...{}", vo);
+		
+		return sqlSession.delete("C_CANCEL_CLIKE", vo);
+	}
+
 
 }

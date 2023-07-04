@@ -48,4 +48,12 @@ public class CommentsService {
 		return dao.count_clikes(vo);
 	}
 
+	public int clike(ClikesVO vo) {
+		return dao.clike(vo);
+	}
+
+	public int cancel_clike(ClikesVO vo) {
+		return dao.cancel_clike(vo);
+	}
+
 }

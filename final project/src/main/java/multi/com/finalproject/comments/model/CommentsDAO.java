@@ -21,4 +21,8 @@ public interface CommentsDAO {
 
 		public int count_clikes(ClikesVO vo);
 
+		public int clike(ClikesVO vo);
+
+		public int cancel_clike(ClikesVO vo);
+
 }
