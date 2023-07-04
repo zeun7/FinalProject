@@ -15,7 +15,8 @@ $(document).on('click', '#editButton', function(e) {
     $('#title').replaceWith('<input id="title" type="text" value="' + originalTitle + '">');
     
     // Replace the image with a file input field
-    $('#file').replaceWith('<input id="file" type="file">');
+    $('#file').replaceWith('<input type="file" id="file" name="file"> ' + 
+    		'<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath}">');
     
     // Change edit button to a save button
     $('#editButton').text('저장').attr('id', 'saveButton');
@@ -29,22 +30,25 @@ $(document).on('click', '#saveButton', function(e) {
         const id = $("#id").val();
         const title = $("#title").val().trim();
         const file = $("#file")[0].files[0];
-		
-        if(title === ''){
-            alert('제목을 입력해주세요.');
-            return;
-        }
+        const filepath = $("#filepath").val();
+//         if(title === ''){
+//             alert('제목을 입력해주세요.');
+//             return;
+//         }
         
-        if(!file){
-            alert('파일을 업로드해주세요.');
-            return;
-        }
+//         if(!file){
+//             alert('파일을 업로드해주세요.');
+//             return;
+//         }
 
         var formData = new FormData();
         formData.append("mbnum", ${vo2.mbnum})
         formData.append("title", title);
-        formData.append("file", file);
-        
+//         formData.append("file", file);
+        if(file) {
+            formData.append("file", file);  // Only append file if one was selected
+        }
+        formData.append("filepath", filepath);  // Always append filepath
         //ajax로 파일전송 폼데이터를 보내기위해
         //enctype, processData, contentType 이 세가지를 반드시 세팅해야한다.
         $.ajax({
@@ -59,6 +63,9 @@ $(document).on('click', '#saveButton', function(e) {
                 alert('수정 완료');
                 location.href='./mini_gallery.do?id=' + '${mh_attr.id}';
             }
+	        error:function(xhr,status,error){
+				console.log('xhr.status : ', xhr.status);	
+			}
         })			
     } 
 });

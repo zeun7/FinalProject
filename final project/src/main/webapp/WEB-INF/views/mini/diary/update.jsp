@@ -38,9 +38,9 @@ function input_check(){
 			<textarea rows="20" cols="100" id="content" name="content">${vo2.content}</textarea>
 		</div>
 		<div>
-			<img src="resources/uploadimg/${vo2.filepath}">
+			<div id="imageContainer"><img src="resources/uploadimg/${vo2.filepath}"></div>
 			<input type="file" id="file" name="file"> 
-			<input type="hidden" id="filepath" name="filepath">
+			<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath}">
 		</div>
 		<div>
 			<button type="button" class="myButton" onclick="input_check()">수정완료</button>
@@ -62,4 +62,9 @@ nhn.husky.EZCreator.createInIFrame({
 	},
 	fCreator: "createSEditor2"
 });
+
+	//이미지 없는 글 수정시 엑박 안나오게
+	if('${vo2.filepath}' == ''){
+	  $('#imageContainer').hide();
+	}
 </script>

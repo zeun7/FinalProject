@@ -1,6 +1,5 @@
 package multi.com.finalproject.member.model;
 
-import java.sql.Date;
 import java.util.List;
 
 public interface MemberDAO {

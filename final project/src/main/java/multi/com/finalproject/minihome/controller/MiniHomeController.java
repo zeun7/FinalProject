@@ -63,30 +63,35 @@ public class MiniHomeController {
 		log.info("mh_attr : {}", mh_attr);
 		return mh_attr;
 	}
-
+	
 	@ModelAttribute("m_attr")
 	public MemberVO getM_attr(MemberVO vo) {
 		log.info("getM_attr(MemberVO vo)...{}", vo);
 		MemberVO m_attr = service.selectNickPic(vo);
 		if(m_attr.getNickname() == null) {
 			m_attr.setNickname(vo.getNickname());
+		}else {
+			m_attr.setId(vo.getId());
 		}
 		log.info("m_attr : {}", m_attr);
 		return m_attr;
 	}
-
+	
 	@RequestMapping(value = "/mini_home.do", method = RequestMethod.GET)
 	public String mini_home(Model model, MiniHomeVO vo) {
 		log.info("mini_home(vo)...{}", vo);
 		
-		//1촌목록 부분
-		 MemberVO m_attr = (MemberVO) model.asMap().get("m_attr");
-		List<FriendsVO> vos = manage_service.ilchon_selectAll(m_attr);
+		//세션에 저장된 로그인한 사용자 id 가져옴
+		String user_id = (String) session.getAttribute("user_id");
+		String nickname = (String) session.getAttribute("nickname");
 		
+		//1촌목록 부분
+		MemberVO id_vo = new MemberVO();
+		id_vo.setNickname(nickname);
+		MemberVO user_vo = member_service.selectOne(id_vo);
+		List<FriendsVO> vos = manage_service.ilchon_selectAll(user_vo);
 		model.addAttribute("vos", vos);
 		
-	    String user_id = (String) session.getAttribute("user_id");
-	    
     	//오늘 날짜 생성
     	Date today_date = new Date(System.currentTimeMillis());
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -97,6 +102,7 @@ public class MiniHomeController {
     	v_vo.setUser_id(user_id);
     	v_vo.setMinihome_id(vo.getId());
     	//nickname 파리미터로로 홈피 방문시
+    	MemberVO m_attr = (MemberVO) model.asMap().get("m_attr");
     	if(vo.getId()==null) {
     		vo.setId(m_attr.getId());
     		v_vo.setMinihome_id(vo.getId());

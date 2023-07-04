@@ -90,11 +90,31 @@ public class MiniBoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/gallery_updateOK.do", method = RequestMethod.POST)
-	public String gallery_updateOK(@RequestParam("file") MultipartFile file, @RequestParam("title") String title, 
+	public String gallery_updateOK(@RequestParam(value="file", required=false) MultipartFile file, 
+			@RequestParam("filepath") String filepath, 
+			@RequestParam("title") String title, 
 			@RequestParam("mbnum") int mbnum) {
-		 // 파일이 업로드되지 않았을 경우 처리
-	    if (file.isEmpty()) {
-	        return "error";
+		// 파일이 업로드되지 않았을 경우 처리
+	    if (file == null || file.isEmpty()) {
+	        if(filepath == null || filepath.isEmpty()){
+	            return "error";
+	        }
+	        else{
+	            // 파일이 업로드되지 않았지만 기존의 파일을 사용
+	            // filepath는 이미 서버에 있는 파일의 경로
+	            String originalFilename = filepath;
+	            // 서비스 호출
+	            MiniBoardVO vo = new MiniBoardVO();
+	            vo.setMbnum(mbnum);
+	            vo.setTitle(title);
+	            vo.setFilepath(originalFilename);
+	            int result = service.gallery_update(vo);
+	            if (result > 0) {
+	                return "success";
+	            } else {
+	                return "error";
+	            }
+	        }
 	    }
 	    
 		// 원본 파일 이름
@@ -103,7 +123,6 @@ public class MiniBoardRestController {
 		log.info("file : {}", file.toString());
 		log.info("title : {}", title);
 		log.info("mbnum : {}", mbnum);
-		
 		
 		// VO 객체 생성 및 데이터 설정
 		MiniBoardVO vo = new MiniBoardVO();

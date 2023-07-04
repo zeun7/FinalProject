@@ -63,6 +63,8 @@ public class MiniBoardController {
 		MemberVO m_attr = minihome_service.selectNickPic(vo);
 		if(m_attr.getNickname() == null) {
 			m_attr.setNickname(vo.getNickname());
+		}else {
+			m_attr.setId(vo.getId());
 		}
 		log.info("m_attr : {}", m_attr);
 		return m_attr;

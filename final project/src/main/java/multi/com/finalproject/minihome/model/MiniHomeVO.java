@@ -13,7 +13,6 @@ public class MiniHomeVO {
 	private String id;
 	private String title;
 	private String message;
-	private String miniaddr;
 	private String backimg;
 	private String bgm;
 	private int vtotal;
