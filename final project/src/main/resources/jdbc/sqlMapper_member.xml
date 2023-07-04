@@ -44,8 +44,8 @@
 
 	<update id="M_UPDATE"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
-		update member set pw=#{pw} , name=#{name} , tel=#{tel} ,
-		profilepic=#{profilepic} , nickname=#{nickname} ,
+		update member set pw=#{pw}, name=#{name}, tel=#{tel}, 
+		profilepic=#{profilepic}, nickname=#{nickname}, 
 		email=#{email} where id = #{id}
 	</update>
 
