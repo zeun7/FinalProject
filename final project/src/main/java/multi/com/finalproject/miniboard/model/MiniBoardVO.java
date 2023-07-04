@@ -17,6 +17,6 @@ public class MiniBoardVO {
 	private Timestamp wdate;
 	private String filepath;
 	private int report;
-	private MultipartFile bfile;
+	private MultipartFile file;
 	
 }

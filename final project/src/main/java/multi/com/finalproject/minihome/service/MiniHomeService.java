@@ -28,7 +28,7 @@ public class MiniHomeService {
 		return dao.update(vo);
 	}
 
-	public MemberVO selectNickPic(MiniHomeVO vo) {
+	public MemberVO selectNickPic(MemberVO vo) {
 		return dao.selectNickPic(vo);
 	}
 

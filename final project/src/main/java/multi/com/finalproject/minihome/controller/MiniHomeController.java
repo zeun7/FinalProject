@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.manage.model.FriendsVO;
+import multi.com.finalproject.manage.service.ManageService;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.model.VisitHistoryVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
@@ -31,7 +35,13 @@ public class MiniHomeController {
 
 	@Autowired
 	MiniHomeService service;
+	
+	@Autowired
+	MemberService member_service;
 
+	@Autowired
+	ManageService manage_service;
+	
 	@Autowired
 	ServletContext sContext;
 
@@ -39,17 +49,28 @@ public class MiniHomeController {
 	HttpSession session;
 
 	@ModelAttribute("mh_attr")
-	public MiniHomeVO getMh_attr(MiniHomeVO vo) {
-		log.info("getMh_attr(MiniHomeVO vo)...{}", vo);
-		MiniHomeVO mh_attr = service.selectOne(vo);
+	public MiniHomeVO getMh_attr(MiniHomeVO vo, MemberVO mvo) {
+		log.info("getMh_attr(MiniHomeVO vo)...vo : {}, mvo : {}", vo, mvo);
+		MiniHomeVO mh_attr = new MiniHomeVO();
+		if(vo.getId() != null) {
+			mh_attr = service.selectOne(vo);
+		}else if(mvo.getNickname() != null){
+			MemberVO mvo2 = member_service.selectOne(mvo);
+			MiniHomeVO vo2 = new MiniHomeVO();
+			vo2.setId(mvo2.getId());
+			mh_attr = service.selectOne(vo2); 
+		}
 		log.info("mh_attr : {}", mh_attr);
 		return mh_attr;
 	}
 
 	@ModelAttribute("m_attr")
-	public MemberVO getM_attr(MiniHomeVO vo) {
-		log.info("getM_attr(MiniHomeVO vo)...{}", vo);
+	public MemberVO getM_attr(MemberVO vo) {
+		log.info("getM_attr(MemberVO vo)...{}", vo);
 		MemberVO m_attr = service.selectNickPic(vo);
+		if(m_attr.getNickname() == null) {
+			m_attr.setNickname(vo.getNickname());
+		}
 		log.info("m_attr : {}", m_attr);
 		return m_attr;
 	}
@@ -57,7 +78,13 @@ public class MiniHomeController {
 	@RequestMapping(value = "/mini_home.do", method = RequestMethod.GET)
 	public String mini_home(Model model, MiniHomeVO vo) {
 		log.info("mini_home(vo)...{}", vo);
-
+		
+		//1촌목록 부분
+		 MemberVO m_attr = (MemberVO) model.asMap().get("m_attr");
+		List<FriendsVO> vos = manage_service.ilchon_selectAll(m_attr);
+		
+		model.addAttribute("vos", vos);
+		
 	    String user_id = (String) session.getAttribute("user_id");
 	    
     	//오늘 날짜 생성
@@ -69,11 +96,15 @@ public class MiniHomeController {
     	v_vo.setVisit_date(sdf.format(today_date)); 
     	v_vo.setUser_id(user_id);
     	v_vo.setMinihome_id(vo.getId());
+    	//nickname 파리미터로로 홈피 방문시
+    	if(vo.getId()==null) {
+    		vo.setId(m_attr.getId());
+    		v_vo.setMinihome_id(vo.getId());
+    	}
     	
     	log.info("v_vo : {}", v_vo);
     	
     	int hasVisitedToday = service.hasVisitedToday(v_vo); // DB에서 오늘 방문 기록 조회하는 메서드 필요
-    	
     	log.info("hasVisitedToday : {}", hasVisitedToday);
 	    if (hasVisitedToday == 0) {
 	        // 오늘 처음 방문한 경우
@@ -81,7 +112,7 @@ public class MiniHomeController {
 	        // 방문 기록 추가
 	        service.addVisitHistory(v_vo);
 	    }
-
+	    
 	    return "mini/minihome";
 	}
 	
@@ -187,13 +218,13 @@ public class MiniHomeController {
 		return "mini/game/game";
 	}
 	
-	@RequestMapping("/music_player")
-	public String musicPlayer(@RequestParam("id") String id, Model model) {
-	    MiniHomeVO vo = new MiniHomeVO();
-	    vo.setId(id);
-	    MiniHomeVO bgm_vo = service.selectOne(vo);
-	    model.addAttribute("bgm_vo", bgm_vo);
-	    return "views/mini/music_player";
-	}
+//	@RequestMapping("/music_player")
+//	public String musicPlayer(@RequestParam("id") String id, Model model) {
+//	    MiniHomeVO vo = new MiniHomeVO();
+//	    vo.setId(id);
+//	    MiniHomeVO bgm_vo = service.selectOne(vo);
+//	    model.addAttribute("bgm_vo", bgm_vo);
+//	    return "views/mini/music_player";
+//	}
 
 }

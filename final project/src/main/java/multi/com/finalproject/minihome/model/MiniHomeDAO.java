@@ -8,7 +8,7 @@ public interface MiniHomeDAO {
 	
 	public int update(MiniHomeVO vo);
 	
-	public MemberVO selectNickPic(MiniHomeVO vo);
+	public MemberVO selectNickPic(MemberVO vo);
 
 	public void view_update(MiniHomeVO vo2);
 

@@ -31,9 +31,13 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	}
 
 	@Override
-	public MemberVO selectNickPic(MiniHomeVO vo) {
-		log.info("selectNickPic(vo)...{}", vo);
-		return sqlSession.selectOne("SELECT_NICK_PIC", vo);
+	public MemberVO selectNickPic(MemberVO vo) {
+		log.info("selectNickPic(MemberVO vo)...{}", vo);
+		if(vo.getNickname() == null) {
+			return sqlSession.selectOne("SELECT_NICK_PIC", vo);
+		}else{
+			return sqlSession.selectOne("SELECT_PIC", vo);
+		}
 	}
 
 	@Override

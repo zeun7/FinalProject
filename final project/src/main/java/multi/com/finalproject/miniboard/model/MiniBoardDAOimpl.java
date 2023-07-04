@@ -26,30 +26,34 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 
 	@Override
-	public MiniBoardVO diary_selectOne(MiniBoardVO vo) {
-		log.info("diary_selectOne(vo)...{}", vo);
-		return sqlSession.selectOne("DIARY_SELECT_ONE", vo);
+	public MiniBoardVO mb_selectOne(MiniBoardVO vo) {
+		log.info("mb_selectOne(vo)...{}", vo);
+		return sqlSession.selectOne("MB_SELECT_ONE", vo);
 	}
 
 	@Override
-	public int insert(MiniBoardVO vo) {
-		log.info("insert(vo)...{}", vo);
+	public int mb_insert(MiniBoardVO vo) {
+		log.info("mb_insert(vo)...{}", vo);
 		return sqlSession.insert("MB_INSERT",vo);
 	}
 	
 	@Override
 	public int diary_update(MiniBoardVO vo) {
 		log.info("diary_update(vo)...{}", vo);
-		log.info("bfile: {}", vo.getBfile().toString());
-		log.info("filepath: {}", vo.getFilepath().toString());
-		int flag = sqlSession.insert("DIARY_UPDATE",vo);
+		int flag = sqlSession.update("DIARY_UPDATE",vo);
 		return flag;
 	}
 
 	@Override
-	public int diary_delete(MiniBoardVO vo) {
-		log.info("diary_delete(vo)...{}", vo);
-		return sqlSession.insert("DIARY_DELETE",vo);
+	public int gallery_update(MiniBoardVO vo) {
+		log.info("gallery_update(vo)...{}", vo);
+		return sqlSession.insert("GALLERY_UPDATE",vo);
+	}
+	
+	@Override
+	public int mb_delete(MiniBoardVO vo) {
+		log.info("mb_delete(vo)...{}", vo);
+		return sqlSession.delete("MB_DELETE",vo);
 	}
 	
 	@Override
@@ -74,24 +78,6 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	public int mongo_delete(MiniBoardVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-	
-	@Override
-	public MiniBoardVO gallery_selectOne(MiniBoardVO vo) {
-		log.info("gallery_selectOne(vo)...{}", vo);
-		return sqlSession.selectOne("GALLERY_SELECT_ONE", vo);
-	}
-
-	@Override
-	public int gallery_update(MiniBoardVO vo) {
-		log.info("gallery_update(vo)...{}", vo);
-		return sqlSession.insert("GALLERY_UPDATE",vo);
-	}
-
-	@Override
-	public int gallery_delete(MiniBoardVO vo) {
-		log.info("gallery_delete(vo)...{}", vo);
-		return sqlSession.insert("GALLERY_DELETE",vo);
 	}
 
 }
