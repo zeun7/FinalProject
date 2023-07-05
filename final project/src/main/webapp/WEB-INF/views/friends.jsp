@@ -341,7 +341,7 @@ function del_ban(nickname2) {	// 차단 해제
 }
 </script>
 </head>
-<body>
+<body onload="friends_list()">
 	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul>
 		<li><button onclick="friends_list()">친구목록</button></li>

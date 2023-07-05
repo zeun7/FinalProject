@@ -350,7 +350,7 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 }
 </script>
 </head>
-<body>
+<body onload="manage_member(1)">
 	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul>
 		<li><button onclick="manage_member(1)">회원관리</button></li>

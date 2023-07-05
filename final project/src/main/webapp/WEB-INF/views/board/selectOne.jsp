@@ -351,7 +351,7 @@ function c_deleteOK(cnum){		// 댓글 삭제
 			method: 'POST',
 			dataType: 'json',
 			success: function(response){
-				if(response.result === 1){
+				if(response.result >= 1){
 					comments();
 				}
 			},
