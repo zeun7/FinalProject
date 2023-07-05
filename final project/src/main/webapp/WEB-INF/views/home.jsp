@@ -74,7 +74,7 @@ function post_friends(){
 	user_id: ${user_id}<br/>
 	nickname: ${nickname}<br />
 	mclass: ${mclass}
-	<a href="json_mc_selectAll.do">json_mc_selectAll.do</a>
+	
 	<table>
 		<tr>
 			<td id="vos1"></td>
