@@ -1,6 +1,5 @@
 package multi.com.finalproject.minicomments.model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;

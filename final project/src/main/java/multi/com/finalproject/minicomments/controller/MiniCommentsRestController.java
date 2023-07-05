@@ -1,6 +1,8 @@
 package multi.com.finalproject.minicomments.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.minicomments.model.MiniCommentsVO;
 import multi.com.finalproject.minicomments.service.MiniCommentsService;
 
@@ -21,67 +25,151 @@ public class MiniCommentsRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mc_selectAll.do", method = RequestMethod.GET)
-	public List<MiniCommentsVO> json_mc_selectAll() {
-		log.info("json_mc_selectAll.do...");
+	public List<MiniCommentsVO> json_mc_selectAll(MiniCommentsVO vo) {
+		log.info("/json_mc_selectAll.do...");
 		
-		List<MiniCommentsVO> vos = service.selectAll();
-			
+		List<MiniCommentsVO> vos = service.selectAll(vo);
+
+		for (MiniCommentsVO x : vos) {
+			log.info(x.toString());
+		}
+		
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mcc_selectAll.do", method = RequestMethod.GET)
+	public List<MiniCommentsVO> json_mcc_selectAll(MiniCommentsVO vo) {
+		log.info("/json_mcc_selectAll.do...");
+		
+		List<MiniCommentsVO> vos = service.mcc_selectAll(vo);
+		
+		for (MiniCommentsVO x : vos) {
+			log.info(x.toString());
+		}
+		
 		return vos;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_insertOK.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_mc_insertOK(MiniCommentsVO vo) {
+		log.info("/json_mc_insertOK.do...{}",vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.insert(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_updateOK.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_mc_updateOK(MiniCommentsVO vo) {
+		log.info("/json_mc_updateOK.do...{}",vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.update(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
 
 	@ResponseBody
-	@RequestMapping(value = "/json_mc_insertOK.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_insertOK(MiniCommentsVO vo) {
+	@RequestMapping(value = "/json_mc_deleteOK.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_mc_deleteOK(MiniCommentsVO vo) {
+		log.info("/json_mc_deleteOK.do...{}",vo);
 		
-		log.info("json_mc_insertOK.do...{}",vo);
-			
-		return vo;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.delete(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
 	}
-
-	@ResponseBody
-	@RequestMapping(value = "/json_mc_reinsertOK.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_reinsertOK(MiniCommentsVO vo) {
-		
-		log.info("json_mc_reinsertOK.do...{}",vo);
+	
+	@RequestMapping(value = "/mc_report.do", method = RequestMethod.GET)
+	public String json_mc_report(MiniCommentsVO vo) {
+		log.info("/mc_report.do...{}",vo);
 			
-		return vo;
+		return "mini/diary/report_comments";
+	}
+	
+	@RequestMapping(value = "/mc_reportOK.do", method = RequestMethod.POST)
+	public String mc_reportOK(MiniCommentsVO vo, String reason) {
+		log.info("/mc_reportOK.do...{}",vo);
+		log.info("reason: {}", reason);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("reason", reason);
+		
+		int result = service.report(map);
+		log.info("result: {}", result);
+		
+		if(result == 1) {
+			return "redirect:mc_report.do?mcnum=0";
+		}
+		else {
+			return "Redirect:mc_report.do?mcnum="+vo.getMcnum();
+		}
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_mc_updateOK.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_updateOK(MiniCommentsVO vo) {
+	@RequestMapping(value = "/json_mc_is_clike.do", method = RequestMethod.POST)
+	public Integer json_mc_is_clike(ClikesVO vo) {
+		log.info("/json_mc_is_clike.do...{}",vo);
 		
-		log.info("json_mc_updateOK.do...{}",vo);
-			
-		return vo;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/json_mc_deleteOK.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_deleteOK(MiniCommentsVO vo) {
+		int result = 0;
+		ClikesVO vo2 = service.is_clike(vo);
 		
-		log.info("json_mc_deleteOK.do...{}",vo);
-			
-		return vo;
+		if(vo2 != null) {
+			result = 1;
+		}
+		
+		return result;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_mc_report.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_report(MiniCommentsVO vo) {
+	@RequestMapping(value = "/json_mc_count_clikes.do", method = RequestMethod.POST)
+	public Integer json_mc_count_clikes(ClikesVO vo) {
+		log.info("/json_mc_count_clikes.do...{}",vo);
 		
-		log.info("json_mc_report.do...{}",vo);
-			
-		return vo;
+		int count = service.count_clikes(vo);
+		
+		return count;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_mc_like.do", method = RequestMethod.GET)
-	public MiniCommentsVO json_mc_like(MiniCommentsVO vo) {
+	@RequestMapping(value = "/json_mc_clike.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_mc_clike(ClikesVO vo) {
+		log.info("/json_mc_clike.do...{}",vo);
 		
-		log.info("json_mc_like.do...{}",vo);
-			
-		return vo;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.clike(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_cancel_clike.do", method = RequestMethod.POST)
+	public Map<String, Integer> json_mc_cancel_clike(ClikesVO vo) {
+		log.info("/json_mc_cancel_clike.do...{}",vo);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		int result = service.cancel_clike(vo);
+		map.put("result", result);
+		log.info("{}", map);
+		
+		return map;
+	}
 }

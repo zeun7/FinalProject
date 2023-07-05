@@ -32,7 +32,7 @@
 	</update>
 	
 	<delete id="C_DELETE">
-		delete from comments where cnum = #{cnum}
+		delete from comments where cnum = #{cnum} or ccnum = #{cnum}
 	</delete>
 	
 	<insert id="C_REPORT">
@@ -40,19 +40,40 @@
 		values(seq_report.nextval, #{vo.bnum}, #{vo.cnum}, #{vo.ccnum}, #{reason})
 	</insert>
 	
+	<insert id="MC_REPORT">
+		insert into report(rnum, bnum, mcnum, mccnum, reason) 
+		values(seq_report.nextval, #{vo.bnum}, #{vo.mcnum}, #{vo.mccnum}, #{reason})
+	</insert>	
+	
 	<select id="C_IS_CLIKE" resultType="multi.com.finalproject.comments.model.ClikesVO">
 		select * from clikes where id = #{id} and cnum = #{cnum}
+	</select>
+	
+	<select id="MC_IS_CLIKE" resultType="multi.com.finalproject.comments.model.ClikesVO">
+		select * from clikes where id = #{id} and mcnum = #{mcnum}
 	</select>
 	
 	<select id="C_COUNT_CLIKES" resultType="Integer">
 		select count(*) from clikes where cnum = #{cnum}
 	</select>
 	
+	<select id="C_COUNT_CLIKES" resultType="Integer">
+		select count(*) from clikes where mcnum = #{mcnum}
+	</select>
+	
 	<insert id="C_CLIKE">
 		insert into clikes(cnum, id) values(#{cnum}, #{id})
 	</insert>
 	
+	<insert id="C_CLIKE">
+		insert into clikes(mcnum, id) values(#{mcnum}, #{id})
+	</insert>
+	
 	<delete id="C_CANCEL_CLIKE">
 		delete from clikes where id = #{id} and cnum = #{cnum}
+	</delete>
+	
+	<delete id="MC_CANCEL_CLIKE">
+		delete from clikes where id = #{id} and mcnum = #{mcnum}
 	</delete>
 </mapper>

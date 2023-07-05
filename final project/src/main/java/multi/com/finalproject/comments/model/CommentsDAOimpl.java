@@ -61,7 +61,7 @@ public class CommentsDAOimpl implements CommentsDAO {
 
 	@Override
 	public int report(Map<String, Object> map) {
-		log.info("report()...{}", map.get("vo"));
+		log.info("report()...{}", map);
 		
 		return sqlSession.insert("C_REPORT", map);
 	}
