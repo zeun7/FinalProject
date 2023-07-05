@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -22,6 +21,8 @@ import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
 
@@ -40,6 +41,9 @@ public class MiniBoardController {
 
 	@Autowired
 	MemberService member_service;
+	
+	@Autowired
+	MiniCommentsService minicomments_service;
 	
 	@ModelAttribute("mh_attr")
 	public MiniHomeVO getMh_attr(MiniHomeVO vo, MemberVO mvo) {
@@ -71,37 +75,15 @@ public class MiniBoardController {
 	}
 	
 	@RequestMapping(value = "/mini_diary.do", method = RequestMethod.GET)
-	public String mini_diary(Model model, MemberVO idvo) {
-		log.info("mini_diary(idvo)...{}", idvo);
+	public String mini_diary() {
+		log.info("mini_diary()...");
 		
-		MemberVO m_vo = minihome_service.selectNickPic(idvo);
-		
-		MiniBoardVO vo = new MiniBoardVO();
-	    vo.setMbname("diary");
-	    vo.setWriter(m_vo.getNickname());
-		
-		List<MiniBoardVO> vos = service.mb_selectAll(vo);
-		log.info("vos : {}",vos);
-
-		model.addAttribute("vos", vos);
-
 		return "mini/diary/selectAll";
 	}
 
 	@RequestMapping(value = "/mini_gallery.do", method = RequestMethod.GET)
-	public String mini_gallery(Model model, MemberVO idvo) {
-		log.info("mini_gallery(idvo)...{}", idvo);
-		
-		MemberVO m_vo = minihome_service.selectNickPic(idvo);
-		
-		MiniBoardVO vo = new MiniBoardVO();
-	    vo.setMbname("gallery");
-	    vo.setWriter(m_vo.getNickname());
-		
-		List<MiniBoardVO> vos = service.mb_selectAll(vo);
-		log.info("vos : {}",vos);
-		
-		model.addAttribute("vos", vos);
+	public String mini_gallery() {
+		log.info("mini_gallery()...");
 
 		return "mini/gallery/selectAll";
 	}
@@ -261,5 +243,25 @@ public class MiniBoardController {
 			return "redirect:gallery_selectOne.do?id=" + id + "&mbnum=" + mbnum;
 		}
 	}
+	
+	@RequestMapping(value = "/visit_findOne.do", method = RequestMethod.GET)
+	public String visit_findOne() {
+		log.info("visit_findOne()...");
+		
+		return "mini/visit/findOne";
+	}
+	
+	@RequestMapping(value = "/visit_deleteOK.do", method = RequestMethod.GET)
+	public String visit_deleteOK(@RequestParam("id") String id, MiniCommentsVO vo) {
+		log.info("visit_deleteOK(vo)...{}", vo);
 
+		int result = minicomments_service.deleteOne(vo);
+		log.info("result...{}", result);
+		
+		if (result == 1) {
+			return "redirect:mini_visit.do?id=" + id;
+		}else {
+			return "redirect:visit_findOne.do?id=" + id + "&mcnum=" + vo.getMcnum();
+		}
+	}
 }

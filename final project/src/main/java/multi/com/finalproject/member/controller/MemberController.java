@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -541,5 +543,27 @@ public class MemberController {
 	public String find_pw_from() throws Exception {
 
 		return "member/find_pw_from";
+	}
+	
+	@RequestMapping(value = "/loginSuccess.do")
+	public String loginSuccess() throws Exception {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(principal instanceof UserDetails) {
+			String username = ((UserDetails)principal).getUsername();
+			
+			MemberVO vo = new MemberVO();
+			vo.setId(username);
+			
+			MemberVO vo2 = service.selectOne(vo);
+			
+			session.setAttribute("user_id", vo2.getId());
+			session.setAttribute("nickname", vo2.getNickname());
+			session.setAttribute("mclass", vo2.getMclass());
+		}else {
+			String username = principal.toString();
+		}
+		
+		return "home";
 	}
 }

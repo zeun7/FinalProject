@@ -13,6 +13,33 @@ function redirectToMiniHome(selectElement) {
     var nickname = selectElement.value;
     window.location.href = "mini_home.do?nickname=" + nickname;
   }
+
+let mh_attr_id = '${mh_attr.id}';
+
+$(document).ready(function(){
+    $.ajax({
+        url: "json_mc_findAll.do",
+        method: "get",
+        data : {
+			id : '${mh_attr_id}'
+		},
+        dataType: "json",
+        success: function(data) {
+            let visit_log = ``;
+            $.each(data, function(index, miniComment){
+                visit_log += `<a href="visit_findOne.do?id=\${mh_attr_id}&mcnum=\${miniComment.mcnum}" style="border:3px solid white;"class="myButton" >`;
+            	visit_log += `<h3>\${miniComment.writer}</h3>`;
+                visit_log += `<p>\${miniComment.content}</p>`;
+                visit_log += `<span>\${miniComment.cdate}</span></a>`;
+            });
+            $('#visitors_log').html(visit_log);
+        },
+        error: function(request, status, error) {
+            console.error('Request failed', status, error);
+        }
+    });
+});
+
 </script>
 </head>
 <body>
@@ -21,7 +48,7 @@ function redirectToMiniHome(selectElement) {
 	<h1>mini/minihome.jsp</h1>
 	<div
 		style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
-		<h1>미니홈피 제목 : ${mh_attr.title}</h1>
+		<h2>미니홈피 제목 : ${mh_attr.title}</h2>
 		<select onchange="redirectToMiniHome(this)">
 			<option>1촌목록</option>
 			<c:forEach var="vo" items="${vos}">
@@ -30,6 +57,7 @@ function redirectToMiniHome(selectElement) {
 		</select>
 
 		<h2>방명록...포스팃 형식으로</h2>
+		<div id="visitors_log"></div>
 	</div>
 </body>
 </html>

@@ -324,9 +324,7 @@ function cancel_clike(mcnum){	// 댓글 좋아요 취소 함수
 	<h1>${user_id}</h1>
 	<h1>${mh_attr.id}</h1>
 	<div>${vo2.mbname}</div>
-	<div id="title">
-		제목 : <span id="titleSpan">${vo2.title}</span>
-	</div>
+	<div id="title">제목 : <span id="titleSpan">${vo2.title}</span></div>
 	<div>닉네임 : ${vo2.writer}</div>
 	<div>작성일자 : ${vo2.wdate}</div>
 	<div style="border: 1px solid black; width: 700px; height: 350px;">

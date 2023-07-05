@@ -72,10 +72,13 @@
 					</span> <input class="w3-input" type="password" id="pw" name="pw" required>
 				</p>
 				<tr>
-					<td colspan="2"><input type="submit"
+					<td colspan="2">
+					<input type="submit"
 						class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"></td>
 				</tr>
-				 <input type="checkbox" name="rememberMe" id="rememberMe"/>로그인 유지<br>
+				 <input type="checkbox" name="_spring_security_remember_me" id="remember_me" value="True"/>로그인 유지<br>
+				 <input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 			</form>
 		</div>
 	</div>

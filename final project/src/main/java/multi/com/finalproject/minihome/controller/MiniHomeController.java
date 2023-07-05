@@ -86,9 +86,9 @@ public class MiniHomeController {
 		String nickname = (String) session.getAttribute("nickname");
 		
 		//1촌목록 부분
-		MemberVO id_vo = new MemberVO();
-		id_vo.setNickname(nickname);
-		MemberVO user_vo = member_service.selectOne(id_vo);
+		MemberVO nick_vo = new MemberVO();
+		nick_vo.setNickname(nickname);
+		MemberVO user_vo = member_service.selectOne(nick_vo);
 		log.info("{}", user_vo);
 		
 		List<FriendsVO> vos = manage_service.ilchon_selectAll(user_vo);
@@ -216,7 +216,7 @@ public class MiniHomeController {
 	public String mini_visit() {
 		log.info("mini_visit()...");
 
-		return "mini/visit/visit";
+		return "mini/visit/findAll";
 	}
 
 	@RequestMapping(value = "/mini_game.do", method = RequestMethod.GET)
