@@ -57,7 +57,7 @@
 		select count(*) from clikes where cnum = #{cnum}
 	</select>
 	
-	<select id="C_COUNT_CLIKES" resultType="Integer">
+	<select id="MC_COUNT_CLIKES" resultType="Integer">
 		select count(*) from clikes where mcnum = #{mcnum}
 	</select>
 	
@@ -65,7 +65,7 @@
 		insert into clikes(cnum, id) values(#{cnum}, #{id})
 	</insert>
 	
-	<insert id="C_CLIKE">
+	<insert id="MC_CLIKE">
 		insert into clikes(mcnum, id) values(#{mcnum}, #{id})
 	</insert>
 	
