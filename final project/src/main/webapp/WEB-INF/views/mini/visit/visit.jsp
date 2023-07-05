@@ -14,6 +14,7 @@
     <div style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
         <h1>방명록</h1>
     </div>
+    
 </body>
 
 <script type="text/javascript">

@@ -24,9 +24,9 @@ public class MiniCommentsRestController {
 	public List<MiniCommentsVO> json_mc_selectAll() {
 		log.info("json_mc_selectAll.do...");
 		
-		List<MiniCommentsVO> list = service.selectAll();
+		List<MiniCommentsVO> vos = service.selectAll();
 			
-		return list;
+		return vos;
 	}
 
 

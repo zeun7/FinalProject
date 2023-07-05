@@ -1,6 +1,5 @@
 package multi.com.finalproject.minicomments.model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;
@@ -13,7 +12,7 @@ public class MiniCommentsVO {
 	private String id;
 	private String writer;
 	private String content;
-	private Date cdate;
+	private Date vdate;
 	private int secret;
 	private int report;
 }
