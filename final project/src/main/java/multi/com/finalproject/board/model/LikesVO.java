@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class LikesVO {
 
-	private int num;
+	private String id;
 	private int bnum;
+	private int mbnum;
 	
 }

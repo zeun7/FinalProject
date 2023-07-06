@@ -100,70 +100,58 @@ public class BoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_like.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_b_like(int num, BoardVO vo) {
-		log.info("/json_b_like.do...");
-		log.info("num:{}", num);
-		log.info("vo:{}", vo);
+	public Map<String, Integer> json_b_like(LikesVO vo) {
+		log.info("/json_b_like.do...{}", vo);
 		
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("num", num);
-		param.put("bnum", vo.getBnum());
-		
-		int result = service.like(param);
+		int result = service.like(vo);
 		log.info("result:{}", result);
+		
+		BoardVO vo2 = new BoardVO();
+		vo2.setBnum(vo.getBnum());
 		
 		//좋아요 성공하면 카운트업
 		if(result == 1) {
-			service.likesUp(vo);
+			service.likesUp(vo2);
 		}
-		BoardVO vo2 = service.selectOne(vo);
+		BoardVO vo3 = service.selectOne(vo2);
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
-		map.put("likes", vo2.getLikes());	//좋아요 개수 반환
+		map.put("likes", vo3.getLikes());	//좋아요 개수 반환
 		
 		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_like_delete.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_b_like_delete(int num, BoardVO vo) {
-		log.info("/json_b_like_delete.do...");
-		log.info("num:{}", num);
-		log.info("vo:{}", vo);
+	public Map<String, Integer> json_b_like_delete(LikesVO vo) {
+		log.info("/json_b_like_delete.do...{}", vo);
 		
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("num", num);
-		param.put("bnum", vo.getBnum());
-		
-		int result = service.deleteLike(param);
+		int result = service.deleteLike(vo);
 		log.info("result:{}", result);
+		
+		BoardVO vo2 = new BoardVO();
+		vo2.setBnum(vo.getBnum());
 		
 		//좋아요 삭제 성공하면 카운트다운
 		if(result == 1) {
-			service.likesDown(vo);
+			service.likesDown(vo2);
 		}
-		BoardVO vo2 = service.selectOne(vo);
+		BoardVO vo3 = service.selectOne(vo2);
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("result", result);
-		map.put("likes", vo2.getLikes());	//좋아요 개수 반환
+		map.put("likes", vo3.getLikes());	//좋아요 개수 반환
 		
 		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_likeCheck.do", method = RequestMethod.GET)
-	public Map<String, Integer> json_b_likeCheck(int num, BoardVO vo) {
-		log.info("/json_b_likeCheck.do...");
-		log.info("num:{}", num);
-		log.info("vo:{}", vo);
+	public Map<String, Integer> json_b_likeCheck(LikesVO vo) {
+		log.info("/json_b_likeCheck.do...{}", vo);
 		
-		Map<String, Integer> param = new HashMap<String, Integer>();
-		param.put("num", num);
-		param.put("bnum", vo.getBnum());
-		
-		LikesVO vo2 = service.likeCheck(param);
+		LikesVO vo2 = service.likeCheck(vo);
 		log.info("vo2:{}", vo2);
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();

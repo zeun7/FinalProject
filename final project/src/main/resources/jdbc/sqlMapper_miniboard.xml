@@ -53,4 +53,29 @@
 		select count(*) from miniboard where mbname=#{mbname} and writer=#{writer}
 	</select>
 	
+	<select id="MB_LIKE_CHECK" resultType="multi.com.finalproject.board.model.LikesVO" parameterType="multi.com.finalproject.board.model.LikesVO">
+		select * from likes where id=#{id} and mbnum = #{mbnum}
+	</select>
+	
+	<insert id="MB_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
+		insert into likes(id, mbnum) values(#{id}, #{mbnum})
+	</insert>
+	
+	<update id="MB_LIKES_UP" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		update miniboard set likes=likes+1
+		where mbnum = #{mbnum}
+	</update>
+	
+	<update id="MB_LIKES_DOWN" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		update miniboard set likes=likes-1
+		where mbnum = #{mbnum}
+	</update>
+	
+	<delete id="MB_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
+		delete from likes where id = #{id} and mbnum = #{mbnum}
+	</delete>
+	
+	<insert id="MB_REPORT" parameterType="Map">
+		insert into report(rnum, mbnum, reason) values(seq_report.nextval, #{vo.mbnum}, #{reason})
+	</insert>
 </mapper>

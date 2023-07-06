@@ -90,7 +90,7 @@ function selectAll(page, limit){
  						<td>
  				`;
  				
- 				if(vo.filepath != null){
+ 				if(vo.isFileExist == 1){
  					tag_vos += `<i class="fa-regular fa-image">`;
  				}
  				tag_vos += `
@@ -145,7 +145,7 @@ function searchListCount(){
 			if(curPage > tag_page){
 				curPage = tag_page;
 			}
-			selectAll(curPage, limit);
+			searchList(curPage, limit);
 			
 // 			$("#board_name").text('${param.bname}');
 			$("#page").html(tag_pages);
@@ -193,7 +193,7 @@ function searchList(page, limit){
  						<td>
  				`;
  				
- 				if(vo.filepath != null){
+ 				if(vo.isFileExist == 1){
  					tag_vos += `<i class="fa-regular fa-image">`;
  				}
  				tag_vos += `

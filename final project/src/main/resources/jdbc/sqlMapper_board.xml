@@ -6,13 +6,13 @@
   <mapper namespace="multi.com.finalproject.board">
   	<select id="B_SELECT_ALL" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
   		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist 
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		    FROM
 		      (
 		        SELECT *
@@ -31,19 +31,19 @@
 		select * from board where bnum = #{bnum}
 	</select>
 	
-	<select id="B_LIKE_CHECK" resultType="multi.com.finalproject.board.model.LikesVO" parameterType="Map">
-		select * from likes where num=#{num} and bnum = #{bnum}
+	<select id="B_LIKE_CHECK" resultType="multi.com.finalproject.board.model.LikesVO" parameterType="multi.com.finalproject.board.model.LikesVO">
+		select * from likes where id=#{id} and bnum = #{bnum}
 	</select>
 
 	<select id="B_SEARCH_LIST_TITLE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		    FROM
 		      (
 		        SELECT *
@@ -60,13 +60,13 @@
 
 	<select id="B_SEARCH_LIST_CONTENT" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		    FROM
 		      (
 		        SELECT *
@@ -83,13 +83,13 @@
 
 	<select id="B_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.board.model.BoardVO">
 		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, filepath  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
 		    FROM
 		      (
 		        SELECT *
@@ -121,12 +121,12 @@
 	</select>
 
 	<insert id="B_INSERT" parameterType="multi.com.finalproject.board.model.BoardVO">
-		insert into board(bnum, bname, caname, writer, title, content, filepath) 
-		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content}, #{filepath})
+		insert into board(bnum, bname, caname, writer, title, content, isfileexist) 
+		values(seq_board.nextval, #{bname}, #{caname}, #{writer}, #{title}, #{content}, #{isFileExist})
 	</insert>
 
-	<insert id="B_LIKE" parameterType="Map">
-		insert into likes values(#{num}, #{bnum})
+	<insert id="B_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
+		insert into likes(id, bnum) values(#{id}, #{bnum})
 	</insert>
 
 	<insert id="B_REPORT" parameterType="Map">
@@ -134,7 +134,7 @@
 	</insert>
 
 	<update id="B_UPDATE" parameterType="multi.com.finalproject.board.model.BoardVO">
-		update board set title=#{title} , content=#{content} , filepath=#{filepath}, 
+		update board set title=#{title} , content=#{content} , isfileexist=#{isFileExist}, 
 		wdate=sysdate
 		where bnum = #{bnum}
 	</update>
@@ -158,8 +158,8 @@
 		delete from board where bnum = #{bnum}
 	</delete>
 
-	<delete id="B_DELETE_LIKE">
-		delete from likes where num = #{num} and bnum = #{bnum}
+	<delete id="B_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
+		delete from likes where id = #{id} and bnum = #{bnum}
 	</delete>
 
   </mapper>

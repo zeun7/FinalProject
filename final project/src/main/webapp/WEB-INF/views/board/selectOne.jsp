@@ -17,20 +17,20 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-let url = 'https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
+let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
 console.log(encodeUrl);
 
 $(function(){
 	//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
-	let snum = '';
-	snum = '${num}';
-	if(snum != ''){
+	let sid = '';
+	sid = '${user_id}';
+	if(sid != ''){
 		$.ajax({
 			url : "json_b_likeCheck.do",
 			method : 'GET',
 			data : {
-				num : snum,
+				id : sid,
 				bnum : ${param.bnum}
 			},
 			dataType : 'json', 
@@ -54,13 +54,13 @@ $(function(){
 });//end onload
 
 function like(){
-	let snum = '';
-	snum = '${num}';
+	let sid = '';
+	sid = '${user_id}';
 	$.ajax({
 		url : "json_b_like.do",
 		method : 'GET',
 		data : {
-			num : snum,
+			id : sid,
 			bnum : ${param.bnum}
 		},
 		dataType : 'json', 
@@ -81,13 +81,13 @@ function like(){
 }//end like()
 
 function like_cancel(){
-	let snum = '';
-	snum = '${num}';
+	let sid = '';
+	sid = '${user_id}';
 	$.ajax({
 		url : "json_b_like_delete.do",
 		method : 'GET',
 		data : {
-			num : snum,
+			id : sid,
 			bnum : ${param.bnum}
 		},
 		dataType : 'json', 
@@ -117,17 +117,17 @@ function report(){
 function share_twitter(){
 	let option = "width = 500, height = 500";
 	let name = "트위터로 공유";
-    window.open("http://twitter.com/share?url=" + encodeURIComponent('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}) +"&text=" + encodeURIComponent(document.title), name, option);
+    window.open("http://twitter.com/share?url=" + encodeURIComponent(url) +"&text=" + encodeURIComponent(document.title), name, option);
 }//end share_twitter()
 
 function share_facebook(){
 	let option = "width = 500, height = 500";
 	let name = "페이스북으로 공유";
-    window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}), name, option);
+    window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent(url), name, option);
 }//end share_facebook()
 
 function copy_url(){
-	navigator.clipboard.writeText('https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}).then(() => {
+	navigator.clipboard.writeText(url).then(() => {
         alert("복사완료");
       });
 }
@@ -137,7 +137,7 @@ $(function(){
 	if(Kakao.isInitialized()){
 		Kakao.Share.createScrapButton({
 		    container: '#kakaotalk-sharing-btn',
-		    requestUrl: 'https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum}
+		    requestUrl: url
 		});
 	}
 });
@@ -469,13 +469,13 @@ function cancel_clike(cnum){	// 댓글 좋아요 취소 함수
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td colspan="3">
-					<hr>
-					<video src="${vo2.filepath}" width="300" controls id="video"></video>
-					<img width="300px" src="${vo2.filepath}" id="img">
-				</td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td colspan="3"> -->
+<!-- 					<hr> -->
+<%-- 					<video src="${vo2.filepath}" width="300" controls id="video"></video> --%>
+<%-- 					<img width="300px" src="${vo2.filepath}" id="img"> --%>
+<!-- 				</td> -->
+<!-- 			</tr> -->
 			<tr>
 <%-- 				<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td> --%>
 				<td colspan="3"><div>${vo2.content }<hr></div></td>
@@ -523,12 +523,12 @@ function cancel_clike(cnum){	// 댓글 좋아요 취소 함수
 		}
 		
 		//첨부파일이 video인지 img인지
-		let str = '${vo2.filepath}'.substr(-3);
-		if(str === 'mp4'){
-			$('#img').hide();
-		}else{
-			$('#video').hide();
-		}
+// 		let str = '${vo2.filepath}'.substr(-3);
+// 		if(str === 'mp4'){
+// 			$('#img').hide();
+// 		}else{
+// 			$('#video').hide();
+// 		}
 		
 		$('#url').html(url);
 		let modal = document.getElementById("modal");

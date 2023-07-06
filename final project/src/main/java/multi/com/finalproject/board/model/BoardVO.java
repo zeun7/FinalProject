@@ -22,4 +22,5 @@ public class BoardVO {
 	private int report;
 	private String reason;
 	private MultipartFile file;
+	private int isFileExist;
 }

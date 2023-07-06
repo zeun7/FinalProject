@@ -71,6 +71,131 @@ $(document).on('click', '#saveButton', function(e) {
     } 
 });
 
+$(function(){
+	//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
+	let sid = '';
+	sid = '${user_id}';
+	if(sid != ''){
+		$.ajax({
+			url : "json_mb_likeCheck.do",
+			method : 'GET',
+			data : {
+				id : sid,
+				mbnum : ${param.mbnum}
+			},
+			dataType : 'json', 
+			success : function(map) {
+// 	 			console.log(map.result);
+				if(map.result == 0){		//좋아요를 안눌렀다면
+					$("#like_button").show();
+					$("#lcancel_button").hide();
+				}else{
+					$("#like_button").hide();
+					$("#lcancel_button").show();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
+//				console.log('status:', status);
+//				console.log('error:', error);
+			}
+		});//end $.ajax()
+	}
+});//end onload
+
+function like(){
+	let sid = '';
+	sid = '${user_id}';
+	$.ajax({
+		url : "json_mb_like.do",
+		method : 'GET',
+		data : {
+			id : sid,
+			mbnum : ${param.mbnum}
+		},
+		dataType : 'json', 
+		success : function(map) {
+//			console.log(map.result);
+			if(map.result == 1){
+				$("#like_button").hide();
+				$("#lcancel_button").show();
+				$("#likes_count").text(map.likes);
+			}
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr:', xhr.status);
+//			console.log('status:', status);
+//			console.log('error:', error);
+		}
+	});//end $.ajax()
+}//end like()
+
+function like_cancel(){
+	let sid = '';
+	sid = '${user_id}';
+	$.ajax({
+		url : "json_mb_like_delete.do",
+		method : 'GET',
+		data : {
+			id : sid,
+			mbnum : ${param.mbnum}
+		},
+		dataType : 'json', 
+		success : function(map) {
+	// 			console.log(map.result);
+			if(map.result == 1){
+				$("#like_button").show();
+				$("#lcancel_button").hide();
+				$("#likes_count").text(map.likes);
+			}
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr:', xhr.status);
+//			console.log('status:', status);
+//			console.log('error:', error);
+		}
+	});//end $.ajax()
+}//end dislike()
+
+function report(){
+	let url = "mb_report.do?mbnum="+${vo2.mbnum}+"&id=${mh_attr.id}";
+	let name = "신고하기";
+	let option = "width = 500, height = 500";
+	window.open(url, name, option);
+}//end report()
+
+function copy_url(){
+	navigator.clipboard.writeText(url).then(() => {
+        alert("복사완료");
+      });
+}
+
+function share_twitter(){
+	let option = "width = 500, height = 500";
+	let name = "트위터로 공유";
+    window.open("http://twitter.com/share?url=" + encodeURIComponent(url) +"&text=" + encodeURIComponent(document.title), name, option);
+}//end share_twitter()
+
+function share_facebook(){
+	let option = "width = 500, height = 500";
+	let name = "페이스북으로 공유";
+    window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent(url), name, option);
+}//end share_facebook()
+
+$(function(){
+	Kakao.init('8b87b1c63625a7c92d74e9e4019cc90f');
+	if(Kakao.isInitialized()){
+		Kakao.Share.createScrapButton({
+		    container: '#kakaotalk-sharing-btn',
+		    requestUrl: url
+		});
+	}
+});
+
+//다중파일 출력을 위한 파일 분할
+let fileList = "${vo2.filepath}".split(',');
+console.log(fileList);
+
 </script>
 </head>
 <body>

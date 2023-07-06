@@ -19,7 +19,7 @@ public interface BoardDAO {
 
 	public int delete(BoardVO vo);
 	
-	public int like(Map<String, Integer> param);
+	public int like(LikesVO vo);
 	
 	public int report(Map<String, Object> map);
 
@@ -29,10 +29,10 @@ public interface BoardDAO {
 
 	public int searchCount(Map<String, Object> map);
 
-	public int deleteLike(Map<String, Integer> param);
+	public int deleteLike(LikesVO vo);
 
 	public void likesDown(BoardVO vo);
 
-	public LikesVO likeCheck(Map<String, Integer> param);
+	public LikesVO likeCheck(LikesVO vo);
 
 }

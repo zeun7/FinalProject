@@ -54,8 +54,8 @@ public class BoardService {
 		return dao.delete(vo);
 	}
 	
-	public int like(Map<String, Integer> param){
-		return dao.like(param);
+	public int like(LikesVO vo){
+		return dao.like(vo);
 	}
 	
 	public int report(Map<String, Object> map){
@@ -70,16 +70,16 @@ public class BoardService {
 		return dao.searchCount(map);
 	}
 
-	public int deleteLike(Map<String, Integer> param) {
-		return dao.deleteLike(param);
+	public int deleteLike(LikesVO vo) {
+		return dao.deleteLike(vo);
 	}
 
 	public void likesDown(BoardVO vo) {
 		dao.likesDown(vo);
 	}
 
-	public LikesVO likeCheck(Map<String, Integer> param) {
-		return dao.likeCheck(param);
+	public LikesVO likeCheck(LikesVO vo) {
+		return dao.likeCheck(vo);
 	}
 	
 }

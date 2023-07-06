@@ -13,12 +13,13 @@
 		let content_val = $("#content").val();
 		
 		//파일이 첨부되어있는지 확인
-		if(content_val.indexOf('<img') == -1 && content_val.indexOf('<video') == -1){
-			let input = document.getElementById("file");
-			input.files.length = 0;
+		if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
+			let input = document.getElementById("isFileExist");
+			input.value = 1;
 		}
 		console.log(content_val);
-		content_val = content_val.replaceAll('src="../../', 'src="');
+		content_val = content_val.replaceAll('<img src="../../', '<img src="');
+		content_val = content_val.replaceAll('<video src="../../', '<video src="');
 		$("#content").val(content_val);
 		
 		if($("#title").val() === ''){
@@ -61,7 +62,7 @@
 						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
 					</label>
 					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
-					<div id="file_content"></div>
+					<input type="hidden" id="isFileExist" name="isFileExist" value="0">
 				</td>
 			</tr>
 			<tr>
@@ -125,13 +126,13 @@ function uploadFile(){
 			 				var img = document.createElement("img");
 				            img.setAttribute("src", result.filepathList[i]);
 				            img.setAttribute("width", "400px");
-				            var tag_img = '<img width="400px" src="../../'+result.filepathList[i]+'" class="img">';
+				            var tag_img = '<img src="../../'+result.filepathList[i]+'" width="400px" class="img">';
 				 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_img]);
 		 				}else{
 		 					var video = document.createElement("video");
 		 					video.setAttribute("src", result.filepathList[i]);
 		 					video.setAttribute("width", "400px");
-				            var tag_video = '<video width="400px" src="../../'+result.filepathList[i]+'" controls class="video">';
+				            var tag_video = '<video src="../../'+result.filepathList[i]+'" width="400px" controls class="video">';
 				 	        oEditors.getById["content"].exec("PASTE_HTML", [tag_video]);
 		 				}
 	 				}

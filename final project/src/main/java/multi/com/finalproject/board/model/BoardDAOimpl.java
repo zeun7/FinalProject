@@ -83,10 +83,10 @@ public class BoardDAOimpl implements BoardDAO {
 	}
 
 	@Override
-	public int like(Map<String, Integer> param) {
-		log.info("like()...{}", param);
+	public int like(LikesVO vo) {
+		log.info("like()...{}", vo);
 
-		return sqlSession.insert("B_LIKE", param);
+		return sqlSession.insert("B_LIKE", vo);
 	}
 
 	@Override
@@ -117,10 +117,10 @@ public class BoardDAOimpl implements BoardDAO {
 	}
 
 	@Override
-	public int deleteLike(Map<String, Integer> param) {
-		log.info("deleteLike()...{}", param);
+	public int deleteLike(LikesVO vo) {
+		log.info("deleteLike()...{}", vo);
 		
-		return sqlSession.delete("B_DELETE_LIKE", param);
+		return sqlSession.delete("B_DELETE_LIKE", vo);
 	}
 
 	@Override
@@ -131,10 +131,10 @@ public class BoardDAOimpl implements BoardDAO {
 	}
 
 	@Override
-	public LikesVO likeCheck(Map<String, Integer> param) {
-		log.info("likeCheck()...{}", param);
+	public LikesVO likeCheck(LikesVO vo) {
+		log.info("likeCheck()...{}", vo);
 		
-		return sqlSession.selectOne("B_LIKE_CHECK", param);
+		return sqlSession.selectOne("B_LIKE_CHECK", vo);
 	}
 
 }

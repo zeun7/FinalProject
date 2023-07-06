@@ -75,19 +75,6 @@ public class BoardController {
 	public String b_insertOK(BoardVO vo) throws IllegalStateException, IOException {
 		log.info("/b_insertOK.do...{}", vo);
 		
-		String getOriginalFilename = vo.getFile().getOriginalFilename();
-		int fileNameLength = vo.getFile().getOriginalFilename().length();
-		log.info("getOriginalFilename:{}", getOriginalFilename);
-		log.info("fileNameLength:{}", fileNameLength);
-		
-		if (getOriginalFilename.length() != 0) {
-			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
-			vo.setFilepath(filepath);
-		}else {
-			vo.setFilepath("");
-		}
-		log.info("{}", vo);
-		
 		int result = service.insert(vo);
 		log.info("result:{}", result);
 		
@@ -102,17 +89,6 @@ public class BoardController {
 	@RequestMapping(value = "/b_updateOK.do", method = RequestMethod.POST)
 	public String b_updateOK(BoardVO vo) throws IllegalStateException, IOException {
 		log.info("/b_updateOK.do...{}", vo);
-		
-		String getOriginalFilename = vo.getFile().getOriginalFilename();
-		int fileNameLength = vo.getFile().getOriginalFilename().length();
-		log.info("getOriginalFilename:{}", getOriginalFilename);
-		log.info("fileNameLength:{}", fileNameLength);
-		
-		if (getOriginalFilename.length() != 0) {
-			String filepath = "resources/uploadimg_board/" + getOriginalFilename;
-			vo.setFilepath(filepath);
-		}
-		log.info("{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result:{}", result);
