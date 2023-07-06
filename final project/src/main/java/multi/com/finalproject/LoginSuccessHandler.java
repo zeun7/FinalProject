@@ -1,4 +1,4 @@
-package multi.com.finalproject.handler;
+package multi.com.finalproject;
 
 import java.io.IOException;
 

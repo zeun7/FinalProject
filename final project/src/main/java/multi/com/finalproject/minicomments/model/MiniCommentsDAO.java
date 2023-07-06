@@ -10,6 +10,14 @@ public interface MiniCommentsDAO {
 	public List<MiniCommentsVO> selectAll(MiniCommentsVO vo);
 
 	public List<MiniCommentsVO> mcc_selectAll(MiniCommentsVO vo);
+	
+	public List<MiniCommentsVO> findAll(MiniCommentsVO vo);
+
+	public List<MiniCommentsVO> findAll2(Map<String, Object> map);
+	
+	public MiniCommentsVO findOne(MiniCommentsVO vo);
+	
+	public int count(MiniCommentsVO vo);
 
 	public int insert(MiniCommentsVO vo);
 

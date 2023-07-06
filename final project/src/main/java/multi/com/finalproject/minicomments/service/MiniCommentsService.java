@@ -23,6 +23,22 @@ public class MiniCommentsService {
 	public List<MiniCommentsVO> mcc_selectAll(MiniCommentsVO vo) {
 		return dao.mcc_selectAll(vo);
 	}
+	
+	public List<MiniCommentsVO> findAll(MiniCommentsVO vo) {
+		return dao.findAll(vo);
+	}
+
+	public List<MiniCommentsVO> findAll2(Map<String, Object> map) {
+		return dao.findAll2(map);
+	}
+	
+	public MiniCommentsVO findOne(MiniCommentsVO vo) {
+		return dao.findOne(vo);
+	}
+	
+	public int count(MiniCommentsVO vo) {
+		return dao.count(vo);
+	}
 
 	public int insert(MiniCommentsVO vo) {
 		return dao.insert(vo);

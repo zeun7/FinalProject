@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<beans:bean id="authenticationSuccessHandler"
-		class="multi.com.finalproject.handler.LoginSuccessHandler"></beans:bean>
+		class="multi.com.finalproject.LoginSuccessHandler"></beans:bean>
 
 	<http use-expressions="true">
 		<intercept-url pattern="/favicon.ico"

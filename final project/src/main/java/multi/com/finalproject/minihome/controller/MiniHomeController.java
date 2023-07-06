@@ -244,7 +244,7 @@ public class MiniHomeController {
 		
 		log.info("vo : {}", vo);
 		
-		int result = minicomments_service.visit_insert(vo);
+		int result = minicomments_service.insert(vo);
 		log.info("result: {}", result);
 
 		if (result == 1) {
@@ -259,7 +259,7 @@ public class MiniHomeController {
 	public String visit_deleteOK(@RequestParam("id") String id, MiniCommentsVO vo) {
 		log.info("visit_deleteOK(vo)...{}", vo);
 
-		int result = minicomments_service.deleteOne(vo);
+		int result = minicomments_service.delete(vo);
 		log.info("result...{}", result);
 		
 		if (result == 1) {

@@ -99,6 +99,104 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		
 		return vos;
 	}
+	
+	@Override
+	public List<MiniCommentsVO> findAll(MiniCommentsVO vo) {
+		log.info("findAll(vo)...{}", vo);
+		String id = vo.getId();
+
+		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
+
+		Bson sort = Sorts.descending("mcnum"); // sort by mcnum in descending order
+
+		//방문한 미니홈피 주인의 방명록(or 댓글)들만 가져오기
+		Bson filter = Filters.eq("id", id);
+
+		FindIterable<Document> docs = MiniComments.find(filter).sort(sort).limit(4); // 최신순, 4개만 가져오기..
+
+		for (Document doc : docs) {
+			log.info("{}", doc);
+			MiniCommentsVO vo2 = new MiniCommentsVO();
+			vo2.setMcnum(doc.getInteger("mcnum"));
+			vo2.setMccnum(doc.getInteger("mccnum"));
+			vo2.setMbnum(doc.getInteger("mbnum"));
+			vo2.setId(doc.getString("id"));
+			vo2.setWriter(doc.getString("writer"));
+			vo2.setContent(doc.getString("content"));
+			vo2.setCdate(doc.getString("cdate"));
+			vo2.setSecret(doc.getInteger("secret"));
+			vo2.setReport(doc.getInteger("report"));
+
+			if(vo2.getMbnum()==0) vos.add(vo2); //방명록(mbnum!=0일 경우 댓글들임)만 가져오기...
+		}
+		return vos;
+	}
+
+	@Override
+	public List<MiniCommentsVO> findAll2(Map<String, Object> map) {
+		log.info("findAll2(map)...{}", map);
+		MiniCommentsVO vo = (MiniCommentsVO) map.get("vo");
+		String id = vo.getId();
+		int page = (int) map.get("page");
+		log.info("id : {}, page : {}", id, page);
+		
+		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
+
+		Bson sort = new Document("mcnum", -1);
+		Bson filter = Filters.eq("id", id);
+		FindIterable<Document> docs = MiniComments.find(filter).sort(sort).limit(10).skip((page-1)*10);
+		
+		for (Document doc : docs) {
+			MiniCommentsVO vo2 = new MiniCommentsVO();
+			vo2.setMcnum(doc.getInteger("mcnum"));
+			vo2.setMccnum(doc.getInteger("mccnum"));
+			vo2.setMbnum(doc.getInteger("mbnum"));
+			vo2.setId(doc.getString("id"));
+			vo2.setWriter(doc.getString("writer"));
+			vo2.setContent(doc.getString("content"));
+			vo2.setCdate(doc.getString("cdate"));
+			vo2.setSecret(doc.getInteger("secret"));
+			vo2.setReport(doc.getInteger("report"));
+			if (id.equals(vo2.getId()) && vo2.getMbnum() == 0)
+				vos.add(vo2); // 방문한 페이지의 id의 방명록만 가져오기...
+		}
+		return vos;
+	}
+	
+	@Override
+	public MiniCommentsVO findOne(MiniCommentsVO vo) {
+		log.info("findOne()...{}", vo);
+
+		MiniCommentsVO vo2 = new MiniCommentsVO();
+		Bson filter = new Document("mcnum", vo.getMcnum());
+
+		Document doc = MiniComments.find(filter).first();
+
+		if (doc != null) {
+			vo2.setMcnum(doc.getInteger("mcnum"));
+			vo2.setMccnum(doc.getInteger("mccnum"));
+			vo2.setMbnum(doc.getInteger("mbnum"));
+			vo2.setId(doc.getString("id"));
+			vo2.setWriter(doc.getString("writer"));
+			vo2.setContent(doc.getString("content"));
+			vo2.setCdate(doc.getString("cdate"));
+			vo2.setSecret(doc.getInteger("secret"));
+			vo2.setReport(doc.getInteger("report"));
+		}
+
+		return vo2;
+	}
+	
+	@Override
+	public int count(MiniCommentsVO vo) {
+		log.info("count(vo)...{}", vo);
+
+	    Bson filter = Filters.and(Filters.eq("id", vo.getId()), Filters.eq("mbnum", 0));
+
+	    int count = (int) MiniComments.count(filter);
+		
+		return count;
+	}
 
 	@Override
 	public int insert(MiniCommentsVO vo) {
@@ -148,8 +246,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			Bson bsons = new Document("$set", 
 					new Document("content", vo.getContent())
 					.append("cdate", sf.format(new Date()))
-					.append("secret", vo.getSecret())
-					.append("report", vo.getReport()));
+					.append("secret", vo.getSecret()));
 			
 			UpdateResult result = MiniComments.updateOne(filter, bsons);
 			log.info("result: {}", result);

@@ -5,6 +5,9 @@
 	<li><a href="m_insert.do" id="m_insert">회원가입</a>
 	<li><a href="m_selectOne.do?id=${user_id}" id="myinfo">내정보</a>
 	<li><a href="login.do" id="login">로그인</a></li>
+	<li><a>mclass: ${mclass}</a></li>
+	<li><a>nickname: ${nickname}</a></li>
+	<li><a>user_id: ${user_id}</a></li>
 </ol>
 
 <ul>
