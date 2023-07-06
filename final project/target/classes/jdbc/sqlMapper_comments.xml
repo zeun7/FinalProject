@@ -24,7 +24,7 @@
 	
 	<insert id="CC_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
 		insert into comments(cnum, ccnum, bnum, content, writer) 
-		values(seq_comments.nextval, #{cnum}, #{bnum}, #{content}, #{writer})
+		values(seq_comments.nextval, #{ccnum}, #{bnum}, #{content}, #{writer})
 	</insert>
 	
 	<update id="C_UPDATE" parameterType="multi.com.finalproject.comments.model.CommentsVO">
@@ -40,9 +40,13 @@
 		values(seq_report.nextval, #{vo.bnum}, #{vo.cnum}, #{vo.ccnum}, #{reason})
 	</insert>
 	
+	<update id="C_UPDATE_REPORT">
+		update comments set report = 1 where cnum = #{vo.cnum}
+	</update>
+	
 	<insert id="MC_REPORT">
-		insert into report(rnum, bnum, mcnum, mccnum, reason) 
-		values(seq_report.nextval, #{vo.bnum}, #{vo.mcnum}, #{vo.mccnum}, #{reason})
+		insert into report(rnum, mbnum, mcnum, mccnum, reason) 
+		values(seq_report.nextval, #{vo.mbnum}, #{vo.mcnum}, #{vo.mccnum}, #{reason})
 	</insert>	
 	
 	<select id="C_IS_CLIKE" resultType="multi.com.finalproject.comments.model.ClikesVO">

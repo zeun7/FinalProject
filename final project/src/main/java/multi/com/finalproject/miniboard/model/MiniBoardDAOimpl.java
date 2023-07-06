@@ -1,6 +1,7 @@
 package multi.com.finalproject.miniboard.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	}
 	
 	@Override
-	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo) {
-		log.info("mb_selectAll(vo)....{}", vo);
-		return sqlSession.selectList("MB_SELECT_ALL", vo);
+	public List<MiniBoardVO> mb_selectAll(Map<String, Object> map) {
+		log.info("selectAll()...{}", map);
+		return sqlSession.selectList("MB_SELECT_ALL", map);
 	}
-
+	
 	@Override
 	public MiniBoardVO mb_selectOne(MiniBoardVO vo) {
 		log.info("mb_selectOne(vo)...{}", vo);
@@ -79,5 +80,15 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int count(MiniBoardVO vo) {
+		log.info("count(vo)...{}", vo);
+		return sqlSession.selectOne("MB_COUNT", vo);
+	}
+
+	
+
+	
 
 }

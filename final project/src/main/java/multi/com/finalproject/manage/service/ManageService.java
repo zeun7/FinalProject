@@ -52,6 +52,10 @@ public class ManageService {
 		return dao.comments();
 	}
 	
+	public List<ReportVO> minicomments() {
+		return dao.minicomments();
+	}
+	
 	public int ccount() {
 		return dao.ccount();
 	}

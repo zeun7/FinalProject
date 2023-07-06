@@ -1,7 +1,5 @@
 package multi.com.finalproject.minicomments.model;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -12,7 +10,7 @@ public class MiniCommentsVO {
 	private String id;
 	private String writer;
 	private String content;
-	private Date cdate;
+	private String cdate;
 	private int secret;
 	private int report;
 }

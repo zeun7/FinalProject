@@ -1,15 +1,23 @@
 package multi.com.finalproject.manage.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
 
 @Slf4j
 @Repository
@@ -17,6 +25,9 @@ public class ManageDAOimpl implements ManageDAO {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Autowired
+	MongoCollection<Document> MiniComments;
 	
 	public ManageDAOimpl() {
 		log.info("ManageDAOimpl()...");
@@ -186,6 +197,60 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectList("MNG_C_SELECT_REPORT");
 	}
+	
+	@Override
+	public List<ReportVO> minicomments() {
+		log.info("minicomments select reported()...");
+		
+		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
+		List<ReportVO> vos3 = new ArrayList<ReportVO>();
+		
+		Bson sort = new Document("mcnum", 1);
+		Bson filter = Filters.eq("report", 1);
+				
+		FindIterable<Document> docs = MiniComments.find(filter).sort(sort);	// minicomments에서 신고된 댓글 찾기
+		
+		try {
+			for(Document doc : docs) {
+				log.info("{}", doc);
+				MiniCommentsVO vo2 = new MiniCommentsVO();
+				vo2.setMcnum(doc.getInteger("mcnum"));
+				vo2.setMccnum(doc.getInteger("mccnum"));
+				vo2.setMbnum(doc.getInteger("mbnum"));
+				vo2.setId(doc.getString("id"));
+				vo2.setWriter(doc.getString("writer"));
+				vo2.setContent(doc.getString("content"));
+				vo2.setCdate(doc.getString("cdate"));
+				vo2.setSecret(doc.getInteger("secret"));
+				vo2.setReport(doc.getInteger("report"));
+				
+				vos.add(vo2);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		List<ReportVO> vos2 = sqlSession.selectList("MNG_MC_SELECT_REPORT"); // report 테이블에서 minicomments 찾기
+		
+		for(MiniCommentsVO vo : vos) {					// 두개의 테이블 join
+			ReportVO vo3 = new ReportVO();
+			for(ReportVO vo2 : vos2) {
+				if(vo.getMcnum() == vo2.getMcnum()) {
+					vo3.setRnum(vo2.getRnum());
+					vo3.setMcnum(vo2.getMcnum());
+					vo3.setMccnum(vo2.getMccnum());
+					vo3.setMbnum(vo2.getMbnum());
+					vo3.setWriter(vo.getWriter());
+					vo3.setContent(vo.getContent());
+					vo3.setReason(vo3.getReason());
+					
+					vos3.add(vo3);
+				}
+			}
+		}
+		
+		return vos3;
+	}
 
 	@Override
 	public int ccount() {
@@ -230,7 +295,13 @@ public class ManageDAOimpl implements ManageDAO {
 	public int del_c_report(ReportVO vo) {
 		log.info("delete comments report()...{}", vo);
 		
-		return sqlSession.delete("MNG_DEL_C_REPORT", vo);
+		int result = sqlSession.delete("MNG_DEL_C_REPORT", vo);	// 신고 완료 처리
+		int count = sqlSession.selectOne("MNG_COUNT_C_REPORT", vo);	// 해당 댓글에 남은 신고가 있는지 확인
+		
+		if(count == 0)
+			sqlSession.update("MNG_RESOLVED_C_REPORT", vo);	// 해당 댓글에 남은 신고가 없으면 댓글의 report를 0으로 만듬
+			 
+		return result;
 	}
 
 	@Override
@@ -246,5 +317,4 @@ public class ManageDAOimpl implements ManageDAO {
 		
 		return sqlSession.selectList("ILCHON_SELECT_ALL", m_attr);
 	}
-	
 }

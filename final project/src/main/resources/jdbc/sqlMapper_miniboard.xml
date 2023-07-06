@@ -5,8 +5,27 @@
 
 <mapper namespace="multi.com.finalproject.miniboard">
 
-	<select id="MB_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		select * from miniboard where mbname = #{mbname} and writer=#{writer} order by mbnum desc
+  	<select id="MB_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO" parameterType="Map">
+  		<![CDATA[
+		SELECT mbnum, title, writer, wdate, filepath 
+		FROM
+		  (
+		  SELECT SEQ, mbnum, title, writer, wdate, filepath 
+		  FROM
+		  (
+		    SELECT ROWNUM AS SEQ, mbnum, title, writer, wdate, filepath 
+		    FROM
+		      (
+		        SELECT *
+		        FROM miniboard
+		        where mbname=#{vo.mbname} and writer=#{vo.writer} 
+		        ORDER BY mbnum desc
+		      )
+		  )
+		WHERE SEQ >= (#{page}-1)*10+1 
+		)
+		WHERE ROWNUM <= 10
+		]]>
 	</select>
 	
 	<select id="MB_SELECT_ONE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
@@ -29,5 +48,9 @@
 	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		update miniboard set title=#{title}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
+	
+	<select id="MB_COUNT" resultType="Integer">
+		select count(*) from miniboard where mbname=#{mbname} and writer=#{writer}
+	</select>
 	
 </mapper>

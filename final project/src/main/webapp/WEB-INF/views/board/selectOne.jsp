@@ -305,8 +305,9 @@ function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 	$.ajax({
 		url: 'json_c_insertOK.do',
 		data: {cnum: cnum,
+			ccnum: cnum,
 			bnum: bnum,
-			writer: '${user_id}',
+			writer: '${nickname}',
 			content: $("#comm_content").val()},
 		method: 'POST',
 		dataType: 'json',

@@ -34,6 +34,46 @@ public class MiniBoardRestController {
 	ServletContext sContext;
 	
 	@ResponseBody
+	@RequestMapping(value = "/json_mb_count.do", method = RequestMethod.GET)
+	public int json_mb_count(MiniBoardVO vo) {
+		log.info("/json_mb_count.do...{}", vo);
+		int count = service.count(vo);
+		return count;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mb_selectAll.do", method = RequestMethod.GET)
+	public List<MiniBoardVO> json_mb_selectAll(MiniBoardVO vo, int page) {
+		log.info("/json_mb_selectAll.do(vo)...{}", vo);
+		log.info("page...{}", page);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("page", page);
+		
+		List<MiniBoardVO> vos = service.mb_selectAll(map);
+		for (MiniBoardVO x : vos) {
+			log.info(x.toString());
+		}
+		
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/select_mb_deleteOK.do", method = RequestMethod.POST)
+	public String select_mb_deleteOK(MiniBoardVO vo) {
+		log.info("/select_mb_deleteOK(vo)...{}", vo);
+		
+		int result = service.mb_delete(vo);
+		log.info("result : {}", result);
+		if (result == 1) {
+		    return "success";
+	    } else {
+	        return "error";
+	    }
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/gallery_insertOK.do", method = RequestMethod.POST)
 	public String gallery_insertOK(@RequestParam("file") MultipartFile file, @RequestParam("mbname") String mbname, 
 			@RequestParam("writer") String writer, @RequestParam("title") String title) {

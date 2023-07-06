@@ -1,6 +1,8 @@
 package multi.com.finalproject.minicomments.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
@@ -29,31 +32,39 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
+	SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	
 	@Override
 	public List<MiniCommentsVO> selectAll(MiniCommentsVO vo) {
-		log.info("selectAll()...");
+		log.info("mc selectAll()...");
 		
 		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 		
 		Bson sort = new Document("mcnum", 1);
-		Bson filter = Filters.eq("mbnum", vo.getMbnum());
+		Bson filter = Filters.and(
+						Filters.eq("mbnum", vo.getMbnum()),
+						Filters.eq("mccnum", 0));
 				
 		FindIterable<Document> docs = MiniComments.find(filter).sort(sort);
 		
-		for(Document doc : docs) {
-			log.info("{}", doc);
-			MiniCommentsVO vo2 = new MiniCommentsVO();
-			vo2.setMcnum(doc.getInteger("mcnum"));
-			vo2.setMccnum(doc.getInteger("mccnum"));
-			vo2.setMbnum(doc.getInteger("mbnum"));
-			vo2.setId(doc.getString("id"));
-			vo2.setWriter(doc.getString("writer"));
-			vo2.setContent(doc.getString("content"));
-			vo2.setCdate(doc.getDate("cdate"));
-			vo2.setSecret(doc.getInteger("secret"));
-			vo2.setReport(doc.getInteger("report"));
-			
-			vos.add(vo2);
+		try {
+			for(Document doc : docs) {
+				log.info("{}", doc);
+				MiniCommentsVO vo2 = new MiniCommentsVO();
+				vo2.setMcnum(doc.getInteger("mcnum"));
+				vo2.setMccnum(doc.getInteger("mccnum"));
+				vo2.setMbnum(doc.getInteger("mbnum"));
+				vo2.setId(doc.getString("id"));
+				vo2.setWriter(doc.getString("writer"));
+				vo2.setContent(doc.getString("content"));
+				vo2.setCdate(doc.getString("cdate"));
+				vo2.setSecret(doc.getInteger("secret"));
+				vo2.setReport(doc.getInteger("report"));
+				
+				vos.add(vo2);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		return vos;
@@ -63,7 +74,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 	public List<MiniCommentsVO> mcc_selectAll(MiniCommentsVO vo) {
 		log.info("mcc_selectAll...{}", vo);
 		
-List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
+		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 		
 		Bson sort = new Document("mcnum", 1);
 		Bson filter = Filters.eq("mccnum", vo.getMcnum());
@@ -79,7 +90,7 @@ List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 			vo2.setId(doc.getString("id"));
 			vo2.setWriter(doc.getString("writer"));
 			vo2.setContent(doc.getString("content"));
-			vo2.setCdate(doc.getDate("cdate"));
+			vo2.setCdate(doc.getString("cdate"));
 			vo2.setSecret(doc.getInteger("secret"));
 			vo2.setReport(doc.getInteger("report"));
 			
@@ -95,14 +106,26 @@ List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 		int flag = 0;
 		
 		try {
+			// 마지막 mcnum 찾기. 없으면 0
+	        Document lastDoc = MiniComments.find().sort(Sorts.descending("mcnum")).first();
+	        int lastMcnum = lastDoc != null ? lastDoc.getInteger("mcnum") : 0;
+			
+	        // 마지막 mcnum +1
+	        int newMcnum = lastMcnum + 1;
+			
 			Document doc = new Document();
-			doc.put("mcnum", vo.getMcnum());
-			doc.put("mccnum", vo.getMccnum());
+			doc.put("mcnum", newMcnum);
+			
+			if(vo.getMccnum() == 0)	// 댓글일 경우
+				doc.put("mccnum", 0);
+			else					// 대댓글일 경우
+				doc.put("mccnum", vo.getMcnum());
+			
 			doc.put("mbnum", vo.getMbnum());
 			doc.put("id", vo.getId());
 			doc.put("writer", vo.getWriter());
 			doc.put("content", vo.getContent());
-			doc.put("cdate", vo.getCdate());
+			doc.put("cdate", sf.format(new Date()));
 			doc.put("secret", vo.getSecret());
 			doc.put("report", vo.getReport());
 			MiniComments.insertOne(doc);
@@ -123,13 +146,8 @@ List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 			Bson filter = Filters.eq("mcnum", vo.getMcnum());
 			
 			Bson bsons = new Document("$set", 
-					new Document("mcnum", vo.getMcnum())
-					.append("mccnum", vo.getMccnum())
-					.append("mbnum", vo.getMbnum())
-					.append("id", vo.getId())
-					.append("writer", vo.getWriter())
-					.append("content", vo.getContent())
-					.append("cdate", vo.getCdate())
+					new Document("content", vo.getContent())
+					.append("cdate", sf.format(new Date()))
 					.append("secret", vo.getSecret())
 					.append("report", vo.getReport()));
 			
@@ -166,6 +184,19 @@ List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 	@Override
 	public int report(Map<String, Object> map) {
 		log.info("report()...{}", map);
+		
+		MiniCommentsVO vo = (MiniCommentsVO)map.get("vo");
+		
+		try {
+			Bson filter = Filters.eq("mcnum", vo.getMcnum());
+			
+			Bson bsons = new Document("$set", new Document("report", 1));
+			
+			UpdateResult result = MiniComments.updateOne(filter, bsons);
+			log.info("result: {}", result);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return sqlSession.insert("MC_REPORT", map);
 	}

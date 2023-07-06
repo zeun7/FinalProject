@@ -45,9 +45,10 @@ public interface ManageDAO {
 	public int del_board(ReportVO vo);
 
 	public int del_comments(ReportVO vo);
+	
+	public List<ReportVO> minicomments();
 
 	public ReportVO select_report(ReportVO vo);
 	
 	public List<FriendsVO> ilchon_selectAll(MemberVO m_attr);
-
 }

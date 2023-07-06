@@ -251,17 +251,5 @@ public class MiniBoardController {
 		return "mini/visit/findOne";
 	}
 	
-	@RequestMapping(value = "/visit_deleteOK.do", method = RequestMethod.GET)
-	public String visit_deleteOK(@RequestParam("id") String id, MiniCommentsVO vo) {
-		log.info("visit_deleteOK(vo)...{}", vo);
-
-		int result = minicomments_service.deleteOne(vo);
-		log.info("result...{}", result);
-		
-		if (result == 1) {
-			return "redirect:mini_visit.do?id=" + id;
-		}else {
-			return "redirect:visit_findOne.do?id=" + id + "&mcnum=" + vo.getMcnum();
-		}
-	}
+	
 }

@@ -37,7 +37,7 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public int insert(CommentsVO vo) {
 		log.info("insert()...{}",vo);
 		
-		if(vo.getCnum() == 0) {	// 댓글 작성
+		if(vo.getCcnum() == 0) {	// 댓글 작성
 			return sqlSession.update("C_INSERT",vo);
 		}
 		else {					// 대댓글 작성
@@ -63,6 +63,7 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public int report(Map<String, Object> map) {
 		log.info("report()...{}", map);
 		
+		sqlSession.update("C_UPDATE_REPORT", map);
 		return sqlSession.insert("C_REPORT", map);
 	}
 

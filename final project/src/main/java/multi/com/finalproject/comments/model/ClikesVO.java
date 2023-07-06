@@ -6,4 +6,5 @@ import lombok.Data;
 public class ClikesVO {
 	private String id;
 	private int cnum;
+	private int mcnum;
 }

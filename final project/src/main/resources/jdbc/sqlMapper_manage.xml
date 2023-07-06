@@ -84,8 +84,12 @@
 	</select>
 	
 	<select id="MNG_C_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.rnum, r.cnum, c.bnum, c.content, c.writer, r.reason from comments c, report r 
+		select r.rnum, r.cnum, c.ccnum, c.bnum, c.content, c.writer, r.reason from comments c, report r 
 		where c.cnum = r.cnum order by r.rnum
+	</select>
+	
+	<select id="MNG_MC_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
+		select rnum, mcnum, mccnum, mbnum, reason from report where mcnum != 0 order by rnum
 	</select>
 	
 	<select id="MNG_CCOUNT" resultType="Integer">
@@ -103,6 +107,14 @@
 	<delete id="MNG_DEL_C_REPORT">
 		delete from report where cnum = #{cnum} and reason = #{reason}
 	</delete>
+	
+	<select id="MNG_COUNT_C_REPORT" resultType="Integer">
+		select count(*) from report where cnum = #{cnum}
+	</select>
+	
+	<update id="MNG_RESOLVED_C_REPORT">
+		update comments set report = 0 where cnum = #{cnum}
+	</update>
 	
 	<select id="MNG_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select * from report where rnum = #{rnum}

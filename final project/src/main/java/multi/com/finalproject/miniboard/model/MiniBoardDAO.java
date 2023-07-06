@@ -1,10 +1,11 @@
 package multi.com.finalproject.miniboard.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MiniBoardDAO {
 	
-	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo);
+	public List<MiniBoardVO> mb_selectAll(Map<String, Object> map);
 
 	public MiniBoardVO mb_selectOne(MiniBoardVO vo);
 
@@ -23,5 +24,7 @@ public interface MiniBoardDAO {
 	public int mongo_update(MiniBoardVO vo);
 
 	public int mongo_delete(MiniBoardVO vo);
-	
+
+	public int count(MiniBoardVO vo);
+
 }

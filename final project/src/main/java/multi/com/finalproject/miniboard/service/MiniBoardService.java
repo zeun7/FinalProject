@@ -1,6 +1,7 @@
 package multi.com.finalproject.miniboard.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ public class MiniBoardService {
 		log.info("MiniBoardService...");
 	}
 	
-	public List<MiniBoardVO> mb_selectAll(MiniBoardVO vo) {
-		return dao.mb_selectAll(vo);
+	public List<MiniBoardVO> mb_selectAll(Map<String, Object> map) {
+		return dao.mb_selectAll(map);
 	}
-
+	
 	public MiniBoardVO mb_selectOne(MiniBoardVO vo) {
 		return dao.mb_selectOne(vo);
 	}
@@ -57,6 +58,10 @@ public class MiniBoardService {
 
 	public int gallery_update(MiniBoardVO vo) {
 		return dao.gallery_update(vo);
+	}
+
+	public int count(MiniBoardVO vo) {
+		return dao.count(vo);
 	}
 
 }

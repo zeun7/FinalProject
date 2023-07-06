@@ -241,6 +241,10 @@ public class ManageRestController {
 		log.info("/json_mng_comments.do...");
 		
 		List<ReportVO> vos = service.comments();
+		List<ReportVO> vos2 = service.minicomments();
+		
+		vos.addAll(vos2);
+		
 		for (ReportVO x : vos) {
 			log.info(x.toString());
 		}
