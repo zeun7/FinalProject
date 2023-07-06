@@ -40,22 +40,6 @@ public class MiniBoardService {
 		return dao.mb_delete(vo);
 	}
 
-	public List<MiniBoardVO> mongo_findAll() {
-		return dao.mongo_findAll();
-	}
-	
-	public int mongo_insert(MiniBoardVO vo) {
-		return dao.mongo_insert(vo);
-	}
-
-	public int mongo_update(MiniBoardVO vo) {
-		return dao.mongo_update(vo);
-	}
-
-	public int mongo_delete(MiniBoardVO vo) {
-		return dao.mongo_delete(vo);
-	}
-
 	public int gallery_update(MiniBoardVO vo) {
 		return dao.gallery_update(vo);
 	}

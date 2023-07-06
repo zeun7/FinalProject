@@ -1,14 +1,20 @@
 package multi.com.finalproject.member.service;
 
+
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+
 
 import multi.com.finalproject.member.model.MemberDAO;
 import multi.com.finalproject.member.model.MemberVO;
+
 
 @Service
 public class MemberService {
@@ -65,11 +71,29 @@ public class MemberService {
 		return dao.find_id_tel(tel);
 	}
 
-	public String find_pw(HttpServletResponse response, String email) throws Exception {
-		return dao.find_pw(email);
+	public String find_pw(MemberVO vo, HttpServletResponse response) {
+		return dao.find_pw(vo, response);
 	}
 
-	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
-		return dao.find_pw_tel(tel);
+//	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
+//		return dao.find_pw_tel(tel);
+//	}
+
+	public int pwUpdate_M(MemberVO vo) {
+		return dao.pwUdate_M(vo);
+	}
+
+	public MemberVO selectMember(String email) {
+		
+		return dao.selectMember(email);
+	}
+
+	public void pass_change(Map<String, Object> map, MemberVO vo) throws Exception {
+        dao.pass_change(map,vo);
+    }
+
+
+	public MemberVO find_user(MemberVO vo) {
+		return dao.find_user(vo);
 	}
 }

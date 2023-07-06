@@ -15,22 +15,24 @@ function redirectToMiniHome(selectElement) {
   }
 
 let mh_attr_id = '${mh_attr.id}';
-
+console.log(mh_attr_id);
 $(document).ready(function(){
     $.ajax({
         url: "json_mc_findAll.do",
         method: "get",
         data : {
-			id : '${mh_attr_id}'
+			id : mh_attr_id
 		},
         dataType: "json",
         success: function(data) {
             let visit_log = ``;
             $.each(data, function(index, miniComment){
-                visit_log += `<a href="visit_findOne.do?id=\${mh_attr_id}&mcnum=\${miniComment.mcnum}" style="border:3px solid white;"class="myButton" >`;
-            	visit_log += `<h3>\${miniComment.writer}</h3>`;
-                visit_log += `<p>\${miniComment.content}</p>`;
-                visit_log += `<span>\${miniComment.cdate}</span></a>`;
+                visit_log += `
+                	<a href="visit_findOne.do?id=\${mh_attr_id}&mcnum=\${miniComment.mcnum}" style="border:3px solid white;"class="myButton" >
+			        <h3>\${miniComment.writer}</h3>
+			        <p>\${miniComment.content}</p>
+			        <span>\${miniComment.cdate}</span></a>
+			        `;
             });
             $('#visitors_log').html(visit_log);
         },

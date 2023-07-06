@@ -7,7 +7,12 @@
 
 	<select id="M_SELECT_ONE"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where id = #{id, jdbcType=VARCHAR} or nickname = #{nickname, jdbcType=VARCHAR}
+		select * from member where id = #{id}
+	</select>
+
+	<select id="USER"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select id, pw from member where num = #{num}
 	</select>
 
 	<select id="M_ID_CHECK"
@@ -20,9 +25,19 @@
 		select nickname from member where nickname = #{nickname}
 	</select>
 
+	<select id="M_TEL_CHECK"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select tel from member where tel = #{tel}
+	</select>
+
+	<select id="M_EMAIL_CHECK"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select email from member where email = #{email}
+	</select>
+
 	<select id="LOGIN"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where id = #{id} and pw = #{pw} 
+		select * from member where id = #{id} and pw = #{pw}
 	</select>
 
 	<select id="M_SEARCH_LIST_NAME"
@@ -34,30 +49,32 @@
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select * from member where tel like #{searchWord}
 	</select>
-	
+
 	<insert id="M_INSERT"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		insert into
-		member(id,pw,nickname,profilepic,question,answer,name,tel,email)
-		values(#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},#{tel},#{email})
+		member(id,pw,nickname,profilepic,question,answer,name,tel,email,
+		verification_code)
+		values(#{id},#{pw},#{nickname},#{profilepic},#{question},#{answer},#{name},#{tel},#{email},#{verification_code})
 	</insert>
 
 	<update id="M_UPDATE"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
-		update member set pw=#{pw}, name=#{name}, tel=#{tel}, 
-		profilepic=#{profilepic}, nickname=#{nickname}, 
-		email=#{email} where id = #{id}
+		update member set pw=#{pw} , name=#{name} , tel=#{tel} ,
+		profilepic=#{profilepic} , nickname=#{nickname} , email=#{email} where
+		id = #{id}
 	</update>
 
-	<delete id="M_DELETE" parameterType="multi.com.finalproject.member.model.MemberVO"> 
-		delete from member where id = #{id} 
- 	</delete>
+	<delete id="M_DELETE"
+		parameterType="multi.com.finalproject.member.model.MemberVO">
+		delete from member where id = #{id}
+	</delete>
 
 	<select id="FIND_ID_EMAIL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
 	</select>
-	
+
 	<select id="FIND_ID_TEL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where tel = #{tel}
@@ -70,20 +87,20 @@
 	<select id="FIND_PW_TEL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where tel = #{tel}
-		
 	</select>
-	<!--
-        로그인된 경우 해당 세션id와 유효시간을 사용자 테이블에 세팅한다.
-     -->
-    <update id="KEEP_LOGIN">
-        update member set sessionKey = #{sessionId}, sessionLimit = #{next} where id=#{id}
-    </update>
-     
-    <!--
-        유효기간이 남아 있으면서 해당 sessionId를 가지는 사용자 정보를 꺼내오는 부분
-     -->
-    <select id="CHECK_USER_WITH_SESSIONKEY" resultType="multi.com.finalproject.member.model.MemberVO">
-        select * from member where sessionKey = #{sessionId} and sessionLimit > now()
-    </select>
-     
+
+
+	<select id="FIND_USER"
+		parameterType="multi.com.finalproject.member.model.MemberVO"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select id, email from member where id = #{id} and email = #{email}
+	</select>
+
+	<!-- 비밀번호 변경 관련 mapper -->
+
+	<update id="PASS_CHANGE" parameterType="hashMap">
+		update member set pw=#{pw} where email=#{email}
+	</update>
+
+
 </mapper>

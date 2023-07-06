@@ -22,7 +22,7 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	
 	@Override
 	public List<MiniBoardVO> mb_selectAll(Map<String, Object> map) {
-		log.info("selectAll()...{}", map);
+		log.info("selectAll(map)...{}", map);
 		return sqlSession.selectList("MB_SELECT_ALL", map);
 	}
 	
@@ -56,31 +56,7 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		log.info("mb_delete(vo)...{}", vo);
 		return sqlSession.delete("MB_DELETE",vo);
 	}
-	
-	@Override
-	public List<MiniBoardVO> mongo_findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public int mongo_insert(MiniBoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int mongo_update(MiniBoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int mongo_delete(MiniBoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+		
 	@Override
 	public int count(MiniBoardVO vo) {
 		log.info("count(vo)...{}", vo);

@@ -62,21 +62,15 @@ $(document).on('click', '#saveButton', function(e) {
             success : function(res){
                 alert('수정 완료');
                 location.href='./mini_gallery.do?id=' + '${mh_attr.id}';
+            },
+            error: function(xhr, status, error) {
+                // 삭제 실패: 에러 메시지를 표시합니다.
+                console.error('삭제 실패:', error);
             }
-	        error:function(xhr,status,error){
-				console.log('xhr.status : ', xhr.status);	
-			}
         })			
     } 
 });
 
-
-//다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
-$(document).ready(function () {
-	if('${user_id}' != '${mh_attr.id}'){	
-	    $('#buttonContainer').hide();
-	}
-});
 </script>
 </head>
 <body>
@@ -96,3 +90,9 @@ $(document).ready(function () {
     </div>
 </body>
 </html>
+<script type="text/javascript">
+	//다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
+	if('${user_id}' != '${mh_attr.id}'){	
+	    $('#buttonContainer').hide();
+	}
+</script>

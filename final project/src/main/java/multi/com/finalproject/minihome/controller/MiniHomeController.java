@@ -25,6 +25,8 @@ import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.manage.service.ManageService;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.model.VisitHistoryVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
@@ -41,6 +43,9 @@ public class MiniHomeController {
 
 	@Autowired
 	ManageService manage_service;
+	
+	@Autowired
+	MiniCommentsService minicomments_service;
 	
 	@Autowired
 	ServletContext sContext;
@@ -219,6 +224,51 @@ public class MiniHomeController {
 		return "mini/visit/findAll";
 	}
 
+	@RequestMapping(value = "/visit_findOne.do", method = RequestMethod.GET)
+	public String visit_findOne() {
+		log.info("visit_findOne()...");
+		
+		return "mini/visit/findOne";
+	}
+	
+	@RequestMapping(value = "/visit_insert.do", method = RequestMethod.GET)
+	public String visit_insert() {
+		log.info("visit_insert()...");
+
+		return "mini/visit/insert";
+	}
+	
+	@RequestMapping(value = "/visit_insertOK.do", method = RequestMethod.POST)
+	public String visit_insertOK(MiniCommentsVO vo) {
+		log.info("visit_insertOK(vo)...{}", vo);
+		
+		log.info("vo : {}", vo);
+		
+		int result = minicomments_service.visit_insert(vo);
+		log.info("result: {}", result);
+
+		if (result == 1) {
+			return "redirect:mini_visit.do?id=" + vo.getId();
+		} else {
+			return "redirect:visit_insert.do?id=" + vo.getId();
+		}
+
+	}
+	
+	@RequestMapping(value = "/visit_deleteOK.do", method = RequestMethod.GET)
+	public String visit_deleteOK(@RequestParam("id") String id, MiniCommentsVO vo) {
+		log.info("visit_deleteOK(vo)...{}", vo);
+
+		int result = minicomments_service.deleteOne(vo);
+		log.info("result...{}", result);
+		
+		if (result == 1) {
+			return "redirect:mini_visit.do?id=" + id;
+		}else {
+			return "redirect:visit_findOne.do?id=" + id + "&mcnum=" + vo.getMcnum();
+		}
+	}
+	
 	@RequestMapping(value = "/mini_game.do", method = RequestMethod.GET)
 	public String mini_game() {
 		log.info("mini_game()...");

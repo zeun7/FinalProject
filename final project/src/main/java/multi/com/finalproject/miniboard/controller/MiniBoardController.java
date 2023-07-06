@@ -21,8 +21,6 @@ import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
-import multi.com.finalproject.minicomments.model.MiniCommentsVO;
-import multi.com.finalproject.minicomments.service.MiniCommentsService;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
 
@@ -41,9 +39,6 @@ public class MiniBoardController {
 
 	@Autowired
 	MemberService member_service;
-	
-	@Autowired
-	MiniCommentsService minicomments_service;
 	
 	@ModelAttribute("mh_attr")
 	public MiniHomeVO getMh_attr(MiniHomeVO vo, MemberVO mvo) {
@@ -108,8 +103,8 @@ public class MiniBoardController {
 	}
 
 	@RequestMapping(value = "/mb_insertOK.do", method = RequestMethod.POST)
-	public String diary_insertOK(@RequestParam("id") String id, MiniBoardVO vo) throws IllegalStateException, IOException {
-		log.info("diary_insertOK(vo)...{}", vo);
+	public String mb_insertOK(@RequestParam("id") String id, MiniBoardVO vo) throws IllegalStateException, IOException {
+		log.info("mb_insertOK(vo)...{}", vo);
 
 		if (vo.getFile() != null && !vo.getFile().isEmpty()) {
 			String originalFilename = vo.getFile().getOriginalFilename();
@@ -243,13 +238,5 @@ public class MiniBoardController {
 			return "redirect:gallery_selectOne.do?id=" + id + "&mbnum=" + mbnum;
 		}
 	}
-	
-	@RequestMapping(value = "/visit_findOne.do", method = RequestMethod.GET)
-	public String visit_findOne() {
-		log.info("visit_findOne()...");
-		
-		return "mini/visit/findOne";
-	}
-	
 	
 }

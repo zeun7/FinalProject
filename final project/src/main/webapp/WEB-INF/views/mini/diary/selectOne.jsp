@@ -1,12 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
 <title>다이어리_selectOne</title>
 <jsp:include page="../../css.jsp"></jsp:include>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	// 댓글 출력 함수
 	console.log("print minicomments...mbnum: ", mbnum);
@@ -26,7 +24,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td rowspan="2">\${vo.writer}</td>`;
 					
-				if(mcnum === vo.mcnum){
+				if(cnum === vo.cnum){
 					tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
 						<td rowspan="2"><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>`;
 				}
@@ -43,7 +41,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td><button onclick="minicomments(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 						<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-						<td>\${vo.cdate}</td>
+						<td>\${vo.vdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="minicocomments_\${vo.mcnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
@@ -130,7 +128,7 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 									<tr>
 										<td><button onclick="minicomments(\${vo.mcnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 										<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-										<td>\${vo.cdate}</td>
+										<td>\${vo.vdate}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -171,10 +169,8 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 	$.ajax({
 		url: 'json_mc_insertOK.do',
 		data: {mcnum: mcnum,
-			mccnum: mcnum,
 			mbnum: mbnum,
-			id: '${mh_attr.id}',
-			writer: '${nickname}',
+			writer: '${user_id}',
 			content: $("#comm_content").val()},
 		method: 'POST',
 		dataType: 'json',
@@ -264,7 +260,7 @@ function is_clike(mcnum){		// 유저가 해당 댓글의 좋아요를 눌렀는�
 	});
 }
 
-function count_clikes(mcnum){		// 댓글 좋아요 카운트 함수
+function count_clikes(cnum){		// 댓글 좋아요 카운트 함수
 	console.log('count clikes...mcnum: ', mcnum);
 	
 	$.ajax({
@@ -320,36 +316,29 @@ function cancel_clike(mcnum){	// 댓글 좋아요 취소 함수
 </script>
 </head>
 <body onload="minicomments()">
-	<jsp:include page="../../top_menu.jsp"></jsp:include>
-	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
-	<h1>mini/diary/selectOne.jsp</h1>
-	<h1>${user_id}</h1>
-	<h1>${mh_attr.id}</h1>
-	<div>${vo2.mbname}</div>
-	<div id="title">제목 : <span id="titleSpan">${vo2.title}</span></div>
-	<div>닉네임 : ${vo2.writer}</div>
-	<div>작성일자 : ${vo2.wdate}</div>
-	<div style="border: 1px solid black; width: 700px; height: 350px;">
-		<p id="content">
-			<span id="contentSpan">${vo2.content}</span>
-		</p>
-	</div>
-	<div id=imageContainer>
-		<img src="resources/uploadimg/${vo2.filepath}">
-	</div>
-	<div id="buttonContainer">
-		<a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
-			class="myButton">수정</a> <a
-			href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
-			class="myButton">삭제</a>
-	</div>
+<jsp:include page="../../top_menu.jsp"></jsp:include>
+<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+<h1>mini/diary/selectOne.jsp</h1>
+<h1>${user_id}</h1>
+<h1>${mh_attr.id}</h1>
+<div>${vo2.mbname}</div>
+<div id="title">제목 : <span id="titleSpan">${vo2.title}</span></div>
+<div>닉네임 : ${vo2.writer}</div>
+<div>작성일자 : ${vo2.wdate}</div>
+<div style="border: 1px solid black; width: 700px; height: 350px;">
+  <p id="content"><span id="contentSpan">${vo2.content}</span></p>
+</div>
+<div id=imageContainer><img src="resources/uploadimg/${vo2.filepath}"></div>
+<div id="buttonContainer">
+  <a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}" class="myButton">수정</a>
+  <a href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}" class="myButton">삭제</a>
+</div>
 
 	<table id="minicomments">
 	</table>
 </body>
 </html>
 <script type="text/javascript">
-  // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
   if('${user_id}' != '${mh_attr.id}'){	
       $('#buttonContainer').hide();
   }

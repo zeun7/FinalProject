@@ -1,10 +1,16 @@
 package multi.com.finalproject.member.model;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,13 +27,13 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public int insert(MemberVO vo) {
-		log.info("insert()....{}", vo);
+		log.info("insert()....", vo);
 		return sqlSession.insert("M_INSERT", vo);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		log.info("update()....{}", vo);
+		log.info("update()....", vo);
 		return sqlSession.update("M_UPDATE", vo);
 	}
 
@@ -46,14 +52,13 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public MemberVO selectOne(MemberVO vo) {
-		log.info("selectOne()....{}", vo);
-		
+		log.info("selectOne()....", vo);
 		return sqlSession.selectOne("M_SELECT_ONE", vo);
 	}
 
 	@Override
 	public MemberVO login(MemberVO vo) {
-		log.info("login()....{}", vo);
+		log.info("login()....", vo);
 		return sqlSession.selectOne("LOGIN", vo);
 	}
 
@@ -90,14 +95,8 @@ public class MemberDAOimpl implements MemberDAO {
 	}
 
 	@Override
-	public String find_pw(String email) throws Exception {
-		return sqlSession.selectOne("FIND_PW", email);
-	}
-
-	@Override
-	public int update_pw(MemberVO member) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public String find_pw(MemberVO vo, HttpServletResponse response) {
+		return sqlSession.selectOne("FIND_PW", vo);
 	}
 
 	@Override
@@ -106,10 +105,10 @@ public class MemberDAOimpl implements MemberDAO {
 		return sqlSession.selectOne("FIND_ID_TEL", tel);
 	}
 
-	@Override
-	public String find_pw_tel(String tel) throws Exception {
-		return sqlSession.selectOne("FIND_PW_TEL", tel);
-	}
+//	@Override
+//	public String find_pw_tel(String tel) throws Exception {
+//		return sqlSession.selectOne("FIND_PW_TEL", tel);
+//	}
 
 	@Override
 
@@ -118,8 +117,36 @@ public class MemberDAOimpl implements MemberDAO {
 	}
 
 	@Override
-	public MemberVO EmailCheck(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int pwUdate_M(MemberVO vo) {
+		return sqlSession.selectOne("PW_UPDATE_M", vo);
 	}
+
+	@Override
+	public MemberVO selectMember(String email) {
+		return sqlSession.selectOne("SELECT_MEMBER", email);
+
+	}
+
+	@Transactional
+	public int update_pw(MemberVO vo) throws Exception {
+		return sqlSession.update("PW_UPDATE", vo);
+	}
+
+	@Override
+	public void pass_change(Map<String, Object> map, MemberVO vo) throws Exception {
+		String pw = (String) map.get("pw");
+		String email = (String) map.get("email");
+
+		vo.setPw(pw);
+		vo.setEmail(email);
+
+		sqlSession.update("PASS_CHANGE", vo);
+	}
+
+	@Override
+	public MemberVO find_user(MemberVO vo) {
+
+		return sqlSession.selectOne("FIND_USER", vo);
+	}
+
 }

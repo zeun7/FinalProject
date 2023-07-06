@@ -16,14 +16,6 @@ public interface MiniBoardDAO {
 	public int gallery_update(MiniBoardVO vo);
 	
 	public int mb_delete(MiniBoardVO vo);
-	
-	public List<MiniBoardVO> mongo_findAll();
-
-	public int mongo_insert(MiniBoardVO vo);
-
-	public int mongo_update(MiniBoardVO vo);
-
-	public int mongo_delete(MiniBoardVO vo);
 
 	public int count(MiniBoardVO vo);
 

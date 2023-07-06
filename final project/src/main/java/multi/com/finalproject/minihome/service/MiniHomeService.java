@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
 import multi.com.finalproject.minihome.model.MiniHomeDAO;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.model.VisitHistoryVO;
