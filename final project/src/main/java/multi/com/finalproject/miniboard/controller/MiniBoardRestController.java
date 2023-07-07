@@ -133,12 +133,15 @@ public class MiniBoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/gallery_updateOK.do", method = RequestMethod.POST)
-	public String gallery_updateOK(@RequestParam(value="file", required=false) MultipartFile file, 
-			@RequestParam("filepath") String filepath, 
+	public String gallery_updateOK(@RequestParam("filepath") String filepath, 
 			@RequestParam("title") String title, 
-			@RequestParam("mbnum") int mbnum) {
+			@RequestParam("mbnum") int mbnum,
+			MultipartHttpServletRequest mRequest) {
+		
+		List<MultipartFile> fileList = mRequest.getFiles("file");
+		
 		// 파일이 업로드되지 않았을 경우 처리
-	    if (file == null || file.isEmpty()) {
+	    if (fileList == null || fileList.isEmpty()) {
 	        if(filepath == null || filepath.isEmpty()){
 	            return "error";
 	        }
@@ -160,10 +163,7 @@ public class MiniBoardRestController {
 	        }
 	    }
 	    
-		// 원본 파일 이름
-		String originalFilename = file.getOriginalFilename();
-		
-		log.info("file : {}", file.toString());
+		log.info("fileList : {}", fileList);
 		log.info("title : {}", title);
 		log.info("mbnum : {}", mbnum);
 		
@@ -171,28 +171,41 @@ public class MiniBoardRestController {
 		MiniBoardVO vo = new MiniBoardVO();
 		vo.setMbnum(mbnum);
 		vo.setTitle(title);
-		vo.setFilepath(originalFilename);
 		
-		try {
-			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
-			String realPath = sContext.getRealPath("resources/uploadimg");
-			File f = new File(realPath + File.separator + vo.getFilepath());
-			file.transferTo(f);
+		String fileNames = "";
+		
+		for(int i = 0; i < fileList.size(); i++) {
+			// 원본 파일 이름
+		    String originalFilename = fileList.get(i).getOriginalFilename();
+		    log.info("original: {}", originalFilename);
 			
-			// 썸네일 이미지 생성
-			BufferedImage originalBufferImg = ImageIO.read(f);
-			BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-			Graphics2D graphic = thumbBufferImg.createGraphics();
-			graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
-			
-			File thumbFile = new File(realPath + File.separator + "thumb_" + vo.getFilepath());
-			String formatName = vo.getFilepath().substring(vo.getFilepath().lastIndexOf(".") + 1);
-			ImageIO.write(thumbBufferImg, formatName, thumbFile);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "error";
+			try {
+				// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
+				String realPath = sContext.getRealPath("resources/uploadimg");
+				File f = new File(realPath + File.separator + originalFilename);
+				fileList.get(i).transferTo(f);
+				
+				// 썸네일 이미지 생성
+				BufferedImage originalBufferImg = ImageIO.read(f);
+				BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+				Graphics2D graphic = thumbBufferImg.createGraphics();
+				graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
+				
+				File thumbFile = new File(realPath + File.separator + "thumb_" + originalFilename);
+				String formatName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+				ImageIO.write(thumbBufferImg, formatName, thumbFile);
+				
+				fileNames += originalFilename;
+	    		if(i < fileList.size() - 1) {
+	    			fileNames += ",";
+	    		}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return "error";
+			}
 		}
+		vo.setFilepath(fileNames);
+	    log.info("{}", vo);
 		
 		// 서비스 호출
 		int result = service.gallery_update(vo);

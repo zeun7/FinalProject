@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -236,6 +238,32 @@ public class MiniBoardController {
 			return "redirect:mini_gallery.do?id=" + id;
 		}else {
 			return "redirect:gallery_selectOne.do?id=" + id + "&mbnum=" + mbnum;
+		}
+	}
+	
+	@RequestMapping(value = "/mb_report.do", method = RequestMethod.GET)
+	public String mb_report() {
+		log.info("/mb_report.do...");
+		
+		return "mini/diary/report";
+	}
+	
+	@RequestMapping(value = "/mb_reportOK.do", method = RequestMethod.POST)
+	public String mb_reportOK(MiniBoardVO vo, String id, String reason) {
+		log.info("/mb_reportOK.do...{}", vo);
+		log.info("reason:{}", reason);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("reason", reason);
+		
+		int result = service.report(map);
+		log.info("result:{}", result);
+		
+		if(result == 1) {
+			return "redirect:mb_report.do?mbnum=0&id="+id;
+		}else {
+			return "redirect:mb_report.do?mbnum="+vo.getMbnum()+"&id="+id;
 		}
 	}
 	

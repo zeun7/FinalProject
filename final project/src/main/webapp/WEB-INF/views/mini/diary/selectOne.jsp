@@ -12,6 +12,12 @@
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 
 $(function(){
+	like_check();
+	share_kakao();
+	minicomments();
+});
+
+function like_check(){
 	//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
 	let sid = '';
 	sid = '${user_id}';
@@ -39,7 +45,7 @@ $(function(){
 			}
 		});//end $.ajax()
 	}
-});//end onload
+}//end onload
 
 function like(){
 	let sid = '';
@@ -116,7 +122,7 @@ function share_facebook(){
     window.open("http://www.facebook.com/sharer.php?u=" + encodeURIComponent(url), name, option);
 }//end share_facebook()
 
-$(function(){
+function share_kakao(){
 	Kakao.init('8b87b1c63625a7c92d74e9e4019cc90f');
 	if(Kakao.isInitialized()){
 		Kakao.Share.createScrapButton({
@@ -124,7 +130,7 @@ $(function(){
 		    requestUrl: url
 		});
 	}
-});
+}
 
 function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	// 댓글 출력 함수
 	console.log("print minicomments...mbnum: ", mbnum);
@@ -433,7 +439,7 @@ function cancel_clike(mcnum){	// 댓글 좋아요 취소 함수
 }
 </script>
 </head>
-<body onload="minicomments()">
+<body>
 	<jsp:include page="../../top_menu.jsp"></jsp:include>
 	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectOne.jsp</h1>
