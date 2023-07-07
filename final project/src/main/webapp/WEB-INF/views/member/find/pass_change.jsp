@@ -23,7 +23,7 @@
 					<p>
 						<label>변경할 비밀번호 입력:</label> <input class="w3-input"
 						type="password" id="pw" name="pw" required=" 비밀번호를 입력하세요.">
-						<input type="hidden" value="${email}" />
+						<input type="hidden" name="email" value="${email}" />
 				</p>
 
 					<button type="submit" name="submit"

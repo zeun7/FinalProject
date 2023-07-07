@@ -652,16 +652,17 @@ public class MemberController {
     
     
     //변경할 비밀번호를 입력한 후에 확인 버튼을 누르면 넘어오는 컨트롤러
-    @RequestMapping(value = "pass_change.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/pass_change.do", method = RequestMethod.POST)
     public ModelAndView pass_change(MemberVO vo) throws Exception{
-    
-    service.pass_change(vo);
-    
-    ModelAndView mv = new ModelAndView();
-    
-    mv.setViewName("member/find/find_pass_result");
-    
-    return mv;
+	    log.info("/pass_change.do...{}", vo);
+	    
+	    service.pass_change(vo);
+	    
+	    ModelAndView mv = new ModelAndView();
+	    
+	    mv.setViewName("member/find/find_pass_result");
+	    
+	    return mv;
                 
     }
     

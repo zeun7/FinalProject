@@ -108,34 +108,7 @@ public class MiniBoardController {
 	public String mb_insertOK(@RequestParam("id") String id, MiniBoardVO vo) throws IllegalStateException, IOException {
 		log.info("mb_insertOK(vo)...{}", vo);
 
-		if (vo.getFile() != null && !vo.getFile().isEmpty()) {
-			String originalFilename = vo.getFile().getOriginalFilename();
-			int fileNameLength = originalFilename.length();
-			log.info("originalFilename: {}", originalFilename);
-			log.info("fileNameLength: {}", fileNameLength);
-
-			vo.setFilepath(originalFilename);
-
-			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일 저장
-			String realPath = sContext.getRealPath("resources/uploadimg");
-			log.info("realPath: {}", realPath);
-
-			File f = new File(realPath + File.separator + vo.getFilepath());
-			vo.getFile().transferTo(f);
-
-			// 썸네일 이미지 생성
-			BufferedImage originalBufferImg = ImageIO.read(f);
-			BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
-			Graphics2D graphic = thumbBufferImg.createGraphics();
-			graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
-
-			File thumbFile = new File(realPath + File.separator + "thumb_" + vo.getFilepath());
-			String formatName = vo.getFilepath().substring(vo.getFilepath().lastIndexOf(".") + 1);
-			log.info("formatName: {}", formatName);
-			ImageIO.write(thumbBufferImg, formatName, thumbFile);
-		}
-		
-		log.info("vo : {}", vo);
+		vo.setFilepath("");
 		
 		int result = service.mb_insert(vo);
 		log.info("result: {}", result);
