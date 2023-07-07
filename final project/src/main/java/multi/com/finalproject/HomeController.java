@@ -1,6 +1,8 @@
 package multi.com.finalproject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,24 @@ public class HomeController {
 		log.info("/json_post_friends.do...");
 		
 		List<BoardVO> vos = service.friends_post();
+		
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_post_board.do",  method = RequestMethod.GET)
+	public List<BoardVO> json_post_board(BoardVO vo, int limit, String sortKey) {
+		log.info("/json_post_board.do...");
+		log.info("vo:{}", vo);
+		log.info("limit:{}", limit);
+		log.info("sortKey:{}", sortKey);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bname", vo.getBname());
+		map.put("limit", limit);
+		map.put("sortKey", sortKey);
+		
+		List<BoardVO> vos = service.board_post(map);
 		
 		return vos;
 	}

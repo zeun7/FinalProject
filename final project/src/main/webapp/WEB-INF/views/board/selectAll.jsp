@@ -91,7 +91,7 @@ function selectAll(page, limit){
  				`;
  				
  				if(vo.isFileExist == 1){
- 					tag_vos += `<i class="fa-regular fa-image">`;
+ 					tag_vos += `<i class="fa-regular fa-image"></i>`;
  				}
  				tag_vos += `
  						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>

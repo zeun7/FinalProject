@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="multi.com.finalproject.board">
+  	<select id="BOARD_POST_WDATE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum, bnum, title, writer, wdate, isFileExist, ccount from (
+			select rownum, bnum, title, writer, wdate, isFileExist, (select count(*) from comments where bnum = b.bnum) as ccount from board b 
+			where bname=#{bname} order by wdate desc
+		) where rownum <= #{limit}
+		]]>
+	</select>
+	
+	<select id="BOARD_POST_VCOUNT" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum, bnum, title, writer, wdate, isFileExist, ccount from (
+			select rownum, bnum, title, writer, wdate, isFileExist, (select count(*) from comments where bnum = b.bnum) as ccount from board b 
+			where bname=#{bname} order by vcount desc
+		) where rownum <= #{limit}
+		]]>
+	</select>
+	
+	<select id="BP_SELECT_ALL_WDATE" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum, bnum, title, writer, wdate, isFileExist, ccount from (
+	  		select rownum, bnum, title, writer, wdate, isFileExist, ccount from (
+				select rownum, bnum, title, writer, wdate, isFileExist, (select count(*) from comments where bnum = b.bnum) as ccount from board b order by vcount desc
+			) where rownum <= #{limit}
+		) order by wdate desc
+		]]>
+	</select>
+	
+	<select id="BP_SELECT_ALL_VCOUNT" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum, bnum, title, writer, wdate, isFileExist, ccount from (
+			select rownum, bnum, title, writer, wdate, isFileExist, (select count(*) from comments where bnum = b.bnum) as ccount from board b order by vcount desc
+		) where rownum <= #{limit}
+		]]>
+	</select>
+
+  </mapper>

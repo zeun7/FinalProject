@@ -195,7 +195,6 @@ function select_gallery_deleteOK() {
     $('.row-check').css('display', 'none');
 }
 
-
 </script>
 
 </head>

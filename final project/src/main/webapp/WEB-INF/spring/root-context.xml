@@ -34,6 +34,7 @@
 				<value>classpath:jdbc/sqlMapper_minihome.xml</value>
 				<value>classpath:jdbc/sqlMapper_miniboard.xml</value>
 				<value>classpath:jdbc/sqlMapper_manage.xml</value>
+				<value>classpath:jdbc/sqlMapper_home.xml</value>
 			</list>
 		</property>
 	</bean>
