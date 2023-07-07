@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.model.LikesVO;
 import multi.com.finalproject.miniboard.model.MiniBoardDAO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
@@ -46,6 +47,30 @@ public class MiniBoardService {
 
 	public int count(MiniBoardVO vo) {
 		return dao.count(vo);
+	}
+	
+	public LikesVO likeCheck(LikesVO vo) {
+		return dao.likeCheck(vo);
+	}
+
+	public int like(LikesVO vo) {
+		return dao.like(vo);
+	}
+
+	public void likesUp(MiniBoardVO vo) {
+		dao.likesUp(vo);
+	}
+
+	public int deleteLike(LikesVO vo) {
+		return dao.deleteLike(vo);
+	}
+
+	public void likesDown(MiniBoardVO vo) {
+		dao.likesDown(vo);
+	}
+
+	public int report(Map<String, Object> map) {
+		return dao.report(map);
 	}
 
 }

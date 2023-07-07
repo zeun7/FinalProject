@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.model.LikesVO;
 
 @Slf4j
 @Repository
@@ -63,8 +64,46 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		return sqlSession.selectOne("MB_COUNT", vo);
 	}
 
-	
+	@Override
+	public LikesVO likeCheck(LikesVO vo) {
+		log.info("likeCheck()...{}", vo);
 
-	
+		return sqlSession.selectOne("MB_LIKE_CHECK", vo);
+	}
+
+	@Override
+	public int like(LikesVO vo) {
+		log.info("like()...{}", vo);
+
+		return sqlSession.insert("MB_LIKE", vo);
+	}
+
+	@Override
+	public void likesUp(MiniBoardVO vo) {
+		log.info("lcountUp()...{}", vo);
+
+		sqlSession.update("MB_LIKES_UP", vo);
+	}
+
+	@Override
+	public int deleteLike(LikesVO vo) {
+		log.info("deleteLike()...{}", vo);
+
+		return sqlSession.delete("MB_DELETE_LIKE", vo);
+	}
+
+	@Override
+	public void likesDown(MiniBoardVO vo) {
+		log.info("likesDown()...{}", vo);
+
+		sqlSession.update("MB_LIKES_DOWN", vo);
+	}
+
+	@Override
+	public int report(Map<String, Object> map) {
+		log.info("report()...{}", map);
+
+		return sqlSession.insert("MB_REPORT", map);
+	}
 
 }

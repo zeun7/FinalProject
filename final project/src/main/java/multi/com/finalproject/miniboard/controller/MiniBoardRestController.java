@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.model.LikesVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
 
@@ -200,6 +203,106 @@ public class MiniBoardRestController {
 		} else {
 			return "error";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mb_likeCheck.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_mb_likeCheck(LikesVO vo) {
+		log.info("/json_mb_likeCheck.do...{}", vo);
+		
+		LikesVO vo2 = service.likeCheck(vo);
+		log.info("vo2:{}", vo2);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		if(vo2 == null) {
+			map.put("result", 0);
+		}else {
+			map.put("result", 1);
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mb_like.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_mb_like(LikesVO vo) {
+		log.info("/json_mb_like.do...{}", vo);
+		
+		int result = service.like(vo);
+		log.info("result:{}", result);
+		
+		MiniBoardVO vo2 = new MiniBoardVO();
+		vo2.setMbnum(vo.getMbnum());
+		
+		//좋아요 성공하면 카운트업
+		if(result == 1) {
+			service.likesUp(vo2);
+		}
+		MiniBoardVO vo3 = service.mb_selectOne(vo2);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		map.put("likes", vo3.getLikes());	//좋아요 개수 반환
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mb_like_delete.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_mb_like_delete(LikesVO vo) {
+		log.info("/json_mb_like_delete.do...{}", vo);
+		
+		int result = service.deleteLike(vo);
+		log.info("result:{}", result);
+		
+		MiniBoardVO vo2 = new MiniBoardVO();
+		vo2.setMbnum(vo.getMbnum());
+		
+		//좋아요 삭제 성공하면 카운트다운
+		if(result == 1) {
+			service.likesDown(vo2);
+		}
+		MiniBoardVO vo3 = service.mb_selectOne(vo2);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		map.put("likes", vo3.getLikes());	//좋아요 개수 반환
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mb_file_insertOK.do", method = RequestMethod.POST, consumes="multipart/form-data")
+	public Map<String, List<String>> json_mb_file_insertOK(MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException {
+		log.info("/json_mb_file_insertOK.do...");
+		List<MultipartFile> fileList = mRequest.getFiles("file");
+		log.info("{}", fileList);
+		
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> filepathList = new ArrayList<String>();
+		
+		for(int i = 0; i < fileList.size(); i++) {
+			String getOriginalFilename = fileList.get(i).getOriginalFilename();
+			int fileNameLength = fileList.get(i).getOriginalFilename().length();
+			log.info("getOriginalFilename:{}", getOriginalFilename);
+			log.info("fileNameLength:{}", fileNameLength);
+			
+			if (getOriginalFilename.length() != 0) {
+				String filepath = "resources/uploadimg/" + getOriginalFilename;
+				// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+				String realPath = sContext.getRealPath("resources/uploadimg");
+				log.info("realPath : {}", realPath);
+				
+				File f = new File(realPath + "\\" + getOriginalFilename);
+				fileList.get(i).transferTo(f);
+				
+				filepathList.add(filepath);
+			}
+		}
+		
+		map.put("filepathList", filepathList);
+		
+		return map;
 	}
 
 }

@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <html>
 <head>
 <title>다이어리_selectOne</title>
 <jsp:include page="../../css.jsp"></jsp:include>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 
@@ -178,8 +180,6 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
 				</tr>`;
 			}
-			
-			
 			
 			$("#minicomments").html(tag_comments);
 			
@@ -433,46 +433,57 @@ function cancel_clike(mcnum){	// 댓글 좋아요 취소 함수
 </script>
 </head>
 <body onload="minicomments()">
-<jsp:include page="../../top_menu.jsp"></jsp:include>
-<jsp:include page="../mini_top_menu.jsp"></jsp:include>
-<h1>mini/diary/selectOne.jsp</h1>
-<h1>${user_id}</h1>
-<h1>${mh_attr.id}</h1>
-<div>${vo2.mbname}</div>
-<div id="title">제목 : <span id="titleSpan">${vo2.title}</span></div>
-<div>닉네임 : ${vo2.writer}</div>
-<div>작성일자 : ${vo2.wdate}</div>
-<div style="border: 1px solid black; width: 700px; height: 350px;">
-  <p id="content"><span id="contentSpan">${vo2.content}</span></p>
-</div>
-<div>
-	<button onclick="like()" id="like_button">좋아요</button>
-	<button onclick="like_cancel()" id="lcancel_button" style="display: none">좋아요 취소</button>
-	<span id="likes_count">${vo2.likes }</span>
-	<button onclick="open_modal()">공유</button>					
-	<button onclick="report()" id="report_button">신고</button>
-</div>
-<%-- <div id=imageContainer><img src="resources/uploadimg/${vo2.filepath}"></div> --%>
-<div id="buttonContainer">
-  <a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}" class="myButton">수정</a>
-  <a href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}" class="myButton">삭제</a>
-</div>
+	<jsp:include page="../../top_menu.jsp"></jsp:include>
+	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+	<h1>mini/diary/selectOne.jsp</h1>
+	<h1>${user_id}</h1>
+	<h1>${mh_attr.id}</h1>
+	<div>${vo2.mbname}</div>
+	<div id="title">
+		제목 : <span id="titleSpan">${vo2.title}</span>
+	</div>
+	<div>닉네임 : ${vo2.writer}</div>
+	<div>작성일자 : ${vo2.wdate}</div>
+	<div style="border: 1px solid black; width: 700px; height: 350px;">
+		<p id="content">
+			<span id="contentSpan">${vo2.content}</span>
+		</p>
+	</div>
+	<div>
+		<button onclick="like()" id="like_button">좋아요</button>
+		<button onclick="like_cancel()" id="lcancel_button"
+			style="display: none">좋아요 취소</button>
+		<span id="likes_count">${vo2.likes }</span>
+		<button onclick="open_modal()">공유</button>
+		<button onclick="report()" id="report_button">신고</button>
+	</div>
+	<%-- <div id=imageContainer><img src="resources/uploadimg/${vo2.filepath}"></div> --%>
+	<div id="buttonContainer">
+		<a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
+			class="myButton">수정</a> <a
+			href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
+			class="myButton">삭제</a>
+	</div>
+	
+	<table id="minicomments">
+	</table>
 
-<div id="modal">
-	<div class="modal-content">
-		<h6>공유하기</h6>
-		<button onclick="share_twitter()" id="share_button">트위터로 공유</button>
-		<button onclick="share_facebook()" id="share_button">페이스북으로 공유</button>
-		<button id="kakaotalk-sharing-btn">카카오톡으로 공유</button>
-		<div>
-			<label for="copy_url_btn" id="url"></label>			
-			<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
-		</div>
-		<div>
-			<button onclick="close_modal()">닫기</button>
+	<div id="modal">
+		<div class="modal-content">
+			<h6>공유하기</h6>
+			<button onclick="share_twitter()" id="share_button">트위터로 공유</button>
+			<button onclick="share_facebook()" id="share_button">페이스북으로
+				공유</button>
+			<button id="kakaotalk-sharing-btn">카카오톡으로 공유</button>
+			<div>
+				<label for="copy_url_btn" id="url"></label>
+				<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
+			</div>
+			<div>
+				<button onclick="close_modal()">닫기</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 <script type="text/javascript">
 $('#url').html(url);
@@ -488,8 +499,10 @@ function close_modal(){
 	document.body.style.overflow = "auto"; // 스크롤바
 }
 </script>
+
 </body>
 </html>
+
 <script type="text/javascript">
   // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
   if('${user_id}' != '${mh_attr.id}'){	
