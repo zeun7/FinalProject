@@ -142,7 +142,7 @@ function manage_board(page){	// 신고 게시글 목록
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
- 					<td>\${vo.bnum}</td>
+ 					<td>\${vo.rnum}</td>
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
@@ -238,7 +238,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
- 					<td>\${vo.cnum}</td>
+ 					<td>\${vo.rnum}</td>
  					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.content}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
