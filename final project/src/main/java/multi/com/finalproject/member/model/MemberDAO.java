@@ -32,7 +32,7 @@ public interface MemberDAO {
 //
 //	public String find_pw_tel(String tel) throws Exception;
 
-	public String find_id_tel(String tel) throws Exception;
+	public String find_id_tel(String tel) ;
 
 	public MemberVO TelCheck( MemberVO vo);
 
@@ -40,13 +40,15 @@ public interface MemberDAO {
 
 	public MemberVO selectMember(String email);
 
-	public String find_pw(MemberVO vo, HttpServletResponse response);
+	public String find_pw(String email);
 
 	public int update_pw(MemberVO vo) throws Exception;
 
 	public void pass_change(MemberVO vo) throws Exception;
 
 	public MemberVO find_user(MemberVO vo);
+
+	public MemberVO findUser(String email);
     
  
 }

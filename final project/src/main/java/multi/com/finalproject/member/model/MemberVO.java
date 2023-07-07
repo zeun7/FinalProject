@@ -14,7 +14,6 @@ public class MemberVO {
 	private String profilepic;
 	private String question;
 	private String answer;
-	private String miniaddr;
 	private String name;
 	private String tel;
 	private String email;
@@ -23,6 +22,5 @@ public class MemberVO {
 	private MultipartFile m_file;
 	public boolean isUseCookie ;
 	public String verification_code;
-	
 	
 }

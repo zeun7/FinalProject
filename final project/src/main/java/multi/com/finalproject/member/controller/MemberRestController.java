@@ -45,7 +45,6 @@ public class MemberRestController {
 		if (vo2 == null)
 			vo2 = vo;
 		return vo2;
-
 	}
 
 	@ResponseBody
@@ -61,6 +60,7 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/json_m_NickCheck.do", method = RequestMethod.GET)
 	public String json_m_NickCheck(MemberVO vo) {
@@ -74,6 +74,7 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/json_m_TelCheck.do", method = RequestMethod.GET)
 	public String json_m_TelCheck(MemberVO vo) {
@@ -88,7 +89,6 @@ public class MemberRestController {
 		}
 	}
 	
-
 	@ResponseBody
 	@RequestMapping(value = "/checkEmailAjax.do",method = RequestMethod.POST)
 	public Map<String, String> sendMail(@RequestBody Map<String, String> map, HttpSession session) {
@@ -96,6 +96,19 @@ public class MemberRestController {
 		log.info("/checkEmail.do에 들어옴");
 		log.info("입력받은 email의 값 : " + map.get("email"));
 
+		MemberVO vo = service.findUser( map.get("email")); 
+
+		log.info("sendMail() 메서드 실행됨");
+		String exists =""; 
+				if(vo==null) {
+					exists="false";
+					}else{
+					exists="true";
+				}
+				
+		log.info("exists 필드의 값: " + exists);
+		
+		
 		int random = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
 		log.info("random의 값 : " + random);
 
@@ -109,11 +122,15 @@ public class MemberRestController {
 		stringBuilder.append("안녕하세요. 'minihome'입니다.\r귀하의 인증 코드는  <" + joinCode + "> 입니다.");
 		log.info(stringBuilder.toString());
 
-		boolean finishSend = this.mailService.send(subject, stringBuilder.toString(), "TongAdmin", map.get("email"));
+		boolean finishSend = false;
+		if (!exists.equals("true")) {
+		    finishSend = this.mailService.send(subject, stringBuilder.toString(), "TongAdmin", map.get("email"));
+		}
 		log.info("성공이냐 실패냐 : " + finishSend);
 
 		map.put("joinCode", joinCode);
-
+		map.put("exists", exists);
+		
 		System.out.println(map);
 
 		return map;

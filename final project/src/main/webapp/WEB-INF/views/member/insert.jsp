@@ -20,41 +20,64 @@
 	$(function() {
 		console.log("onload....");
 	});
-	function fn_sendEmail_Ajax() {
-		var userEmail = $("#email").val().trim();
 	
-		// 이메일이 입력되지 않은 경우 처리
+	function fn_emailChk_Ajax() {
+	    var userEmail = $("#email").val().trim();
+	    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+	    if (userEmail === "") {
+	        // 이메일이 입력되지 않은 경우
+	        $("#showDiv").prop("disabled", true);
+	        return;
+	    }
+
+	    if (!emailRegex.test(userEmail)) {
+	        // 유효한 이메일 형식이 아닌 경우
+	        $("#showDiv").prop("disabled", true);
+	        return;
+	    }
+
+	    // 이메일이 유효하므로 버튼을 활성화
+	    $("#showDiv").prop("disabled", false);
+	}
+
+
+	function fn_sendEmail_Ajax() {
+	    var userEmail = $("#email").val().trim();
+
+	    // 이메일이 입력되지 않은 경우 처리
 	    if (userEmail === "") {
 	        alert("이메일 주소를 입력해야 합니다.");
 	        return;
 	    }
 
-		var form = { email : userEmail};
+	    var form = { "email": userEmail };
 
-		$.ajax({
-			url : "checkEmailAjax.do",
-			method:"POST",
-			data : JSON.stringify(form),
-			contentType : "application/json; charset=utf-8;",
-			async : false,
-			success : function(data) {
-				 if (data.exists) {
-		                alert("이미 가입된 이메일입니다.");
-		                return;
-		            }
-				alert("입력하신 이메일 주소에서 발급된 코드를 확인하세요.");
+	    $.ajax({
+	        url: "checkEmailAjax.do",
+	        method: "POST",
+	        data: JSON.stringify(form),
+	        contentType: "application/json; charset=utf-8;",
+	        async: false,
+	        success: function (data) {
+	        	
+	        	if (data.exists==="true") {
+	                alert("이미 가입된 이메일입니다.");
+	                
+	            } else {
+	            alert("입력하신 이메일 주소에서 발급된 코드를 확인하세요.");
 
-				resultCode = data.joinCode;
+	            resultCode = data.joinCode;
 
-				$("#checkCodeDiv").show();
-
-			},
-			error : function() {
-				alert("네트워크가 불안정합니다. 다시 시도해 주세요.222");
-			}
-		})
-
+	            $("#checkCodeDiv").show();
+	            }
+	        },
+	        error: function () {
+	            alert("네트워크가 불안정합니다. 다시 시도해 주세요.222");
+	        },
+	    });
 	}
+
 	function fn_checkCode() {
 	    var inputCode = $("#verification_code").val().trim();
 
@@ -72,6 +95,9 @@
 	    } else {
 	        // 인증 코드가 일치하지 않는 경우
 	        alert("인증 코드가 올바르지 않습니다. 다시 확인해주세요.");
+	        // 다시 인증 번호 요청을 보낼 수 있도록 설정
+	        $("#checkCodeDiv").hide();
+	        resultCode = "";
 	    }
 	}
 
@@ -266,7 +292,7 @@
 								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Join</button>
 							<button
 								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">
-								<a href="home.do">Cancle</a>
+								<a href="home.do">Cancel</a>
 							</button>
 							<!-- 						<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button> -->
 						</tr>
@@ -276,26 +302,43 @@
 		</div>
 	</div>
 	<script>
-    	function submitForm() {
-        	var id = document.getElementById("id").value;
-			var pw1 = document.getElementById("pw1").value;
-			var pw2 = document.getElementById("pw2").value;
-			var nickname = document.getElementById("nickname").value;
-			var email = document.getElementById("email").value;
-			var email = document.getElementById("verification_code").value;
-			var tel = document.getElementById("tel").value;
-			var question = document.getElementById("question").value;
-			var answer = document.getElementById("answer").value;
+    function submitForm() {
+        var id = document.getElementById("id").value;
+        var pw1 = document.getElementById("pw1").value;
+        var pw2 = document.getElementById("pw2").value;
+        var nickname = document.getElementById("nickname").value;
+        var email = document.getElementById("email").value;
+        var tel = document.getElementById("tel").value;
+        var question = document.getElementById("question").value;
+        var answer = document.getElementById("answer").value;
 
-			if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === '' || nickname.trim() === '' || email.trim() === '' ||  tel.trim() === '' || question.trim() === '' || answer.trim() === '') {
-				alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
-				return;
-			}
-			
-			// 나머지 처리 로직
-			document.getElementById("joinForm").submit();
-		}
-    </script>
+        if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === '' || nickname.trim() === '' || email.trim() === '' || tel.trim() === '' || question.trim() === '' || answer.trim() === '') {
+            alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
+            return;
+        }
+
+        // 중복 체크를 통한 회원가입 제어
+        if ($('#demo1').text() !== '사용가능한 아이디입니다.') {
+            alert("사용중인 아이디입니다.");
+            return;
+        }
+        if ($('#demo2').text() !== ' 사용 가능한 닉네임 입니다') {
+            alert("사용중인 닉네임 입니다");
+            return;
+        }
+        if ($('#demo3').text() !== '사용가능 합니다 ') {
+            alert("로그인 되어있는 전화번호입니다.");
+            return;
+        }
+        if ($('#verification_code').val().trim() === '') {
+            alert("이메일 인증이 필요합니다.");
+            return;
+        }
+        
+        // 나머지 처리 로직
+        document.getElementById("joinForm").submit();
+    }
+</script>
     
 </body>
 </html>

@@ -93,12 +93,12 @@ public class MemberDAOimpl implements MemberDAO {
 	}
 
 	@Override
-	public String find_pw(MemberVO vo, HttpServletResponse response) {
-		return sqlSession.selectOne("FIND_PW", vo);
+	public String find_pw(String email) {
+		return sqlSession.selectOne("FIND_PW", email);
 	}
 
 	@Override
-	public String find_id_tel(String tel) throws Exception {
+	public String find_id_tel(String tel)  {
 
 		return sqlSession.selectOne("FIND_ID_TEL", tel);
 	}
@@ -141,6 +141,11 @@ public class MemberDAOimpl implements MemberDAO {
 	public MemberVO find_user(MemberVO vo) {
 
 		return sqlSession.selectOne("FIND_USER", vo);
+	}
+
+	@Override
+	public MemberVO findUser(String email) {
+		return sqlSession.selectOne("FINDUSER", email);
 	}
 
 }

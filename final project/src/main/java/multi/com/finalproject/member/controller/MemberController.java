@@ -228,6 +228,7 @@ public class MemberController {
 			model.addAttribute("message", "아이디 또는 비밀번호가 틀렸습니다.");
 			model.addAttribute("errorMessage", true); // 에러 메시지 플래그 추가
 			return "member/login";
+			
 		} else {
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
@@ -384,148 +385,11 @@ public class MemberController {
 		return "member/find_id_from_email";
 	}
 
-	@RequestMapping(value = "/find_pw_email.do", method = RequestMethod.GET)
-	public String find_pw_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
-		try {
-			response.setContentType("text/html;charset=utf-8");
-			PrintWriter out = response.getWriter();
-
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-
-			try {
-				// Oracle JDBC 드라이버 로드
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-
-				// 데이터베이스 연결 설정
-				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
-																																																																								// URL
-				String username = "admin"; // 데이터베이스 사용자명
-				String password = "Final123456!"; // 데이터베이스 비밀번호
-
-				conn = DriverManager.getConnection(url, username, password);
-
-				// SQL 문장 준비
-				String sql = "select pw from member where email = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, email);
-
-				// 쿼리 실행
-				rs = pstmt.executeQuery();
-
-				// 결과 처리
-				if (rs.next()) {
-					String pw = rs.getString("pw");
-					model.addAttribute("pw", pw);
-				} else {
-					out.println("<script>");
-					out.println("alert('가입된 비밀번호가 없습니다.');");
-					out.println("history.go(-1);");
-					out.println("</script>");
-					out.close();
-					return null;
-				}
-			} finally {
-				// 리소스 해제
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			}
-
-			return "member/find_pw";
-		} catch (Exception e) {
-			// 예외 처리
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-//	@RequestMapping(value = "/find_pw_tel.do", method = RequestMethod.GET)
-//	public String find_pw_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
-//		try {
-//			response.setContentType("text/html;charset=utf-8");
-//			PrintWriter out = response.getWriter();
-//
-//			Connection conn = null;
-//			PreparedStatement pstmt = null;
-//			ResultSet rs = null;
-//
-//			try {
-//				// Oracle JDBC 드라이버 로드
-//				Class.forName("oracle.jdbc.driver.OracleDriver");
-//
-//				// 데이터베이스 연결 설정
-//				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
-//				// URL
-//				String username = "admin"; // 데이터베이스 사용자명
-//				String password = "Final123456!"; // 데이터베이스 비밀번호
-//
-//				conn = DriverManager.getConnection(url, username, password);
-//
-//				// SQL 문장 준비
-//				String sql = "select pw from member where tel = ?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, tel);
-//
-//				// 쿼리 실행
-//				rs = pstmt.executeQuery();
-//
-//				// 결과 처리
-//				if (rs.next()) {
-//					String pw = rs.getString("pw");
-//					model.addAttribute("pw", pw);
-//				} else {
-//					out.println("<script>");
-//					out.println("alert('가입된 비밀번호가 없습니다.');");
-//					out.println("history.go(-1);");
-//					out.println("</script>");
-//					out.close();
-//					return null;
-//				}
-//			} finally {
-//				// 리소스 해제
-//				if (rs != null) {
-//					rs.close();
-//				}
-//
-//				if (pstmt != null) {
-//					pstmt.close();
-//				}
-//
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			}
-//
-//			return "member/find_pw";
-//		} catch (Exception e) {
-//			// 예외 처리
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-
-//	@RequestMapping(value = "/find_pw_from_email.do")
-//	public String find_pw_from_email() throws Exception {
-//
-//		return "member/find_pw_from_email";
-//	}
-//
 	@RequestMapping(value = "/find_pw_from.do")
 	public String find_pw_from() throws Exception {
 
 		return "member/find/pw";
 	}
-
 	
 	@RequestMapping(value = "find_pass.do", method = RequestMethod.POST)
     public ModelAndView find_pass(HttpServletRequest request, String id, String email,
@@ -592,7 +456,6 @@ public class MemberController {
 	    out_email.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
 	    out_email.flush();
 		return mv;
-	    
 	}
 
 	//인증번호를 입력한 후에 확인 버튼을 누르면 자료가 넘어오는 컨트롤러
@@ -627,7 +490,6 @@ public class MemberController {
     
             return mv;
             
-            
         }else if (pass_injeung != dice) {
             
             
@@ -649,20 +511,17 @@ public class MemberController {
         
     }
     
-    
-    
     //변경할 비밀번호를 입력한 후에 확인 버튼을 누르면 넘어오는 컨트롤러
-    @RequestMapping(value = "/pass_change.do", method = RequestMethod.POST)
+    @RequestMapping(value = "pass_change.do", method = RequestMethod.POST)
     public ModelAndView pass_change(MemberVO vo) throws Exception{
-	    log.info("/pass_change.do...{}", vo);
-	    
-	    service.pass_change(vo);
-	    
-	    ModelAndView mv = new ModelAndView();
-	    
-	    mv.setViewName("member/find/find_pass_result");
-	    
-	    return mv;
+    
+    service.pass_change(vo);
+    
+    ModelAndView mv = new ModelAndView();
+    
+    mv.setViewName("member/find/find_pass_result");
+    
+    return mv;
                 
     }
     

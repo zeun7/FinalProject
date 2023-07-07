@@ -66,13 +66,13 @@ public class MemberService {
 		return dao.find_id(email);
 	}
 
-	public String find_id_tel(HttpServletResponse response, String tel) throws Exception {
+	public String find_id_tel( String tel)  {
 
 		return dao.find_id_tel(tel);
 	}
 
-	public String find_pw(MemberVO vo, HttpServletResponse response) {
-		return dao.find_pw(vo, response);
+	public String find_pw(String email ) {
+		return dao.find_pw(email);
 	}
 
 //	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
@@ -95,5 +95,10 @@ public class MemberService {
 
 	public MemberVO find_user(MemberVO vo) {
 		return dao.find_user(vo);
+	}
+
+	public MemberVO findUser(String email) {
+	
+		return dao.findUser(email);
 	}
 }

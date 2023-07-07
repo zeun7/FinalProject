@@ -79,28 +79,36 @@
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where tel = #{tel}
 	</select>
+	
+	<select id="FIND_PW" parameterType="multi.com.finalproject.member.model.MemberVO">
+		select id from member where email = #{email}
+	</select>
 
 	<select id="FIND_PW_EMAIL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
 	</select>
+	
 	<select id="FIND_PW_TEL"
 		parameterType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where tel = #{tel}
 	</select>
-
 
 	<select id="FIND_USER"
 		parameterType="multi.com.finalproject.member.model.MemberVO"
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id, email from member where id = #{id} and email = #{email}
 	</select>
-
+	
+	<select id="FINDUSER"
+		parameterType="multi.com.finalproject.member.model.MemberVO"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select email from member where  email = #{email}
+	</select>
+	
 	<!-- 비밀번호 변경 관련 mapper -->
 
 	<update id="PASS_CHANGE" parameterType="hashMap">
 		update member set pw=#{pw} where email=#{email}
 	</update>
-
-
 </mapper>
