@@ -50,6 +50,52 @@ public class MiniCommentsRestController {
 		
 		return vos;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_findAll.do", method = RequestMethod.GET)
+	public List<MiniCommentsVO> json_mc_findAll(MiniCommentsVO vo) {
+		log.info("json_mc_findAll.do(vo)...{}", vo);
+
+		List<MiniCommentsVO> vos = service.findAll(vo);
+
+		return vos;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_findAll2.do", method = RequestMethod.GET)
+	public List<MiniCommentsVO> json_mc_findAll2(MiniCommentsVO vo, int page) {
+		log.info("json_mc_findAll2.do(vo)...{}", vo);
+		log.info("page : {}", page);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		map.put("page", page);
+
+		List<MiniCommentsVO> vos = service.findAll2(map);
+
+		for (MiniCommentsVO x : vos) {
+			log.info(x.toString());
+		}
+		return vos;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_findOne.do", method = RequestMethod.GET)
+	public MiniCommentsVO json_mc_findOne(MiniCommentsVO vo) {
+		log.info("json_mc_findOne.do...{}", vo);
+
+		MiniCommentsVO vo2 = service.findOne(vo);
+
+		return vo2;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_mc_count.do", method = RequestMethod.GET)
+	public int json_mc_count(MiniCommentsVO vo) {
+		log.info("json_mc_count(vo)...", vo);
+		int count = service.count(vo);
+		return count;
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/json_mc_insertOK.do", method = RequestMethod.POST)
