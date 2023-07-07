@@ -5,6 +5,8 @@
 <title>사진첩_selectOne</title>
 <jsp:include page="../../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="resources/css/modal.css">
 <script type="text/javascript">
 $(document).on('click', '#editButton', function(e) {
     e.preventDefault();
