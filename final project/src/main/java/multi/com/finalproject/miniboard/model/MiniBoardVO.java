@@ -18,5 +18,7 @@ public class MiniBoardVO {
 	private String filepath;
 	private int report;
 	private MultipartFile file;
+	private int likes;
+	private int isFileExist;
 	
 }

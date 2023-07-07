@@ -1,7 +1,5 @@
 package multi.com.finalproject.member.model;
 
-import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
