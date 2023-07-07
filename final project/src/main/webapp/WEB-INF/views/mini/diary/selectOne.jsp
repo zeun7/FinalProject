@@ -170,19 +170,26 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 				
 				if(insert_num === vo.mcnum){	// 대댓글 작성
 					tag_comments += `<tr>
-						<td><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td colspan="3"><input type="text" id="comm_content" /></td>
-						<td><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})">등록</button></td>
+						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
+						<td colspan="3" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
+						<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
 						<td><button onclick="minicomments(0, 0, \${mbnum}, 0)">취소</button></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
 					</tr>`; // 대댓글 입력창 출력 위치
 				}
 			});
 			
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
-				tag_comments += `<tr>
-					<td colspan="5"><input type="text" id="comm_content" /></td>
-					<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
-				</tr>`;
+				tag_comments += `
+					<tr>
+						<td colspan="5" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
+						<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
+					</tr>`;
 			}
 			
 			$("#minicomments").html(tag_comments);
@@ -292,8 +299,10 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 		url: 'json_mc_insertOK.do',
 		data: {mcnum: mcnum,
 			mbnum: mbnum,
+			id: '${mh_attr.id}',
 			writer: '${user_id}',
-			content: $("#comm_content").val()},
+			content: $("#comm_content").val(),
+			secret: $("#secret").val()},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){

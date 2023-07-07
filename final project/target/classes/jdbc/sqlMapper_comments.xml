@@ -18,8 +18,8 @@
 	
 
 	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
-		insert into comments(cnum, bnum, content, writer) 
-		values(seq_comments.nextval, #{bnum}, #{content}, #{writer})
+		insert into comments(cnum, bnum, content, writer, secret) 
+		values(seq_comments.nextval, #{bnum}, #{content}, #{writer}, #{secret})
 	</insert>
 	
 	<insert id="CC_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
