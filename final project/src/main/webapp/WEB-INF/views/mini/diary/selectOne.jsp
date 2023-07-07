@@ -161,7 +161,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td><button onclick="minicomments(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 						<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-						<td>\${vo.vdate}</td>
+						<td>\${vo.cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="minicocomments_\${vo.mcnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
@@ -246,7 +246,7 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 									<tr>
 										<td><button onclick="minicomments(\${vo.mcnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 										<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-										<td>\${vo.vdate}</td>
+										<td>\${vo.cdate}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -378,7 +378,7 @@ function is_clike(mcnum){		// 유저가 해당 댓글의 좋아요를 눌렀는�
 	});
 }
 
-function count_clikes(cnum){		// 댓글 좋아요 카운트 함수
+function count_clikes(mcnum){		// 댓글 좋아요 카운트 함수
 	console.log('count clikes...mcnum: ', mcnum);
 	
 	$.ajax({

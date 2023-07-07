@@ -11,64 +11,6 @@
 <jsp:include page="../../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function () {
-    $("#uploadButton").on("click", function(e) {
-        e.preventDefault();
-
-        var fileInput = document.getElementById('file');
-        var file = fileInput.files[0];
-        var title = document.getElementById('title').value;
-        var formData = new FormData();
-		
-        if(title === ''){
-            alert('제목을 입력해주세요.');
-            return;
-        }
-        
-        if(!file){
-            alert('파일을 업로드해주세요.');
-            return;
-        }
-        
-        formData.append('mbname', 'gallery');
-        formData.append('writer', '${m_attr.nickname}'); 
-        formData.append('title', title);
-        for(let i = 0; i < fileInput.files.length; i++){
-			formData.append('file', fileInput.files[i]);
-		}
-
-        $.ajax({
-            url: 'gallery_insertOK.do', 
-            type: 'POST',
-            data: formData,
-            processData: false,  
-            contentType: false,  
-            success: function(response) {
-                // 서버에서 응답을 받았을 때의 처리
-                console.log(response);
-                
-//                 // 0.05초 지연 후 페이지 새로고침
-//                 setTimeout(function() {
-//                     location.reload();
-//                 }, 50);
-
-                alert('사진올리기 완료');
-                location.href='./mini_gallery.do?id=' + '${mh_attr.id}';
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
-    });
-    
-    // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
-    if('${user_id}' != '${mh_attr.id}'){	
-        $('#buttonContainer').hide();
-    }
-    
-    
-});
-
 function gallery_insertOK() {
     let fileInput = document.getElementById('file');
     let file = fileInput.files[0];
