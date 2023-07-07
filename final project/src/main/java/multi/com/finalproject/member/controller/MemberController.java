@@ -40,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
+import multi.com.finalproject.minihome.service.MiniHomeService;
 
 @Controller
 @Slf4j
@@ -56,6 +57,9 @@ public class MemberController {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
+	@Autowired
+	MiniHomeService minihome_service;
 
 	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
@@ -107,6 +111,7 @@ public class MemberController {
 		int result = service.insert(vo);
 
 		if (result == 1) {
+			minihome_service.insert(vo);
 			return "redirect:login.do";
 		} else {
 			return "redirect:m_insert.do";

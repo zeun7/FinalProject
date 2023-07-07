@@ -36,11 +36,6 @@
 					value="${vo2.message}"></td>
 			</tr>
 			<tr>
-				<td><label for="miniaddr">miniaddr:</label></td>
-				<td>${vo2.miniaddr}</td>
-			</tr>
-
-			<tr>
 				<td><label for="backimg">backimg:</label></td>
 				<td>
 					<img src="resources/uploadimg/thumb_${vo2.backimg}">

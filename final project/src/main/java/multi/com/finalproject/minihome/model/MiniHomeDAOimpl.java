@@ -41,6 +41,12 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	}
 
 	@Override
+	public void insert(MemberVO vo) {
+		log.info("insert(vo)...{}", vo);
+		sqlSession.insert("MINI_INSERT", vo);
+	}
+	
+	@Override
 	public void view_update(MiniHomeVO vo2) {
 		log.info("update(vo2)...{}", vo2);
 		sqlSession.update("VIEW_UPDATE",vo2);

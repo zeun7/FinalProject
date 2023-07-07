@@ -22,4 +22,6 @@ public interface MiniHomeDAO {
 
 	public MiniHomeVO getRandomMiniHome();
 
+	public void insert(MemberVO vo);
+
 }

@@ -106,4 +106,16 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		return sqlSession.insert("MB_REPORT", map);
 	}
 
+	@Override
+	public MiniBoardVO newest_diary(MiniBoardVO vo) {
+		log.info("newest_diary(vo)...{}", vo);
+		return sqlSession.selectOne("NEWEST_DIARY", vo);
+	}
+
+	@Override
+	public MiniBoardVO newest_gallery(MiniBoardVO vo) {
+		log.info("newest_gallery(vo)...{}", vo);
+		return sqlSession.selectOne("NEWEST_GALLERY", vo);
+	}
+
 }

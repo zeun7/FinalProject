@@ -32,6 +32,10 @@ public interface MiniBoardDAO {
 	public void likesDown(MiniBoardVO vo);
 
 	public int report(Map<String, Object> map);
+
+	public MiniBoardVO newest_diary(MiniBoardVO vo);
+
+	public MiniBoardVO newest_gallery(MiniBoardVO vo);
 	
 	
 }

@@ -73,4 +73,12 @@ public class MiniBoardService {
 		return dao.report(map);
 	}
 
+	public MiniBoardVO newest_diary(MiniBoardVO vo) {
+		return dao.newest_diary(vo);
+	}
+
+	public MiniBoardVO newest_gallery(MiniBoardVO vo) {
+		return dao.newest_gallery(vo);
+	}
+
 }

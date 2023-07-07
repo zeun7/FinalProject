@@ -5,6 +5,10 @@
 
 <mapper namespace="multi.com.finalproject.minihome">
 	
+	<insert id="MINI_INSERT" parameterType="multi.com.finalproject.minihome.model.MiniHomeVO">
+		insert into minihome(hnum,id) values(seq_minihome.nextval,#{id})
+	</insert>
+	
 	<select id="MINI_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.MiniHomeVO">
 		select * from minihome where id = #{id}
 	</select>

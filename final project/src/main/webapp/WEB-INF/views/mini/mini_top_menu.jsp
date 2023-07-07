@@ -4,6 +4,44 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<script type="text/javascript">
+function goToNewestDiary(){
+	$.ajax({
+		url : "newest_diary.do",
+		method : 'GET',
+		data : {
+			mbname : 'diary',
+			writer : '${m_attr.nickname}'
+		},
+		dataType : 'json',
+		success: function(response) {
+			window.location.href = "diary_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+            console.error(textStatus, errorThrown);
+        }
+	});
+	
+}
+function goToNewestGallery(){
+	$.ajax({
+		url : "newest_gallery.do",
+		method : "GET",
+		data : {
+			mbname : 'gallery',
+			writer : '${m_attr.nickname}'
+		},
+		dataType : 'json',
+		success : function(response) {
+			window.location.href = "gallery_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+		},
+		error : function(jqXHR,textStatus, errorThrown){
+			console.error(textStatus, errorThrown);
+		}
+	});
+}
+</script>
+
 <ul>
 	<li><a href="mini_home.do?id=${mh_attr.id}">홈</a></li>
 	<li><a href="mini_diary.do?id=${mh_attr.id}">다이어리</a></li>
@@ -33,8 +71,10 @@
 	<div>vtotal : ${mh_attr.vtotal}</div>
 	<div>
 		<a href="">최신 게시글</a>
-<%-- 		<a href="diary_selectOne.do?mbnum="+${newest.mbnum}>${newest.title}</a> --%>
-<%-- 		<a href="gallery_selectOne.do?mbnum="+${newest2.mbnum}>${newest2.title}</a> --%>
+		<a href="diary_selectOne.do?mbnum="+${newest.mbnum}>${newest.title}</a>
+		<a href="gallery_selectOne.do?mbnum="+${newest2.mbnum}>${newest2.title}</a>
+		<button onclick="goToNewestDiary()">최신 다이어리</button>
+		<button onclick="goToNewestGallery()">최신 사진</button>
 	</div>
 	<div>
 		<a href="mini_random.do?id=${mh_attr.id}">랜덤 미니홈피 가기</a>

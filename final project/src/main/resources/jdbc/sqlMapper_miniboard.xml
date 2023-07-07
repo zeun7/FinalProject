@@ -32,6 +32,14 @@
 		select * from miniboard where mbnum=#{mbnum}
 	</select>
 	
+	<select id="NEWEST_DIARY" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where mbnum = (select MAX(mbnum) from miniboard where mbname=#{mbname} and writer=#{writer})
+	</select>
+	
+	<select id="NEWEST_GALLERY" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where mbnum = (select max(mbnum) from miniboard where mbname=#{mbname} and writer=#{writer})
+	</select>
+	
 	<insert id="MB_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		insert into miniboard(mbnum,mbname,writer,title,content,filepath) 
 		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath})
