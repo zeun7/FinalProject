@@ -7,6 +7,8 @@
 <jsp:include page="../../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <link rel="stylesheet" href="resources/css/modal.css">
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
@@ -137,6 +139,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 			let tag_comments = '';
 			
 			$.each(arr, function(index, vo){
+				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_comments += `
 					<tr>
 						<td colspan="6"><hr /></td>
@@ -161,7 +164,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td><button onclick="minicomments(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 						<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-						<td>\${vo.cdate}</td>
+						<td>\${cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="minicocomments_\${vo.mcnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
@@ -220,6 +223,7 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 			let tag_cocomments = '';
 			
 			$.each(arr, function(index, vo){
+				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_cocomments += `
 					<tr><td colspan="6"><hr /></td></tr>
 					<tr>
@@ -246,7 +250,7 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 									<tr>
 										<td><button onclick="minicomments(\${vo.mcnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 										<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-										<td>\${vo.cdate}</td>
+										<td>\${cdate}</td>
 									</tr>
 								</tbody>
 							</table>

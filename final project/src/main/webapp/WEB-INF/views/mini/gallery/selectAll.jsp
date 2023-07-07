@@ -30,7 +30,9 @@ function gallery_insertOK() {
     formData.append('mbname', 'gallery');
     formData.append('writer', '${m_attr.nickname}'); 
     formData.append('title', title);
-    formData.append('file', file);
+    for(let i = 0; i < fileInput.files.length; i++){
+		formData.append('file', fileInput.files[i]);
+	}
 
     $.ajax({
         url: 'gallery_insertOK.do', 
@@ -103,15 +105,25 @@ function selectAll(page){
 			let tag_vos = '';
 			for ( let i in arr) {
  				let vo = arr[i];
- 				console.log(vo); 
- 				tag_vos += `
- 					<span data-mbnum="\${vo.mbnum}">
-	 					<input type="checkbox" class="row-check" />
-	 		        	 <a href="gallery_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">
-	 			  			<img src="resources/uploadimg/thumb_\${vo.filepath}">
-	 				    </a>
- 		        	</span>
- 				`;
+ 				console.log(vo);
+ 				let filepath = vo.filepath;
+				if(filepath != null){
+	 				tag_vos += `
+	 					<span data-mbnum="\${vo.mbnum}">
+		 					<input type="checkbox" class="row-check" />
+		 		        	 <a href="gallery_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">`;
+		 		    
+		 		    if(filepath.indexOf(',') > 0){
+		 		    	tag_vos += `<img src="resources/uploadimg/thumb_\${vo.filepath.substring(0,vo.filepath.indexOf(','))}">`;
+		 		    }else{
+		 		    	tag_vos += `<img src="resources/uploadimg/thumb_\${vo.filepath}">`;
+		 		    }
+		 		        	 
+		 			tag_vos += `
+		 				    </a>
+	 		        	</span>
+	 				`;
+	 		    }
  			}
 			
 			$("#vos").html(tag_vos); 
@@ -198,7 +210,7 @@ function select_gallery_deleteOK() {
         <div id="page"></div>
         <div id="buttonContainer">
         <h2>이미지추가</h2><br>
-	        <input type="file" id="file" name="file"><br>
+	        <input type="file" id="file" name="file" multiple="multiple"><br>
 	        제목 :<input type="text" id="title" name="title">
 	        <button id="uploadButton" onclick="gallery_insertOK()" class="myButton">사진올리기</button>
 	        <button id="selectDeleteButton" onclick="toggleDeleteMode()" class="myButton">선택삭제</button>

@@ -10,6 +10,8 @@
 <meta name="twitter:description" content="1조 파이널프로젝트" />
 <meta name="twitter:image" content="https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg" />
 <meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/modal.css">
 <jsp:include page="../css.jsp"></jsp:include>
@@ -153,6 +155,7 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 			let tag_comments = '';
 			
 			$.each(arr, function(index, vo){
+				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_comments += `
 					<tr>
 						<td colspan="6"><hr /></td>
@@ -177,7 +180,7 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					<tr>
 						<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-						<td>\${vo.cdate}</td>
+						<td>\${cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
@@ -238,6 +241,7 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 			let tag_cocomments = '';
 			
 			$.each(arr, function(index, vo){
+				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_cocomments += `
 					<tr><td colspan="6"><hr /></td></tr>
 					<tr>
@@ -264,7 +268,7 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 									<tr>
 										<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-										<td>\${vo.cdate}</td>
+										<td>\${cdate}</td>
 									</tr>
 								</tbody>
 							</table>
