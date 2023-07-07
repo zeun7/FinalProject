@@ -44,7 +44,7 @@ public interface MemberDAO {
 
 	public int update_pw(MemberVO vo) throws Exception;
 
-	public void pass_change(Map<String, Object> map, MemberVO vo) throws Exception;
+	public void pass_change(MemberVO vo) throws Exception;
 
 	public MemberVO find_user(MemberVO vo);
     

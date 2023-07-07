@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -40,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
-import multi.com.finalproject.member.model.MemberDAO;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
 
@@ -56,9 +53,6 @@ public class MemberController {
 
 	@Autowired
 	HttpSession session;
-
-	@Autowired
-	MemberDAO dao;
 	
 	@Autowired
 	JavaMailSender mailSender;
@@ -203,14 +197,6 @@ public class MemberController {
 
 	}
 
-//	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-//	public String logout(MemberVO vo) {
-//		log.info("/m_logout.do...{}", vo);
-//
-//		session.invalidate(); // 세션 만료시킴
-//
-//		return "redirect:home.do";
-//	}
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public String logout(MemberVO vo) {
 		log.info("/m_logout.do...{}", vo);
@@ -559,7 +545,6 @@ public class MemberController {
         return new ModelAndView("redirect:/forgot-password");
     }
 	
-
 	    // 랜덤한 난수 (인증번호) 생성
 	    Random r = new Random();
 	    int dice = r.nextInt(900000) + 100000;//6자리의 랜덤한 숫자
@@ -609,8 +594,6 @@ public class MemberController {
 		return mv;
 	    
 	}
-
-    
 
 	//인증번호를 입력한 후에 확인 버튼을 누르면 자료가 넘어오는 컨트롤러
     @RequestMapping(value = "pass_injeung.do{dice},{email}", method = RequestMethod.POST)
@@ -669,25 +652,10 @@ public class MemberController {
     
     
     //변경할 비밀번호를 입력한 후에 확인 버튼을 누르면 넘어오는 컨트롤러
-    @RequestMapping(value = "pass_change.do{email}", method = RequestMethod.POST)
-    public ModelAndView pass_change(@PathVariable String email, HttpServletRequest request, MemberVO vo, HttpServletResponse pass) throws Exception{
-                
-    String pw = request.getParameter("pw");
-                
-    String email1 = email;
-                
-    vo.setEmail(email1);
-    vo.setPw(pw);
+    @RequestMapping(value = "pass_change.do", method = RequestMethod.POST)
+    public ModelAndView pass_change(MemberVO vo) throws Exception{
     
-    //값을 여러개 담아야 하므로 해쉬맵을 사용해서 값을 저장함
-    
-    Map<String, Object> map = new HashMap<>();
-    
-	map.put("email", vo.getEmail());
-    map.put("pw", vo.getPw());
-    
-    service.pass_change(map,vo);
-   
+    service.pass_change(vo);
     
     ModelAndView mv = new ModelAndView();
     

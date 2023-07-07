@@ -131,12 +131,8 @@ public class MemberDAOimpl implements MemberDAO {
 	}
 
 	@Override
-	public void pass_change(Map<String, Object> map, MemberVO vo) throws Exception {
-		String pw = (String) map.get("pw");
-		String email = (String) map.get("email");
-
-		vo.setPw(pw);
-		vo.setEmail(email);
+	public void pass_change(MemberVO vo) throws Exception {
+		log.info("change password...{}", vo);
 
 		sqlSession.update("PASS_CHANGE", vo);
 	}

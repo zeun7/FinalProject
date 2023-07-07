@@ -88,8 +88,8 @@ public class MemberService {
 		return dao.selectMember(email);
 	}
 
-	public void pass_change(Map<String, Object> map, MemberVO vo) throws Exception {
-        dao.pass_change(map,vo);
+	public void pass_change(MemberVO vo) throws Exception {
+        dao.pass_change(vo);
     }
 
 

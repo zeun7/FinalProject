@@ -1,7 +1,5 @@
 package multi.com.finalproject.member.model;
 
-import java.sql.Timestamp;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
