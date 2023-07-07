@@ -180,7 +180,7 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					<tr>
 						<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-						<td>\${cdate}</td>
+						<td colspan="2">\${cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
@@ -268,7 +268,7 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 									<tr>
 										<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-										<td>\${cdate}</td>
+										<td colspan="2">\${cdate}</td>
 									</tr>
 								</tbody>
 							</table>
