@@ -188,7 +188,7 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					tag_comments += `<tr>
 						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
 						<td colspan="3" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
-						<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
+						<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
 						<td><button onclick="comments(0, 0, \${bnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
@@ -313,8 +313,7 @@ function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 	
 	$.ajax({
 		url: 'json_c_insertOK.do',
-		data: {cnum: cnum,
-			ccnum: cnum,
+		data: {ccnum: cnum,
 			bnum: bnum,
 			writer: '${nickname}',
 			content: $("#comm_content").val(),

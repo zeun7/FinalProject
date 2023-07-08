@@ -147,7 +147,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td rowspan="2">\${vo.writer}</td>`;
 					
-				if(mcnum === vo.mcnum){
+				if(mcnum === vo.mcnum){	// 댓글 수정
 					tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
 						<td rowspan="2"><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>`;
 				}
@@ -172,7 +172,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					tag_comments += `<tr>
 						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
 						<td colspan="3" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
-						<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
+						<td><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})">등록</button></td>
 						<td><button onclick="minicomments(0, 0, \${mbnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
@@ -297,7 +297,7 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 	
 	$.ajax({
 		url: 'json_mc_insertOK.do',
-		data: {mcnum: mcnum,
+		data: {mccnum: mcnum,
 			mbnum: mbnum,
 			id: '${mh_attr.id}',
 			writer: '${user_id}',

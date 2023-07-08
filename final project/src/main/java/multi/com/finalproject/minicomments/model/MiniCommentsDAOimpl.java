@@ -217,7 +217,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			if(vo.getMccnum() == 0)	// 댓글일 경우
 				doc.put("mccnum", 0);
 			else					// 대댓글일 경우
-				doc.put("mccnum", vo.getMcnum());
+				doc.put("mccnum", vo.getMccnum());
 			
 			doc.put("mbnum", vo.getMbnum());
 			doc.put("id", vo.getId());
