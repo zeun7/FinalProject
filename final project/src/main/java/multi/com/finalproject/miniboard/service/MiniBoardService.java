@@ -80,5 +80,9 @@ public class MiniBoardService {
 	public MiniBoardVO newest_gallery(MiniBoardVO vo) {
 		return dao.newest_gallery(vo);
 	}
+	
+	public void vcountUp(MiniBoardVO vo) {
+		dao.vcountUp(vo);
+	}
 
 }

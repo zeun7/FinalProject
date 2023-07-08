@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.home.HomeService;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 @Slf4j
 @Controller
@@ -30,10 +32,18 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_post_friends.do",  method = RequestMethod.GET)
-	public List<BoardVO> json_post_friends() {
+	public List<MiniBoardVO> json_post_friends(MemberVO vo, int limit, String sortKey) {
 		log.info("/json_post_friends.do...");
+		log.info("vo:{}", vo);
+		log.info("limit:{}", limit);
+		log.info("sortKey:{}", sortKey);
 		
-		List<BoardVO> vos = service.friends_post();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", vo.getId());
+		map.put("limit", limit);
+		map.put("sortKey", sortKey);
+		
+		List<MiniBoardVO> vos = service.friends_post(map);
 		
 		return vos;
 	}

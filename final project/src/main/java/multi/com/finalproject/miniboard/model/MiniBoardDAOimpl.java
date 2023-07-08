@@ -117,5 +117,11 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		log.info("newest_gallery(vo)...{}", vo);
 		return sqlSession.selectOne("NEWEST_GALLERY", vo);
 	}
+	
+	@Override
+	public void vcountUp(MiniBoardVO vo) {
+		log.info("vcountUp(vo)...{}", vo);
+		sqlSession.selectOne("MB_VCOUNT_UP", vo);
+	}
 
 }

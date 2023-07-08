@@ -88,7 +88,9 @@ public class MiniBoardController {
 	@RequestMapping(value = "/diary_selectOne.do", method = RequestMethod.GET)
 	public String diary_selectOne(Model model, MiniBoardVO vo) {
 		log.info("diary_selectOne(vo)...{}", vo);
-
+		
+		service.vcountUp(vo);
+		
 		MiniBoardVO vo2 = service.mb_selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
@@ -192,7 +194,9 @@ public class MiniBoardController {
 	@RequestMapping(value = "/gallery_selectOne.do", method = RequestMethod.GET)
 	public String gallery_selectOne(Model model, MiniBoardVO vo) {
 		log.info("gallery_selectOne()...");
-
+		
+		service.vcountUp(vo);
+		
 		MiniBoardVO vo2 = service.mb_selectOne(vo);
 		
 		model.addAttribute("vo2", vo2);
@@ -238,6 +242,13 @@ public class MiniBoardController {
 		}else {
 			return "redirect:mb_report.do?mbnum="+vo.getMbnum()+"&id="+id;
 		}
+	}
+	
+	@RequestMapping(value = "/mini_peachPay.do", method = RequestMethod.GET)
+	public String mini_peach_pay() {
+		log.info("mini_peach_pay()...");
+
+		return "mini/peachPay";
 	}
 	
 }

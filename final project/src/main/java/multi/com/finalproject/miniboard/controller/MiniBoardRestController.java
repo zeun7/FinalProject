@@ -98,6 +98,7 @@ public class MiniBoardRestController {
 	    vo.setMbname(mbname);
 	    vo.setWriter(writer);
 	    vo.setTitle(title);
+	    vo.setIsFileExist(1);
 
 	    String fileNames = "";
 	    
