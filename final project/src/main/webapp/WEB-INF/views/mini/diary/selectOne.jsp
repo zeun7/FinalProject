@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="resources/css/modal.css">
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+let iswriter = false;
 
 $(function(){
 	//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
@@ -128,7 +129,7 @@ $(function(){
 	}
 });
 
-function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	// 댓글 출력 함수
+function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	// 댓글 출력 함수
 	console.log("print minicomments...mbnum: ", mbnum);
 	$.ajax({
 		url: 'json_mc_selectAll.do',
@@ -140,6 +141,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 			
 			$.each(arr, function(index, vo){
 				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
+				checkviewer(writer);
 				tag_comments += `
 					<tr>
 						<td colspan="6"><hr /></td>
@@ -147,33 +149,46 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					<tr>
 						<td rowspan="2">\${vo.writer}</td>`;
 					
-				if(mcnum === vo.mcnum){	// 댓글 수정
-					tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-						<td rowspan="2"><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>`;
-				}
-				else{
-					tag_comments += `<td rowspan="2">\${vo.content}</td>`;
-				}
-					
-				tag_comments += `<td><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
-						<td><div id="count_clikes_\${vo.mcnum}"></div></td>
-						<td><button onclick="minicomments(0, 0, \${mbnum}, \${vo.mcnum})">답글</button></td>
-						<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})">신고</button></td>
+				if(mcnum === vo.mcnum){	// 댓글 수정인 경우
+					tag_comments += `
+						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
+						<td><button onclick="c_updateOK(\${vo.mcnum})">수정완료</button></td>
+						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
-						<td><button onclick="minicomments(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
+						<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+					</tr>`;
+				}
+				else{ 	// 댓글 출력
+					if(vo.secret === 1){	// 비밀 댓글인 경우
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
+							tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+						else
+							tag_comments += `<td rowspan="2">비밀댓글 입니다</td>`;
+					}
+					else	// 비밀 댓글이 아닌 경우
+						tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+				}
+					
+				tag_comments += `<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+						<td><div id="count_clikes_\${vo.mcnum}"></div></td>
+						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" id="cocoment_\${vo.mcnum}">답글</button></td>
+						<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report_\${vo.mcnum}">신고</button></td>
+					</tr>
+					<tr>
+						<td><button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 						<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-						<td colspan="2">\${cdate}</td>
+						<td colspan="2" id="cdate_\${vo.mcnum}">\${cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="minicocomments_\${vo.mcnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
 				if(insert_num === vo.mcnum){	// 대댓글 작성
 					tag_comments += `<tr>
 						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td colspan="3" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
+						<td colspan="3" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
 						<td><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})">등록</button></td>
-						<td><button onclick="minicomments(0, 0, \${mbnum}, 0)">취소</button></td>
+						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
 						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
@@ -184,18 +199,18 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
 				tag_comments += `
 					<tr>
-						<td colspan="5" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
-						<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
+						<td colspan="5" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
+						<td><button onclick="c_insertOK(0, \${mbnum})">등록</button></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
+						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
 					</tr>`;
 			}
 			
 			$("#minicomments").html(tag_comments);
 			
 			$.each(arr, function(index, vo){
-				minicocomments(vo.mcnum, mbnum, mcnum);	// 대댓글 출력 함수 호출
+				minicocomments(writer, vo.mcnum, mbnum, mcnum);	// 대댓글 출력 함수 호출
 				is_clike(vo.mcnum);					// 댓글 좋아요 확인
 				count_clikes(vo.mcnum);				// 좋아요 카운트
 				
@@ -208,8 +223,14 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 					$("#mc_delete_"+vo.mcnum).hide();
 				}
 				
-				if(mcnum === vo.mcnum){				// 수정중에는 수정버튼 숨김
+				if(mcnum === vo.mcnum){				// 수정중에는 버튼 숨김
 					$("#mc_update_"+vo.mcnum).hide();
+					$("#clike_btn_"+vo.mcnum).hide();
+					$("#cocoment_"+vo.mcnum).hide();
+					$("#report_"+vo.mcnum).hide();
+					$("#cdate_"+vo.mcnum).hide();
+					$("#count_clikes_"+vo.mcnum).hide();
+					$("#c_delete_"+vo.mcnum).hide();
 				}
 			});
 		},
@@ -219,7 +240,7 @@ function minicomments(mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_num=0){	//
 	});
 }
 
-function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 출력 함수
+function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 출력 함수
 	console.log('print cocomments...mcnum:', mcnum, 'mbnum: ', mbnum);
 	$.ajax({
 		url: 'json_mcc_selectAll.do',
@@ -241,23 +262,37 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 									<tr>
 										<td rowspan="2">\${vo.writer}</td>`;
 										
-				if(update_num === vo.mcnum){
-					tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-						<td rowspan="2"><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>`;
+				if(update_num === vo.mcnum){	// 대댓글 수정인 경우
+					tag_cocomments += `
+						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
+						<td><button onclick="c_updateOK(\${vo.mcnum})">수정완료</button></td>
+						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+					</tr>`;
 				}
-				else{
-					tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+				else{		// 대댓글 출력
+					if(vo.secret === 1){	// 비밀 댓글인 경우
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
+							tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+						else
+							tag_cocomments += `<td rowspan="2">비밀 댓글 입니다</td>`;
+					}
+					else{	// 비밀 댓글이 아닌 경우
+						tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+					}
 				}
 				
-				tag_cocomments += `		<td><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+				tag_cocomments += `		<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
 										<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
 										<td><div id="count_clikes_\${vo.mcnum}"></div></td>
-										<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})">신고</button></td>
+										<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report__\${vo.mcnum}">신고</button></td>
 									</tr>
 									<tr>
-										<td><button onclick="minicomments(\${vo.mcnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
+										<td><button onclick="minicomments('\${writer}', \${vo.mcnum}, \${mbnum})" id="mc_update_\${vo.mcnum}">수정</button></td>
 										<td><button onclick="mc_deleteOK(\${vo.mcnum})" id="mc_delete_\${vo.mcnum}">삭제</button></td>
-										<td colspan="2">\${cdate}</td>
+										<td colspan="2" id="cdate_\${vo.mcnum}">\${cdate}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -281,8 +316,13 @@ function minicocomments(mcnum, mbnum=${param.mbnum}, update_num){		// 대댓글 
 					$("#mc_delete_"+vo.mcnum).hide();
 				}
 				
-				if(update_num === vo.mcnum){		// 수정중에는 수정 버튼 숨김
+				if(update_num === vo.mcnum){		// 수정중에는 버튼 숨김
 					$("#mc_update_"+vo.mcnum).hide();
+					$("#clike_btn_"+vo.mcnum).hide();
+					$("#report_"+vo.mcnum).hide();
+					$("#cdate_"+vo.mcnum).hide();
+					$("#count_clikes_"+vo.mcnum).hide();
+					$("#c_delete_"+vo.mcnum).hide();
 				}
 			});
 		},
@@ -444,9 +484,17 @@ function cancel_clike(mcnum){	// 댓글 좋아요 취소 함수
 		}
 	});
 }
+
+function checkviewer(writer){
+	console.log('check viewer...', writer);
+	if(writer === '${nickname}')	// 게시글 작성자와 게시글 열람자의 닉네임이 같을 경우
+		iswriter = true;
+	
+	console.log('iswriter is...', iswriter);
+}
 </script>
 </head>
-<body onload="minicomments()">
+<body onload="minicomments('${vo2.writer}')">
 	<jsp:include page="../../top_menu.jsp"></jsp:include>
 	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
 	<h1>mini/diary/selectOne.jsp</h1>

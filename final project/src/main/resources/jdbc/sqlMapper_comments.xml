@@ -23,12 +23,12 @@
 	</insert>
 	
 	<insert id="CC_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
-		insert into comments(cnum, ccnum, bnum, content, writer) 
-		values(seq_comments.nextval, #{ccnum}, #{bnum}, #{content}, #{writer})
+		insert into comments(cnum, ccnum, bnum, content, writer, secret) 
+		values(seq_comments.nextval, #{ccnum}, #{bnum}, #{content}, #{writer}, #{secret})
 	</insert>
 	
 	<update id="C_UPDATE" parameterType="multi.com.finalproject.comments.model.CommentsVO">
-		update comments set content = #{content} , cdate = sysdate where cnum = #{cnum}
+		update comments set content = #{content}, secret = #{secret}, cdate = sysdate where cnum = #{cnum}
 	</update>
 	
 	<delete id="C_DELETE">
@@ -77,7 +77,15 @@
 		delete from clikes where id = #{id} and cnum = #{cnum}
 	</delete>
 	
+	<delete id="C_DEL_CLIKE">
+		delete from clikes where cnum = #{cnum} or ccnum = #{cnum}
+	</delete>
+	
 	<delete id="MC_CANCEL_CLIKE">
 		delete from clikes where id = #{id} and mcnum = #{mcnum}
+	</delete>
+	
+	<delete id="MC_DEL_CLIKE">
+		delete from clikes where mcnum = #{mcnum} or mccnum = #{mcnum}
 	</delete>
 </mapper>

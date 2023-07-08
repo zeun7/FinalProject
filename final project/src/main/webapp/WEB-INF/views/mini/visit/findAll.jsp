@@ -76,7 +76,7 @@ function findAll(page){
 			        `;
             }
             
-            $("#visitors_log").html(visit_log); 
+            $("#visitors_log").html(visit_log);
 			curPage = page;
         },
         error: function(request, status, error) {

@@ -182,10 +182,14 @@ public class ManageDAOimpl implements ManageDAO {
 		log.info("delete board result: {}", result);
 		
 		if(result == 1){
-			if(vo.getBnum() != 0)
-				return sqlSession.delete("MNG_DEL_B_REPORT", vo);
-			else
-				return sqlSession.delete("MNG_DEL_MB_REPORT", vo);
+			if(vo.getBnum() != 0) {
+				sqlSession.delete("B_DELETE", vo);	// 게시글 삭제
+				return sqlSession.delete("MNG_DEL_REPORT_BY_BNUM", vo);	// 해당 게시글 신고 삭제
+			}
+			else {
+				sqlSession.delete("MB_DELETE", vo);
+				return sqlSession.delete("MNG_DEL_REPORT_BY_MBNUM", vo);
+			}
 		}
 		else
 			return 0;
@@ -266,19 +270,16 @@ public class ManageDAOimpl implements ManageDAO {
 		log.info("delete comments()...{}", vo);
 		int result = 0;
 		
-		if(vo.getCcnum() != 0)
-			result = sqlSession.delete("C_DELETE", vo);
-		else
-			result = sqlSession.delete("CC_DELETE", vo);
-		
-		if(result == 1) {
-			if(vo.getCcnum() == 0)
-				return sqlSession.delete("MNG_DEL_C_REPORT", vo);
-			else
-				return sqlSession.delete("MNG_DEL_CC_REPORT", vo);
+		if(vo.getCcnum() != 0) {	// 댓글일 경우
+			sqlSession.delete("MNG_DEL_REPORT_BY_CNUM", vo);	// manage 테이블에서 삭제
+			sqlSession.delete("C_DEL_CLIKE", vo);			// clikes 테이블에서 삭제
+			return sqlSession.delete("C_DELETE", vo);		// comments 테이블에서 삭제
 		}
-		else
-			return 0;
+		else {		// 대댓글일 경우
+			sqlSession.delete("MNG_DEL_REPORT_BY_CNUM", vo);	// comments 테이블에서 삭제
+			sqlSession.delete("MC_DEL_CLIKE", vo);			// clikes 테이블에서 삭제
+			return sqlSession.delete("CC_DELETE", vo);		// comments 테이블에서 삭제
+		}
 	}
 
 	@Override

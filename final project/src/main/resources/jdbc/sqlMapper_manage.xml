@@ -100,12 +100,24 @@
 		delete from report where bnum = #{bnum} and cnum = 0 and reason = #{reason}
 	</delete>
 	
+	<delete id="MNG_DEL_REPORT_BY_BNUM">
+		delete from report where bnum = #{bnum}
+	</delete>
+	
 	<delete id="MNG_DEL_MB_REPORT">
 		delete from report where mbnum = #{mbnum} and mcnum = 0 and reason = #{reason}
 	</delete>
 	
+	<delete id="MNG_DEL_REPORT_BY_MBNUM">
+		delete from report where mbnum = #{mbnum}
+	</delete>
+	
 	<delete id="MNG_DEL_C_REPORT">
 		delete from report where cnum = #{cnum} and reason = #{reason}
+	</delete>
+	
+	<delete id="MNG_DEL_REPORT_BY_CNUM">
+		delete from report where cnum = #{cnum} or ccnum = #{cnum}
 	</delete>
 	
 	<select id="MNG_COUNT_C_REPORT" resultType="Integer">

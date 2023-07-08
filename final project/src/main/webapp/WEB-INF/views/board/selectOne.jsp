@@ -21,6 +21,7 @@
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
+let iswriter = false;
 console.log(encodeUrl);
 
 $(function(){
@@ -48,8 +49,6 @@ $(function(){
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-//				console.log('status:', status);
-//				console.log('error:', error);
 			}
 		});//end $.ajax()
 	}
@@ -76,8 +75,6 @@ function like(){
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
-//			console.log('status:', status);
-//			console.log('error:', error);
 		}
 	});//end $.ajax()
 }//end like()
@@ -94,7 +91,6 @@ function like_cancel(){
 		},
 		dataType : 'json', 
 		success : function(map) {
-	// 			console.log(map.result);
 			if(map.result == 1){
 				$("#like_button").show();
 				$("#lcancel_button").hide();
@@ -103,8 +99,6 @@ function like_cancel(){
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
-//			console.log('status:', status);
-//			console.log('error:', error);
 		}
 	});//end $.ajax()
 }//end dislike()
@@ -144,7 +138,7 @@ $(function(){
 	}
 });
 
-function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 출력 함수
+function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 출력 함수
 	console.log("print comments...bnum: ", bnum);
 	$.ajax({
 		url: 'json_c_selectAll.do',
@@ -156,6 +150,7 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 			
 			$.each(arr, function(index, vo){
 				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
+				checkviewer(writer);
 				tag_comments += `
 					<tr>
 						<td colspan="6"><hr /></td>
@@ -163,36 +158,49 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					<tr>
 						<td rowspan="2">\${vo.writer}</td>`;
 					
-				if(cnum === vo.cnum){
-					tag_comments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-						<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
+				if(cnum === vo.cnum){	// 댓글 수정인 경우
+					tag_comments += `
+							<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
+							<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
+							<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+						</tr>`;
 				}
-				else{
-					tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+				else{	// 댓글 출력
+					if(vo.secret === 1){	// 비밀 댓글인 경우
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
+							tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+						else
+							tag_comments += `<td rowspan="2">비밀댓글 입니다</td>`;
+					}
+					else	// 비밀 댓글이 아닌 경우
+						tag_comments += `<td rowspan="2">\${vo.content}</td>`;
 				}
 					
-				tag_comments += `<td><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+				tag_comments += `<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
 						<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
 						<td><div id="count_clikes_\${vo.cnum}"></div></td>
-						<td><button onclick="comments(0, 0, \${bnum}, \${vo.cnum})">답글</button></td>
-						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button></td>
+						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></td>
+						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
 					</tr>
 					<tr>
-						<td><button onclick="comments(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
+						<td><button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-						<td colspan="2">\${cdate}</td>
+						<td colspan="2" id="cdate_\${vo.cnum}">\${cdate}</td>
 					</tr>
 					<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
 				if(insert_num === vo.cnum){	// 대댓글 작성
 					tag_comments += `<tr>
 						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td colspan="3" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
+						<td colspan="3" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
 						<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
-						<td><button onclick="comments(0, 0, \${bnum}, 0)">취소</button></td>
+						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
+						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
 					</tr>`; // 대댓글 입력창 출력 위치
 				}
 			});
@@ -200,18 +208,18 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
 				tag_comments += `
 					<tr>
-						<td colspan="5" rowspan="2"><textarea cols="50" id="comm_content" /></textarea></td>
+						<td colspan="5" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
 						<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀 댓글</td>
+						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
 					</tr>`;
 			}
 			
 			$("#comments").html(tag_comments);
 			
 			$.each(arr, function(index, vo){
-				cocomments(vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
+				cocomments(writer, vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
 				is_clike(vo.cnum);					// 댓글 좋아요 확인
 				count_clikes(vo.cnum);				// 좋아요 카운트
 				
@@ -224,8 +232,14 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 					$("#c_delete_"+vo.cnum).hide();
 				}
 				
-				if(cnum === vo.cnum){				// 수정중에는 수정버튼 숨김
+				if(cnum === vo.cnum){				// 수정중에는 버튼 숨김
 					$("#c_update_"+vo.cnum).hide();
+					$("#clike_btn_"+vo.cnum).hide();
+					$("#cocoment_"+vo.cnum).hide();
+					$("#report_"+vo.cnum).hide();
+					$("#cdate_"+vo.cnum).hide();
+					$("#count_clikes_"+vo.cnum).hide();
+					$("#c_delete_"+vo.cnum).hide();
 				}
 			});
 		},
@@ -235,8 +249,9 @@ function comments(cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	// 댓글 
 	});
 }
 
-function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 함수
+function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 함수
 	console.log('print cocomments...cnum:', cnum, 'bnum: ', bnum);
+	console.log('iswriter: ', iswriter);
 	$.ajax({
 		url: 'json_cc_selectAll.do',
 		data: {cnum: cnum},
@@ -257,23 +272,37 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 									<tr>
 										<td rowspan="2">\${vo.writer}</td>`;
 										
-				if(update_num === vo.cnum){
-					tag_cocomments += `<td rowspan="2"><input type="text" id="comm_content" value="\${vo.content}"/><td>
-						<td rowspan="2"><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>`;
+				if(update_num === vo.cnum){	// 대댓글 수정인 경우
+					tag_cocomments += `
+						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
+						<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
+						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+					</tr>`;
 				}
-				else{
-					tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+				else{		// 대댓글 출력
+					if(vo.secret === 1){	// 비밀 댓글인 경우
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
+							tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+						else
+							tag_cocomments += `<td rowspan="2">비밀 댓글 입니다</td>`;
+					}
+					else{	// 비밀 댓글이 아닌 경우
+						tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+					}
 				}
 				
-				tag_cocomments += `		<td><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+				tag_cocomments += `		<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
 										<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
 										<td><div id="count_clikes_\${vo.cnum}"></div></td>
-										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})">신고</button></td>
+										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
 									</tr>
 									<tr>
-										<td><button onclick="comments(\${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
+										<td><button onclick="comments('\${writer}', \${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
 										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-										<td colspan="2">\${cdate}</td>
+										<td colspan="2" id="cdate_\${vo.cnum}">\${cdate}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -297,8 +326,13 @@ function cocomments(cnum, bnum=${param.bnum}, update_num){		// 대댓글 출력 
 					$("#c_delete_"+vo.cnum).hide();
 				}
 				
-				if(update_num === vo.cnum){		// 수정중에는 수정 버튼 숨김
+				if(update_num === vo.cnum){		// 수정중에는 버튼 숨김
 					$("#c_update_"+vo.cnum).hide();
+					$("#clike_btn_"+vo.cnum).hide();
+					$("#report_"+vo.cnum).hide();
+					$("#cdate_"+vo.cnum).hide();
+					$("#count_clikes_"+vo.cnum).hide();
+					$("#c_delete_"+vo.cnum).hide();
 				}
 			});
 		},
@@ -337,7 +371,8 @@ function c_updateOK(cnum){		// 댓글 수정 완료 버튼
 	$.ajax({
 		url: 'json_c_updateOK.do',
 		data:{cnum: cnum,
-			content: $("#comm_content").val()},
+			content: $("#comm_content").val(),
+			secret: $("#update_secret").val()},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
@@ -459,9 +494,17 @@ function cancel_clike(cnum){	// 댓글 좋아요 취소 함수
 		}
 	});
 }
+
+function checkviewer(writer){
+	console.log('check viewer...', writer);
+	if(writer === '${nickname}')	// 게시글 작성자와 게시글 열람자의 닉네임이 같을 경우
+		iswriter = true;
+	
+	console.log('iswriter is...', iswriter);
+}
 </script>
 </head>
-<body onload="comments()">
+<body onload="comments('${vo2.writer}')">
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 <!-- 	페이스북 공유 sdk -->
 	<div id="fb-root"></div>
