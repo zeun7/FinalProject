@@ -1,5 +1,8 @@
 package multi.com.finalproject.minihome.model;
 
+import java.util.List;
+import java.util.Map;
+
 import multi.com.finalproject.member.model.MemberVO;
 
 public interface MiniHomeDAO {
@@ -23,5 +26,11 @@ public interface MiniHomeDAO {
 	public MiniHomeVO getRandomMiniHome();
 
 	public void insert(MemberVO vo);
+
+	public int count(JukeboxVO vo);
+
+	public List<JukeboxVO> j_selectAll(Map<String, Object> map);
+
+	public JukeboxVO bgm_selectOnce(JukeboxVO vo);
 
 }

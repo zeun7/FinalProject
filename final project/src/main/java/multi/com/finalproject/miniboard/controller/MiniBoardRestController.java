@@ -41,6 +41,7 @@ public class MiniBoardRestController {
 	public int json_mb_count(MiniBoardVO vo) {
 		log.info("/json_mb_count(vo)...{}", vo);
 		int count = service.count(vo);
+		log.info("count : {}", count);
 		return count;
 	}
 	

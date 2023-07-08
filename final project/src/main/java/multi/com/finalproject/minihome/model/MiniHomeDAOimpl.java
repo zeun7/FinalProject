@@ -1,5 +1,8 @@
 package multi.com.finalproject.minihome.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -79,6 +82,24 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	public MiniHomeVO getRandomMiniHome() {
 		log.info("getRandomMiniHome()...");
 		return sqlSession.selectOne("RANDOM_MINI_HOME");
+	}
+
+	@Override
+	public int count(JukeboxVO vo) {
+		log.info("count(vo)...{}", vo);
+		return sqlSession.selectOne("J_COUNT", vo);
+	}
+
+	@Override
+	public List<JukeboxVO> j_selectAll(Map<String, Object> map) {
+		log.info("j_selectAll(map)...{},{}", map.get("vo"), map.get("page"));
+		return sqlSession.selectList("J_SELECT_ALL", map);
+	}
+
+	@Override
+	public JukeboxVO bgm_selectOnce(JukeboxVO vo) {
+		log.info("bgm_selectOne(vo)...{}", vo);
+		return sqlSession.selectOne("BGM_SELECT_ONE", vo);
 	}
 
 }

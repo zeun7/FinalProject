@@ -15,7 +15,12 @@ function goToNewestDiary(){
 		},
 		dataType : 'json',
 		success: function(response) {
-			window.location.href = "diary_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+			console.log(response);
+			if(response.mbnum == 0) {
+                alert("최신 게시글이 없습니다.");
+            } else {
+                window.location.href = "diary_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+            }
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
             console.error(textStatus, errorThrown);
@@ -33,7 +38,11 @@ function goToNewestGallery(){
 		},
 		dataType : 'json',
 		success : function(response) {
-			window.location.href = "gallery_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+			if(response.mbnum == 0){
+				alert("최신 게시글이 없습니다.");
+			} else {
+				window.location.href = "gallery_selectOne.do?id=${m_attr.id}&mbnum=" + response.mbnum;
+			}
 		},
 		error : function(jqXHR,textStatus, errorThrown){
 			console.error(textStatus, errorThrown);
@@ -48,6 +57,7 @@ function goToNewestGallery(){
 	<li><a href="mini_visit.do?id=${mh_attr.id}">방명록</a></li>
 	<li><a href="mini_gallery.do?id=${mh_attr.id}">사진첩</a></li>
 	<li><a href="mini_game.do?id=${mh_attr.id}">게임</a></li>
+	<li id="jukebox"><a href="mini_jukebox.do?id=${mh_attr.id}">쥬크박스</a></li>
 </ul>
 <div
 	style="background-image: url('resources/uploadimg/profile_backimg_default.png'); background-size: auto; background-repeat: no-repeat; width: 100%; height: 100vh;">
@@ -70,9 +80,6 @@ function goToNewestGallery(){
 	<div>vtoday : ${mh_attr.vtoday}</div>
 	<div>vtotal : ${mh_attr.vtotal}</div>
 	<div>
-		<a href="">최신 게시글</a>
-		<a href="diary_selectOne.do?mbnum="+${newest.mbnum}>${newest.title}</a>
-		<a href="gallery_selectOne.do?mbnum="+${newest2.mbnum}>${newest2.title}</a>
 		<button onclick="goToNewestDiary()">최신 다이어리</button>
 		<button onclick="goToNewestGallery()">최신 사진</button>
 	</div>
@@ -106,5 +113,6 @@ function goToNewestGallery(){
 	// 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
 	if ('${user_id}' != '${mh_attr.id}') {
 		$('#mini_update').hide();
+		$('#jukebox').hide();
 	}
 </script>

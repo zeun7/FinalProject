@@ -276,6 +276,13 @@ public class MiniHomeController {
 		return "mini/game/game";
 	}
 	
+	@RequestMapping(value = "/mini_jukebox.do", method = RequestMethod.GET)
+	public String mini_jukebox() {
+		log.info("mini_jukebox()...");
+		
+		return "mini/jukebox/selectAll";
+	}
+	
 //	@RequestMapping("/music_player")
 //	public String musicPlayer(@RequestParam("id") String id, Model model) {
 //	    MiniHomeVO vo = new MiniHomeVO();

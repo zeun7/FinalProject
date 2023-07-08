@@ -1,10 +1,14 @@
 package multi.com.finalproject.minihome.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.minihome.model.JukeboxVO;
 import multi.com.finalproject.minihome.model.MiniHomeDAO;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.model.VisitHistoryVO;
@@ -60,4 +64,15 @@ public class MiniHomeService {
 		return dao.getRandomMiniHome();
 	}
 
+	public int count(JukeboxVO vo) {
+		return dao.count(vo);
+	}
+
+	public List<JukeboxVO> j_selectAll(Map<String, Object> map) {
+		return dao.j_selectAll(map);
+	}
+
+	public JukeboxVO bgm_selectOne(JukeboxVO vo) {
+		return dao.bgm_selectOnce(vo);
+	}
 }

@@ -46,4 +46,34 @@
 		select * from minihome order by dbms_random.random fetch first 1 rows only
 	</select>
 	
+	<select id="J_COUNT" resultType="Integer">
+		select count(*) from jukebox where id=#{id}
+	</select>
+	
+	<select id="J_SELECT_ALL" resultType="multi.com.finalproject.minihome.model.JukeboxVO" parameterType="Map">
+  		<![CDATA[
+		SELECT id, bgm, jdate 
+		FROM
+		  (
+		  SELECT SEQ, id, bgm, jdate 
+		  FROM
+		  (
+		    SELECT ROWNUM AS SEQ, id, bgm, jdate 
+		    FROM
+		      (
+		        SELECT *
+		        FROM jukebox
+		        where id=#{vo.id} 
+		        ORDER BY jdate desc
+		      )
+		  )
+		WHERE SEQ >= (#{page}-1)*10+1 
+		)
+		WHERE ROWNUM <= 10
+		]]>
+	</select>
+	
+	<select id="BGM_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.JukeboxVO">
+		select * from jukebox where id=#{id} and bgm=#{bgm}
+	</select>
 </mapper>

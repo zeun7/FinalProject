@@ -506,7 +506,7 @@ function checkviewer(writer){
 	</div>
 	<div>닉네임 : ${vo2.writer}</div>
 	<div>작성일자 : ${vo2.wdate}</div>
-	<div style="border: 1px solid black; width: 700px; height: 350px;">
+	<div style="border: 1px solid black; width: 700px; height: 350px; overflow: auto;">
 		<p id="content">
 			<span id="contentSpan">${vo2.content}</span>
 		</p>
