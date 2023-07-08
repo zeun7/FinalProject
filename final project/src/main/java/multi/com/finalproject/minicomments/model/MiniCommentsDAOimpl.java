@@ -268,9 +268,12 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 					Filters.eq("mcnum", vo.getMcnum()),
 					Filters.eq("mccnum", vo.getMcnum()));
 			
-			DeleteResult result = MiniComments.deleteMany(filter);
+			DeleteResult result = MiniComments.deleteMany(filter);	// minicomments 테이블에서 삭제
 			log.info("result: {}", result);
 			flag = (int)result.getDeletedCount();
+			
+			sqlSession.delete("MNG_DEL_REPORT_BY_MCNUM", vo);	// report 테이블에서 삭제
+			sqlSession.delete("MC_DEL_CLIKE", vo);			// clikes 테이블에서 삭제
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

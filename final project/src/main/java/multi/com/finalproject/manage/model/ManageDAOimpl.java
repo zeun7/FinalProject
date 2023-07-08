@@ -268,7 +268,6 @@ public class ManageDAOimpl implements ManageDAO {
 	@Override
 	public int del_comments(ReportVO vo) {
 		log.info("delete comments()...{}", vo);
-		int result = 0;
 		
 		if(vo.getCcnum() != 0) {	// 댓글일 경우
 			sqlSession.delete("MNG_DEL_REPORT_BY_CNUM", vo);	// manage 테이블에서 삭제
@@ -277,7 +276,7 @@ public class ManageDAOimpl implements ManageDAO {
 		}
 		else {		// 대댓글일 경우
 			sqlSession.delete("MNG_DEL_REPORT_BY_CNUM", vo);	// comments 테이블에서 삭제
-			sqlSession.delete("MC_DEL_CLIKE", vo);			// clikes 테이블에서 삭제
+			sqlSession.delete("C_DEL_CLIKE", vo);			// clikes 테이블에서 삭제
 			return sqlSession.delete("CC_DELETE", vo);		// comments 테이블에서 삭제
 		}
 	}
