@@ -79,6 +79,11 @@
 		where mbnum = #{mbnum}
 	</update>
 	
+	<update id="MB_VCOUNT_UP" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		update miniboard set vcount=vcount+1
+		where mbnum = #{mbnum}
+	</update>
+	
 	<delete id="MB_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
 		delete from likes where id = #{id} and mbnum = #{mbnum}
 	</delete>
