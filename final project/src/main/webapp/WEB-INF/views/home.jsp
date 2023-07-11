@@ -17,9 +17,11 @@ if (session.getAttribute("user_id") != null) {
 }
 %>
 <script type="text/javascript">
+let uid = '${user_id}';
+let limit = 5;
+
 $(function(){
 	console.log('load posts...');
-	let uid = '${user_id}';
 	
 	post_board('board1', 'wdate');
 	post_board('board2', 'wdate');
@@ -29,55 +31,73 @@ $(function(){
 	if(uid === ''){
 		post_board('hot', 'wdate');
 	}
-// 	else{
-// 		post_friends();
-// 	}
+	else{
+		post_friends('wdate');
+	}
 });
 
-// function post_friends(){
-// 	console.log('load friends posts...');
-<%-- 	let id = '<%=id%>'; --%>
+function post_friends(sortKey){
+	console.log('load friends posts...');
 	
-// 	$.ajax({
-// 		url: 'json_post_friends.do',
-// 		data: {id: id},
-// 		method: 'GET',
-// 		dataType: 'json',
-// 		success: function(arr){
-// 			console.log('ajax success...', arr);
+	$.ajax({
+		url: 'json_post_friends.do',
+		data: {
+			id: uid,
+			limit: limit,
+			sortKey: sortKey
+			},
+		method: 'GET',
+		dataType: 'json',
+		success: function(arr){
+			console.log('ajax success...', arr);
 			
-// 			let tag_vos = `
-// 				<table>
-// 					<thead>
-// 						<tr>
-// 							<th>친구들의 소식</th>
-// 							<th>인기순</th>
-// 							<th>최신순</th>
-// 						</tr>
-// 					</thead>
-// 					<tbody>`;
+			let tag_vos = `
+				<table>
+					<thead>
+						<tr>
+							<th>친구들의 소식</th>
+							<th><button onclick="post_friends('vcount')">인기순</button></th>
+							<th><button onclick="post_friends('wdate')">최신순</button></th>
+						</tr>
+					</thead>
+					<tbody>`;
 					
-// 			$.each(arr, function(index,vo){
-// 				tag_vos += `
-// 					<tr>
-// 						<td>\${vo.title}</td>
-// 						<td>\${vo.writer}</td>
-// 						<td>\${vo.wdate}</td>
-// 					</tr>
-// 			});
+			$.each(arr, function(index,vo){
+				let date = moment(vo.wdate).format('YYYY-MM-DD HH:mm:ss');
+				tag_vos += `
+					<tr>
+						<td>\${vo.mbnum}</td>
+						<td>
+						`;
+				
+				if(vo.isFileExist == 1){
+					tag_vos += `<i class="fa-regular fa-image"></i>`;
+				}
+				
+				if(vo.mbname === 'diary'){
+					tag_vos += `<a href="diary_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>`;
+				}else{
+					tag_vos += `<a href="gallery_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>`;
+				}
+				
+				tag_vos += `<td>\${vo.writer}</td>
+						<td>\${date}</td>
+					</tr>`;
+			});
 			
-// 			tag_vos += `
-// 					</tbody>
-// 				</table>
-// 				`;
-// 		}
-// 	});
-// }
+			tag_vos += `
+					</tbody>
+				</table>
+				`;
+			
+			$('#hot').html(tag_vos);
+		}
+	});
+}
 
 function post_board(boardName, sortKey){
 	console.log('load board posts...'+boardName);
 	let bname = boardName;
-	let limit = 5;
 	
 	$.ajax({
 		url: 'json_post_board.do',

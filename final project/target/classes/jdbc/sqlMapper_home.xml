@@ -39,5 +39,23 @@
 		) where rownum <= #{limit}
 		]]>
 	</select>
+	
+	<select id="FRIENDS_POST_WDATE" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum,mbnum,mbname,writer,title,wdate,isfileexist from (
+			select mbnum,mbname,writer,title,wdate,isfileexist from miniboard 
+			where writer in (select nickname2 from friends where nickname=(select nickname from member where id=#{id})) order by wdate desc
+		) where rownum <= #{limit}
+		]]>
+	</select>
+	
+	<select id="FRIENDS_POST_VCOUNT" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO" parameterType="Map">
+  		<![CDATA[
+  		select rownum,mbnum,mbname,writer,title,wdate,isfileexist from (
+			select mbnum,mbname,writer,title,wdate,isfileexist,vcount from miniboard 
+			where writer in (select nickname2 from friends where nickname=(select nickname from member where id=#{id})) order by wdate desc
+		) where rownum <= #{limit} order by vcount desc
+		]]>
+	</select>
 
   </mapper>

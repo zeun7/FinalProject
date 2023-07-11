@@ -12,7 +12,7 @@ public class ResetVTodayScheduler {
 	MiniHomeService service;
 	
 	// Every day at 00:00 AM
-	@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(cron = "0 0 15 * * ?")
 	public void resetVToday() {
 	    service.resetVTodayForAll();
 	}
