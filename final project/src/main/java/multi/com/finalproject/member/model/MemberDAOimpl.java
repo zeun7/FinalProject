@@ -1,9 +1,6 @@
 package multi.com.finalproject.member.model;
 
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,25 +85,16 @@ public class MemberDAOimpl implements MemberDAO {
 	}
 
 	@Override
-	public String find_id(String email) throws Exception {
-		return sqlSession.selectOne("FIND_ID_EMAIL", email);
+	public MemberVO find_id(MemberVO vo)  {
+		log.info("find_id()...{}", vo);
+		
+		return sqlSession.selectOne("FIND_ID_EMAIL", vo);
 	}
 
 	@Override
 	public String find_pw(String email) {
 		return sqlSession.selectOne("FIND_PW", email);
 	}
-
-	@Override
-	public String find_id_tel(String tel)  {
-
-		return sqlSession.selectOne("FIND_ID_TEL", tel);
-	}
-
-//	@Override
-//	public String find_pw_tel(String tel) throws Exception {
-//		return sqlSession.selectOne("FIND_PW_TEL", tel);
-//	}
 
 	@Override
 
@@ -146,6 +134,11 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public MemberVO findUser(String email) {
 		return sqlSession.selectOne("FINDUSER", email);
+	}
+
+	@Override
+	public MemberVO find_id_question(MemberVO vo) {
+		return sqlSession.selectOne("FIND_ID_QUESTION", vo);
 	}
 
 }

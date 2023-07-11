@@ -143,7 +143,7 @@ function manage_board(page){	// 신고 게시글 목록
  				tag_vos += `
  					<tr>
  					<td>\${vo.rnum}</td>
- 					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+ 					<td><a href="mng_selectOne.do?bnum=\${vo.bnum}&mbnum=\${vo.mbnum}&id=\${vo.id}">\${vo.title}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_board(\${vo.bnum}, \${page})">삭제</button></td>
@@ -239,7 +239,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
  				tag_vos += `
  					<tr>
  					<td>\${vo.rnum}</td>
- 					<td><a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.content}</a></td>
+ 					<td><a href="mng_selectOne.do?bnum=\${vo.bnum}&mbnum=\${vo.mbnum}&id=\${vo.id}">\${vo.content}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
  					<td><button onclick="del_comments(\${vo.cnum}, \${vo.ccnum}, \${page})">삭제</button></td>

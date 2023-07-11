@@ -16,7 +16,8 @@ function redirectToMiniHome(selectElement) {
 
 let mh_attr_id = '${mh_attr.id}';
 console.log(mh_attr_id);
-$(document).ready(function(){
+
+function recent_visitLog(){
     $.ajax({
         url: "json_mc_findAll.do",
         method: "get",
@@ -25,6 +26,7 @@ $(document).ready(function(){
 		},
         dataType: "json",
         success: function(data) {
+        	console.log(data);
             let visit_log = ``;
             $.each(data, function(index, miniComment){
                 visit_log += `
@@ -40,11 +42,10 @@ $(document).ready(function(){
             console.error('Request failed', status, error);
         }
     });
-});
-
+}
 </script>
 </head>
-<body>
+<body onload=recent_visitLog()>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
 	<jsp:include page="mini_top_menu.jsp"></jsp:include>
 	<h1>mini/minihome.jsp</h1>

@@ -99,6 +99,14 @@ function showMusicPlayer(btn_id ,bgm){
     `;
     $("#"+btn_id).html(audio);
 }
+
+function buyPeach(){
+	window.location.href="mini_peachPay.do?id=${mh_attr.id}";
+}
+
+function buyBGM(){
+	window.location.href="mini_peachPay.do?id=${mh_attr.id}";
+}
 </script>
 
 </head>

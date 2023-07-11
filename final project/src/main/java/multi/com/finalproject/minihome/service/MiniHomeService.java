@@ -75,4 +75,5 @@ public class MiniHomeService {
 	public JukeboxVO bgm_selectOne(JukeboxVO vo) {
 		return dao.bgm_selectOnce(vo);
 	}
+
 }

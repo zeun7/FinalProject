@@ -8,9 +8,10 @@
 </head>
 <body>
 	<form action="mc_reportOK.do" method="post" id="report_form">
-		<input type="hidden" name="mcnum" value="${param.mcnum }">
-		<input type="hidden" name="mccnum" value="${param.mccnum }">
-		<input type="hidden" name="mbnum" value="${param.mbnum }">
+		<input type="hidden" name="mcnum" value="${param.mcnum}">
+		<input type="hidden" name="mccnum" value="${param.mccnum}">
+		<input type="hidden" name="mbnum" value="${param.mbnum}">
+		<input type="hidden" name="id" value="${param.id}">
 		<div>신고사유를 선택하세요</div>
 		<input type="radio" id="reason1" name="reason" value="욕설/혐오/차별적 표현입니다">
 		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br>

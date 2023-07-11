@@ -24,6 +24,10 @@
 
 		<remember-me key="remekey" token-validity-seconds="604800"
 			authentication-success-handler-ref="authenticationSuccessHandler" />
+			
+		<session-management>
+			<concurrency-control max-sessions="1" expired-url="/login.do"/>
+		</session-management>
 	</http>
 
 	<authentication-manager>

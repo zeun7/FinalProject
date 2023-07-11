@@ -147,13 +147,14 @@ public class MiniCommentsRestController {
 	}
 	
 	@RequestMapping(value = "/mc_reportOK.do", method = RequestMethod.POST)
-	public String mc_reportOK(MiniCommentsVO vo, String reason) {
+	public String mc_reportOK(MiniCommentsVO vo, String reason, String id) {
 		log.info("/mc_reportOK.do...{}",vo);
 		log.info("reason: {}", reason);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("vo", vo);
 		map.put("reason", reason);
+		map.put("id", id);
 		
 		int result = service.report(map);
 		log.info("result: {}", result);

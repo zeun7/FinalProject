@@ -291,5 +291,12 @@ public class MiniHomeController {
 //	    model.addAttribute("bgm_vo", bgm_vo);
 //	    return "views/mini/music_player";
 //	}
+	
+	@RequestMapping(value = "/mini_peachPay.do", method = RequestMethod.GET)
+	public String mini_peach_pay() {
+		log.info("mini_peach_pay()...");
+
+		return "mini/jukebox/peachPay";
+	}
 
 }

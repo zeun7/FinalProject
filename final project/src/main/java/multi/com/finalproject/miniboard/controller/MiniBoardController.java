@@ -233,6 +233,7 @@ public class MiniBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("vo", vo);
 		map.put("reason", reason);
+		map.put("id", id);
 		
 		int result = service.report(map);
 		log.info("result:{}", result);
@@ -244,11 +245,6 @@ public class MiniBoardController {
 		}
 	}
 	
-	@RequestMapping(value = "/mini_peachPay.do", method = RequestMethod.GET)
-	public String mini_peach_pay() {
-		log.info("mini_peach_pay()...");
-
-		return "mini/peachPay";
-	}
+	
 	
 }

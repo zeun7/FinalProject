@@ -1,6 +1,7 @@
 package multi.com.finalproject.manage.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,6 +107,10 @@ public class ManageService {
 
 	public List<FriendsVO> ilchon_selectAll(MemberVO m_attr) {
 		return dao.ilchon_selectAll(m_attr);
+	}
+
+	public void update_nickname(Map<String, String> map) {
+		dao.update_nickname(map);
 	}
 
 }

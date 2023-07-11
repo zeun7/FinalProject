@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -38,8 +40,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.service.BoardService;
+import multi.com.finalproject.comments.service.CommentsService;
+import multi.com.finalproject.manage.service.ManageService;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MemberService;
+import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 import multi.com.finalproject.minihome.service.MiniHomeService;
 
 @Controller
@@ -48,6 +55,24 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	BoardService board_service;
+	
+	@Autowired
+	CommentsService comments_service;
+
+	@Autowired
+	MiniHomeService minihome_service;
+	
+	@Autowired
+	MiniBoardService miniboard_service;
+	
+	@Autowired
+	MiniCommentsService minicomments_service;
+	
+	@Autowired
+	ManageService manage_service;
 
 	@Autowired
 	ServletContext sContext;
@@ -58,9 +83,6 @@ public class MemberController {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	@Autowired
-	MiniHomeService minihome_service;
-
 	@RequestMapping(value = "/m_insert.do", method = RequestMethod.GET)
 	public String insert(MemberVO vo) {
 		log.info("insert()....", vo);
@@ -174,10 +196,29 @@ public class MemberController {
 
 		} // end else
 		log.info("{}", vo);
-
+		
+		MemberVO vo2 = service.selectOne(vo);
+		
 		int result = service.update(vo);
 
 		if (result == 1) {
+			if(vo.getNickname() != vo2.getNickname()) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("before", vo2.getNickname());
+				map.put("after", vo.getNickname());
+				
+				board_service.update_nickname(map);
+				comments_service.update_nickname(map);
+				miniboard_service.update_nickname(map);
+				minicomments_service.update_nickname(map);
+				manage_service.update_nickname(map);
+			}
+			
+			session.invalidate();
+			session.setAttribute("user_id", vo.getId());
+			session.setAttribute("nickname", vo.getNickname());
+			session.setAttribute("mclass", vo2.getMclass());
+			
 			return "redirect:m_selectOne.do?id=" + vo.getId();
 		} else {
 			return "redirect:m_update.do?id=" + vo.getId();
@@ -217,7 +258,7 @@ public class MemberController {
 
 		if (message != null)
 			message = "아이디/비번 을 확인하세요";
-		model.addAttribute("message", message);
+		model.addAttribute("message", "아이디/비번 을 확인하세요");
 
 		return "member/login";
 	}
@@ -230,7 +271,7 @@ public class MemberController {
 		log.info("vo2...{}", vo2);
 
 		if (vo2 == null) {
-			model.addAttribute("message", "아이디 또는 비밀번호가 틀렸습니다.");
+			model.addAttribute("message", "아이디/비번 을 확인하세요");
 			model.addAttribute("errorMessage", true); // 에러 메시지 플래그 추가
 			return "member/login";
 			
@@ -243,132 +284,39 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/find_id_email.do", method = RequestMethod.GET)
-	public String find_id_email(HttpServletResponse response, @RequestParam("email") String email, Model model) {
-		try {
-			response.setContentType("text/html;charset=utf-8");
-			PrintWriter out = response.getWriter();
+	public String find_id_email(@RequestParam("email") String email, Model model) {
+	    log.info("/find_id_email.do... email: {}", email);
 
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
+	    MemberVO vo = new MemberVO();
+	    vo.setEmail(email);
 
-			try {
-				// Oracle JDBC 드라이버 로드
-				Class.forName("oracle.jdbc.driver.OracleDriver");
+	    MemberVO vo2 = service.find_id(vo);
+	    log.info("vo2... {}", vo2);
 
-				// 데이터베이스 연결 설정
-				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
-																																																																								// URL
-				String username = "admin"; // 데이터베이스 사용자명
-				String password = "Final123456!"; // 데이터베이스 비밀번호
-
-				conn = DriverManager.getConnection(url, username, password);
-
-				// SQL 문장 준비
-				String sql = "select id from member where email = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, email);
-
-				// 쿼리 실행
-				rs = pstmt.executeQuery();
-
-				// 결과 처리
-				if (rs.next()) {
-					String id = rs.getString("id");
-					model.addAttribute("id", id);
-				} else {
-					out.println("<script>");
-					out.println("alert('가입된 아이디가 없습니다.');");
-					out.println("history.go(-1);");
-					out.println("</script>");
-					out.close();
-					return null;
-				}
-			} finally {
-				// 리소스 해제
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			}
-
-			return "member/find_id";
-		} catch (Exception e) {
-			// 예외 처리
-			e.printStackTrace();
-			return null;
-		}
+	    if (vo2 == null) {
+	        model.addAttribute("message", "가입된 아이디가 존재하지 않습니다"); // 알림창에 표시할 메시지를 모델에 추가
+	        model.addAttribute("errorMessage", true);
+	        return "member/find_id_from_email";
+	    } else {
+	        session.setAttribute("id", vo2.getId());
+	        return "member/find_id"; // 아이디가 존재하는 경우를 나타내는 뷰로 이동
+	    }
 	}
 
-	@RequestMapping(value = "/find_id_tel.do", method = RequestMethod.GET)
-	public String find_id_tel(HttpServletResponse response, @RequestParam("tel") String tel, Model model) {
-		try {
-			response.setContentType("text/html;charset=utf-8");
-			PrintWriter out = response.getWriter();
-
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-
-			try {
-				// Oracle JDBC 드라이버 로드
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-
-				// 데이터베이스 연결 설정
-				String url = "jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gcbc9103dc3cfcf_final_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))"; // 데이터베이스
-				// URL
-				String username = "admin"; // 데이터베이스 사용자명
-				String password = "Final123456!"; // 데이터베이스 비밀번호
-
-				conn = DriverManager.getConnection(url, username, password);
-
-				// SQL 문장 준비
-				String sql = "select id from member where tel = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, tel);
-
-				// 쿼리 실행
-				rs = pstmt.executeQuery();
-
-				// 결과 처리
-				if (rs.next()) {
-					String id = rs.getString("id");
-					model.addAttribute("id", id);
-				} else {
-					out.println("<script>");
-					out.println("alert('가입된 아이디가 없습니다.');");
-					out.println("history.go(-1);");
-					out.println("</script>");
-					out.close();
-					return null;
-				}
-			} finally {
-				// 리소스 해제
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			}
-
-			return "member/find_id";
-		} catch (Exception e) {
-			// 예외 처리
-			e.printStackTrace();
-			return null;
+	@RequestMapping(value = "/find_id_question.do", method = RequestMethod.GET)
+	public String find_id_question(MemberVO vo, Model model) {
+		log.info("/find_id_question.do... vo: {}", vo);
+				
+		MemberVO vo2 = service.find_id_question(vo);
+		log.info("vo2... {}", vo2);
+		
+		if (vo2 == null) {
+			model.addAttribute("message", "가입된 아이디가 존재하지 않습니다"); // 알림창에 표시할 메시지를 모델에 추가
+			model.addAttribute("errorMessage", true);
+			return "member/find_id_from_question";
+		} else {
+			session.setAttribute("id", vo2.getId());
+			return "member/find_id"; // 아이디가 존재하는 경우를 나타내는 뷰로 이동
 		}
 	}
 
@@ -388,6 +336,12 @@ public class MemberController {
 	public String find_id_from_email() throws Exception {
 
 		return "member/find_id_from_email";
+	}
+	
+	@RequestMapping(value = "/find_id_from_question.do")
+	public String find_id_from_question() throws Exception {
+		
+		return "member/find_id_from_question";
 	}
 
 	@RequestMapping(value = "/find_pw_from.do")

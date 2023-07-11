@@ -38,5 +38,7 @@ public interface MiniBoardDAO {
 	public MiniBoardVO newest_gallery(MiniBoardVO vo);
 	
 	public void vcountUp(MiniBoardVO vo);
+
+	public void update_nickname(Map<String, String> map);
 	
 }

@@ -35,4 +35,6 @@ public interface MiniCommentsDAO {
 
 	public int cancel_clike(ClikesVO vo);
 
+	public void update_nickname(Map<String, String> map);
+
 }

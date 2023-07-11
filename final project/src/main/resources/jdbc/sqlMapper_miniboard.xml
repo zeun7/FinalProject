@@ -45,6 +45,15 @@
 		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath})
 	</insert>
 	
+	<update id="MB_UPDATE_NICKNAME">
+		update miniboard set writer = #{after} where writer = #{before}
+	</update>
+	
+	<update id="MB_VCOUNT_UP" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		update miniboard set vcount=vcount+1
+		where mbnum = #{mbnum}
+	</update>
+	
 	<update id="DIARY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		update miniboard set title=#{title}, content=#{content}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
@@ -79,16 +88,11 @@
 		where mbnum = #{mbnum}
 	</update>
 	
-	<update id="MB_VCOUNT_UP" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		update miniboard set vcount=vcount+1
-		where mbnum = #{mbnum}
-	</update>
-	
 	<delete id="MB_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
 		delete from likes where id = #{id} and mbnum = #{mbnum}
 	</delete>
 	
 	<insert id="MB_REPORT" parameterType="Map">
-		insert into report(rnum, mbnum, reason) values(seq_report.nextval, #{vo.mbnum}, #{reason})
+		insert into report(rnum, mbnum, reason, id) values(seq_report.nextval, #{vo.mbnum}, #{reason}, #{id})
 	</insert>
 </mapper>

@@ -9,6 +9,14 @@
 		select fnum, grade, nickname2 from friends where nickname = #{nickname} and grade != 3
 	</select>
 	
+	<update id="MNG_UPDATE_NICKNAME1">
+		update friends set nickname = #{after} where nickname = #{before}
+	</update>
+	
+	<update id="MNG_UPDATE_NICKNAME2">
+		update friends set nickname2 = #{after} where nickname2 = #{before}
+	</update>
+	
 	<select id="ILCHON_SELECT_ALL" resultType="multi.com.finalproject.manage.model.FriendsVO">
 		select nickname2 from friends where nickname = #{nickname} and grade = 1
 	</select>

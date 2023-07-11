@@ -124,4 +124,12 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		sqlSession.selectOne("MB_VCOUNT_UP", vo);
 	}
 
+	@Override
+	public void update_nickname(Map<String, String> map) {
+		log.info("update nickname()...{}", map);
+		
+		int result = sqlSession.update("MB_UPDATE_NICKNAME", map);
+		log.info("result: {}", result);
+	}
+
 }

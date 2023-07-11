@@ -31,7 +31,7 @@ public class KakaoService {
 		parameters.add("cancel_url", "http://localhost:8088/finalproject/cancel");
 		parameters.add("fail_url", "http://localhost:8088/finalproject/fail");
 		
-		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, getHeaders());
 		
 		RestTemplate restTemplate = new RestTemplate();
 		

@@ -71,8 +71,14 @@
 	</delete>
 
 	<select id="FIND_ID_EMAIL"
-		parameterType="multi.com.finalproject.member.model.MemberVO">
+		parameterType="multi.com.finalproject.member.model.MemberVO"
+		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
+	</select>
+	
+	<select id="FIND_ID_QUESTION"
+		resultType="multi.com.finalproject.member.model.MemberVO">
+		select id from member where question = #{question,jdbcType=VARCHAR} and answer=#{answer, jdbcType=VARCHAR} and tel=#{tel}
 	</select>
 
 	<select id="FIND_ID_TEL"
@@ -80,17 +86,15 @@
 		select id from member where tel = #{tel}
 	</select>
 	
-	<select id="FIND_PW" parameterType="multi.com.finalproject.member.model.MemberVO">
-		select id from member where email = #{email}
-	</select>
-
-	<select id="FIND_PW_EMAIL"
-		parameterType="multi.com.finalproject.member.model.MemberVO">
+	<select id="FIND_PW" 
+		parameterType="multi.com.finalproject.member.model.MemberVO"
+		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where email = #{email}
 	</select>
 	
 	<select id="FIND_PW_TEL"
-		parameterType="multi.com.finalproject.member.model.MemberVO">
+		parameterType="multi.com.finalproject.member.model.MemberVO"
+		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where tel = #{tel}
 	</select>
 

@@ -35,6 +35,7 @@
 				<value>classpath:jdbc/sqlMapper_miniboard.xml</value>
 				<value>classpath:jdbc/sqlMapper_manage.xml</value>
 				<value>classpath:jdbc/sqlMapper_home.xml</value>
+				<value>classpath:jdbc/sqlMapper_jukebox.xml</value>
 			</list>
 		</property>
 	</bean>

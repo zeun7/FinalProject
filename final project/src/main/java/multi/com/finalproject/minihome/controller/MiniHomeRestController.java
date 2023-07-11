@@ -4,11 +4,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
@@ -25,6 +41,9 @@ public class MiniHomeRestController {
 	
 	@Autowired
 	MiniBoardService miniboard_service;
+	
+	@Autowired
+	RestTemplate restTemplate;
 	
 	@ResponseBody
 	@RequestMapping(value = "/newest_diary.do", method = RequestMethod.GET)
@@ -80,20 +99,85 @@ public class MiniHomeRestController {
 		return vo2;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//	@ResponseBody
+//	@RequestMapping(value = "/validateWord/{word}", method = RequestMethod.GET)
+//	public Map<String, Object> validateWord(@PathVariable String word) {
+//		
+//	    String url = "https://opendict.korean.go.kr/api/search?certkey_no=5639&key=9C37D5176D46A9E8F98D17FD5AE96673&target_type=search&req_type=json&part=word&q="
+//	            + word + "&sort=dict&start=1&num=10";
+//	    Map<String, Object> result = new HashMap<>();
+//	    try {
+//	        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+//	        if(response.getStatusCode() == HttpStatus.OK) {
+//	            JSONObject json = new JSONObject(response.getBody());
+//	            int count = json.getJSONObject("searchResult").getInt("total");
+//	            if (count > 0) {
+//	                result.put("isValid", true);
+//	            } else {
+//	                result.put("isValid", false);
+//	                result.put("message", "사전에 존재하지 않는 단어입니다.");
+//	            }
+//	        } else {
+//	            result.put("isValid", false);
+//	            result.put("message", "API request failed with status: " + response.getStatusCode());
+//	        }
+//	    } catch (RestClientException e) {
+//	        result.put("isValid", false);
+//	        result.put("message", "Exception occurred while making API request: " + e.getMessage());
+//	    }
+//	    return result;
+//	}
+	@ResponseBody
+	@RequestMapping(value = "/validateWord/{word}", method = RequestMethod.GET)
+	public Map<String, Object> validateWord(@PathVariable String word) throws Exception {
+		log.info("validateWord(word)...{}", word);
+	    // SSLContext를 생성하고 모든 인증서를 신뢰하도록 설정
+	    SSLContext sslContext = SSLContextBuilder
+	        .create()
+	        .loadTrustMaterial(new TrustSelfSignedStrategy())
+	        .build();
+
+	    // 모든 호스트 이름을 신뢰하도록 HostnameVerifier를 설정
+	    HostnameVerifier allowAllHosts = new NoopHostnameVerifier();
+
+	    // SSLConnectionSocketFactory를 생성하고 위에서 만든 SSLContext와 HostnameVerifier를 사용하도록 설정
+	    SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, allowAllHosts);
+
+	    // HttpClient를 생성하고 위에서 만든 SSLConnectionSocketFactory를 사용하도록 설정
+	    CloseableHttpClient httpClient = HttpClients
+	        .custom()
+	        .setSSLSocketFactory(csf)
+	        .build();
+
+	    // RestTemplate의 RequestFactory를 HttpComponentsClientHttpRequestFactory로 설정하고, 
+	    // 위에서 만든 HttpClient를 사용하도록 설정
+	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+	    requestFactory.setHttpClient(httpClient);
+
+	    RestTemplate restTemplate = new RestTemplate(requestFactory);
+
+	    String url = "https://opendict.korean.go.kr/api/search?certkey_no=5639&key=9C37D5176D46A9E8F98D17FD5AE96673&target_type=search&req_type=json&part=word&q="
+	        + word + "&sort=dict&start=1&num=10";
+	    Map<String, Object> result = new HashMap<>();
+	    try {
+	        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+	        if(response.getStatusCode() == HttpStatus.OK) {
+	            JSONObject json = new JSONObject(response.getBody());
+	            int count = json.getJSONObject("channel").getInt("total");
+	            if (count > 0) {
+	                result.put("isValid", true);
+	            } else {
+	                result.put("isValid", false);
+	                result.put("message", "사전에 존재하지 않는 단어입니다.");
+	            }
+	        } else {
+	            result.put("isValid", false);
+	            result.put("message", "API request failed with status: " + response.getStatusCode());
+	        }
+	    } catch (RestClientException e) {
+	        result.put("isValid", false);
+	        result.put("message", "Exception occurred while making API request: " + e.getMessage());
+	    }
+	    return result;
+	}
 }

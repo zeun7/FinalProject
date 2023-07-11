@@ -72,4 +72,8 @@ public class MiniCommentsService {
 		return dao.cancel_clike(vo);
 	}
 
+	public void update_nickname(Map<String, String> map) {
+		dao.update_nickname(map);
+	}
+
 }

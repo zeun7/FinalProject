@@ -11,6 +11,7 @@ public class ReportVO {
 	private int mbnum;
 	private int mcnum;
 	private int mccnum;
+	private String id;
 	private String writer;
 	private String title;
 	private String content;

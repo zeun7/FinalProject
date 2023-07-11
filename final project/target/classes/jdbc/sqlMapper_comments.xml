@@ -31,6 +31,10 @@
 		update comments set content = #{content}, secret = #{secret}, cdate = sysdate where cnum = #{cnum}
 	</update>
 	
+	<update id="C_UPDATE_NICKNAME">
+		update comments set writer = #{after} where writer = #{before}
+	</update>
+	
 	<delete id="C_DELETE">
 		delete from comments where cnum = #{cnum} or ccnum = #{cnum}
 	</delete>
@@ -45,8 +49,8 @@
 	</update>
 	
 	<insert id="MC_REPORT">
-		insert into report(rnum, mbnum, mcnum, mccnum, reason) 
-		values(seq_report.nextval, #{vo.mbnum}, #{vo.mcnum}, #{vo.mccnum}, #{reason})
+		insert into report(rnum, mbnum, mcnum, mccnum, reason, id) 
+		values(seq_report.nextval, #{vo.mbnum}, #{vo.mcnum}, #{vo.mccnum}, #{reason}, #{id})
 	</insert>	
 	
 	<select id="C_IS_CLIKE" resultType="multi.com.finalproject.comments.model.ClikesVO">

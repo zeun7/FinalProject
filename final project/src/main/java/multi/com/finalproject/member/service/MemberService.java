@@ -61,23 +61,15 @@ public class MemberService {
 		return dao.TelCheck(vo);
 	}
 
-	public String find_id(HttpServletResponse response, String email) throws Exception {
+	public MemberVO find_id(MemberVO vo)  {
 
-		return dao.find_id(email);
+		return dao.find_id(vo);
 	}
 
-	public String find_id_tel( String tel)  {
-
-		return dao.find_id_tel(tel);
-	}
 
 	public String find_pw(String email ) {
 		return dao.find_pw(email);
 	}
-
-//	public String find_pw_tel(HttpServletResponse response, String tel) throws Exception {
-//		return dao.find_pw_tel(tel);
-//	}
 
 	public int pwUpdate_M(MemberVO vo) {
 		return dao.pwUdate_M(vo);
@@ -100,5 +92,9 @@ public class MemberService {
 	public MemberVO findUser(String email) {
 	
 		return dao.findUser(email);
+	}
+
+	public MemberVO find_id_question(MemberVO vo) {
+		return dao.find_id_question(vo);
 	}
 }

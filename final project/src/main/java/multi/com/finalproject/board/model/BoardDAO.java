@@ -3,6 +3,8 @@ package multi.com.finalproject.board.model;
 import java.util.List;
 import java.util.Map;
 
+import multi.com.finalproject.member.model.MemberVO;
+
 public interface BoardDAO {
 
 	public List<BoardVO> selectAll(Map<String, Object> map);
@@ -34,5 +36,7 @@ public interface BoardDAO {
 	public void likesDown(BoardVO vo);
 
 	public LikesVO likeCheck(LikesVO vo);
+
+	public void update_nickname(Map<String, String> map);
 
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,7 @@
 				<div>
 					<p>
 						<label>tel</label>
-						<input class="w3-input" type="text" id="tel" name="tel" required>
+						<input class="w3-input" type="text" id="tel" name="tel" placeholder="010-0000-0000" required>
 					</p>
 					<p class="w3-center">
 						<button type="submit" id=findBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">find</button>
@@ -28,5 +29,10 @@
 			</form>
 		</div>
 	</div>
+	<c:if test="${errorMessage}">
+		<script>
+			alert('${message}');
+		</script>
+		</c:if> 
 </body>
 </html>

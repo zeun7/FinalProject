@@ -138,6 +138,10 @@
 		wdate=sysdate
 		where bnum = #{bnum}
 	</update>
+	
+	<update id="B_UPDATE_NICKNAME">
+		update board set writer = #{after} where writer = #{before} 
+	</update>
 
 	<update id="B_VCOUNT_UP" parameterType="multi.com.finalproject.board.model.BoardVO">
 		update board set vcount=vcount+1

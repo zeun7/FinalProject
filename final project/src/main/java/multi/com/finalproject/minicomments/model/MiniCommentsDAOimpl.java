@@ -110,7 +110,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		Bson sort = Sorts.descending("mcnum"); // sort by mcnum in descending order
 
 		//방문한 미니홈피 주인의 방명록(or 댓글)들만 가져오기
-		Bson filter = Filters.eq("id", id);
+		Bson filter = Filters.and(Filters.eq("id", id), Filters.eq("mccnum", 0), Filters.eq("mbnum", 0));
 
 		FindIterable<Document> docs = MiniComments.find(filter).sort(sort).limit(4); // 최신순, 4개만 가져오기..
 
@@ -327,6 +327,22 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		log.info("cancel clike()...{}", vo);
 		
 		return sqlSession.delete("MC_CANCEL_CLIKE", vo);
+	}
+
+	@Override
+	public void update_nickname(Map<String, String> map) {
+		log.info("update nickname()...{}", map);
+		
+		try {
+			Bson filter = Filters.eq("writer", map.get("before"));
+			
+			Bson bsons = new Document("$set", new Document("writer", map.get("after")));
+			
+			UpdateResult result = MiniComments.updateMany(filter, bsons);
+			log.info("result: {}", result);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

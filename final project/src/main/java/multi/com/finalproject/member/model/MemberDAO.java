@@ -1,10 +1,6 @@
 package multi.com.finalproject.member.model;
 
-import java.sql.Date;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 public interface MemberDAO {
 
@@ -26,13 +22,7 @@ public interface MemberDAO {
 
 	public MemberVO NickCheck(MemberVO vo);
 	
-	public String find_id(String email) throws Exception;
-	
-//	public String find_pw(String email) throws Exception;
-//
-//	public String find_pw_tel(String tel) throws Exception;
-
-	public String find_id_tel(String tel) ;
+	public MemberVO find_id(MemberVO vo) ;
 
 	public MemberVO TelCheck( MemberVO vo);
 
@@ -49,6 +39,8 @@ public interface MemberDAO {
 	public MemberVO find_user(MemberVO vo);
 
 	public MemberVO findUser(String email);
+
+	public MemberVO find_id_question(MemberVO vo);
     
  
 }

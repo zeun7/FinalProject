@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.member.model.MemberVO;
 
 @Repository
 @Slf4j
@@ -135,6 +136,14 @@ public class BoardDAOimpl implements BoardDAO {
 		log.info("likeCheck()...{}", vo);
 		
 		return sqlSession.selectOne("B_LIKE_CHECK", vo);
+	}
+
+	@Override
+	public void update_nickname(Map<String, String> map) {
+		log.info("update nickname...{}",  map);
+		
+		int result = sqlSession.update("B_UPDATE_NICKNAME", map);
+		log.info("result: {}", result);
 	}
 
 }

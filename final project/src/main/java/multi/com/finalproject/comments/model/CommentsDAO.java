@@ -25,4 +25,6 @@ public interface CommentsDAO {
 
 		public int cancel_clike(ClikesVO vo);
 
+		public void update_nickname(Map<String, String> map);
+
 }

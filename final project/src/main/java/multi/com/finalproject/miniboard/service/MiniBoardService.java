@@ -85,4 +85,8 @@ public class MiniBoardService {
 		dao.vcountUp(vo);
 	}
 
+	public void update_nickname(Map<String, String> map) {
+		dao.update_nickname(map);
+	}
+
 }

@@ -152,7 +152,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 				if(mcnum === vo.mcnum){	// 댓글 수정인 경우
 					tag_comments += `
 						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
-						<td><button onclick="c_updateOK(\${vo.mcnum})">수정완료</button></td>
+						<td><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>
 						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
@@ -200,7 +200,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 				tag_comments += `
 					<tr>
 						<td colspan="5" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
-						<td><button onclick="c_insertOK(0, \${mbnum})">등록</button></td>
+						<td><button onclick="mc_insertOK(0, \${mbnum})">등록</button></td>
 					</tr>
 					<tr>
 						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
@@ -265,7 +265,7 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 				if(update_num === vo.mcnum){	// 대댓글 수정인 경우
 					tag_cocomments += `
 						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
-						<td><button onclick="c_updateOK(\${vo.mcnum})">수정완료</button></td>
+						<td><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></td>
 						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
@@ -340,7 +340,7 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 		data: {mccnum: mcnum,
 			mbnum: mbnum,
 			id: '${mh_attr.id}',
-			writer: '${user_id}',
+			writer: '${nickname}',
 			content: $("#comm_content").val(),
 			secret: $("#secret").val()},
 		method: 'POST',
@@ -400,7 +400,7 @@ function mc_deleteOK(mcnum){		// 댓글 삭제
 function mc_report(mcnum, mccnum, mbnum){	// 댓글 신고하기
 	console.log('report comment...mcnum: ', mcnum, 'mccnum: ', mccnum, 'mbnum: ');
 	
-	let url = "mc_report.do?mcnum="+mcnum+'&mccnum='+mccnum+'&mbnum='+mbnum;
+	let url = "mc_report.do?mcnum="+mcnum+'&mccnum='+mccnum+'&mbnum='+mbnum+"&id=${mh_attr.id}";
 	let name = "신고하기";
 	let option = "width = 400, height = 500";
 	window.open(url, name, option);

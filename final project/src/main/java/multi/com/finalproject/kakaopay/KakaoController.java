@@ -17,12 +17,12 @@ public class KakaoController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/mini_peachPayOK.do", method = RequestMethod.POST)
-	public String mini_peachPayOK() {
+	public KakaoReadyResponseVO mini_peachPayOK() {
 		log.info("/mini_peachPayOK.do...");
 		
 		KakaoReadyResponseVO kakaoReady = service.kakaoReadyRequest();
 		
-		return "kakaoReady";
+		return kakaoReady;
 	}
 	
 

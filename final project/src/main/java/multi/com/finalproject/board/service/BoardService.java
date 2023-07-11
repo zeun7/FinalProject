@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardDAO;
 import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.board.model.LikesVO;
+import multi.com.finalproject.member.model.MemberVO;
 
 @Service
 @Slf4j
@@ -80,6 +81,10 @@ public class BoardService {
 
 	public LikesVO likeCheck(LikesVO vo) {
 		return dao.likeCheck(vo);
+	}
+
+	public void update_nickname(Map<String, String> map) {
+		dao.update_nickname(map);
 	}
 	
 }

@@ -246,7 +246,8 @@ public class ManageDAOimpl implements ManageDAO {
 					vo3.setMbnum(vo2.getMbnum());
 					vo3.setWriter(vo.getWriter());
 					vo3.setContent(vo.getContent());
-					vo3.setReason(vo3.getReason());
+					vo3.setReason(vo2.getReason());
+					vo3.setId(vo2.getId());
 					
 					vos3.add(vo3);
 				}
@@ -316,5 +317,15 @@ public class ManageDAOimpl implements ManageDAO {
 		log.info("ilchon_selectAll(m_attr)...", m_attr);
 		
 		return sqlSession.selectList("ILCHON_SELECT_ALL", m_attr);
+	}
+
+	@Override
+	public void update_nickname(Map<String, String> map) {
+		log.info("update nickname()...{}", map);
+		
+		int result1 = sqlSession.update("MNG_UPDATE_NICKNAME1", map);
+		int result2 = sqlSession.update("MNG_UPDATE_NICKNAME2", map);
+		log.info("result1: {}", result1);
+		log.info("result2: {}", result2);
 	}
 }

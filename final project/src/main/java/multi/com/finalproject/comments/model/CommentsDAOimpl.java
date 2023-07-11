@@ -95,5 +95,13 @@ public class CommentsDAOimpl implements CommentsDAO {
 		return sqlSession.delete("C_CANCEL_CLIKE", vo);
 	}
 
+	@Override
+	public void update_nickname(Map<String, String> map) {
+		log.info("update nickname()...{}", map);
+		
+		int result = sqlSession.update("C_UPDATE_NICKNAME", map);
+		log.info("result: {}", result);
+	}
+
 
 }

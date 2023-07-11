@@ -1,6 +1,7 @@
 package multi.com.finalproject.manage.model;
 
 import java.util.List;
+import java.util.Map;
 
 import multi.com.finalproject.member.model.MemberVO;
 
@@ -51,4 +52,6 @@ public interface ManageDAO {
 	public ReportVO select_report(ReportVO vo);
 	
 	public List<FriendsVO> ilchon_selectAll(MemberVO m_attr);
+
+	public void update_nickname(Map<String, String> map);
 }
