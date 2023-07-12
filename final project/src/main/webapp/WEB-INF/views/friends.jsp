@@ -29,7 +29,7 @@ function friends_list(){		// 친구목록
 					<thead>
 						<tr>
 							<th>닉네임</th>
-							<th>채팅</th>
+							<th>미니홈피 가기</th>
 							<th>차단</th>
 							<th>친구삭제</th>
 							<th>친구등급</th>
@@ -42,8 +42,8 @@ function friends_list(){		// 친구목록
  					<tr>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button onclick="chat_selectOne.do?nickname=\${vo.nickname2}">
-	 						채팅</button>
+	 						<button onclick="location.href='mng_mini_home.do?nickname=\${vo.nickname2}'">
+	 						미니홈피</button>
 	 					</td>
 	 					<td>
 	 						<button onclick="add_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.manage.model.ReportVO;
 import multi.com.finalproject.manage.service.ManageService;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 
 
 @Slf4j
@@ -18,6 +19,9 @@ public class ManageController {
 	
 	@Autowired
 	ManageService service;
+	
+	@Autowired
+	MemberService member_service;
 	
 	@RequestMapping(value = "/m_friends.do", method = RequestMethod.GET)
 	public String m_friends(MemberVO vo, Model model) {
@@ -43,6 +47,15 @@ public class ManageController {
 			return "redirect:b_selectOne.do?bnum="+vo.getBnum();
 		else
 			return "redirect:diary_selectOne.do?id="+vo.getId()+"&mbnum="+vo.getMbnum();
+	}
+	
+	@RequestMapping(value = "/mng_mini_home.do",  method = RequestMethod.GET)
+	public String mng_mini_home(MemberVO vo) {
+		log.info("/mng_mini_home.do...{}", vo);
 		
+		MemberVO vo2 = member_service.selectOne(vo);
+		log.info("{}", vo2);
+		
+		return "redirect:mini_home.do?id="+vo2.getId();
 	}
 }
