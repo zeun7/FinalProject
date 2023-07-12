@@ -35,6 +35,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(sPath.equals("/selectAll.do")
 				|| sPath.equals("/selectOne.do")
 				|| sPath.equals("/mini_home.do")
+				|| sPath.equals("/mini_game.do")
 				){
 			
 			if(user_id == null) {

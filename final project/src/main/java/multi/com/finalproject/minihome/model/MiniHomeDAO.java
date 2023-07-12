@@ -34,5 +34,13 @@ public interface MiniHomeDAO {
 	public JukeboxVO bgm_selectOnce(JukeboxVO vo);
 
 	public void delete(MemberVO vo);
+	
+	public int record_insert(GameVO vo);
+
+	public List<GameVO> record_selectAll();
+
+	public List<GameVO> record_selectAll_today();
+
+	public GameVO record_selectOne(GameVO vo);
 
 }

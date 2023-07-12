@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.minihome.model.GameVO;
 import multi.com.finalproject.minihome.model.JukeboxVO;
 import multi.com.finalproject.minihome.model.MiniHomeDAO;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
@@ -78,6 +79,22 @@ public class MiniHomeService {
 
 	public void delete(MemberVO vo) {
 		dao.delete(vo);
+	}
+	
+	public int record_insert(GameVO vo) {
+		return dao.record_insert(vo);
+	}
+
+	public List<GameVO> record_selectAll() {
+		return dao.record_selectAll();
+	}
+
+	public List<GameVO> record_selectAll_today() {
+		return dao.record_selectAll_today();
+	}
+
+	public GameVO record_selectOne(GameVO vo) {
+		return dao.record_selectOne(vo);
 	}
 
 }

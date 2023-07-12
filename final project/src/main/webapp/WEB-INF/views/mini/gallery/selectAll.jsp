@@ -57,7 +57,7 @@ let page = 1;
 let curPage = 1;
 let mh_attr_id = '${mh_attr.id}';
 
-function selectAllCount(){	// diary 목록의 페이징 버튼 출력
+function selectAllCount(){	// gallery 목록의 페이징 버튼 출력
 	$.ajax({
 		url : "json_mb_count.do",
 		method : 'GET',
@@ -188,7 +188,7 @@ function select_gallery_deleteOK() {
  	
  	// 모든 요청이 완료됐을 때 알림을 표시합니다.
     $.when(...promises).done(function() {
-        alert('선택된 사진 완료');
+        alert('선택된 사진 삭제완료');
     });
 
     // 체크박스 숨기기

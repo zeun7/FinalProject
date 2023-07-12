@@ -80,4 +80,24 @@
 	<select id="BGM_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.JukeboxVO">
 		select * from jukebox where id=#{id} and bgm=#{bgm}
 	</select>
+	
+	<insert id="GAME_RECORD_INSERT" parameterType="multi.com.finalproject.minihome.model.GameVO">
+		insert into game(gnum,profilepic,score,id) values(seq_game.nextval,#{profilepic},#{score},#{id})
+	</insert>
+	
+	<select id="GAME_SELECT_ALL" resultType="multi.com.finalproject.minihome.model.GameVO">
+		<![CDATA[
+			select * from (select * from game order by score desc) where rownum <= 10
+		]]>
+	</select>
+	
+	<select id="GAME_SELECT_TODAY" resultType="multi.com.finalproject.minihome.model.GameVO">
+		<![CDATA[
+			select * from (select * from game where trunc(gdate) = trunc(sysdate) order by score desc) where rownum <= 10
+		]]>
+	</select>
+	
+	<select id="GAME_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.GameVO">
+		select * from game where gnum=#{gnum}
+	</select>
 </mapper>

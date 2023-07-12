@@ -37,7 +37,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 	
 	@Override
 	public List<MiniCommentsVO> selectAll(MiniCommentsVO vo) {
-		log.info("mc selectAll()...");
+		log.info("mc selectAll()...{}", vo);
 		
 		List<MiniCommentsVO> vos = new ArrayList<MiniCommentsVO>();
 		

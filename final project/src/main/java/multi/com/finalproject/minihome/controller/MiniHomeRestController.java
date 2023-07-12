@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -27,8 +28,11 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minihome.model.GameVO;
 import multi.com.finalproject.minihome.model.JukeboxVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
 
@@ -43,7 +47,13 @@ public class MiniHomeRestController {
 	MiniBoardService miniboard_service;
 	
 	@Autowired
+	MemberService member_service;
+	
+	@Autowired
 	RestTemplate restTemplate;
+	
+	@Autowired
+	HttpSession session;
 	
 	@ResponseBody
 	@RequestMapping(value = "/newest_diary.do", method = RequestMethod.GET)
@@ -179,5 +189,79 @@ public class MiniHomeRestController {
 	        result.put("message", "Exception occurred while making API request: " + e.getMessage());
 	    }
 	    return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/game_record_insert.do", method = RequestMethod.POST)
+	public Map<String, Object> game_record_insert(GameVO vo) {
+		log.info("game_record_insert(vo)...{}", vo);
+		
+		log.info("game_ranking_insert(vo)...{}", vo);
+	    Map<String, Object> map = new HashMap<String, Object>();
+
+	    // 세션에서 id를 가져와서 세팅
+	    MemberVO mvo = new MemberVO();
+	    mvo.setId(session.getAttribute("user_id").toString());
+	    MemberVO mvo2 = member_service.selectOne(mvo);
+	    log.info("mvo2 : {}", mvo2);
+	    
+	    vo.setProfilepic(mvo2.getProfilepic());
+	    vo.setId(mvo2.getId()); 
+
+	    int result = service.record_insert(vo);
+	    map.put("result", result);
+	    if (result > 0) {
+	        GameVO vo2 = service.record_selectOne(vo);
+	        map.put("gnum", vo2.getGnum());
+	    }
+	    return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/game_ranking_all.do", method = RequestMethod.GET)
+	public List<GameVO> game_ranking_all() {
+		log.info("game_ranking_all()...");
+		
+		List<GameVO> vos = service.record_selectAll();
+		log.info("역대 랭킹 vos : {}", vos);
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/game_ranking_today.do", method = RequestMethod.GET)
+	public List<GameVO> game_ranking_today() {
+		log.info("game_ranking_today()...");
+		
+		List<GameVO> vos = service.record_selectAll_today();
+		log.info("오늘 랭킹 vos : {}", vos);
+		return vos;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/game_ranking_all2.do", method = RequestMethod.GET)
+	public Map<String, Object> game_ranking_all2(GameVO vo) {
+		log.info("game_ranking_all2(vo)...{}", vo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<GameVO> vos = service.record_selectAll();
+		GameVO vo2 = service.record_selectOne(vo);
+		map.put("vos", vos);
+		map.put("vo2", vo2);
+		log.info("역대 랭킹 vos : {}", vos);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/game_ranking_today2.do", method = RequestMethod.GET)
+	public Map<String, Object> game_ranking_today2(GameVO vo) {
+		log.info("game_ranking_today2(vo)...{}", vo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<GameVO> vos = service.record_selectAll_today();
+		GameVO vo2 = service.record_selectOne(vo);
+		map.put("vos", vos);
+		map.put("vo2", vo2);
+		log.info("오늘 랭킹 vos : {}", vos);
+		return map;
 	}
 }

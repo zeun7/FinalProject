@@ -109,5 +109,29 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		int result = sqlSession.delete("MH_DELETE", vo);
 		log.info("result: {}", result);
 	}
+	
+	@Override
+	public int record_insert(GameVO vo) {
+		log.info("record_insert(vo)...{}", vo);
+		return sqlSession.insert("GAME_RECORD_INSERT", vo);
+	}
+
+	@Override
+	public List<GameVO> record_selectAll() {
+		log.info("record_selectAll()...");
+		return sqlSession.selectList("GAME_SELECT_ALL");
+	}
+
+	@Override
+	public List<GameVO> record_selectAll_today() {
+		log.info("record_selectAll_today");
+		return sqlSession.selectList("GAME_SELECT_TODAY");
+	}
+
+	@Override
+	public GameVO record_selectOne(GameVO vo) {
+		log.info("record_selectOne(vo)...{}", vo);
+		return sqlSession.selectOne("GAME_SELECT_ONE", vo);
+	}
 
 }
