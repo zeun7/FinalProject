@@ -165,7 +165,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 							<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+							<td><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
 						</tr>`;
 				}
 				else{	// 댓글 출력
@@ -216,30 +216,30 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 					</tr>`;
 			}
 			
-			$("#comments").html(tag_comments);
+			$('#comments').html(tag_comments);
 			
 			$.each(arr, function(index, vo){
 				cocomments(writer, vo.cnum, bnum, cnum);	// 대댓글 출력 함수 호출
 				is_clike(vo.cnum);					// 댓글 좋아요 확인
 				count_clikes(vo.cnum);				// 좋아요 카운트
 				
-				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
-					$("#c_update_"+vo.cnum).show();
-					$("#c_delete_"+vo.cnum).show();
+				if('${nickname}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+					$('#c_update_'+vo.cnum).show();
+					$('#c_delete_'+vo.cnum).show();
 				}
 				else{
-					$("#c_update_"+vo.cnum).hide();
-					$("#c_delete_"+vo.cnum).hide();
+					$('#c_update_'+vo.cnum).hide();
+					$('#c_delete_'+vo.cnum).hide();
 				}
 				
 				if(cnum === vo.cnum){				// 수정중에는 버튼 숨김
-					$("#c_update_"+vo.cnum).hide();
-					$("#clike_btn_"+vo.cnum).hide();
-					$("#cocoment_"+vo.cnum).hide();
-					$("#report_"+vo.cnum).hide();
-					$("#cdate_"+vo.cnum).hide();
-					$("#count_clikes_"+vo.cnum).hide();
-					$("#c_delete_"+vo.cnum).hide();
+					$('#c_update_'+vo.cnum).hide();
+					$('#clike_btn_'+vo.cnum).hide();
+					$('#cocoment_'+vo.cnum).hide();
+					$('#report_'+vo.cnum).hide();
+					$('#cdate_'+vo.cnum).hide();
+					$('#count_clikes_'+vo.cnum).hide();
+					$('#c_delete_'+vo.cnum).hide();
 				}
 			});
 		},
@@ -279,7 +279,7 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="secret" id="update_secret" value="1" />비밀댓글</td>
+						<td><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
 					</tr>`;
 				}
 				else{		// 대댓글 출력
@@ -311,28 +311,28 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 				
 			});
 			
-			$("#cocomments_"+cnum).html(tag_cocomments);
+			$('#cocomments_'+cnum).html(tag_cocomments);
 			
 			$.each(arr, function(index, vo){
 				is_clike(vo.cnum);		// 댓글 좋아요 확인
 				count_clikes(vo.cnum);	// 좋아요 카운트
 				
 				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
-					$("#c_update_"+vo.cnum).show();
-					$("#c_delete_"+vo.cnum).show();
+					$('#c_update_'+vo.cnum).show();
+					$('#c_delete_'+vo.cnum).show();
 				}
 				else{
-					$("#c_update_"+vo.cnum).hide();
-					$("#c_delete_"+vo.cnum).hide();
+					$('#c_update_'+vo.cnum).hide();
+					$('#c_delete_'+vo.cnum).hide();
 				}
 				
 				if(update_num === vo.cnum){		// 수정중에는 버튼 숨김
-					$("#c_update_"+vo.cnum).hide();
-					$("#clike_btn_"+vo.cnum).hide();
-					$("#report_"+vo.cnum).hide();
-					$("#cdate_"+vo.cnum).hide();
-					$("#count_clikes_"+vo.cnum).hide();
-					$("#c_delete_"+vo.cnum).hide();
+					$('#c_update_'+vo.cnum).hide();
+					$('#clike_btn_'+vo.cnum).hide();
+					$('#report_'+vo.cnum).hide();
+					$('#cdate_'+vo.cnum).hide();
+					$('#count_clikes_'+vo.cnum).hide();
+					$('#c_delete_'+vo.cnum).hide();
 				}
 			});
 		},
@@ -350,8 +350,8 @@ function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 		data: {ccnum: cnum,
 			bnum: bnum,
 			writer: '${nickname}',
-			content: $("#comm_content").val(),
-			secret: $("#secret").val()},
+			content: $('#comm_content').val(),
+			secret: $("input[name='secret']").is(":checked")? 1:0},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
@@ -371,8 +371,8 @@ function c_updateOK(cnum){		// 댓글 수정 완료 버튼
 	$.ajax({
 		url: 'json_c_updateOK.do',
 		data:{cnum: cnum,
-			content: $("#comm_content").val(),
-			secret: $("#update_secret").val()},
+			content: $('#comm_content').val(),
+			secret: $("input[name='update_secret']").is(":checked")? 1:0},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
@@ -450,7 +450,7 @@ function count_clikes(cnum){		// 댓글 좋아요 카운트 함수
 		method: 'POST',
 		dataType: 'json',
 		success: function(count){
-			console.log('', cnum, ': ', count);
+			console.log('likes: ', cnum, '-', count);
 			$("#count_clikes_"+cnum).html(count);
 		},
 		error: function(xhr, status, error){

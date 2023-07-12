@@ -342,11 +342,11 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 			id: '${mh_attr.id}',
 			writer: '${nickname}',
 			content: $("#comm_content").val(),
-			secret: $("#secret").val()},
+			secret: $("input[name='secret']").is(":checked")? 1:0},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
-			if(response.result == 1){
+			if(response.result === 1){
 				minicomments();
 			}
 		},
@@ -362,11 +362,12 @@ function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
 	$.ajax({
 		url: 'json_mc_updateOK.do',
 		data:{mcnum: mcnum,
-			content: $("#comm_content").val()},
+			content: $("#comm_content").val(),
+			secret: $("input[name='update_secret']").is(":checked")? 1:0},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
-			if(response.result == 1){
+			if(response.result === 1){
 				minicomments();
 			}
 		},
@@ -440,7 +441,7 @@ function count_clikes(mcnum){		// 댓글 좋아요 카운트 함수
 		method: 'POST',
 		dataType: 'json',
 		success: function(count){
-			console.log('', mcnum, ': ', count);
+			console.log('likes: ', mcnum, ' - ', count);
 			$("#count_clikes_"+mcnum).html(count);
 		},
 		error: function(xhr, status, error){

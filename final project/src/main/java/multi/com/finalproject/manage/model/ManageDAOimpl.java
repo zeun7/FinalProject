@@ -156,9 +156,7 @@ public class ManageDAOimpl implements ManageDAO {
 		List<ReportVO> vos = sqlSession.selectList("MNG_B_SELECT_REPORT");
 		List<ReportVO> vos2 = sqlSession.selectList("MNG_MB_SELECT_REPORT");
 		
-		for(ReportVO vo : vos2) {
-			vos.add(vo);
-		}
+		vos.addAll(vos2);
 		
 		return vos;
 	}
@@ -244,10 +242,10 @@ public class ManageDAOimpl implements ManageDAO {
 					vo3.setMcnum(vo2.getMcnum());
 					vo3.setMccnum(vo2.getMccnum());
 					vo3.setMbnum(vo2.getMbnum());
+					vo3.setId(vo.getId());
 					vo3.setWriter(vo.getWriter());
 					vo3.setContent(vo.getContent());
 					vo3.setReason(vo2.getReason());
-					vo3.setId(vo2.getId());
 					
 					vos3.add(vo3);
 				}

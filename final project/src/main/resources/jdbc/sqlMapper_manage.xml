@@ -74,12 +74,12 @@
 	</update>
 	
 	<select id="MNG_B_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.rnum, r.bnum, b.title, b.writer, r.reason from board b, report r 
+		select r.rnum, r.bnum, b.title, r.id, b.writer, r.reason from board b, report r 
 		where b.bnum = r.bnum and cnum = 0 and mcnum = 0 order by r.rnum
 	</select>
 	
 	<select id="MNG_MB_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
-		select r.rnum, r.mbnum, mb.title, mb.writer, r.reason from miniboard mb, report r 
+		select r.rnum, r.mbnum, mb.title, r.id, mb.writer, r.reason from miniboard mb, report r 
 		where mb.mbnum = r.mbnum order by r.rnum
 	</select>
 	
