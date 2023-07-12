@@ -10,11 +10,6 @@
 		select * from member where id = #{id, jdbcType=VARCHAR} or nickname = #{nickname, jdbcType=VARCHAR}
 	</select>
 
-	<select id="USER"
-		resultType="multi.com.finalproject.member.model.MemberVO">
-		select id, pw from member where num = #{num}
-	</select>
-
 	<select id="M_ID_CHECK"
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where id = #{id}
@@ -38,16 +33,6 @@
 	<select id="LOGIN"
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select * from member where id = #{id} and pw = #{pw}
-	</select>
-
-	<select id="M_SEARCH_LIST_NAME"
-		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where name like #{searchWord}
-	</select>
-
-	<select id="M_SEARCH_LIST_TEL"
-		resultType="multi.com.finalproject.member.model.MemberVO">
-		select * from member where tel like #{searchWord}
 	</select>
 
 	<insert id="M_INSERT"
@@ -79,11 +64,6 @@
 	<select id="FIND_ID_QUESTION"
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where question = #{question,jdbcType=VARCHAR} and answer=#{answer, jdbcType=VARCHAR} and tel=#{tel}
-	</select>
-
-	<select id="FIND_ID_TEL"
-		parameterType="multi.com.finalproject.member.model.MemberVO">
-		select id from member where tel = #{tel}
 	</select>
 	
 	<select id="FIND_PW" 

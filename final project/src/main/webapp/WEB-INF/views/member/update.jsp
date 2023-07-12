@@ -15,13 +15,19 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-	function NickCheck() {
+	function NickCheck(currentUserNickname) {
 		console.log("NickCheck....", $('#nickname').val());
+
+		if ($('#nickname').val() === currentUserNickname) {
+			alert("기존 닉네임입니다.");
+			return;
+		}
 
 		$.ajax({
 			url : "json_m_NickCheck.do",
 			data : {
-				nickname : $('#nickname').val()
+				nickname : $('#nickname').val(),
+				currentUserNickname : currentUserNickname
 			},
 			method : 'GET',
 			dataType : 'json',
@@ -39,10 +45,33 @@
 			error : function(xhr, status, error) {
 				console.log('xhr.status:', xhr.status);
 			}
-		});//end $.ajax()...
+		});
+	}
 
-	}//end NickCheck()...
+	function test2() {
+		var p1 = document.getElementById('pw1').value;
+		var p2 = document.getElementById('pw2').value;
+
+		if (p1.length < 6) {
+			alert('입력한 글자가 6글자 이상이어야 합니다.');
+			return false;
+		}
+
+		if (p1 !== p2) {
+			alert("비밀번호불일치");
+			return false;
+		} else {
+			alert("비밀번호가 일치합니다");
+			return true;
+		}
+	}
 </script>
+
+<style>
+#pw2, #confirmationButton {
+	display: none;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../top_menu.jsp"></jsp:include>
@@ -57,12 +86,18 @@
 					<table id="memberList">
 						<tr>
 							<td><label for="id">id:</label></td>
-							<td><input type="hidden" id="id" name="id" value="${vo2.id}"u/>${vo2.id}<td>
+							<td><input type="hidden" id="id" name="id" value="${vo2.id}"
+								u />${vo2.id}
+							<td>
 						</tr>
+
 						<tr>
 							<td><label for="pw">pw:</label></td>
-							<td><input type="password" id="pw" name="pw"
-								value="${vo2.pw}"></td>
+							<td><input class="w3-input" type="password" id="pw1"
+								name="pw" value="${vo2.pw}">
+								<button type="button" onclick="togglePasswordConfirmation()">비밀번호
+									수정</button> <input class="w3-input" type="password" id="pw2" name="pw2"
+								placeholder="비밀번호 한번더 입력"> <input id="confirmationButton" type="button" onclick="test2()" value="확인" class="myButton"></td>
 						</tr>
 						<tr>
 							<td><label for="name">name:</label></td>
@@ -83,8 +118,8 @@
 							<td><label for="nickname">nickname:</label></td>
 							<td><input type="text" id="nickname" name="nickname"
 								value="${vo2.nickname}">
-								<button type="button" onclick="NickCheck()" class="myButton">닉네임중복체크</button>
-								<span id="demo2"></span></td>
+								<button type="button" onclick="NickCheck('${vo2.nickname}')"
+									class="myButton">닉네임중복체크</button> <span id="demo2"></span></td>
 						</tr>
 						<tr>
 							<td><label for="profilepic">profilepic:</label></td>
@@ -93,7 +128,8 @@
 								value="${vo2.profilepic}"></td>
 						</tr>
 						<tr>
-							<td colspan="2"><input type="submit" value="회원수정완료">
+							<td colspan="2"><input type="button" value="회원수정완료"
+								onclick="submitForm()">
 								<button type="button" onclick="m_deleteOK()">탈퇴하기</button></td>
 						</tr>
 					</table>
@@ -108,6 +144,76 @@
 			}
 
 		}
+		function test2() {
+			var p1 = document.getElementById('pw1').value;
+			var p2 = document.getElementById('pw2').value;
+
+			if (p1.length < 6) {
+				alert('입력한 글자가 6글자 이상이어야 합니다.');
+				return false;
+			}
+
+			if (p1 !== p2) {
+				alert("비밀번호 불일치");
+				return false;
+			} else {
+				alert("비밀번호가 일치합니다");
+				return true;
+			}
+		}
+
+		function togglePasswordConfirmation() {
+			var pwConfirmation = document.getElementById("pw2");
+			var pwConfirmationLabel = document
+					.getElementById("pwConfirmationLabel");
+			var confirmationButton = document
+					.getElementById("confirmationButton");
+
+			if (pwConfirmation.style.display === "none") {
+				pwConfirmation.style.display = "block";
+				pwConfirmationLabel.style.display = "block";
+				confirmationButton.style.display = "block";
+				pwConfirmation.value = ""; // 비밀번호 확인 필드가 나타날 때 pw2의 값 초기화
+			} else {
+				pwConfirmation.style.display = "none";
+				pwConfirmationLabel.style.display = "none";
+				confirmationButton.style.display = "none";
+				pwConfirmation.value = document.getElementById("pw1").value; // 비밀번호 확인 필드가 숨겨질 때 pw1과 pw2의 값 일치화
+				document.getElementById("pw2").oninput = null;
+			}
+		}
+
+		function submitForm() {
+
+			var pw1 = document.getElementById("pw1").value;
+			var pw2 = document.getElementById("pw2").value;
+			var currentUserNickname = "${vo2.nickname}";
+			var nickname = document.getElementById("nickname").value;
+			var email = document.getElementById("email").value;
+			var tel = document.getElementById("tel").value;
+
+			if (document.getElementById("pw2").style.display === "block") {
+				if (pw1 !== pw2) {
+					alert("비밀번호가 일치하지 않습니다.");
+					return;
+				}
+			}
+
+			if (pw1 === "" && pw2 !== "") {
+				document.getElementById("pw2").value = "";
+			}
+
+			if (nickname !== currentUserNickname) {
+				if ($('#demo2').text() !== '사용 가능한 닉네임입니다.') {
+					alert("사용 중인 닉네임입니다.");
+					return;
+				}
+			}
+
+			// 나머지 처리 로직
+			document.getElementById("joinForm").submit();
+		}
 	</script>
+
 </body>
 </html>
