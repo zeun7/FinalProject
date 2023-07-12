@@ -175,23 +175,23 @@ public class MiniHomeController {
 
 		} // end if
 
-		String getOriginalMusicFilename = vo.getMusicFile().getOriginalFilename();
-		int musicFileNameLength = vo.getMusicFile().getOriginalFilename().length();
-		log.info("getOriginalMusicFilename:{}", getOriginalMusicFilename);
-		log.info("musicFileNameLength:{}", musicFileNameLength);
-
-		if (getOriginalMusicFilename.length() != 0) {
-
-			vo.setBgm(getOriginalMusicFilename);
-			// 웹 어플리케이션이 갖는 실제 경로: bgm을 업로드할 대상 경로를 찾아서 파일저장.
-			String realPath = sContext.getRealPath("resources/uploadbgm");
-			log.info("realPath : {}", realPath);
-
-			File f = new File(realPath + "\\" + vo.getBgm());
-			vo.getMusicFile().transferTo(f);
-		} // end if
-
-		log.info("vo : {}", vo);
+//		String getOriginalMusicFilename = vo.getMusicFile().getOriginalFilename();
+//		int musicFileNameLength = vo.getMusicFile().getOriginalFilename().length();
+//		log.info("getOriginalMusicFilename:{}", getOriginalMusicFilename);
+//		log.info("musicFileNameLength:{}", musicFileNameLength);
+//
+//		if (getOriginalMusicFilename.length() != 0) {
+//
+//			vo.setBgm(getOriginalMusicFilename);
+//			// 웹 어플리케이션이 갖는 실제 경로: bgm을 업로드할 대상 경로를 찾아서 파일저장.
+//			String realPath = sContext.getRealPath("resources/uploadbgm");
+//			log.info("realPath : {}", realPath);
+//
+//			File f = new File(realPath + "\\" + vo.getBgm());
+//			vo.getMusicFile().transferTo(f);
+//		} // end if
+//
+//		log.info("vo : {}", vo);
 
 		int result = service.update(vo);
 

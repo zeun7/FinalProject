@@ -1,4 +1,4 @@
-package multi.com.finalproject.jukebox;
+package multi.com.finalproject.jukebox.model;
 
 import lombok.Data;
 

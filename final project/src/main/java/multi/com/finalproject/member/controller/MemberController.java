@@ -515,4 +515,11 @@ public class MemberController {
 		
 		return "home";
 	}
+    
+    @RequestMapping(value = "/loginFail.do")
+	public String loginFail(Model model){
+    	model.addAttribute("message", "아이디/비번 을 확인하세요");
+		model.addAttribute("errorMessage", true); // 에러 메시지 플래그 추가
+		return "member/login";
+	}
 }

@@ -8,6 +8,9 @@
 
 	<beans:bean id="authenticationSuccessHandler"
 		class="multi.com.finalproject.LoginSuccessHandler"></beans:bean>
+		
+	<beans:bean id="authenticationFailHandler"
+		class="multi.com.finalproject.LoginFailHandler"></beans:bean>
 
 	<http use-expressions="true">
 		<intercept-url pattern="/favicon.ico"
@@ -16,7 +19,8 @@
 		<form-login login-page="/login.do"
 			login-processing-url="/loginOK.do" username-parameter="id"
 			password-parameter="pw"
-			authentication-success-handler-ref="authenticationSuccessHandler" />
+			authentication-success-handler-ref="authenticationSuccessHandler"
+			authentication-failure-handler-ref="authenticationFailHandler" />
 		<logout logout-url="/logout.do"
 			delete-cookies="SPRING_SECURITY_REMEMBER_ME_COOKIE" />
 

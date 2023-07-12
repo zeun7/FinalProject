@@ -67,7 +67,7 @@
 		      (
 		        SELECT *
 		        FROM jukebox
-		        where id=#{vo.id} 
+		        where id=#{vo.id} and forsale is null 
 		        ORDER BY jdate desc
 		      )
 		  )

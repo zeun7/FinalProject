@@ -42,7 +42,6 @@ function getQuantity(event){
 </head>
 <body>
     <jsp:include page="../../top_menu.jsp"></jsp:include>
-    <jsp:include page="../mini_top_menu.jsp"></jsp:include>
     <h1>peachPay</h1>
     <form action="mini_peachPayOK.do" method="post">
     	<table>
@@ -56,13 +55,13 @@ function getQuantity(event){
 					<input type="radio" id="quantity5" name="quantity" value="5" onclick="getQuantity(event)" checked="checked">
 					<label for="quantity5">5개: 500원</label><br>
 					<input type="radio" id="quantity10" name="quantity" value="10" onclick="getQuantity(event)">
-					<label for="quantity10">10: 1000원</label><br>
+					<label for="quantity10">10개: 1000원</label><br>
 					<input type="radio" id="quantity30" name="quantity" value="30" onclick="getQuantity(event)">
-					<label for="quantity30">30: 3000원</label><br>
+					<label for="quantity30">30개: 3000원</label><br>
 					<input type="radio" id="quantity50" name="quantity" value="50" onclick="getQuantity(event)">
-					<label for="quantity50">50: 5000원</label><br>
+					<label for="quantity50">50개: 5000원</label><br>
 					<input type="radio" id="quantity100" name="quantity" value="100" onclick="getQuantity(event)">
-					<label for="quantity100">100: 10000원</label><br>
+					<label for="quantity100">100개: 10000원</label><br>
 				</td>
 			</tr>    	
 			<tr>

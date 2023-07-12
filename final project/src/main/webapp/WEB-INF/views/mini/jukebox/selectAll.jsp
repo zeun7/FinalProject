@@ -105,7 +105,7 @@ function buyPeach(){
 }
 
 function buyBGM(){
-	window.location.href="mini_peachPay.do?id=${mh_attr.id}";
+	window.location.href="musicPay_selectAll.do";
 }
 </script>
 

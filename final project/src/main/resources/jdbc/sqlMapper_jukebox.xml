@@ -4,8 +4,52 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="multi.com.finalproject.jukebox">
+  	<select id="MP_COUNT" resultType="Integer">
+  		select count(*) from jukebox where forsale is not null
+  	</select>
+  	
+  	<select id="MP_SELECT_ALL" resultType="multi.com.finalproject.minihome.model.JukeboxVO">
+  		<![CDATA[
+		SELECT bgm 
+		FROM
+		  (
+		  SELECT SEQ, bgm 
+		  FROM
+		  (
+		    SELECT ROWNUM AS SEQ, id, bgm, jdate 
+		    FROM
+		      (
+		        SELECT *
+		        FROM jukebox
+		        where forsale is not null 
+		        ORDER BY jdate desc
+		      )
+		  )
+		WHERE SEQ >= (#{page}-1)*10+1 
+		)
+		WHERE ROWNUM <= 10
+		]]>
+  	</select>
+  	
+  	<select id="MP_SELECT_PEACHCOUNT" resultType="multi.com.finalproject.member.model.MemberVO" parameterType="multi.com.finalproject.member.model.MemberVO">
+  		select peach from member where id=#{id}
+  	</select>
+  	
+  	<select id="J_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.JukeboxVO">
+  		select * from jukebox where id=#{id} and bgm=#{bgm}
+  	</select>
+  	
+  	<insert id="J_INSERT">
+  		insert into jukebox(id, bgm) values(#{id}, #{bgm})
+  	</insert>
+  
 	<update id="PCOUNT_UP" parameterType="multi.com.finalproject.member.model.MemberVO">
 		update member set peach=peach+#{peach}
+		where id = #{id}
+	</update>
+	
+	<update id="PCOUNT_DOWN" parameterType="multi.com.finalproject.member.model.MemberVO">
+		update member set peach=peach-#{peach}
 		where id = #{id}
 	</update>
   </mapper>
