@@ -39,4 +39,8 @@ public interface BoardDAO {
 
 	public void update_nickname(Map<String, String> map);
 
+	public void deleteAll(MemberVO vo);
+
+	public void deleteLikesAll(MemberVO vo);
+
 }

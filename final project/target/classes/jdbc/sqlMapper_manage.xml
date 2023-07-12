@@ -40,6 +40,10 @@
 		delete from friends where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</delete>
 	
+	<delete id="MNG_DEL_FRIENDS_ALL">
+		delete from friends where nickname = #{nickname} or nickname2 = #{nickname}
+	</delete>
+	
 	<select id="MNG_M_SELECT_BAN" resultType="multi.com.finalproject.manage.model.FriendsVO">
 		select * from friends where nickname = #{nickname} and grade = 3
 	</select>

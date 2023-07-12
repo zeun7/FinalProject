@@ -103,6 +103,10 @@
 		WHERE ROWNUM <= #{limit}
 		]]>
 	</select>
+	
+	<select id="B_SEARCH_ALL_WRITER" resultType="multi.com.finalproject.board.model.BoardVO">
+		select * from board where writer = #{nickname}
+	</select>
 
 	<select id="B_COUNT" resultType="Integer">
 		select count(*) from board where bname=#{bname}
@@ -161,9 +165,21 @@
 	<delete id="B_DELETE">
 		delete from board where bnum = #{bnum}
 	</delete>
+	
+	<delete id="B_DELETE_ALL">
+		delete from board where writer = #{nickname}
+	</delete>
 
 	<delete id="B_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
 		delete from likes where id = #{id} and bnum = #{bnum}
+	</delete>
+	
+	<delete id="B_DELETE_LIKE_ALL">
+		delete from likes where bnum = #{bnum}
+	</delete>
+	
+	<delete id="B_DELETE_LIKE_ID">
+		delete from likes where id = #{id}
 	</delete>
 
   </mapper>

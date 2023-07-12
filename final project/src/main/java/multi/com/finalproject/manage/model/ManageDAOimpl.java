@@ -326,4 +326,12 @@ public class ManageDAOimpl implements ManageDAO {
 		log.info("result1: {}", result1);
 		log.info("result2: {}", result2);
 	}
+
+	@Override
+	public void delfriendAll(MemberVO vo) {
+		log.info("delete frineds All()...{}", vo);
+		
+		int result = sqlSession.delete("MNG_DEL_FRIENDS_ALL", vo);
+		log.info("result: {}", result);
+	}
 }

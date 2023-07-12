@@ -8,6 +8,10 @@
 		select * from comments where bnum = #{bnum} and ccnum = 0 order by cnum asc
 	</select>
 	
+	<select id="C_SELECT_ALL2" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments where bnum = #{bnum}
+	</select>
+	
 	<select id="CC_SELECT_ALL" resultType="multi.com.finalproject.comments.model.CommentsVO">
 		select * from comments where ccnum = #{cnum} order by cnum asc
 	</select>
@@ -16,7 +20,10 @@
 		select * from comments where cnum = #{cnum}
 	</select>
 	
-
+	<select id="C_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.comments.model.CommentsVO">
+		select * from comments whrer writer = #{nickname}
+	</select>
+	
 	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
 		insert into comments(cnum, bnum, content, writer, secret) 
 		values(seq_comments.nextval, #{bnum}, #{content}, #{writer}, #{secret})
@@ -37,6 +44,14 @@
 	
 	<delete id="C_DELETE">
 		delete from comments where cnum = #{cnum} or ccnum = #{cnum}
+	</delete>
+	
+	<delete id="C_DELETE_ALL">
+		delete from comments where bnum = #{bnum}
+	</delete>
+	
+	<delete id="C_DELETE_WRITER">
+		delete from comments where writer = #{nickname}
 	</delete>
 	
 	<insert id="C_REPORT">
@@ -83,6 +98,14 @@
 	
 	<delete id="C_DEL_CLIKE">
 		delete from clikes where cnum = #{cnum} or ccnum = #{cnum}
+	</delete>
+	
+	<delete id="C_DEL_CLIKE_ALL">
+		delete from clikes where bnum = #{bnum}
+	</delete>
+	
+	<delete id="C_DEL_CLIKE_ID">
+		delete from clikes where id = #{id}
 	</delete>
 	
 	<delete id="MC_CANCEL_CLIKE">

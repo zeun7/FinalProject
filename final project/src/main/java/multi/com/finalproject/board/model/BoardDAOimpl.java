@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.comments.service.CommentsService;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Repository
@@ -16,6 +17,9 @@ public class BoardDAOimpl implements BoardDAO {
 
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Autowired
+	CommentsService comments_service;
 
 	public BoardDAOimpl() {
 		log.info("BoardDAOimpl()...");
@@ -79,8 +83,16 @@ public class BoardDAOimpl implements BoardDAO {
 	@Override
 	public int delete(BoardVO vo) {
 		log.info("delete()...{}", vo);
-
-		return sqlSession.delete("B_DELETE", vo);
+		
+		int del_like_result = sqlSession.delete("B_DELETE_LIKE_ALL", vo);	// 게시글 좋아요 삭제
+		int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_BNUM", vo); // 게시글 신고 삭제
+		int del_comm_result = comments_service.deleteAll(vo);	// 댓글 삭제
+		
+		log.info("delete like result: {}", del_like_result);
+		log.info("delete report result: {}", del_report_result);
+		log.info("delete comments result: {}", del_comm_result);
+		
+		return sqlSession.delete("B_DELETE", vo);	// 게시글 삭제
 	}
 
 	@Override
@@ -143,6 +155,34 @@ public class BoardDAOimpl implements BoardDAO {
 		log.info("update nickname...{}",  map);
 		
 		int result = sqlSession.update("B_UPDATE_NICKNAME", map);
+		log.info("result: {}", result);
+	}
+
+	@Override
+	public void deleteAll(MemberVO vo) {
+		log.info("delete All()...{}", vo);
+		
+		List<BoardVO> vos = sqlSession.selectList("B_SEARCH_ALL_WRITER", vo);
+		
+		for (BoardVO vo2 : vos) {
+			int del_like_result = sqlSession.delete("B_DELETE_LIKE_ALL", vo2);	// 게시글 좋아요 삭제
+			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_BNUM", vo2); // 게시글 신고 삭제
+			int del_comm_result = comments_service.deleteAll(vo2);	// 댓글 삭제
+			
+			log.info("delete like result: {}", del_like_result);
+			log.info("delete report result: {}", del_report_result);
+			log.info("delete comments result: {}", del_comm_result);
+		}
+		
+		int result = sqlSession.delete("B_DELETE_ALL", vo); // 게시글 삭제
+		log.info("result: {}", result);
+	}
+
+	@Override
+	public void deleteLikesAll(MemberVO vo) {
+		log.info("delete likes All()...{}", vo);
+		
+		int result = sqlSession.delete("B_DELETE_LIKE_ID", vo);
 		log.info("result: {}", result);
 	}
 

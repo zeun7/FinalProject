@@ -76,4 +76,8 @@ public class MiniHomeService {
 		return dao.bgm_selectOnce(vo);
 	}
 
+	public void delete(MemberVO vo) {
+		dao.delete(vo);
+	}
+
 }

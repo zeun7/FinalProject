@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.LikesVO;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardDAO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
@@ -87,6 +88,10 @@ public class MiniBoardService {
 
 	public void update_nickname(Map<String, String> map) {
 		dao.update_nickname(map);
+	}
+
+	public void deleteAll(MemberVO vo) {
+		dao.deleteAll(vo);
 	}
 
 }

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.LikesVO;
+import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.minicomments.model.MiniCommentsVO;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 
 @Slf4j
 @Repository
@@ -16,6 +19,9 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Autowired
+	MiniCommentsService minicomments_service;
 	
 	public MiniBoardDAOimpl() {
 		log.info("MiniBoardDAOimpl...");
@@ -55,6 +61,15 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	@Override
 	public int mb_delete(MiniBoardVO vo) {
 		log.info("mb_delete(vo)...{}", vo);
+		
+		int del_like_result = sqlSession.delete("MB_DELETE_LIKE_ALL", vo);	// 게시글 좋아요 삭제
+		int del_comm_result = minicomments_service.deleteAll(vo);			// 댓글 삭제
+		int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_MBNUM", vo); // 게시글 신고 삭제
+		
+		log.info("miniboard delete like result: {}", del_like_result);
+		log.info("minicomments delete result: {}", del_comm_result);
+		log.info("miniboard delete report result: {}", del_report_result);
+		
 		return sqlSession.delete("MB_DELETE",vo);
 	}
 		
@@ -131,5 +146,26 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		int result = sqlSession.update("MB_UPDATE_NICKNAME", map);
 		log.info("result: {}", result);
 	}
+
+	@Override
+	public void deleteAll(MemberVO vo) {
+		log.info("delete board all()...{}", vo);
+		
+		List<MiniBoardVO> vos = sqlSession.selectList("MB_SELECT_ALL", vo);	// 게시글 찾기
+		
+		for (MiniBoardVO vo2 : vos) {
+			int del_like_result = sqlSession.delete("MB_DELETE_LIKE_ALL", vo2);	// 게시글 좋아요 삭제
+			int del_comm_result = minicomments_service.deleteAll(vo2);			// 댓글 삭제
+			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_MBNUM", vo2); // 게시글 신고 삭제
+			
+			log.info("miniboard delete like result: {}", del_like_result);
+			log.info("minicomments delete result: {}", del_comm_result);
+			log.info("miniboard delete report result: {}", del_report_result);
+		}
+		
+		int result = sqlSession.delete("MB_DELETE_ALL", vo);		// 게시글 삭제
+		log.info("result: {}", result);
+	}
+
 
 }

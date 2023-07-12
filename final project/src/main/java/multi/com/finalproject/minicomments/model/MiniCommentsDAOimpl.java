@@ -21,6 +21,7 @@ import com.mongodb.client.result.UpdateResult;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 @Slf4j
 @Repository
@@ -343,6 +344,35 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int deleteAll(MiniBoardVO vo2) {
+		log.info("delete All()...{}", vo2);
+		int flag = 0;
+		
+		try {
+			Bson filter = Filters.eq("mbnum", vo2.getMbnum());
+					
+			FindIterable<Document> docs = MiniComments.find(filter);
+			
+			for(Document doc : docs) {
+				log.info("{}", doc);
+				MiniCommentsVO vo = new MiniCommentsVO();
+				vo.setMcnum(doc.getInteger("mcnum"));
+				
+				sqlSession.delete("MC_DELETE_CLIKES_ALL", vo);		// 댓글 좋아요 삭제
+				sqlSession.delete("MNG_DEL_REPORT_BY_MCNUM", vo);	// 댓글 신고 삭제
+			}
+			
+			DeleteResult result = MiniComments.deleteMany(filter);	// 댓글 삭제
+			log.info("result: {}", result);
+			flag = 1;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
 	}
 
 }

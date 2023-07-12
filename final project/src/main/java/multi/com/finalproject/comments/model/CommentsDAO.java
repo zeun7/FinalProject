@@ -3,6 +3,9 @@ package multi.com.finalproject.comments.model;
 import java.util.List;
 import java.util.Map;
 
+import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.member.model.MemberVO;
+
 public interface CommentsDAO {
 		
 		public List<CommentsVO> selectAll(CommentsVO vo);
@@ -26,5 +29,11 @@ public interface CommentsDAO {
 		public int cancel_clike(ClikesVO vo);
 
 		public void update_nickname(Map<String, String> map);
+
+		public int deleteAll(BoardVO vo2);
+
+		public void deleteClikesAll(MemberVO vo);
+
+		public void deleteWriter(MemberVO vo);
 
 }

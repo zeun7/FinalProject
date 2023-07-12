@@ -86,5 +86,13 @@ public class BoardService {
 	public void update_nickname(Map<String, String> map) {
 		dao.update_nickname(map);
 	}
+
+	public void deleteAll(MemberVO vo) {
+		dao.deleteAll(vo);
+	}
+
+	public void deleteLikesAll(MemberVO vo) {
+		dao.deleteLikesAll(vo);
+	}
 	
 }

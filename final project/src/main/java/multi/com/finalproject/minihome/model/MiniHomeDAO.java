@@ -33,4 +33,6 @@ public interface MiniHomeDAO {
 
 	public JukeboxVO bgm_selectOnce(JukeboxVO vo);
 
+	public void delete(MemberVO vo);
+
 }

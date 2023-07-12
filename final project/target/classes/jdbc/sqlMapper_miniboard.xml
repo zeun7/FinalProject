@@ -62,6 +62,10 @@
 		delete from miniboard where mbnum=#{mbnum}
 	</delete>
 	
+	<delete id="MB_DELETE_ALL">
+		delete from miniboard where writer = #{nickname}
+	</delete>
+	
 	<update id="GALLERY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		update miniboard set title=#{title}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
@@ -90,6 +94,10 @@
 	
 	<delete id="MB_DELETE_LIKE" parameterType="multi.com.finalproject.board.model.LikesVO">
 		delete from likes where id = #{id} and mbnum = #{mbnum}
+	</delete>
+	
+	<delete id="MB_DELETE_LIKE_ALL">
+		delete from likes where mbnum = #{mbnum}
 	</delete>
 	
 	<insert id="MB_REPORT" parameterType="Map">

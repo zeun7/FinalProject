@@ -229,11 +229,21 @@ public class MemberController {
 	public String m_deleteOK(MemberVO vo) {
 		log.info("/m_deleteOK.do");
 		log.info("vo:{}", vo);
+		
 		int result = service.delete(vo);
 		log.info("result:{}", result);
+		
 		if (result == 1) {
+			minihome_service.delete(vo);		// 미니홈피 삭제
+			miniboard_service.deleteAll(vo);	// 미니홈피 게시글 삭제, 게시글 좋아요 삭제, 댓글 삭제, 댓글 좋아요 삭제
+			board_service.deleteAll(vo);		// 게시글 삭제, 게시글 좋아요 삭제, 댓글 삭제, 댓글 좋아요 삭제
+			board_service.deleteLikesAll(vo);	// 게시글 좋아요 삭제
+			comments_service.deleteClikesAll(vo); // 게시글의 댓글 좋아요 삭제
+			comments_service.deleteWriter(vo);		// 작성한 댓글 삭제
+			manage_service.delfriendAll(vo);	// 친구 목록 삭제
+			
 			session.invalidate(); // 세션 만료시킴
-
+			
 			return "redirect:home.do";
 
 		} else {

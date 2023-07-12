@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 public interface MiniCommentsDAO {
 
@@ -36,5 +37,7 @@ public interface MiniCommentsDAO {
 	public int cancel_clike(ClikesVO vo);
 
 	public void update_nickname(Map<String, String> map);
+
+	public int deleteAll(MiniBoardVO vo2);
 
 }

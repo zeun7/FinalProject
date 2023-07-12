@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.minicomments.model.MiniCommentsDAO;
 import multi.com.finalproject.minicomments.model.MiniCommentsVO;
 
@@ -74,6 +75,10 @@ public class MiniCommentsService {
 
 	public void update_nickname(Map<String, String> map) {
 		dao.update_nickname(map);
+	}
+
+	public int deleteAll(MiniBoardVO vo2) {
+		return dao.deleteAll(vo2);
 	}
 
 }

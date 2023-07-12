@@ -102,4 +102,12 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		return sqlSession.selectOne("BGM_SELECT_ONE", vo);
 	}
 
+	@Override
+	public void delete(MemberVO vo) {
+		log.info("delete()...{}", vo);
+		
+		int result = sqlSession.delete("MH_DELETE", vo);
+		log.info("result: {}", result);
+	}
+
 }

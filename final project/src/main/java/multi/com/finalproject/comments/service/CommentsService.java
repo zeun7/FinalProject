@@ -6,9 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.comments.model.ClikesVO;
 import multi.com.finalproject.comments.model.CommentsDAO;
 import multi.com.finalproject.comments.model.CommentsVO;
+import multi.com.finalproject.member.model.MemberVO;
 
 @Service
 public class CommentsService {
@@ -58,6 +60,18 @@ public class CommentsService {
 
 	public void update_nickname(Map<String, String> map) {
 		dao.update_nickname(map);
+	}
+
+	public int deleteAll(BoardVO vo2) {
+		return dao.deleteAll(vo2);
+	}
+
+	public void deleteClikesAll(MemberVO vo) {
+		dao.deleteClikesAll(vo);
+	}
+
+	public void deleteWriter(MemberVO vo) {
+		dao.deleteWriter(vo);
 	}
 
 }

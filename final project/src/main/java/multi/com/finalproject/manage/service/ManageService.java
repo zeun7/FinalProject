@@ -113,4 +113,8 @@ public class ManageService {
 		dao.update_nickname(map);
 	}
 
+	public void delfriendAll(MemberVO vo) {
+		dao.delfriendAll(vo);
+	}
+
 }
