@@ -32,6 +32,10 @@
 		select * from miniboard where mbnum=#{mbnum}
 	</select>
 	
+	<select id="MB_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
+		select * from miniboard where writer = #{nickname}
+	</select>
+	
 	<select id="NEWEST_DIARY" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO">
 		select * from miniboard where mbnum = (select MAX(mbnum) from miniboard where mbname=#{mbname} and writer=#{writer})
 	</select>
@@ -98,6 +102,10 @@
 	
 	<delete id="MB_DELETE_LIKE_ALL">
 		delete from likes where mbnum = #{mbnum}
+	</delete>
+	
+	<delete id="MB_DELETE_LIKE_ID">
+		delete from likes where id = #{id}
 	</delete>
 	
 	<insert id="MB_REPORT" parameterType="Map">

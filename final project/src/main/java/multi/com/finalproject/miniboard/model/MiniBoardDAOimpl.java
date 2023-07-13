@@ -149,23 +149,30 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 
 	@Override
 	public void deleteAll(MemberVO vo) {
-		log.info("delete board all()...{}", vo);
+		log.info("delete miniboard all()...{}", vo);
 		
-		List<MiniBoardVO> vos = sqlSession.selectList("MB_SELECT_ALL", vo);	// 게시글 찾기
+		List<MiniBoardVO> vos = sqlSession.selectList("MB_SEARCH_LIST_WRITER", vo);	// nickname으로 게시글 찾기
 		
 		for (MiniBoardVO vo2 : vos) {
-			int del_like_result = sqlSession.delete("MB_DELETE_LIKE_ALL", vo2);	// 게시글 좋아요 삭제
-			int del_comm_result = minicomments_service.deleteAll(vo2);			// 댓글 삭제
-			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_MBNUM", vo2); // 게시글 신고 삭제
+			int del_like_result = sqlSession.delete("MB_DELETE_LIKE_ALL", vo2);	// mbnum으로 게시글 좋아요 삭제
+			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_MBNUM", vo2); // mbnum으로 게시글 신고 삭제
+			int del_comm_result = minicomments_service.deleteAll(vo2);			// mbnum으로 댓글 삭제
 			
 			log.info("miniboard delete like result: {}", del_like_result);
-			log.info("minicomments delete result: {}", del_comm_result);
 			log.info("miniboard delete report result: {}", del_report_result);
+			log.info("minicomments delete result: {}", del_comm_result);
 		}
 		
-		int result = sqlSession.delete("MB_DELETE_ALL", vo);		// 게시글 삭제
+		int result = sqlSession.delete("MB_DELETE_ALL", vo);		// nickname으로 게시글 모두 삭제
 		log.info("result: {}", result);
 	}
 
+	@Override
+	public void deleteLikesAll(MemberVO vo) {
+		log.info("delete miniboard likes()...{}", vo);
+		
+		int result = sqlSession.delete("MB_DELETE_LIKE_ID", vo);	// id로 좋아요 모두 삭제
+		log.info("result: {}", result);
+	}
 
 }

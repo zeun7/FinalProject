@@ -76,10 +76,6 @@ public class MiniHomeService {
 	public JukeboxVO bgm_selectOne(JukeboxVO vo) {
 		return dao.bgm_selectOnce(vo);
 	}
-
-	public void delete(MemberVO vo) {
-		dao.delete(vo);
-	}
 	
 	public int record_insert(GameVO vo) {
 		return dao.record_insert(vo);

@@ -94,4 +94,8 @@ public class MiniBoardService {
 		dao.deleteAll(vo);
 	}
 
+	public void deleteLikesAll(MemberVO vo) {
+		dao.deleteLikesAll(vo);
+	}
+
 }

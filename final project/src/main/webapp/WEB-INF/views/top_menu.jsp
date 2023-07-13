@@ -21,6 +21,7 @@
 	<li><a href="b_selectAll.do?bname=board5">게시판5</a></li>
 	<li><a href="m_friends.do">친구목록</a></li>
 	<li><a href="manage.do" id="manage">관리</a></li>
+	<li><a href="template.do">템플릿</a></li>
 </ul>
 <script type="text/javascript">
 	if('${user_id}' === ''){	// 로그아웃 상태

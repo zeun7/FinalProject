@@ -101,14 +101,6 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		log.info("bgm_selectOne(vo)...{}", vo);
 		return sqlSession.selectOne("BGM_SELECT_ONE", vo);
 	}
-
-	@Override
-	public void delete(MemberVO vo) {
-		log.info("delete()...{}", vo);
-		
-		int result = sqlSession.delete("MH_DELETE", vo);
-		log.info("result: {}", result);
-	}
 	
 	@Override
 	public int record_insert(GameVO vo) {

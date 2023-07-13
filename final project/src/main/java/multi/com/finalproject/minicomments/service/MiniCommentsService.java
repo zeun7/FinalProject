@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.minicomments.model.MiniCommentsDAO;
 import multi.com.finalproject.minicomments.model.MiniCommentsVO;
@@ -79,6 +80,14 @@ public class MiniCommentsService {
 
 	public int deleteAll(MiniBoardVO vo2) {
 		return dao.deleteAll(vo2);
+	}
+
+	public void deleteClikesAll(MemberVO vo) {
+		dao.deleteClikesAll(vo);
+	}
+
+	public void deleteWriter(MemberVO vo) {
+		dao.deleteWriter(vo);
 	}
 
 }

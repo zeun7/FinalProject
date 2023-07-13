@@ -232,14 +232,17 @@ public class MemberController {
 		
 		int result = service.delete(vo);
 		log.info("result:{}", result);
+		vo.setNickname(session.getAttribute("nickname").toString());
 		
 		if (result == 1) {
-			minihome_service.delete(vo);		// 미니홈피 삭제
 			miniboard_service.deleteAll(vo);	// 미니홈피 게시글 삭제, 게시글 좋아요 삭제, 댓글 삭제, 댓글 좋아요 삭제
 			board_service.deleteAll(vo);		// 게시글 삭제, 게시글 좋아요 삭제, 댓글 삭제, 댓글 좋아요 삭제
 			board_service.deleteLikesAll(vo);	// 게시글 좋아요 삭제
 			comments_service.deleteClikesAll(vo); // 게시글의 댓글 좋아요 삭제
 			comments_service.deleteWriter(vo);		// 작성한 댓글 삭제
+			miniboard_service.deleteLikesAll(vo);	// 미니홈피 게시글 좋아요 삭제
+			minicomments_service.deleteClikesAll(vo);	// 미니홈피 게시글의 댓글 좋아요 삭제
+			minicomments_service.deleteWriter(vo);	// 작성한 미니홈피 댓글 삭제
 			manage_service.delfriendAll(vo);	// 친구 목록 삭제
 			
 			session.invalidate(); // 세션 만료시킴

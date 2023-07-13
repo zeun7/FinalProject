@@ -21,6 +21,7 @@ import com.mongodb.client.result.UpdateResult;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.comments.model.ClikesVO;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 @Slf4j
@@ -361,11 +362,11 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 				MiniCommentsVO vo = new MiniCommentsVO();
 				vo.setMcnum(doc.getInteger("mcnum"));
 				
-				sqlSession.delete("MC_DELETE_CLIKES_ALL", vo);		// 댓글 좋아요 삭제
-				sqlSession.delete("MNG_DEL_REPORT_BY_MCNUM", vo);	// 댓글 신고 삭제
+				sqlSession.delete("MC_DEL_CLIKE", vo);		// mcnum으로 댓글 좋아요 삭제
+				sqlSession.delete("MNG_DEL_REPORT_BY_MCNUM", vo);	// mcnum으로 댓글 신고 삭제
 			}
 			
-			DeleteResult result = MiniComments.deleteMany(filter);	// 댓글 삭제
+			DeleteResult result = MiniComments.deleteMany(filter);	// mbnum으로 댓글 삭제
 			log.info("result: {}", result);
 			flag = 1;
 		} catch(Exception e) {
@@ -373,6 +374,44 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		}
 		
 		return flag;
+	}
+
+	@Override
+	public void deleteClikesAll(MemberVO vo) {
+		log.info("delete minicomments clikes()...", vo);
+		
+		int result = sqlSession.delete("C_DEL_CLIKE_ID", vo);	// id로 댓글 좋아요 모두 삭제
+		log.info("result: {}", result);
+	}
+
+	@Override
+	public void deleteWriter(MemberVO vo) {
+		log.info("delete by writer()...{}", vo);
+		
+		try {
+			Bson filter = Filters.eq("writer", vo.getNickname());	// nickname으로 댓글 찾기
+			
+			FindIterable<Document> docs = MiniComments.find(filter);
+			
+			for(Document doc : docs) {
+				MiniCommentsVO vo2 = new MiniCommentsVO();
+				vo2.setMcnum(doc.getInteger("mcnum"));
+				vo2.setMccnum(doc.getInteger("mccnum"));
+				vo2.setWriter(doc.getString("writer"));
+				
+				if(vo2.getMccnum() != 0) {	// 대댓글일 경우
+					delete(vo2);	// 삭제
+				}
+				
+				sqlSession.delete("MNG_DEL_REPORT_BY_MCNUM", vo2);	// mcnum으로 신고 삭제
+				sqlSession.delete("MC_DEL_CLIKE", vo2);			// cnum으로 좋아요 모두 삭제
+				// 삭제하려는 것이 댓글이면 대댓글들도 처리를 해줘야 함
+				DeleteResult result = MiniComments.deleteMany(filter);	// cnum으로 댓글 삭제
+				log.info("result: {}", result);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

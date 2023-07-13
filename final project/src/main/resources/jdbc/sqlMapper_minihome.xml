@@ -16,11 +16,7 @@
 	<update id="MINI_UPDATE" parameterType="multi.com.finalproject.minihome.model.MiniHomeVO">
 		update minihome set title=#{title}, message=#{message}, backimg=#{backimg}, bgm=#{bgm} where id=#{id}
 	</update>
-	
-	<delete id="MH_DELETE">
-		delete minihome where id = #{id}
-	</delete>
-	
+
 	<select id="SELECT_NICK_PIC" resultType="multi.com.finalproject.member.model.MemberVO">
 		select profilepic, nickname from member where id=#{id}
 	</select>

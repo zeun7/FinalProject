@@ -32,8 +32,6 @@ public interface MiniHomeDAO {
 	public List<JukeboxVO> j_selectAll(Map<String, Object> map);
 
 	public JukeboxVO bgm_selectOnce(JukeboxVO vo);
-
-	public void delete(MemberVO vo);
 	
 	public int record_insert(GameVO vo);
 

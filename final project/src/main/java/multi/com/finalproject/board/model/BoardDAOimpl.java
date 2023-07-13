@@ -162,11 +162,11 @@ public class BoardDAOimpl implements BoardDAO {
 	public void deleteAll(MemberVO vo) {
 		log.info("delete All()...{}", vo);
 		
-		List<BoardVO> vos = sqlSession.selectList("B_SEARCH_ALL_WRITER", vo);
+		List<BoardVO> vos = sqlSession.selectList("B_SEARCH_ALL_WRITER", vo);	// nickname으로 게시글 찾기
 		
 		for (BoardVO vo2 : vos) {
-			int del_like_result = sqlSession.delete("B_DELETE_LIKE_ALL", vo2);	// 게시글 좋아요 삭제
-			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_BNUM", vo2); // 게시글 신고 삭제
+			int del_like_result = sqlSession.delete("B_DELETE_LIKE_ALL", vo2);	// bnum으로 게시글 좋아요 삭제
+			int del_report_result = sqlSession.delete("MNG_DEL_REPORT_BY_BNUM", vo2); // bnum으로 게시글 신고 삭제
 			int del_comm_result = comments_service.deleteAll(vo2);	// 댓글 삭제
 			
 			log.info("delete like result: {}", del_like_result);
@@ -174,7 +174,7 @@ public class BoardDAOimpl implements BoardDAO {
 			log.info("delete comments result: {}", del_comm_result);
 		}
 		
-		int result = sqlSession.delete("B_DELETE_ALL", vo); // 게시글 삭제
+		int result = sqlSession.delete("B_DELETE_ALL", vo); // nickname으로 게시글 삭제
 		log.info("result: {}", result);
 	}
 
@@ -182,7 +182,7 @@ public class BoardDAOimpl implements BoardDAO {
 	public void deleteLikesAll(MemberVO vo) {
 		log.info("delete likes All()...{}", vo);
 		
-		int result = sqlSession.delete("B_DELETE_LIKE_ID", vo);
+		int result = sqlSession.delete("B_DELETE_LIKE_ID", vo);	// id로 게시글 좋아요 모두 삭제
 		log.info("result: {}", result);
 	}
 

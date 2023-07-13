@@ -133,11 +133,11 @@
 	</delete>
 	
 	<delete id="MNG_DEL_REPORT_BY_CNUM">
-		delete from report where cnum = #{cnum} or ccnum = #{cnum}
+		delete from report where cnum = #{cnum}
 	</delete>
 	
 	<delete id="MNG_DEL_REPORT_BY_MCNUM">
-		delete from report where mcnum = #{mcnum} or mccnum = #{mcnum}
+		delete from report where mcnum = #{mcnum}
 	</delete>
 	
 	<select id="MNG_COUNT_C_REPORT" resultType="Integer">

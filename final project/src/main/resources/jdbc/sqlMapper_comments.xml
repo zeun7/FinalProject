@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="C_SEARCH_LIST_WRITER" resultType="multi.com.finalproject.comments.model.CommentsVO">
-		select * from comments whrer writer = #{nickname}
+		select * from comments where writer = #{nickname}
 	</select>
 	
 	<insert id="C_INSERT" parameterType="multi.com.finalproject.comments.model.CommentsVO">
@@ -97,11 +97,7 @@
 	</delete>
 	
 	<delete id="C_DEL_CLIKE">
-		delete from clikes where cnum = #{cnum} or ccnum = #{cnum}
-	</delete>
-	
-	<delete id="C_DEL_CLIKE_ALL">
-		delete from clikes where bnum = #{bnum}
+		delete from clikes where cnum = #{cnum}
 	</delete>
 	
 	<delete id="C_DEL_CLIKE_ID">
@@ -113,6 +109,7 @@
 	</delete>
 	
 	<delete id="MC_DEL_CLIKE">
-		delete from clikes where mcnum = #{mcnum} or mccnum = #{mcnum}
+		delete from clikes where mcnum = #{mcnum}
 	</delete>
+
 </mapper>
