@@ -97,7 +97,9 @@
 								name="pw" value="${vo2.pw}">
 								<button type="button" onclick="togglePasswordConfirmation()">비밀번호
 									수정</button> <input class="w3-input" type="password" id="pw2" name="pw2"
-								placeholder="비밀번호 한번더 입력"> <input id="confirmationButton" type="button" onclick="test2()" value="확인" class="myButton"></td>
+								placeholder="비밀번호 한번더 입력"> <input
+								id="confirmationButton" type="button" onclick="test2()"
+								value="확인" class="myButton"></td>
 						</tr>
 						<tr>
 							<td><label for="name">name:</label></td>
@@ -137,29 +139,13 @@
 			</div>
 		</div>
 	</div>
+
 	<script>
 		function m_deleteOK() {
 			if (window.confirm("탈퇴하시겠습니까?")) {
 				location.href = "m_deleteOK.do?id=${vo2.id}";
 			}
 
-		}
-		function test2() {
-			var p1 = document.getElementById('pw1').value;
-			var p2 = document.getElementById('pw2').value;
-
-			if (p1.length < 6) {
-				alert('입력한 글자가 6글자 이상이어야 합니다.');
-				return false;
-			}
-
-			if (p1 !== p2) {
-				alert("비밀번호 불일치");
-				return false;
-			} else {
-				alert("비밀번호가 일치합니다");
-				return true;
-			}
 		}
 
 		function togglePasswordConfirmation() {
@@ -192,6 +178,9 @@
 			var email = document.getElementById("email").value;
 			var tel = document.getElementById("tel").value;
 
+			console.log("currentUserNickname:", currentUserNickname);
+			console.log("nickname:", nickname);
+
 			if (document.getElementById("pw2").style.display === "block") {
 				if (pw1 !== pw2) {
 					alert("비밀번호가 일치하지 않습니다.");
@@ -203,9 +192,10 @@
 				document.getElementById("pw2").value = "";
 			}
 
+
 			if (nickname !== currentUserNickname) {
-				if ($('#demo2').text() !== '사용 가능한 닉네임입니다.') {
-					alert("사용 중인 닉네임입니다.");
+				if ($('#demo2').text() !== '사용가능한 닉네임입니다.') {
+					alert("사용중인 닉네임입니다");
 					return;
 				}
 			}
