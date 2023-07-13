@@ -96,4 +96,10 @@
 	<select id="GAME_SELECT_ONE" resultType="multi.com.finalproject.minihome.model.GameVO">
 		select * from game where gnum=#{gnum}
 	</select>
+	
+	<select id="GET_LATEST_RECORD" resultType="multi.com.finalproject.minihome.model.GameVO">
+		<![CDATA[
+			select * from (select * from game order by gdate desc) where rownum = 1
+		]]>
+	</select>
 </mapper>

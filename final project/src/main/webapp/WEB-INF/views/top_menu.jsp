@@ -13,7 +13,7 @@
 <ul>
 	<li><a href="home.do">HOME</a></li>
 
-	<li><a href="mini_home.do?id=${user_id}">미니홈피</a></li>
+	<li><a href="mini_home.do?id=${user_id}" onclick="openMiniHomePage(event)">미니홈피</a></li>
 	<li><a href="b_selectAll.do?bname=board1">게시판1</a></li>
 	<li><a href="b_selectAll.do?bname=board2">게시판2</a></li>
 	<li><a href="b_selectAll.do?bname=board3">게시판3</a></li>
@@ -21,7 +21,6 @@
 	<li><a href="b_selectAll.do?bname=board5">게시판5</a></li>
 	<li><a href="m_friends.do">친구목록</a></li>
 	<li><a href="manage.do" id="manage">관리</a></li>
-	<li><a href="template.do">템플릿</a></li>
 </ul>
 <script type="text/javascript">
 	if('${user_id}' === ''){	// 로그아웃 상태
@@ -43,4 +42,12 @@
 	else{						// 일반 유저
 		$('#manage').hide();
 	}
+	
+	function openMiniHomePage(event) {
+		  event.preventDefault(); // 기본 동작인 링크 이동을 중지합니다.
+		  let url = event.target.href;
+		  let name = '내 미니홈피';
+		  let options = 'width=1600,height=900,menubar=yes,toolbar=yes,location=yes,resizable=no';
+		  window.open(url, name, options);
+		}
 </script>

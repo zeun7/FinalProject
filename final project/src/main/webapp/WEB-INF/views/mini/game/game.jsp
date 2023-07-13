@@ -62,383 +62,8 @@
 	}
 	
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript">
-	function gameStart() {
-    let currentWord = '사과'; // 시작 단어
-    let score = 0; // 점수
-    let gameDuration = 10 * 1000; // 게임 시간 (60초)
-    let gameStarted = false; //게임 시작 시 flag 추가
-    
-    let remainingTime = gameDuration / 1000; // 초 단위로 변환
-    let timeDisplay = document.getElementById('remainingTime');
-
-    // 1초마다 남은 시간 갱신
-    let timerInterval = setInterval(function() {
-        remainingTime--;
-        timeDisplay.textContent = '남은 시간: ' + remainingTime;
-        
-        // 시간이 0이 되면 게임 종료
-        if (remainingTime <= 0) {
-            clearInterval(timerInterval);
-            timeDisplay.textContent = '게임 끝!';
-        }
-    }, 1000);
-    
-    let gameTimeout = setTimeout(function() {
-    	//게임을 플레이하지 않고 제한시간이 지났을 때
-    	if(!gameStarted){
-    		clearTimeout(gameTimeout);
-    		return;
-    	}
-        alert('Game Over!'); // 게임 종료 메시지
-        // 게임 기록 저장
-        $.ajax({
-            url: "game_record_insert.do",
-            method: "POST",
-            data: {
-                score: score
-            },
-            success: function(response) {
-            	 if (response.result > 0) {
-					console.log('if 문');
-            		show_all_record2(response.vo2);
-                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Request failed', textStatus, errorThrown);
-            }
-        });
-        clearTimeout(gameTimeout); // 타이머 클리어
-    }, gameDuration);
-
-    $('#startButton').on('click', function() {
-    	gameStarted = true; //게임 시작 시 flag 참으로 변경
-        validateAndAddWord();
-    });
-
-    $('#inputWord').on('keyup', function(event) {
-        if (event.which === 13) {
-            event.preventDefault();
-            gameStarted = true; //게임 시작 시 flag 참으로 변경
-            validateAndAddWord();
-        }
-    });
-
-    function validateAndAddWord() {
-        let inputWord = $('#inputWord').val().trim(); // 입력한 단어
-        if (inputWord !== '') {
-            validateWord(inputWord, function(isValid) {
-                if (isValid) {
-                    let hangulWord = /^[가-힣]+$/; // 한글 단어 유효성 검사
-                    // 입력한 단어가 한글 단어이며, 그리고 입력한 단어의 첫 글자가 현재 참조 단어의 마지막 글자와 같다면
-                    if (hangulWord.test(inputWord) && inputWord.charAt(0) === currentWord.charAt(currentWord.length - 1)) {
-                        $('#wordList').empty(); // 리스트 비우기
-                        let listItem = $('<li>').text('입력한 단어: ' + inputWord); 
-                        $('#wordList').append(listItem); // 단어 리스트에 추가
-
-                        // 다음 차례 설정
-                        currentWord = inputWord;
-
-                        // 점수 증가
-                        score++;
-
-                        // 입력 필드 초기화
-                        $('#inputWord').val('');
-                    } else if (!hangulWord.test(inputWord)) {
-                        alert('한글만 입력!'); // '한글만 입력!' 알림창 표시
-                    } else {
-                        alert('땡!'); // '땡!' 알림창 표시
-                    }
-                }
-            });
-        }
-    }
-   
-    function validateWord(word, callback) {
-        $.ajax({
-            url: "validateWord/" + word,
-            method: "GET",
-            success: function(response) {
-                if (response.isValid) {
-                    // 단어가 사전에 존재
-                    callback(true);
-                } else {
-                    // 단어가 사전에 존재하지 않음
-                    alert(response.message);
-                    callback(false);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Request failed', textStatus, errorThrown);
-                callback(false);
-            }
-        });
-    }
-    
-//     function show_all_record2(){
-	function show_all_record2(myResult) {
-		console.log(myResult);
-	        $.ajax({
-            url : "game_ranking_all2.do",
-            method : "get",
-            data : {
-            	gnum : myResult
-            },
-            success : function(records){
-            	let vos = records.vos; // vos 추출
-                let vo2 = records.vo2; // vo2 추출
-            	
-                //랭킹 테이블
-                let table = $('<table></table>');
-                let header = $('<tr><th>Rank</th><th>Score</th><th>profilepic</th><th>ID</th><th>Gdate</th></tr>')
-                let footer = $('<tr></tr>');
-
-                // 다시하기 버튼 추가
-                let restartButton = $('<button class="myButton"></button>').text('다시하기');
-                let restartButtonCell = $('<td colspan="5"></td>').append(restartButton);
-                footer.append(restartButtonCell);
-                
-                // 오늘의 랭킹 버튼 추가
-                let todayRankingButton = $('<button class="myButton"></button>').text('오늘의 랭킹');
-                let todayRankingButtonCell = $('<td colspan="5"></td>').append(todayRankingButton);
-                footer.append(todayRankingButtonCell);
-
-                table.append(header);
-                
-             	// 나의 레코드를 첫 번째 행으로 추가
-                let row = $('<tr></tr>');
-                row.append($('<td></td>').text('내 점수'));
-                row.append($('<td></td>').text(vo2.score));
-                let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + vo2.profilepic);
-                row.append($('<td></td>')).append(img);
-                row.append($('<td></td>').text(vo2.id));
-                row.append($('<td></td>').text(vo2.gdate));
-                table.append(row);
-                
-                vos.forEach(function(record, index){
-                	let newIndex = index + 1; // 1부터 시작
-                    let row = $('<tr></tr>');
-                    row.append($('<td></td>').text(newIndex + 1)); // 2,3,4...
-                    row.append($('<td></td>').text(record.score));
-                    let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + record.profilepic);
-                    row.append($('<td></td>')).append(img);
-                    row.append($('<td></td>').text(record.id));
-                    row.append($('<td></td>').text(record.gdate));
-                    table.append(row);
-                });
-                table.append(footer);
-                $('#rankingContent').html(table);
-                    
-                // 게임 플레이 화면 숨기고 랭킹 화면 보이기
-                $('#showRank').hide();
-                $('#gameContent').hide();
-                $('#rankingContent').show();
-                
-                restartButton.click(function() {
-                    // 다시하기 버튼이 클릭되면 랭킹 화면 숨기고 게임 플레이 화면 보이기
-                    $('#rankingContent').hide();
-                    $('#gameContent').show();
-                    $('#showRank').show();
-                    
-                    gameStart();
-                });//end restartButton()
-                
-                todayRankingButton.click(function(myResult){
-                    $.ajax({
-                        url: "game_ranking_today2.do",
-                        method: "GET",
-                        data : {
-                        	gnum : myResult.gnum,
-                        },
-                        success: function(records) {
-                        	let vos = records.vos; // vos 추출
-                            let vo2 = records.vo2; // vo2 추출
-                        	
-                            // 랭킹 테이블
-                            let table = $('<table></table>');
-                            let header = $('<tr><th>Rank</th><th>Score</th><th>profilepic</th><th>ID</th><th>Gdate</th></tr>');
-                            let footer = $('<tr></tr>');
-                            
-                            // 다시하기 버튼 추가
-                            let restartButton = $('<button class="myButton"></button>').text('다시하기');
-                            let restartButtonCell = $('<td colspan="5"></td>').append(restartButton);
-                            footer.append(restartButtonCell);
-                            
-                            // 역대 랭킹 버튼 추가
-                            let allTimeRankingButton = $('<button class="myButton"></button>').text('역대 랭킹');
-                            let allTimeRankingButtonCell = $('<td colspan="5"></td>').append(allTimeRankingButton);
-                            footer.append(allTimeRankingButtonCell);
-
-                            table.append(header);
-                            
-                         	// 나의 레코드를 첫 번째 행으로 추가
-                            let row = $('<tr></tr>');
-                            row.append($('<td></td>').text('내 점수'));
-                            row.append($('<td></td>').text(vo2.score));
-                            let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + vo2.profilepic);
-                            row.append($('<td></td>')).append(img);
-                            row.append($('<td></td>').text(vo2.id));
-                            row.append($('<td></td>').text(vo2.gdate));
-                            table.append(row);
-                            
-                            vos.forEach(function(record, index) {
-                            	let newIndex = index + 1; // 1부터 시작
-                                let row = $('<tr></tr>');
-                                row.append($('<td></td>').text(newIndex + 1)); // 2,3,4,5...
-                                row.append($('<td></td>').text(record.score));
-                                let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + record.profilepic);
-                                row.append($('<td></td>')).append(img);
-                                row.append($('<td></td>').text(record.id));
-                                row.append($('<td></td>').text(record.gdate));
-                                table.append(row);
-                            });
-                            table.append(footer);
-                            $('#rankingContent').html(table);
-
-                            // 다시하기 버튼 클릭 이벤트 핸들러
-                            restartButton.click(function() {
-                                // 다시하기 버튼이 클릭되면 랭킹 화면 숨기고 게임 플레이 화면 보이기
-                                $('#rankingContent').hide();
-                                $('#gameContent').show();
-
-                                gameStart();
-                            });
-
-                            // 역대 랭킹 버튼 클릭 이벤트 핸들러
-                            allTimeRankingButton.click(function() {
-                                // 여기서 "show_all_record()" 함수를 다시 호출하여 역대 랭킹을 불러옵니다.
-                                show_all_record();
-                            });
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error('Request failed', textStatus, errorThrown);
-                        }
-                    });//end ajax
-                });//end todayRankingButton()
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.error('Request failed', textStatus, errorThrown);
-            }
-        });//end ajax
-    }//end show_all_record2()
-    
-    window.show_all_record = function() {
-        $.ajax({
-            url : "game_ranking_all.do",
-            method : "get",
-            success : function(records){            	
-                //랭킹 테이블
-                let table = $('<table></table>');
-                let header = $('<tr><th>Rank</th><th>Score</th><th>profilepic</th><th>ID</th><th>Gdate</th></tr>')
-                let footer = $('<tr></tr>');
-
-                // 다시하기 버튼 추가
-                let restartButton = $('<button class="myButton"></button>').text('다시하기');
-                let restartButtonCell = $('<td colspan="5"></td>').append(restartButton);
-                footer.append(restartButtonCell);
-                
-                // 오늘의 랭킹 버튼 추가
-                let todayRankingButton = $('<button class="myButton"></button>').text('오늘의 랭킹');
-                let todayRankingButtonCell = $('<td colspan="5"></td>').append(todayRankingButton);
-                footer.append(todayRankingButtonCell);
-
-                table.append(header);
-                
-                records.forEach(function(record, index){
-                    let row = $('<tr></tr>');
-                    row.append($('<td></td>').text(index + 1)); // 1,2,3,4... 
-                    row.append($('<td></td>').text(record.score));
-                    let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + record.profilepic);
-                    row.append($('<td></td>')).append(img);
-                    row.append($('<td></td>').text(record.id));
-                    row.append($('<td></td>').text(record.gdate));
-                    table.append(row);
-                });
-                table.append(footer);
-                $('#rankingContent').html(table);
-                    
-                // 게임 플레이 화면 숨기고 랭킹 화면 보이기
-                $('#showRank').hide();
-                $('#gameContent').hide();
-                $('#rankingContent').show();
-                
-                restartButton.click(function() {
-                    // 다시하기 버튼이 클릭되면 랭킹 화면 숨기고 게임 플레이 화면 보이기
-                    $('#rankingContent').hide();
-                    $('#gameContent').show();
-                    $('#showRank').show();
-                    
-                    gameStart();
-                });//end restartButton()
-                
-                todayRankingButton.click(function(){
-                    $.ajax({
-                        url: "game_ranking_today.do",
-                        method: "GET",
-                        success: function(records) {
-                            // 랭킹 테이블
-                            let table = $('<table></table>');
-                            let header = $('<tr><th>Rank</th><th>Score</th><th>profilepic</th><th>ID</th><th>Gdate</th></tr>');
-                            let footer = $('<tr></tr>');
-                            
-                            // 다시하기 버튼 추가
-                            let restartButton = $('<button class="myButton"></button>').text('다시하기');
-                            let restartButtonCell = $('<td colspan="5"></td>').append(restartButton);
-                            footer.append(restartButtonCell);
-                            
-                            // 역대 랭킹 버튼 추가
-                            let allTimeRankingButton = $('<button class="myButton"></button>').text('역대 랭킹');
-                            let allTimeRankingButtonCell = $('<td colspan="5"></td>').append(allTimeRankingButton);
-                            footer.append(allTimeRankingButtonCell);
-
-                            table.append(header);
-                            
-                            records.forEach(function(record, index) {
-                                let row = $('<tr></tr>');
-                                row.append($('<td></td>').text(index + 1)); // 1,2,3,4...
-                                row.append($('<td></td>').text(record.score));
-                                let img = $('<img>').attr('src', "resources/uploadimg/thumb_" + record.profilepic);
-                                row.append($('<td></td>')).append(img);
-                                row.append($('<td></td>').text(record.id));
-                                row.append($('<td></td>').text(record.gdate));
-                                table.append(row);
-                            });
-                            table.append(footer);
-                            $('#rankingContent').html(table);
-
-                            // 다시하기 버튼 클릭 이벤트 핸들러
-                            restartButton.click(function() {
-                                // 다시하기 버튼이 클릭되면 랭킹 화면 숨기고 게임 플레이 화면 보이기
-                                $('#rankingContent').hide();
-                                $('#gameContent').show();
-
-                                gameStart();
-                            });
-
-                            // 역대 랭킹 버튼 클릭 이벤트 핸들러
-                            allTimeRankingButton.click(function() {
-                                // 여기서 "show_all_record()" 함수를 다시 호출하여 역대 랭킹을 불러옵니다.
-                                show_all_record();
-                            });
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error('Request failed', textStatus, errorThrown);
-                        }
-                    });//end ajax
-                });//end todayRankingButton()
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.error('Request failed', textStatus, errorThrown);
-            }
-        });//end ajax
-    }//end show_all_record()
-}
-</script>
 </head>
 <body onload="gameStart()">
     <jsp:include page="../../top_menu.jsp"></jsp:include>
@@ -448,19 +73,332 @@
         style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
         <div id="gameContainer">
             <div id="gameBackground">
-                <p id="remainingTime">남은 시간: 10</p>
+                <p id="remainingTime"></p>
             </div>
             <div id="gameContent">
                 <h2>끝말잇기 게임</h2>
                 <p>시작 단어: 사과</p>
                 <ul id="wordList"></ul>
                 <input type="text" id="inputWord" placeholder="단어를 입력하세요">
-                <button id="startButton">다음 단어</button><br>
-		       	<button id="showRank" onclick="show_all_record()" class="myButton" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">랭킹보기</button>
+                <button id="startButton""></button><br>
+		       	<button id="showRank" class="myButton" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">랭킹보기</button>
             </div>
             <div id="rankingContent" style="display: none;">
             </div>
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    let Game = { // Game 객체 선언
+        currentWord: '사과',
+        score: 0,
+        gameDuration: 60 * 1000,
+        gameStarted: false,
+        remainingTime: 60, // 제한 시간
+        startButton: document.getElementById('startButton'),
+        timeDisplay: document.getElementById('remainingTime'),
+        timerInterval: null, // timerInterval 초기화
+        gameTimeout: null // gameTimeout 초기화
+    }
+	
+ 	// 버튼의 초기 텍스트 설정
+    Game.startButton.textContent = '게임 시작';
+    Game.timeDisplay.textContent = '남은 시간: 60';
+    
+    function startTimer() {
+        Game.timerInterval = setInterval(function() {
+            Game.remainingTime--;
+            Game.timeDisplay.textContent = '남은 시간: ' + Game.remainingTime;
+            
+            if (Game.remainingTime <= 0) {
+                clearInterval(Game.timerInterval);
+                Game.timeDisplay.textContent = '게임 끝!';
+            }
+        }, 1000);
+    }
+
+    function startGameTimeout() {
+        Game.gameTimeout = setTimeout(function() {
+            if(!Game.gameStarted){
+                clearTimeout(Game.gameTimeout);
+                return;
+            }
+            alert('Game Over!');
+            // 게임 기록 저장
+            $.ajax({
+                url: "game_record_insert.do",
+                method: "POST",
+                data: {
+                    score: Game.score
+                },
+                success: function(response) {
+                	console.log(response);
+                	gameEnd(response.gnum);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Request failed', textStatus, errorThrown);
+                }
+            });
+            clearTimeout(Game.gameTimeout); 
+        }, Game.gameDuration);
+    }
+
+    function gameStart() {
+        $('#wordList').hide();
+        $('#rankingContent').hide();
+        $('#gameContent').show();
+        $('#remainingTime').show();
+
+        $('#startButton').on('click', function() {
+            startGame();
+        });
+
+        $('#startButton').on('keyup', function(event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                startGame();
+            }
+        });
+    }
+	
+    function startGame() {
+        if (!Game.gameStarted) {
+            Game.startButton.textContent = '다음 단어';
+            Game.startButton.removeEventListener('click', startGame);
+            Game.startButton.removeEventListener('keyup', startGame);
+            Game.startButton.addEventListener('click', validateAndAddWord);
+            $('#inputWord').on('keyup', function(event) { // inputWord에서 엔터를 입력했을 때의 처리
+                if (event.which === 13) {
+                    event.preventDefault();
+                    validateAndAddWord();
+                }
+            });
+            Game.gameStarted = true;
+            startTimer();
+            startGameTimeout();
+            validateAndAddWord();  // 여기서 바로 validateAndAddWord 호출
+        }
+        $('#inputWord').val(''); // inputWord 초기화
+        $('#wordList').html('<li>사과</li>'); // wordList 초기화
+    }
+
+    $('#inputWord').on('keyup', function(event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            if (!Game.gameStarted) {
+                startGame();
+            }
+        }
+    });
+
+    $('#startButton').on('click', function(event) {
+        event.preventDefault();
+        if (!Game.gameStarted) {
+            startGame();
+        }
+    });
+    
+ 	// 게임플레이 후 랭킹 보여주는 경우
+    function gameEnd(gnum) {
+        // db에서 user_id, profilepic 가져오기
+        $.ajax({
+            url: "getUserInfo.do", 
+            method: "GET",
+            data:{
+            	gnum : gnum
+            },
+            dataType : 'json',
+            success: function(data) {
+                show_all_record(data.profilepic, data.score, data.id, data.gdate);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Request failed', textStatus, errorThrown);
+            }
+        });
+    }
+    
+    function show_all_record(userProfilePic, userScore, userId, playDate) {
+        $.ajax({
+            url : "game_ranking_all.do",
+            method : "get",
+            success : function(records) {
+                if(userId) { // 게임을 플레이한 경우 사용자의 점수를 추가
+                    let userRecord = {
+                        profilepic: userProfilePic,
+                        score: userScore,
+                        id: userId,
+                        gdate: playDate
+                    };
+                    records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
+                }
+
+                let rankingTable = "<table><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>";
+
+                for(let i = 0; i < records.length; i++) {
+                    let row = records[i];
+                    let rank;
+                    let date = moment(row.gdate).format('YY년MM월DD일HH시mm분ss초');
+                    if(i === 0 && userScore) {
+                        // 첫 번째 행이고, 사용자가 게임을 플레이했으면 '내 점수'로 설정
+                        rank = '내 점수';
+                    } else {
+                        // 그 외의 경우, 순위를 1부터 시작하여 부여
+                        rank = userScore ? i : i + 1; // 게임을 플레이하지 않았다면 i + 1을 사용
+                    }
+                    rankingTable += `<tr><td>\${rank}</td><td><img src="resources/uploadimg/thumb_\${row.profilepic}"></td><td>\${row.id}</td><td>\${row.score}점</td><td>\${date}</td></tr>`;
+                }
+             	// 테이블 마지막에 버튼 추가
+                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton'>게임하기</button><button id='showRankingButton'>오늘의 랭킹 보기</button></td></tr></tfoot></table>`;
+                rankingTable += `</table>`;
+                
+                $('#rankingContent').html(rankingTable);
+                $('#rankingContent').show();
+                $('#gameContent').hide();
+                
+                $('#restartGameButton').on('click', function() {
+                    // Game 객체 초기화(다시하기 버튼을 눌렀을 때를 위한)
+                    Game.currentWord = '사과';
+                    Game.score = 0;
+                    Game.gameStarted = false;
+                    Game.remainingTime = 60;
+                    Game.startButton.textContent = '게임 시작';
+                    Game.timeDisplay.textContent = '남은 시간: ' + Game.remainingTime;
+                    clearInterval(Game.timerInterval); // 이미 설정된 timerInterval을 취소
+                    clearTimeout(Game.gameTimeout); // 이미 설정된 gameTimeout을 취소
+
+                    $('#inputWord').val(''); // inputWord 초기화
+                    $('#wordList').val(''); // wordList 초기화
+                    gameStart();
+                });
+                
+                $('#showRankingButton').on('click', function() { // '오늘의 랭킹 보기' 버튼에 이벤트 바인딩
+                    show_today_ranking(userProfilePic, userScore, userId, playDate);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Request failed', textStatus, errorThrown);
+            }
+        });
+    }
+	
+    function show_today_ranking(userProfilePic, userScore, userId, playDate) {
+        $.ajax({
+        	url : "game_ranking_today.do",
+        	method : "get",
+        	success : function(records) {
+        		if(userId) { // 게임을 플레이한 경우 사용자의 점수를 추가
+                    let userRecord = {
+                        profilepic: userProfilePic,
+                        score: userScore,
+                        id: userId,
+                        gdate: playDate
+                    };
+                    records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
+                }
+
+                let rankingTable = "<table><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>";
+
+                for(let i = 0; i < records.length; i++) {
+                    let row = records[i];
+                    let rank;
+                    let date = moment(row.gdate).format('YY년MM월DD일HH시mm분ss초');
+                    if(i === 0 && userScore) {
+                        // 첫 번째 행이고, 사용자가 게임을 플레이했으면 '내 점수'로 설정
+                        rank = '내 점수';
+                    } else {
+                        // 그 외의 경우, 순위를 1부터 시작하여 부여
+                        rank = userScore ? i : i + 1; // 게임을 플레이하지 않았다면 i + 1을 사용
+                    }
+                    rankingTable += `<tr><td>\${rank}</td><td><img src="resources/uploadimg/thumb_\${row.profilepic}"></td><td>\${row.id}</td><td>\${row.score}점</td><td>\${date}</td></tr>`;
+                }
+             	// 테이블 마지막에 버튼 추가
+                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton'>게임하기</button><button id='showAllRankingButton'>전체 랭킹 보기</button></td></tr></tfoot></table>`;
+                rankingTable += `</table>`;
+                
+                $('#rankingContent').html(rankingTable);
+                $('#rankingContent').show();
+                $('#gameContent').hide();
+             	
+                $('#restartGameButton').on('click', function() {
+                    // Game 객체 초기화(다시하기 버튼을 눌렀을 때를 위한)
+                    Game.currentWord = '사과';
+                    Game.score = 0;
+                    Game.gameStarted = false;
+                    Game.remainingTime = 60;
+                    Game.startButton.textContent = '게임 시작';
+                    Game.timeDisplay.textContent = '남은 시간: ' + Game.remainingTime;
+                    clearInterval(Game.timerInterval); // 이미 설정된 timerInterval을 취소
+                    clearTimeout(Game.gameTimeout); // 이미 설정된 gameTimeout을 취소
+
+                    $('#inputWord').val(''); // inputWord 초기화
+                    $('#wordList').val(''); // wordList 초기화
+                    gameStart();
+                });
+                
+                $('#showAllRankingButton').on('click', function() { // '전체 랭킹 보기' 버튼에 이벤트 바인딩
+                    show_all_record(userProfilePic, userScore, userId, playDate);
+                });
+        	},
+        	error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Request failed', textStatus, errorThrown);
+            }
+        });
+    }
+ 	
+    function validateAndAddWord() {
+        let inputWord = $('#inputWord').val().trim(); // 입력한 단어 앞뒤 공백 자르기
+        if (inputWord !== '') {
+            validateWord(inputWord, function(isValid) {
+                if (isValid) {
+                    let hangulWord = /^[가-힣]+$/; // 한글 단어 유효성 검사
+                    // 입력한 단어가 한글 단어이며, 그리고 입력한 단어의 첫 글자가 현재 참조 단어의 마지막 글자와 같다면
+                    if (hangulWord.test(inputWord) && inputWord.charAt(0) === Game.currentWord.charAt(Game.currentWord.length - 1)) {
+                        let listItem = $('<li>').text('입력한 단어: ' + inputWord); 
+                        $('#wordList').empty(); // 리스트 비우기
+                        $('#wordList').append(listItem); // 단어 리스트에 추가
+                        Game.currentWord = inputWord; // 다음 차례 설정
+                        Game.score++; // 점수 증가
+                        $('#inputWord').val(''); // 입력 필드 초기화
+                        $('#wordList').show();
+                    } else if (!hangulWord.test(inputWord)) {
+                        alert('한글만 입력!'); // '한글만 입력!' 알림창 표시
+                    } else {
+//                         alert('땡!'); // '땡!' 알림창 표시
+                    }
+                }
+            });
+        }
+    } //end validateAndAddWord()
+   
+    function validateWord(word, callback) {
+        $.ajax({
+            url: "validateWord/" + word,
+            method: "GET",
+            success: function(response) {
+                if (response.isValid) {
+                    callback(true); //단어가 사전에 존재
+                } else {
+                    alert(response.message); //단어가 사전에 존재하지 않음
+                    callback(false);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Request failed', textStatus, errorThrown);
+                callback(false);
+            }
+        });
+    }//end validateWord
+    
+    // 랭킹만 보여주는 경우
+    $('#showRank').click(function() {
+    	// 게임 종료
+        Game.gameStarted = false;
+        clearTimeout(Game.gameTimeout);
+        clearInterval(Game.timerInterval);
+
+        $('#remainingTime').hide();
+    	
+        show_all_record(userScore = null, userId = null, userProfilePic = null, playDate = null);
+    });
+</script>
 </html>
