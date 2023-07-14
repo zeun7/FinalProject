@@ -10,7 +10,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>login from</title>
-<jsp:include page="../css.jsp"></jsp:include>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(function() {
@@ -28,7 +27,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
+	<jsp:include page="../sidebar.jsp"></jsp:include>
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">

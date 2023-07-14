@@ -89,8 +89,12 @@ public class MiniHomeService {
 		return dao.record_selectAll_today();
 	}
 
-	public GameVO record_selectOne(GameVO vo) {
-		return dao.record_selectOne(vo);
+	public GameVO record_selectOne(int gnum) {
+		return dao.record_selectOne(gnum);
+	}
+
+	public GameVO record_latest() {
+		return dao.record_latest();
 	}
 
 }

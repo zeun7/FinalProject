@@ -5,7 +5,6 @@
 <html>
 <head>
 <title>미니홈피</title>
-<jsp:include page="../css.jsp"></jsp:include>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -46,8 +45,8 @@ function recent_visitLog(){
 </script>
 </head>
 <body onload=recent_visitLog()>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
-	<jsp:include page="mini_top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<h1>mini/minihome.jsp</h1>
 	<div
 		style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
@@ -62,5 +61,6 @@ function recent_visitLog(){
 		<h2>방명록...포스팃 형식으로</h2>
 		<div id="visitors_log"></div>
 	</div>
+</div>
 </body>
 </html>

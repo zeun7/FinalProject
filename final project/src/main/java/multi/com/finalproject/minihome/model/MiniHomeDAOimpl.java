@@ -121,9 +121,15 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 	}
 
 	@Override
-	public GameVO record_selectOne(GameVO vo) {
-		log.info("record_selectOne(vo)...{}", vo);
-		return sqlSession.selectOne("GAME_SELECT_ONE", vo);
+	public GameVO record_selectOne(int gnum) {
+		log.info("record_selectOne(gnum)...{}", gnum);
+		return sqlSession.selectOne("GAME_SELECT_ONE", gnum);
+	}
+
+	@Override
+	public GameVO record_latest() {
+		log.info("record_latest()...");
+		return sqlSession.selectOne("GET_LATEST_RECORD");
 	}
 
 }

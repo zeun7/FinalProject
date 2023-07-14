@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 // 	$(function(){
@@ -63,7 +62,8 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<h1>${param.bname }</h1>
 	
 	<h3>글수정</h3>
@@ -114,7 +114,7 @@
 		</tfoot>
 	</table>
 	</form>
-	
+</div>
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 	let caname = document.querySelector('#${vo2.caname}');

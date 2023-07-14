@@ -10,6 +10,8 @@
 </head>
 
 <body>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<form action="find_pw_tel.do" method="get">
@@ -29,5 +31,6 @@
 			</form>
 		</div>
 	</div>
+</div>
 </body>
 </html>

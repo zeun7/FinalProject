@@ -11,7 +11,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>update</title>
-<jsp:include page="../css.jsp"></jsp:include>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -74,7 +73,8 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">
@@ -139,71 +139,72 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script>
-		function m_deleteOK() {
-			if (window.confirm("탈퇴하시겠습니까?")) {
-				location.href = "m_deleteOK.do?id=${vo2.id}";
-			}
-
+<script>
+	function m_deleteOK() {
+		if (window.confirm("탈퇴하시겠습니까?")) {
+			location.href = "m_deleteOK.do?id=${vo2.id}";
 		}
 
-		function togglePasswordConfirmation() {
-			var pwConfirmation = document.getElementById("pw2");
-			var pwConfirmationLabel = document
-					.getElementById("pwConfirmationLabel");
-			var confirmationButton = document
-					.getElementById("confirmationButton");
+	}
 
-			if (pwConfirmation.style.display === "none") {
-				pwConfirmation.style.display = "block";
-				pwConfirmationLabel.style.display = "block";
-				confirmationButton.style.display = "block";
-				pwConfirmation.value = ""; // 비밀번호 확인 필드가 나타날 때 pw2의 값 초기화
-			} else {
-				pwConfirmation.style.display = "none";
-				pwConfirmationLabel.style.display = "none";
-				confirmationButton.style.display = "none";
-				pwConfirmation.value = document.getElementById("pw1").value; // 비밀번호 확인 필드가 숨겨질 때 pw1과 pw2의 값 일치화
-				document.getElementById("pw2").oninput = null;
+	function togglePasswordConfirmation() {
+		var pwConfirmation = document.getElementById("pw2");
+		var pwConfirmationLabel = document
+				.getElementById("pwConfirmationLabel");
+		var confirmationButton = document
+				.getElementById("confirmationButton");
+
+		if (pwConfirmation.style.display === "none") {
+			pwConfirmation.style.display = "block";
+			pwConfirmationLabel.style.display = "block";
+			confirmationButton.style.display = "block";
+			pwConfirmation.value = ""; // 비밀번호 확인 필드가 나타날 때 pw2의 값 초기화
+		} else {
+			pwConfirmation.style.display = "none";
+			pwConfirmationLabel.style.display = "none";
+			confirmationButton.style.display = "none";
+			pwConfirmation.value = document.getElementById("pw1").value; // 비밀번호 확인 필드가 숨겨질 때 pw1과 pw2의 값 일치화
+			document.getElementById("pw2").oninput = null;
+		}
+	}
+
+	function submitForm() {
+
+		var pw1 = document.getElementById("pw1").value;
+		var pw2 = document.getElementById("pw2").value;
+		var currentUserNickname = "${vo2.nickname}";
+		var nickname = document.getElementById("nickname").value;
+		var email = document.getElementById("email").value;
+		var tel = document.getElementById("tel").value;
+
+		console.log("currentUserNickname:", currentUserNickname);
+		console.log("nickname:", nickname);
+
+		if (document.getElementById("pw2").style.display === "block") {
+			if (pw1 !== pw2) {
+				alert("비밀번호가 일치하지 않습니다.");
+				return;
 			}
 		}
 
-		function submitForm() {
-
-			var pw1 = document.getElementById("pw1").value;
-			var pw2 = document.getElementById("pw2").value;
-			var currentUserNickname = "${vo2.nickname}";
-			var nickname = document.getElementById("nickname").value;
-			var email = document.getElementById("email").value;
-			var tel = document.getElementById("tel").value;
-
-			console.log("currentUserNickname:", currentUserNickname);
-			console.log("nickname:", nickname);
-
-			if (document.getElementById("pw2").style.display === "block") {
-				if (pw1 !== pw2) {
-					alert("비밀번호가 일치하지 않습니다.");
-					return;
-				}
-			}
-
-			if (pw1 === "" && pw2 !== "") {
-				document.getElementById("pw2").value = "";
-			}
-
-
-			if (nickname !== currentUserNickname) {
-				if ($('#demo2').text() !== '사용가능한 닉네임입니다.') {
-					alert("사용중인 닉네임입니다");
-					return;
-				}
-			}
-
-			// 나머지 처리 로직
-			document.getElementById("joinForm").submit();
+		if (pw1 === "" && pw2 !== "") {
+			document.getElementById("pw2").value = "";
 		}
-	</script>
+
+
+		if (nickname !== currentUserNickname) {
+			if ($('#demo2').text() !== '사용가능한 닉네임입니다.') {
+				alert("사용중인 닉네임입니다");
+				return;
+			}
+		}
+
+		// 나머지 처리 로직
+		document.getElementById("joinForm").submit();
+	}
+</script>
 
 </body>
 </html>

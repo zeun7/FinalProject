@@ -13,26 +13,28 @@
 </head>
 
 <body>
+<jsp:include page="../../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
+			<form action="pass_injeung.do${dice},${email}" method="post">
 
-					<form action="pass_injeung.do${dice},${email}" method="post">
+				<br><br>
+				<p>
+					<label>인증번호 입력:</label> <input class="w3-input" type="number"
+						id="email" name="pass_injeung" required=" 인증번호를 입력하세요.">
+				</p>
 
-						<br><br>
-						<p>
-							<label>인증번호 입력:</label> <input class="w3-input" type="number"
-								id="email" name="pass_injeung" required=" 인증번호를 입력하세요.">
-						</p>
+				<button type="submit" name="submit"
+					class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">인증번호
+					확인</button>
 
-						<button type="submit" name="submit"
-							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">인증번호
-							확인</button>
+				<button type="button" onclick="history.go(-1);"
+					class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
 
-						<button type="button" onclick="history.go(-1);"
-							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-
-					</form>
+			</form>
 		</div>
 	</div>
+</div>
 </body>
 </html>

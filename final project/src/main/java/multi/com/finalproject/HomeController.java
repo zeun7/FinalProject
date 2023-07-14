@@ -37,13 +37,6 @@ public class HomeController {
 		return "template";
 	}
 	
-	@RequestMapping(value = "/dashboard.do", method = RequestMethod.GET)
-	public String dashboard() {
-		log.info("/dashboard.do...");
-		
-		return "dashboard";
-	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/json_post_friends.do",  method = RequestMethod.GET)
 	public List<MiniBoardVO> json_post_friends(MemberVO vo, int limit, String sortKey) {
@@ -79,5 +72,60 @@ public class HomeController {
 		
 		return vos;
 	}
-
+	
+	@RequestMapping(value = "/dashboard.do", method = RequestMethod.GET)
+	public String dashboard() {
+		log.info("/dashboard.do...");
+		
+		return "example/dashboard";
+	}
+	
+	@RequestMapping(value = "/icons.do", method = RequestMethod.GET)
+	public String icons() {
+		log.info("/icons.do...");
+		
+		return "example/icons";
+	}
+	
+	@RequestMapping(value = "/map.do", method = RequestMethod.GET)
+	public String map() {
+		log.info("/map.do...");
+		
+		return "example/map";
+	}
+	
+	@RequestMapping(value = "/notifications.do", method = RequestMethod.GET)
+	public String notifications() {
+		log.info("/notifications.do...");
+		
+		return "example/notifications";
+	}
+	
+	@RequestMapping(value = "/tables.do", method = RequestMethod.GET)
+	public String tables() {
+		log.info("/tables.do...");
+		
+		return "example/tables";
+	}
+	
+	@RequestMapping(value = "/typography.do", method = RequestMethod.GET)
+	public String typography() {
+		log.info("/typography.do...");
+		
+		return "example/typography";
+	}
+	
+	@RequestMapping(value = "/upgrade.do", method = RequestMethod.GET)
+	public String upgrade() {
+		log.info("/upgrade.do...");
+		
+		return "example/upgrade";
+	}
+	
+	@RequestMapping(value = "/user.do", method = RequestMethod.GET)
+	public String user() {
+		log.info("/user.do...");
+		
+		return "example/user";
+	}
 }

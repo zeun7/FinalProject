@@ -4,7 +4,6 @@
 <html>
 <head>
 <title>Home</title>
-<jsp:include page="css.jsp"></jsp:include>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
@@ -154,7 +153,8 @@ function post_board(boardName, sortKey){
 </script>
 </head>
 <body>
-	<jsp:include page="top_menu.jsp"></jsp:include>
+<jsp:include page="sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<h1>Hello world!</h1>
 
 	<table>
@@ -173,5 +173,6 @@ function post_board(boardName, sortKey){
 			<td id="board5"></td>
 		</tr>
 	</table>
+</div>
 </body>
 </html>

@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <title>selectOne</title>
-<jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<h1>내 정보</h1>
 	<table id="myinfo">
 		<thead>
@@ -32,7 +32,7 @@
 				<td colspan="8"><img width="300px"
 					src="resources/uploadimg/${vo2.profilepic}"></td>
 			</tr>
-
+	
 		</tbody>
 		<tfoot>
 			<tr>
@@ -40,5 +40,6 @@
 			</tr>
 		</tfoot>
 	</table>
+</div>
 </body>
 </html>

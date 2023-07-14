@@ -48,6 +48,8 @@
 <title>비밀번호 찾기</title>
 </head>
 <body>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 456.3px;">
 			<div class="w3-center w3-large w3-margin-top">
@@ -69,5 +71,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

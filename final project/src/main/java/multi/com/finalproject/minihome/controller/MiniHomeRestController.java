@@ -193,11 +193,8 @@ public class MiniHomeRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/game_record_insert.do", method = RequestMethod.POST)
-	public Map<String, Object> game_record_insert(GameVO vo) {
+	public GameVO game_record_insert(GameVO vo) {
 		log.info("game_record_insert(vo)...{}", vo);
-		
-		log.info("game_ranking_insert(vo)...{}", vo);
-	    Map<String, Object> map = new HashMap<String, Object>();
 
 	    // 세션에서 id를 가져와서 세팅
 	    MemberVO mvo = new MemberVO();
@@ -209,12 +206,10 @@ public class MiniHomeRestController {
 	    vo.setId(mvo2.getId()); 
 
 	    int result = service.record_insert(vo);
-	    map.put("result", result);
-	    if (result > 0) {
-	        GameVO vo2 = service.record_selectOne(vo);
-	        map.put("gnum", vo2.getGnum());
-	    }
-	    return map;
+	    log.info("result : {}", result);
+	    GameVO vo2 = service.record_latest();
+	    log.info("vo2 : ", vo2);
+	    return vo2;
 	}
 	
 	@ResponseBody
@@ -237,31 +232,31 @@ public class MiniHomeRestController {
 		return vos;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/game_ranking_all2.do", method = RequestMethod.GET)
-	public Map<String, Object> game_ranking_all2(GameVO vo) {
-		log.info("game_ranking_all2(vo)...{}", vo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		List<GameVO> vos = service.record_selectAll();
-		GameVO vo2 = service.record_selectOne(vo);
-		map.put("vos", vos);
-		map.put("vo2", vo2);
-		log.info("역대 랭킹 vos : {}", vos);
-		return map;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/game_ranking_today2.do", method = RequestMethod.GET)
-	public Map<String, Object> game_ranking_today2(GameVO vo) {
-		log.info("game_ranking_today2(vo)...{}", vo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		List<GameVO> vos = service.record_selectAll_today();
-		GameVO vo2 = service.record_selectOne(vo);
-		map.put("vos", vos);
-		map.put("vo2", vo2);
-		log.info("오늘 랭킹 vos : {}", vos);
-		return map;
-	}
+//	@ResponseBody
+//	@RequestMapping(value = "/game_ranking_all2.do", method = RequestMethod.GET)
+//	public Map<String, Object> game_ranking_all2(GameVO vo) {
+//		log.info("game_ranking_all2(vo)...{}", vo);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		List<GameVO> vos = service.record_selectAll();
+//		GameVO vo2 = service.record_selectOne(vo);
+//		map.put("vos", vos);
+//		map.put("vo2", vo2);
+//		log.info("역대 랭킹 vos : {}", vos);
+//		return map;
+//	}
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/game_ranking_today2.do", method = RequestMethod.GET)
+//	public Map<String, Object> game_ranking_today2(GameVO vo) {
+//		log.info("game_ranking_today2(vo)...{}", vo);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		List<GameVO> vos = service.record_selectAll_today();
+//		GameVO vo2 = service.record_selectOne(vo);
+//		map.put("vos", vos);
+//		map.put("vo2", vo2);
+//		log.info("오늘 랭킹 vos : {}", vos);
+//		return map;
+//	}
 }

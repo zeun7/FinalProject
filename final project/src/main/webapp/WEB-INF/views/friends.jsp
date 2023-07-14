@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
-<jsp:include page="css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <%
 	String nickname = "";
@@ -342,7 +341,8 @@ function del_ban(nickname2) {	// 차단 해제
 </script>
 </head>
 <body onload="friends_list()">
-	<jsp:include page="top_menu.jsp"></jsp:include>
+<jsp:include page="sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<ul>
 		<li><button onclick="friends_list()">친구목록</button></li>
 		<li><button onclick="friends_ban()">차단목록</button></li>
@@ -350,5 +350,6 @@ function del_ban(nickname2) {	// 차단 해제
 	</ul>
 	<table id="vos">
 	</table>
+</div>
 </body>
 </html>

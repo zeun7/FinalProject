@@ -39,6 +39,8 @@ public interface MiniHomeDAO {
 
 	public List<GameVO> record_selectAll_today();
 
-	public GameVO record_selectOne(GameVO vo);
+	public GameVO record_selectOne(int gnum);
+
+	public GameVO record_latest();
 
 }

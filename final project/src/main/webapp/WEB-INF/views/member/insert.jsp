@@ -12,8 +12,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>insert</title>
-<jsp:include page="../css.jsp"></jsp:include>
-
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -206,7 +204,8 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">
@@ -305,54 +304,55 @@
 			</div>
 		</div>
 	</div>
-	<script>
-	function submitForm() {
-	    var pw1 = document.getElementById("pw1").value;
-	    var pw2 = document.getElementById("pw2").value;
+</div>
+<script>
+function submitForm() {
+    var pw1 = document.getElementById("pw1").value;
+    var pw2 = document.getElementById("pw2").value;
 
-	    if (pw1 !== pw2) {
-	        alert("비밀번호가 일치하지 않습니다.");
-	        return;
-	    }
+    if (pw1 !== pw2) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+    }
 
-	    // Rest of the code for form submission
-	    var id = document.getElementById("id").value;
-	    var nickname = document.getElementById("nickname").value;
-	    var email = document.getElementById("email").value;
-	    var tel = document.getElementById("tel").value;
-	    var question = document.getElementById("question").value;
-	    var answer = document.getElementById("answer").value;
+    // Rest of the code for form submission
+    var id = document.getElementById("id").value;
+    var nickname = document.getElementById("nickname").value;
+    var email = document.getElementById("email").value;
+    var tel = document.getElementById("tel").value;
+    var question = document.getElementById("question").value;
+    var answer = document.getElementById("answer").value;
 
-			if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === ''
-					|| nickname.trim() === '' || email.trim() === ''
-					|| tel.trim() === '' || question.trim() === ''
-					|| answer.trim() === '') {
-				alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
-				return;
-			}
-
-			// 중복 체크를 통한 회원가입 제어
-			if ($('#demo1').text() !== '사용가능한 아이디입니다.') {
-				alert("사용중인 아이디입니다.");
-				return;
-			}
-			if ($('#demo2').text() !== ' 사용 가능한 닉네임 입니다') {
-				alert("사용중인 닉네임 입니다");
-				return;
-			}
-			if ($('#demo3').text() !== '사용가능 합니다 ') {
-				alert("로그인 되어있는 전화번호입니다.");
-				return;
-			}
-			if ($('#verification_code').val().trim() === '') {
-				alert("이메일 인증이 필요합니다.");
-				return;
-			}
-
-			// 나머지 처리 로직
-			document.getElementById("joinForm").submit();
+		if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === ''
+				|| nickname.trim() === '' || email.trim() === ''
+				|| tel.trim() === '' || question.trim() === ''
+				|| answer.trim() === '') {
+			alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
+			return;
 		}
-	</script>
+
+		// 중복 체크를 통한 회원가입 제어
+		if ($('#demo1').text() !== '사용가능한 아이디입니다.') {
+			alert("사용중인 아이디입니다.");
+			return;
+		}
+		if ($('#demo2').text() !== ' 사용 가능한 닉네임 입니다') {
+			alert("사용중인 닉네임 입니다");
+			return;
+		}
+		if ($('#demo3').text() !== '사용가능 합니다 ') {
+			alert("로그인 되어있는 전화번호입니다.");
+			return;
+		}
+		if ($('#verification_code').val().trim() === '') {
+			alert("이메일 인증이 필요합니다.");
+			return;
+		}
+
+		// 나머지 처리 로직
+		document.getElementById("joinForm").submit();
+	}
+</script>
 
 </body>
 </html>

@@ -17,6 +17,8 @@
 <title>아이디 찾기</title>
 </head>
 <body>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">
@@ -33,5 +35,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

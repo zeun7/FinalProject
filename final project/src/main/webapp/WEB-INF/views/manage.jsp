@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
-<jsp:include page="css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function manage_member(page){	// 회원목록 출력
@@ -351,7 +350,8 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 </script>
 </head>
 <body onload="manage_member(1)">
-	<jsp:include page="top_menu.jsp"></jsp:include>
+<jsp:include page="sidebar.jsp"></jsp:include>
+<div class="main-panel">
 	<ul>
 		<li><button onclick="manage_member(1)">회원관리</button></li>
 		<li><button onclick="manage_board(1)">신고 게시글</button></li>
@@ -359,5 +359,6 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 	</ul>
 	<table id="vos">
 	</table>
+</div>
 </body>
 </html>

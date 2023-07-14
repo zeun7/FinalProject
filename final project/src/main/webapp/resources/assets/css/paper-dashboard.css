@@ -1370,10 +1370,16 @@ textarea {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400; }
 
+/* 링크 */
 a {
-  color: #51cbce; }
-  a:hover, a:focus {
-    color: #51cbce; }
+	color: #000;
+/*   color: #51cbce; */
+ }
+
+a:hover, a:focus {
+	color: #000;
+/*     color: #51cbce; */
+}
 
 h1, .h1 {
   font-size: 3.5em;
@@ -2981,7 +2987,7 @@ License - nucleoapp.com/license/
     width: 100%; }
 
 .table-responsive {
-  overflow: scroll;
+/*   overflow: scroll; */
   padding-bottom: 10px; }
 
 #tables .table-responsive {
