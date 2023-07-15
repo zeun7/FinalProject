@@ -2,7 +2,6 @@ package multi.com.finalproject.minihome.model;
 
 import java.util.List;
 import java.util.Map;
-
 import multi.com.finalproject.member.model.MemberVO;
 
 public interface MiniHomeDAO {

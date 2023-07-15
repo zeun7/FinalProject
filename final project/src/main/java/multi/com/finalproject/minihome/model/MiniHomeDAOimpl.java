@@ -101,13 +101,13 @@ public class MiniHomeDAOimpl implements MiniHomeDAO {
 		log.info("bgm_selectOne(vo)...{}", vo);
 		return sqlSession.selectOne("BGM_SELECT_ONE", vo);
 	}
-	
+
 	@Override
 	public int record_insert(GameVO vo) {
 		log.info("record_insert(vo)...{}", vo);
 		return sqlSession.insert("GAME_RECORD_INSERT", vo);
 	}
-
+	
 	@Override
 	public List<GameVO> record_selectAll() {
 		log.info("record_selectAll()...");

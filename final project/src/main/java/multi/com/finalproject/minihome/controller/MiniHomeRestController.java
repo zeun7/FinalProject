@@ -109,34 +109,6 @@ public class MiniHomeRestController {
 		return vo2;
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value = "/validateWord/{word}", method = RequestMethod.GET)
-//	public Map<String, Object> validateWord(@PathVariable String word) {
-//		
-//	    String url = "https://opendict.korean.go.kr/api/search?certkey_no=5639&key=9C37D5176D46A9E8F98D17FD5AE96673&target_type=search&req_type=json&part=word&q="
-//	            + word + "&sort=dict&start=1&num=10";
-//	    Map<String, Object> result = new HashMap<>();
-//	    try {
-//	        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-//	        if(response.getStatusCode() == HttpStatus.OK) {
-//	            JSONObject json = new JSONObject(response.getBody());
-//	            int count = json.getJSONObject("searchResult").getInt("total");
-//	            if (count > 0) {
-//	                result.put("isValid", true);
-//	            } else {
-//	                result.put("isValid", false);
-//	                result.put("message", "사전에 존재하지 않는 단어입니다.");
-//	            }
-//	        } else {
-//	            result.put("isValid", false);
-//	            result.put("message", "API request failed with status: " + response.getStatusCode());
-//	        }
-//	    } catch (RestClientException e) {
-//	        result.put("isValid", false);
-//	        result.put("message", "Exception occurred while making API request: " + e.getMessage());
-//	    }
-//	    return result;
-//	}
 	@ResponseBody
 	@RequestMapping(value = "/validateWord/{word}", method = RequestMethod.GET)
 	public Map<String, Object> validateWord(@PathVariable String word) throws Exception {
@@ -213,6 +185,16 @@ public class MiniHomeRestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.GET)
+	public GameVO getUserInfo(int gnum) {
+		log.info("getUserInfo()...");
+		log.info("gnum : {}", gnum);
+		GameVO vo = service.record_selectOne(gnum);
+		log.info("vo : {}", vo);
+		return vo;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/game_ranking_all.do", method = RequestMethod.GET)
 	public List<GameVO> game_ranking_all() {
 		log.info("game_ranking_all()...");
@@ -231,32 +213,4 @@ public class MiniHomeRestController {
 		log.info("오늘 랭킹 vos : {}", vos);
 		return vos;
 	}
-	
-//	@ResponseBody
-//	@RequestMapping(value = "/game_ranking_all2.do", method = RequestMethod.GET)
-//	public Map<String, Object> game_ranking_all2(GameVO vo) {
-//		log.info("game_ranking_all2(vo)...{}", vo);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		List<GameVO> vos = service.record_selectAll();
-//		GameVO vo2 = service.record_selectOne(vo);
-//		map.put("vos", vos);
-//		map.put("vo2", vo2);
-//		log.info("역대 랭킹 vos : {}", vos);
-//		return map;
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value = "/game_ranking_today2.do", method = RequestMethod.GET)
-//	public Map<String, Object> game_ranking_today2(GameVO vo) {
-//		log.info("game_ranking_today2(vo)...{}", vo);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		List<GameVO> vos = service.record_selectAll_today();
-//		GameVO vo2 = service.record_selectOne(vo);
-//		map.put("vos", vos);
-//		map.put("vo2", vo2);
-//		log.info("오늘 랭킹 vos : {}", vos);
-//		return map;
-//	}
 }

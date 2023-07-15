@@ -292,6 +292,7 @@ public class MemberController {
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
+			session.setMaxInactiveInterval(60 * 120); //60초 * 120 = 2시간
 			return "redirect:home.do";
 		}
 	}
