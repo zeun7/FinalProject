@@ -542,8 +542,8 @@ function checkviewer(writer){
 							<tfoot>
 								<tr>
 									<td>
-										<button onclick="like()" id="like_button">좋아요</button>
-										<button onclick="like_cancel()" id="lcancel_button" style="display: none">좋아요 취소</button>
+										<button onclick="like()" id="like_button"><img width="15px" src="resources/icon/not_like.png" /></button>
+										<button onclick="like_cancel()" id="lcancel_button" style="display: none"><img width="15px" src="resources/icon/like.png" /></button>
 										<span id="likes_count">${vo2.likes }</span>
 										<button onclick="open_modal()">공유</button>					
 										<button onclick="report()" id="report_button">신고</button>
