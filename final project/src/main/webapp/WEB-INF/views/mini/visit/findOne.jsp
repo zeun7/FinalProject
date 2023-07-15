@@ -93,8 +93,7 @@ function visitUpdate(mcnum){
 
 </head>
 <body onload="visitFindOne()">
-	<jsp:include page="../../top_menu.jsp"></jsp:include>
-	<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+	<jsp:include page="../../sidebar.jsp"></jsp:include>
 	<h1>mini/visit/selectOne.jsp</h1>
 	<div id="visitor_log"></div>
 </body>

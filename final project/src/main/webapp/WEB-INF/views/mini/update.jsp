@@ -90,8 +90,7 @@ function setBGM(bgm){
 </script>
 </head>
 <body onload="selectAllCount()">
-<jsp:include page="../top_menu.jsp"></jsp:include>
-<jsp:include page="mini_top_menu.jsp"></jsp:include>
+<jsp:include page="../sidebar.jsp"></jsp:include>
 	<h1>mini/update.jsp</h1>
 	<form action="mini_updateOK.do" method="post" enctype="multipart/form-data">
 		<table id="memberList">
