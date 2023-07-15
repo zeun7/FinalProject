@@ -179,7 +179,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 				}
 					
 				tag_comments += `<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-						<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+						<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
 						<td><div id="count_clikes_\${vo.cnum}"></div></td>
 						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></td>
 						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
@@ -294,7 +294,7 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 				}
 				
 				tag_cocomments += `		<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-										<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+										<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
 										<td><div id="count_clikes_\${vo.cnum}"></div></td>
 										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
 									</tr>
@@ -536,7 +536,7 @@ function checkviewer(writer){
 					<!-- 			</tr> -->
 								<tr>
 					<%-- 				<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td> --%>
-									<td colspan="3"><div>${vo2.content }<hr></div></td>
+									<td colspan="3"><div>${vo2.content}<hr></div></td>
 								</tr>
 							</tbody>
 							<tfoot>
@@ -548,7 +548,7 @@ function checkviewer(writer){
 										<button onclick="open_modal()">공유</button>					
 										<button onclick="report()" id="report_button">신고</button>
 									</td>
-									<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum }">수정</a> <a
+									<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum}">수정</a> <a
 										href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a></td>
 								</tr>
 							</tfoot>

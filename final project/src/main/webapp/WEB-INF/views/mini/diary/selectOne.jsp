@@ -199,7 +199,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 				}
 					
 				tag_comments += `<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
 						<td><div id="count_clikes_\${vo.mcnum}"></div></td>
 						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" id="cocoment_\${vo.mcnum}">답글</button></td>
 						<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report_\${vo.mcnum}">신고</button></td>
@@ -313,7 +313,7 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 				}
 				
 				tag_cocomments += `		<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-										<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
+										<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
 										<td><div id="count_clikes_\${vo.mcnum}"></div></td>
 										<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report__\${vo.mcnum}">신고</button></td>
 									</tr>

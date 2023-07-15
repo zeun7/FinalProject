@@ -239,7 +239,8 @@ function changeLimit(){
 							<option value="15">15</option>
 							<option value="20">20</option>
 						</select>
-						<a class="text-primary" href="b_insert.do?bname=${param.bname}" style="margin-left:auto">글쓰기</a>
+						<a class="text-primary" href="b_insert.do?bname=${param.bname}" style="margin-left:auto"
+							style="color:#000; floag:right;">글쓰기</a>
 						<table class="table">
 							<thead class="text-primary">
 								<tr>
@@ -255,7 +256,7 @@ function changeLimit(){
 							</tbody>
 							<tfoot style="margin:auto">
 								<tr>
-									<td colspan="7" id="page"></td>
+									<td colspan="7" style="margin:auto;" id="page"></td>
 								</tr>
 							</tfoot>	
 						</table>
