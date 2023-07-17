@@ -1,92 +1,126 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<title>게임</title>
-<jsp:include page="../../css.jsp"></jsp:include>
-<style>
-    #gameContainer {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-    }
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76"
+	href="resources/assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>미니게임</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<!--     Fonts and icons     -->
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+	rel="stylesheet" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 
-    #gameBackground {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('resources/uploadimg/${backimg}');
-        background-size: cover;
-    }
-
-    #gameContent {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        color: white;
-    }
-
-    #gameContent h2,
-    #gameContent p {
-        margin: 0;
-    }
-    
-   #remainingTime {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+<style type="text/css">
+#remainingTime {
+	width: 150px;
+	padding: 5px;
     font-size: 18px;
     color: white; 
     background-color: pink;
-    padding: 5px; 
     border-radius: 5px;
+    transform: translate(100%, 50%);
 	}
-	
-	#gameContent img {
-    width: 50px; 
-    height: 50px;
-	}
-	
-	#rankingContent button {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-	}
-	
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
-<body onload="gameStart()">
-    <jsp:include page="../mini_top_menu.jsp"></jsp:include>
-    <h1>mini/game/game.jsp</h1>
-    <div
-        style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size: cover; width: 100%; height: 100vh;">
-        <div id="gameContainer">
-            <div id="gameBackground">
-                <p id="remainingTime"></p>
-            </div>
-            <div id="gameContent">
-                <h2>끝말잇기 게임</h2>
-                <p>시작 단어: 사과</p>
-                <ul id="wordList"></ul>
-                <input type="text" id="inputWord" placeholder="단어를 입력하세요">
-                <button id="startButton""></button><br>
-		       	<button id="showRank" class="myButton" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">랭킹보기</button>
-            </div>
-            <div id="rankingContent" style="display: none;">
-            </div>
-        </div>
-    </div>
+
+<body class="" onload="gameStart()">
+<jsp:include page="../mini_top_menu.jsp"></jsp:include>
+	<div class="wrapper ">
+		<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+		<jsp:include page="../mini_navbar.jsp"></jsp:include>
+			<div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title text-center">끝말잇기 게임</h4>
+							</div>
+							<div class="card-body">
+								<div id="gameContainer" class="text-center">
+						            <div id="gameBackground">
+						                <p id="remainingTime"></p>
+						            </div>
+						            <div id="gameContent">
+						                <p>시작 단어: 사과</p>
+						                <ul id="wordList"></ul>
+						                <input type="text" id="inputWord" placeholder="단어를 입력하세요">
+						                <button id="startButton" class="btn btn-primary btn-round"></button><br><br>
+								       	<button id="showRank" class="btn btn-round">랭킹보기</button>
+						            </div>
+						            <div id="rankingContent" style="display: none;">
+						            </div>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="footer footer-black  footer-white ">
+				<div class="container-fluid">
+					<div class="row">
+						<nav class="footer-nav">
+							<ul>
+								<li><a href="https://www.creative-tim.com" target="_blank">Creative
+										Tim</a></li>
+								<li><a href="https://www.creative-tim.com/blog"
+									target="_blank">Blog</a></li>
+								<li><a href="https://www.creative-tim.com/license"
+									target="_blank">Licenses</a></li>
+							</ul>
+						</nav>
+						<div class="credits ml-auto">
+							<span class="copyright"> Â© <script>
+								document.write(new Date().getFullYear())
+							</script>, made with <i class="fa fa-heart heart"></i> by
+								Creative Tim
+							</span>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<!--   Core JS Files   -->
+	<script src="resources/assets/js/core/jquery.min.js"></script>
+	<script src="resources/assets/js/core/popper.min.js"></script>
+	<script src="resources/assets/js/core/bootstrap.min.js"></script>
+	<script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+	<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1"
+		type="text/javascript"></script>
 </body>
+
 <script type="text/javascript">
     let Game = { // Game 객체 선언
         currentWord: '사과',
@@ -231,7 +265,7 @@
                     records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
                 }
 
-                let rankingTable = "<table><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>";
+                let rankingTable = '<table class="table"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
                 for(let i = 0; i < records.length; i++) {
                     let row = records[i];
@@ -247,7 +281,7 @@
                     rankingTable += `<tr><td>\${rank}</td><td><img src="resources/uploadimg/thumb_\${row.profilepic}"></td><td>\${row.id}</td><td>\${row.score}점</td><td>\${date}</td></tr>`;
                 }
              	// 테이블 마지막에 버튼 추가
-                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton'>게임하기</button><button id='showRankingButton'>오늘의 랭킹 보기</button></td></tr></tfoot></table>`;
+                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton' class="btn btn-primary btn-round">게임하기</button><button id='showRankingButton' class="btn btn-round">오늘의 랭킹 보기</button></td></tr></tfoot></table>`;
                 rankingTable += `</table>`;
                 
                 $('#rankingContent').html(rankingTable);
@@ -295,7 +329,7 @@
                     records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
                 }
 
-                let rankingTable = "<table><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>";
+                let rankingTable = '<table class="table"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
                 for(let i = 0; i < records.length; i++) {
                     let row = records[i];
@@ -311,7 +345,7 @@
                     rankingTable += `<tr><td>\${rank}</td><td><img src="resources/uploadimg/thumb_\${row.profilepic}"></td><td>\${row.id}</td><td>\${row.score}점</td><td>\${date}</td></tr>`;
                 }
              	// 테이블 마지막에 버튼 추가
-                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton'>게임하기</button><button id='showAllRankingButton'>전체 랭킹 보기</button></td></tr></tfoot></table>`;
+                rankingTable += `<tfoot><tr><td colspan='5'><button id='restartGameButton' class="btn btn-primary btn-round">게임하기</button><button id='showAllRankingButton' class="btn btn-round">전체 랭킹 보기</button></td></tr></tfoot></table>`;
                 rankingTable += `</table>`;
                 
                 $('#rankingContent').html(rankingTable);
@@ -400,4 +434,5 @@
         show_all_record(userScore = null, userId = null, userProfilePic = null, playDate = null);
     });
 </script>
+
 </html>

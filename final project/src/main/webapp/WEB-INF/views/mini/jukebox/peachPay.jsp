@@ -56,7 +56,13 @@ function payClick(){
 		success: function(response){
 			console.log(response.tid);
 			var url = response.next_redirect_pc_url;
-			window.location.href=url;
+			let name = '피치 결제';
+			let options = 'width=500,height=500';
+			var popup = window.open(url, name, options);
+
+			popup.onunload=function (){
+		        window.location.href="mini_jukebox.do?id=${user_id}";
+		    }
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
@@ -73,7 +79,7 @@ function getQuantity(event){
 <body class="">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">

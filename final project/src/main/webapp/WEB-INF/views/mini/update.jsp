@@ -1,11 +1,45 @@
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<title>미니홈피 수정</title>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    미니홈피 수정
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+
+<style type="text/css">
+.pr-1{
+	margin: auto;
+}
+</style>
 <link rel="stylesheet" href="resources/css/modal.css">
-<jsp:include page="../css.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
@@ -89,91 +123,141 @@ function setBGM(bgm){
 }
 </script>
 </head>
-<body onload="selectAllCount()">
-<jsp:include page="../sidebar.jsp"></jsp:include>
-	<h1>mini/update.jsp</h1>
-	<form action="mini_updateOK.do" method="post" enctype="multipart/form-data">
-		<table id="memberList">
-			<tr>
-				<td><label for="hnum">hnum:</label></td>
-				<td>
-					<span id="span_hnum">${vo2.hnum}</span>
+
+<body class="" onload="selectAllCount()">
+<jsp:include page="./mini_top_menu.jsp"></jsp:include>
+  <div class="wrapper ">
+    <div class="main-panel">
+    <jsp:include page="./mini_navbar.jsp"></jsp:include>
+      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-user">
+              <div class="card-header text-center">
+                <h5 class="card-title">미니홈피 수정</h5>
+              </div>
+              <div class="card-body">
+                <form action="mini_updateOK.do" method="post" enctype="multipart/form-data">
 					<input type="hidden" id="hnum" name="hnum" value="${vo2.hnum}">
-				</td>
-			</tr>
-			<tr>
-				<td><label for="id">id:</label></td>
-				<td>
-					<span id="span_id">${user_id}</span>
-					<input type="hidden" id="id" name="id" value="${user_id}">
-				</td>
-			</tr>
-			<tr>
-				<td><label for="title">title:</label></td>
-				<td><input type="text" id="title" name="title" value="${vo2.title}"></td>
-			</tr>
-			<tr>
-				<td><label for="message">message:</label></td>
-				<td><input type="text" id="message" name="message"
-					value="${vo2.message}"></td>
-			</tr>
-			<tr>
-				<td><label for="backimg">backimg:</label></td>
-				<td>
-					<img src="resources/uploadimg/thumb_${vo2.backimg}">
-					<input type="file" id="file" name="file">
-					<input type="hidden" id="backimg" name="backimg" value="${vo2.backimg}">
-				</td>
-			</tr>
-			<tr>
-				<td><label for="bgm">bgm:</label></td>
-				<td>
-					<div id="bgm_title">${vo2.bgm}</div>
-					<div id="music_player">
-						<audio controls>
-					      <source src="resources/uploadbgm/${vo2.bgm}" type="audio/mp3">
-	   					</audio>
+					<div class="row">
+                    	<div class="col-md-6 pr-1">
+                    		<div class="form-group">
+								<label for="id">id</label>
+								<input type="text" class="form-control" id="id" name="id" value="${user_id}" readonly="readonly">
+							</div>
+						</div>
 					</div>
-<!-- 					<input type="file" id="musicFile" name="musicFile">  -->
-					<button type="button" onclick="open_modal()">bgm 선택</button>
-					<input type="hidden" id="bgm" name="bgm" value="${vo2.bgm}">
-				</td>
-			</tr>
-			
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="미니홈피 수정완료">
-				</td>
-			</tr>
-		</table>
-	</form>
-	
-	<div id="modal">
-		<div class="modal-content">
-			<h1>쥬크박스</h1>
-	        <table>
-	        	<thead>
-		        	<tr>
-		        		<th>보유 음악</th>
-		        		<th>미리듣기</th>
-		        	</tr>
-	        	</thead>
-	        	<tbody id="vos">
-	        		
-	        	</tbody>
-	        	<tfoot>
-	        		<tr>
-	        			<td colspan="2" id="page"></td>
-	        		</tr>
-	        	</tfoot>
-	        </table>
-			<div>
-				<button onclick="close_modal()">닫기</button>
+					<div class="row">
+                    	<div class="col-md-6 pr-1">
+                    		<div class="form-group">
+								<label for="title">title</label>
+								<input type="text" class="form-control" id="title" name="title" value="${vo2.title}">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+                    	<div class="col-md-6 pr-1">
+                    		<div class="form-group">
+								<label for="message">message</label>
+								<input type="text" class="form-control" id="message" name="message"
+								value="${vo2.message}">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+                    	<div class="col-md-6 pr-1">
+                    		<div class="form-group">
+								<label for="backimg">backimg</label><br>
+								<img src="resources/uploadimg/thumb_${vo2.backimg}">
+								<input type="hidden" id="backimg" name="backimg" value="${vo2.backimg}">
+							</div>
+								<input type="file" id="file" name="file">
+						</div>
+					</div>
+					<br>
+					<div class="row">
+                    	<div class="col-md-6 pr-1">
+                    		<div class="form-group">
+								<label for="bgm">bgm</label>
+								<div id="bgm_title">${vo2.bgm}</div>
+								<div id="music_player">
+									<audio controls>
+								      <source src="resources/uploadbgm/${vo2.bgm}" type="audio/mp3">
+				   					</audio>
+								</div>
+			<!-- 					<input type="file" id="musicFile" name="musicFile">  -->
+								<button type="button" onclick="open_modal()">bgm 선택</button>
+								<input type="hidden" id="bgm" name="bgm" value="${vo2.bgm}">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+	                    <div class="update ml-auto mr-auto">
+	                    	<input type="submit" class="btn btn-primary btn-round" value="미니홈피 수정완료">
+	                    </div>
+	                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="modal">
+			<div class="modal-content">
+				<h1>쥬크박스</h1>
+		        <table>
+		        	<thead>
+			        	<tr>
+			        		<th>보유 음악</th>
+			        		<th>미리듣기</th>
+			        	</tr>
+		        	</thead>
+		        	<tbody id="vos">
+		        		
+		        	</tbody>
+		        	<tfoot>
+		        		<tr>
+		        			<td colspan="2" id="page"></td>
+		        		</tr>
+		        	</tfoot>
+		        </table>
+				<div>
+					<button onclick="close_modal()">닫기</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<script type="text/javascript">
+      </div>
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+            <nav class="footer-nav">
+              <ul>
+                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
+                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+              </ul>
+            </nav>
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="resources/assets/js/core/jquery.min.js"></script>
+  <script src="resources/assets/js/core/popper.min.js"></script>
+  <script src="resources/assets/js/core/bootstrap.min.js"></script>
+  <script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+
+<script type="text/javascript">
 		function open_modal(){
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden"; // 스크롤바 제거
@@ -185,4 +269,5 @@ function setBGM(bgm){
 		}
 	</script>
 </body>
+
 </html>

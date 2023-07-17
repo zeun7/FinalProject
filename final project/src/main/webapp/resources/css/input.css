@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+/* 4 */
+input[type="text"].inputS-1 {
+  background-color: #FFFFFF; /* White background */
+  line-height: 42px;
+  padding: 10px 5px;  /* Change this value to adjust button size */
+  border: 0.5px solid #000000; /* Black border */
+  height: 40px;
+  aspect-ratio: 7 / 2;
+
+  /*   글꼴관련 */
+  color: #000000;  /* Text color */
+  font-family: Arial; /* Font family */
+  font-size: 15px; /* Font size */
+  font-weight: bold; /* Font weight */
+  text-transform: none; /* Text transform */
+  text-align: left; /* Text alignment */
+  line-height: 3px;
+}

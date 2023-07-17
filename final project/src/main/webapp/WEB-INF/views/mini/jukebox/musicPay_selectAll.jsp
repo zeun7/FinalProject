@@ -102,8 +102,9 @@ function selectAll(page){
 				tag_vos +=`
 					<tr>
 					<td>\${vo.bgm}</td>
-					<td><button id="btn_\${i}" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">\${vo.bgm}</button></td>
-					<td><button onclick="jukebox_check('\${vo.bgm}')">구매하기</button></td>
+					<td><span id="btn_\${i}"><btn class="btn btn-sm btn-outline-success btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
+					<i class="nc-icon nc-headphones"></i></btn></span></td>
+					<td><button onclick="jukebox_check('\${vo.bgm}')" class="btn btn-primary btn-round">구매하기</button></td>
 		        	</tr>	
 				`;
 			}
@@ -150,7 +151,7 @@ function jukebox_check(bgm){	//구매하려는 곡이 사용자의 보관함에 
 
 function gotoMusic_selectOne(bgm){
 	console.log(bgm);
-	window.location.href="musicPay_selectOne.do?bgm="+bgm;
+	window.location.href="musicPay_selectOne.do?id=${user_id}&bgm="+bgm;
 }
 </script>
 </head>
@@ -158,14 +159,14 @@ function gotoMusic_selectOne(bgm){
 <body class="" onload="selectAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
+                <h4 class="card-title"> 음악 구매</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

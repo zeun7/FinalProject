@@ -198,22 +198,35 @@
 		}
 	}
 </script>
+
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
-<div class="main-panel">
 <jsp:include page="../navbar.jsp"></jsp:include>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>Member Join Form</h3>
+<div class="main-panel">
+<style>
+
+
+  .card{ 
+  padding: 80px 30px; 
+    margin: 0 auto; 
+    max-width: 900px;
+  }
+  
+</style>
+		<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+				<h3>회원가입</h3>
 			</div>
 			<div>
 				<form id="joinForm" action="m_insertOK.do" method="post"
 					enctype="multipart/form-data">
 					<table id="memberList">
 						<tr>
-							<td><label for="id">id:</label></td>
+							<td><strong for="id">id:</strong></td>
 							<td><input class="w3-input" type="text" id="id" name="id"
 								placeholder="아이디">
 								<button type="button" onclick="idCheck()" class="myButton">ID중복체크</button>
@@ -221,7 +234,7 @@
 						</tr>
 
 						<tr>
-							<td><label for="pw">pw:</label></td>
+							<td><strong for="pw">pw:</strong></td>
 							<td><input class="w3-input" type="password" id="pw1"
 								name="pw" placeholder="비밀번호"> <input class="w3-input"
 								type="password" id="pw2" name="pw2" placeholder="비밀번호 한번더 입력">
@@ -232,34 +245,34 @@
 						</tr>
 
 						<tr>
-							<td><label for="nickname">nickname:</label></td>
+							<td><strong for="nickname">nickname:</strong></td>
 							<td><input class="w3-input" type="text" id="nickname"
 								name="nickname" placeholder="닉네임">
 								<button type="button" onclick="NickCheck()" class="myButton">닉네임
 									중복체크</button> <span id="demo2"></span></td>
 						</tr>
 						<tr>
-							<td><label for="question">question:</label></td>
+							<td><strong for="question">question:</strong></td>
 							<td><select class="w3-select" id="question" name="question">
 									<option value="" disabled selected>질문을 선택하세요</option>
-									<option value="question1">가장 행복했던 순간은?</option>
-									<option value="question2">집주소는?</option>
-									<option value="question3">가입하게 된 이유</option>
+									<option value="가장 행복했던 순간은?">가장 행복했던 순간은?</option>
+									<option value="집주소는?">집주소는?</option>
+									<option value="가입하게 된 이유">가입하게 된 이유</option>
 							</select></td>
 						</tr>
 						<tr>
-							<td><label for="answer">answer:</label></td>
+							<td><strong for="answer">answer:</strong></td>
 							<td><input class="w3-input" type="text" id="answer"
 								name="answer" placeholder="답"></td>
 						</tr>
 
 						<tr>
-							<td><label for="name">name:</label></td>
+							<td><strong for="name">name:</strong></td>
 							<td><input class="w3-input" type="text" id="name"
 								name="name" placeholder="이름"></td>
 						</tr>
 						<tr>
-							<td><label for="tel">tel:</label></td>
+							<td><strong for="tel">tel:</strong></td>
 							<td><input class="w3-input" type="text" id="tel" name="tel"
 								placeholder="010-0000-0000">
 								<button type="button" onclick="TelCheck()" class="myButton">전화번호
@@ -284,24 +297,22 @@
 						</tr>
 
 						<tr>
-							<td><label for="m_file">프로필 사진선택:</label></td>
+							<td><strong for="m_file">프로필 사진선택:</strong></td>
 							<td><input class="w3-input" type="file" id="m_file"
 								name="m_file" placeholder=" "></td>
 						</tr>
 						<tr>
 							<button type="button" onclick=" submitForm() " id="joinBtn"
 								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Join</button>
-							<button
-								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">
-								<a href="home.do">Cancle</a>
-							</button>
+							<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
+	</div>
 <script>
 function submitForm() {
     var pw1 = document.getElementById("pw1").value;

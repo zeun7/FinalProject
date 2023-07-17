@@ -8,6 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/input.css">
+<link rel="stylesheet" href="resources/css/pagination.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
@@ -29,16 +32,18 @@ function selectAllCount(){
 		success : function(result) {
 // 			console.log(result);
 			let tag_page = 0;
-			let tag_pages = '';
+			let tag_pages = `<div class="paging-btn-container">`;
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page},\${limit})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page},\${limit})>\${tag_page}</button>
 				`;
 				
 				result -= limit;
 			}
+			tag_pages += `</div>`;
 			
 			if(curPage > tag_page){
 				curPage = tag_page;
@@ -53,6 +58,13 @@ function selectAllCount(){
 	});//end $.ajax()
 }//end selectAllCount()
 
+function setActive(button) {
+    // 모든 버튼에서 'active' 클래스 제거
+    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+    // 클릭한 버튼에 'active' 클래스 추가
+    button.classList.add('active');
+}
+
 function selectAll(page, limit){
 // 	console.log('onload...');
 	$.ajax({
@@ -66,6 +78,14 @@ function selectAll(page, limit){
 		dataType : 'json', 
 		success : function(arr) {
 			let tag_vos = '';
+			
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+            
 			for ( let i in arr) {
  				let vo = arr[i];
  				let date = '';
@@ -234,13 +254,16 @@ function changeLimit(){
 						<h3 class="card-title">${param.bname}</h3>
 					</div>
 					<div class="card-body">
-						<select name="limit" id="limit" onchange="changeLimit()">
-							<option value="10">10</option>
-							<option value="15">15</option>
-							<option value="20">20</option>
-						</select>
-						<a class="text-primary" href="b_insert.do?bname=${param.bname}" style="margin-left:auto"
-							style="color:#000; floag:right;">글쓰기</a>
+						<div style="display: flex; justify-content: space-between;">
+							<select name="limit" id="limit" onchange="changeLimit()">
+								<option value="10">10</option>
+								<option value="15">15</option>
+								<option value="20">20</option>
+							</select>
+							<a class="custom-btn btn-4" id="writeBoard" href="b_insert.do?bname=${param.bname}">
+								<span style="display: inline-flex; justify-content: center; align-items: center;">글쓰기</span>
+							</a>
+						</div>
 						<table class="table">
 							<thead class="text-primary">
 								<tr>
@@ -261,14 +284,14 @@ function changeLimit(){
 							</tfoot>	
 						</table>
 					</div>
-					<div class="card-footer" style="margin:auto;">
+					<div class="card-footer" style="margin:auto; display:flex;">
 						<select name="searchKey" id="searchKey">
 							<option value="title">제목</option>
 							<option value="content">내용</option>
 							<option value="writer">닉네임</option>
 						</select>
-						<input type="text" name="searchWord" id="searchWord" value="${param.searchWrod}">
-						<button onclick="searchListCount()">검색</button>
+						<input type="text" name="searchWord" id="searchWord" value="${param.searchWrod}" class="inputS-1">
+						<button onclick="searchListCount()" class="custom-btn btn-4">검색</button>
 					</div>
 				</div>
 			</div>
@@ -276,4 +299,9 @@ function changeLimit(){
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+if ('${user_id}' === '') { // 로그아웃 상태
+	$('#writeBoard').hide();
+}
+</script>
 </html>

@@ -299,4 +299,17 @@ public class MiniHomeController {
 		return "mini/jukebox/peachPay";
 	}
 
+	@RequestMapping(value = "/musicPay_selectAll.do", method = RequestMethod.GET)
+	public String musicPay_selectAll() {
+		log.info("/musicPay_selectAll.do...");
+		
+		return "mini/jukebox/musicPay_selectAll";
+	}
+	
+	@RequestMapping(value = "/musicPay_selectOne.do", method = RequestMethod.GET)
+	public String musicPay_selectOne() {
+		log.info("/musicPay_selectOne.do...");
+		
+		return "mini/jukebox/musicPay_selectOne";
+	}
 }

@@ -3,16 +3,24 @@
 <html>
 <head>
 <title>피치구매</title>
-<jsp:include page="../../css.jsp"></jsp:include>
+<!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript">
-	function gotoJukebox(){
-		window.location.href="/finalproject/mini_jukebox.do?id=${user_id}";
-	}
-</script>
 </head>
 <body>
-	<h1>결제가 취소되었습니다</h1>
-	<button onclick="gotoJukebox()">쥬크박스로</button>    
+<div class="main-panel">
+	<div class="content" style="background-size: cover; width: 100%; height: 85vh;">
+		<div>
+			<h3 class="text-center">결제가 취소되었습니다</h3>
+			<div class="text-center">
+				<button onclick="window.close()" class="btn">닫기</button>  
+			</div>
+		</div>
+	</div>
+</div>  
 </body>
 </html>

@@ -229,16 +229,35 @@ function select_gallery_deleteOK() {
 
 <body class="" onload="selectAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
-  <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}');">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-4" id="buttonContainer">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title"> 이미지추가</h4>
+              </div>
+              <div class="card-body">
+              	<div>
+              		<div class="form-group">
+						<label>title</label>
+				        <input type="text" id="title" class="form-control" name="title" placeholder="제목을 입력하세요.">
+					</div>
+              		<div>
+						<label>file</label>
+				        <input type="file" id="file" class="form-control" name="file" multiple="multiple">
+					</div>
+			        <button id="uploadButton" onclick="gallery_insertOK()" class="btn btn-primary btn-round">사진올리기</button>
+		        </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> 사진첩</h4>
-                <button id="selectDeleteButton" onclick="toggleDeleteMode()" class="myButton">선택삭제</button>
+                <button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
               </div>
               <div class="card-body">
                 <div>
@@ -249,26 +268,10 @@ function select_gallery_deleteOK() {
                     	</tr>
                     </tbody>
                     <tr>
-                    	<td id="page"></td>
+                    	<td id="page" class="text-center"></td>
                     </tr>
                   </table>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" id="buttonContainer">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> 이미지추가</h4>
-              </div>
-              <div class="card-body">
-              	<div>
-			        <input type="text" id="title" name="title" placeholder="제목을 입력하세요.">
-			        <input type="file" id="file" name="file" multiple="multiple"><br>
-			        <button id="uploadButton" onclick="gallery_insertOK()" class="btn btn-primary btn-round">사진올리기</button>
-		        </div>
               </div>
             </div>
           </div>
@@ -295,18 +298,6 @@ function select_gallery_deleteOK() {
         </div>
       </footer>
     </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="resources/assets/js/core/jquery.min.js"></script>
-  <script src="resources/assets/js/core/popper.min.js"></script>
-  <script src="resources/assets/js/core/bootstrap.min.js"></script>
-  <script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS -->
-  <script src="resources/assets/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="resources/assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 
 <script type="text/javascript">
 	//다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김

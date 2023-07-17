@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 	function input_check(){
@@ -34,54 +35,56 @@
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <div class="main-panel">
-	<h1>${param.bname }</h1>
-	
-	<h3>글쓰기</h3>
-	<form action="b_insertOK.do" method="post" enctype="multipart/form-data" id="insert_form" style="width:800px">
-	<table style="width: 100%">
-		<thead>
-			<tr>
-				<td>
-					<input type="text" name="title" id="title" placeholder="제목을 입력하세요." value="">
-					<input type="hidden" name="bname" id="bname" value="${param.bname }">
-					<input type="hidden" name="writer" id="writer" value="${nickname }">
-				</td>
-				<td>
-					<select name="caname" id="caname">
-						<option value="general">일반</option>
-						<option value="notice">공지</option>
-						<option value="question">질문</option>
-					</select>
-				</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					<label for="file">
-						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
-					</label>
-					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
-					<input type="hidden" id="isFileExist" name="isFileExist" value="0">
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<textarea rows="20" cols="50" name="content" id="content"></textarea>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td>
-					<button type="button" onclick="history.back()">취소</button>
-					<button type="button" onclick="input_check()">등록</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	</form>
-</div>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h1>${param.bname }</h1>
+			</div>
+			<div class="card-body" style="width: 100%">
+				<form action="b_insertOK.do" method="post" enctype="multipart/form-data" id="insert_form" style="width:800px">
+				<table style="width: 100%">
+					<thead>
+						<tr>
+							<td>
+								<input type="text" name="title" id="title" style="width:400px" placeholder="제목을 입력하세요." value="">
+								<input type="hidden" name="bname" id="bname" value="${param.bname }">
+								<input type="hidden" name="writer" id="writer" value="${nickname }">
+							</td>
+							<td>
+								<select name="caname" id="caname">
+									<option value="general">일반</option>
+									<option id="announcement" value="notice">공지</option>
+									<option value="question">질문</option>
+								</select>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<label for="file">
+									<span  class="btn-two cyan mini" id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+								</label>
+								<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
+								<input type="hidden" id="isFileExist" name="isFileExist" value="0">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<textarea rows="20" cols="50" name="content" id="content" style="width:100%;"></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer"  style="display: flex; justify-content: flex-end;">
+					<button type="button" class="custom-btn btn-4" style="margin-right: 10px;" onclick="history.back()">취소</button>
+					<button type="button" class="custom-btn btn-4" onclick="input_check()">글쓰기</button>
+				</div>
+				</form>
+			</div>
+		</div> <!-- end "card"-->
+	</div> <!-- end "col-md-12"-->
+</div> <!-- end "main-panel"-->
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 var oEditors = [];
@@ -146,6 +149,10 @@ function uploadFile(){
 		});//end $.ajax()
 	}//end if
 }//end uploadFile()
+
+if ('${mclass}' !== '1') { // 관리자만 공지 쓸 수 있게
+	$('#announcement').hide();
+}
 </script>
 
 </body>

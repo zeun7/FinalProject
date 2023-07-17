@@ -25,27 +25,35 @@
 		});
 	});
 </script>
+<style>
+ .card{ 
+  padding: 80px 30px; /* 상단/하단 80px, 좌우 30px의 공간을 설정합니다. */
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  </style>
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
-<div class="main-panel">
 <jsp:include page="../navbar.jsp"></jsp:include>
-	<div class="content">
-		<div class="w3-content w3-container w3-margin-top">
-			<div class="w3-container w3-card-4">
-				<div class="w3-center w3-large w3-margin-top">
+<div class="main-panel">
+<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
 					<h3>Log In</h3>
 				</div>
 				<div>
 					<form action="loginOK.do" method="post">
 						<p>
-							<label>ID</label>
+							<strong>ID</strong>
 							<span class="w3-right w3-button w3-hover-white" title="아이디 찾기" id="find_id_btn">
 								<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
 							</span> <input class="w3-input" id="id" name="id" type="text" required />
 						</p>
 						<p>
-							<label>Password</label>
+							<strong>Password</strong>
 							<span class="w3-right w3-button w3-hover-white" title="비밀번호 찾기" id="find_pw_btn">
 								<i class="fa fa-exclamation-triangle w3-hover-text-red w3-large"></i>
 							</span> <input class="w3-input" id="pw" name="pw" type="password" required />
@@ -60,9 +68,11 @@
 						<input type="checkbox" name="_spring_security_remember_me" id="remember_me" value="True" />
 							로그인 유지<br>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</br>
 					</form>
 				</div>
 			</div>
+		</div>
 		</div>
 		<c:if test="${errorMessage}">
 			<script>
@@ -73,4 +83,3 @@
 </div>
 </body>
 </html>
-

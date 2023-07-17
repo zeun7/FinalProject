@@ -32,6 +32,7 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  
 <style>
 .row-check {
     display: none;
@@ -93,6 +94,11 @@ function selectAll(page){
 			for ( let i in arr) {
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YY년 MM월 DD일 HH시mm분');
+ 				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
+ 					date = moment(vo.wdate).format('HH:mm');
+ 				} else{											// 오늘 이전에 작성한 게시글
+ 					date = moment(vo.wdate).format('MM-DD');
+ 				}
  				console.log(vo); 
  				tag_vos += `
  					<tr data-mbnum="\${vo.mbnum}">
@@ -190,8 +196,8 @@ function select_diary_deleteOK() {
                 <h4 class="card-title"> 다이어리</h4>
               </div>
               <div class="card-header" id="buttonContainer">
-				<a href="diary_insert.do?id=${mh_attr.id}" id="diary_insert" class="myButton">다이어리 작성</a>
-				<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="myButton">선택삭제</button>
+				<a href="diary_insert.do?id=${mh_attr.id}" id="diary_insert" class="btn btn-outline-success">다이어리 작성</a>
+				<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
               </div>
               <div class="card-body">
                 <div class="">
@@ -215,7 +221,7 @@ function select_diary_deleteOK() {
                     <tbody id="vos">
                     </tbody>
 					<tr>
-						<td colspan="4" id="page"></td>
+						<td colspan="5" id="page" class="text-center"></td>
 					</tr>
                   </table>
                 </div>

@@ -56,7 +56,7 @@
           <!-- <p>CT</p> -->
           <div>${mh_attr.id}</div>
           <div id="mini_update">
-			<a href="mini_update.do?id=${mh_attr.id}">미니홈피 수정</a>
+			<a href="mini_update.do?id=${mh_attr.id}" class=" text-primary">미니홈피 수정</a>
 			</div>
 			<div>${mh_attr.message}</div>
 			<div>
@@ -66,12 +66,13 @@
 			</div>
 			<div>vtoday : ${mh_attr.vtoday}</div>
 			<div>vtotal : ${mh_attr.vtotal}</div>
+			<br>
 			<div>
-				<button onclick="goToNewestDiary()">최신 다이어리</button>
-				<button onclick="goToNewestGallery()">최신 사진</button>
+				<button onclick="goToNewestDiary()" style="border: 0; background: white;" class=" text-primary">최신 다이어리</button>
+				<button onclick="goToNewestGallery()" style="border: 0; background: white;" class=" text-primary">최신 사진</button>
 			</div>
 			<div>
-				<a href="mini_random.do?id=${mh_attr.id}">랜덤 미니홈피 가기</a>
+				<a href="mini_random.do?id=${mh_attr.id}" class="btn btn-primary btn-block">랜덤 미니홈피 가기</a>
 			</div>
       </div>
       <div class="sidebar-wrapper">

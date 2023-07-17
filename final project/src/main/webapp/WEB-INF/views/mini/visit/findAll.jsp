@@ -23,7 +23,7 @@ Coded by www.creative-tim.com
   <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Paper Dashboard 2 by Creative Tim
+    방명록
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -197,15 +197,15 @@ function select_diary_deleteOK() {
               </div>
               <div class="card-body">
               	<div id="buttonContainer">
-					<a href="visit_insert.do?id=${mh_attr.id}&writer=${nickname}" id="visit_insert" class="myButton">방명록 쓰기</a>
-					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="myButton">선택삭제</button>
+					<a href="visit_insert.do?id=${mh_attr.id}&writer=${nickname}" id="visit_insert" class="btn btn-outline-success">방명록 쓰기</a>
+					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
 				</div>
 				<hr>
                 <div id="visitors_log"></div>
               </div>
               <div class="card-footer ">
                 <hr>
-		        <div id="page"></div>
+		        <div id="page" class="text-center"></div>
               </div>
             </div>
           </div>
