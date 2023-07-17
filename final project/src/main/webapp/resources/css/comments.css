@@ -1,0 +1,9 @@
+@charset "EUC-KR";
+
+.comments .nick {
+	width: 10%;
+}
+
+.comments .comm_content {
+	width: 70%;
+}

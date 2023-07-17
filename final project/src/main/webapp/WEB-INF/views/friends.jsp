@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
+<link rel="stylesheet" href="resources/css/menu.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <%
 	String nickname = "";
@@ -25,7 +26,7 @@ function friends_list(){		// 친구목록
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
-					<thead>
+					<thead class="text-primary">
 						<tr>
 							<th>닉네임</th>
 							<th>미니홈피 가기</th>
@@ -110,7 +111,7 @@ function friends_ban(){	// 차단 목록 출력
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
-					<thead>
+					<thead class="text-primary">
 						<tr>
 							<th>닉네임</th>
 							<th>차단해제</th>
@@ -140,7 +141,7 @@ function friends_ban(){	// 차단 목록 출력
 
 function friends_add(){ // 친구추가 화면 출력
 	let tag_vos = `
-		<thead>
+		<thead class="text-primary">
 			<tr>
 				<td colspan="2">
 					<input type="text" name="searchWord" id="searchWord" />
@@ -226,7 +227,7 @@ function searchUser(){	// 유저 검색 결과 출력
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
-				<thead>
+				<thead class="text-primary">
 					<tr>
  						<td>
 		 					<input type="text" name="searchWord" id="searchWord" />
@@ -338,18 +339,30 @@ function del_ban(nickname2) {	// 차단 해제
 		});
 	}
 }
+
 </script>
 </head>
 <body onload="friends_list()">
 <jsp:include page="sidebar.jsp"></jsp:include>
 <div class="main-panel">
-	<ul>
-		<li><button onclick="friends_list()">친구목록</button></li>
-		<li><button onclick="friends_ban()">차단목록</button></li>
-		<li><button onclick="friends_add()">친구추가</button></li>
-	</ul>
-	<table id="vos">
-	</table>
+<jsp:include page="navbar.jsp"></jsp:include>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+					<ul class="menu">
+						<li><button onclick="friends_list()">친구목록</button></li>
+						<li><button onclick="friends_ban()">차단목록</button></li>
+						<li><button onclick="friends_add()">친구추가</button></li>
+					</ul>
+					</div>
+					<table class="table" id="vos">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

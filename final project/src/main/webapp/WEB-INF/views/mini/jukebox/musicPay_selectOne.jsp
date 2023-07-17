@@ -68,7 +68,6 @@ function buyPeach(){
 </script>
 </head>
 <body>
-<jsp:include page="../../top_menu.jsp"></jsp:include>
 <h1>musicPay_selectOne</h1>
 <table>
 	<tr>

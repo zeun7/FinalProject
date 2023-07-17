@@ -1,60 +1,26 @@
 @charset "UTF-8";
 
-ul {
+.menu{
 	list-style-type: none;
 	margin: 20px 10px;
 	padding: 0;
-	background-color: #AD7EF4;
 }
 
-ul:after {
+.menu:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-li {
+.menu li {
 	float: left;
 }
 
-ul li a {
+.menu li a {
 	display: block;
-	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
-}
-
-ul li a:hover:not(.active) {
-	background-color: #A067F6;
-}
-
-ol {
-	list-style-type: none;
-	margin: 20px 10px;
-	padding: 0;
-}
-
-ol:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-ol li {
-	float:right;
-}
-
-ol li a {
-	display: block;
-	color: black;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-.active {
-	background-color: #A067F6;
 }
 
 .memberUpDel {

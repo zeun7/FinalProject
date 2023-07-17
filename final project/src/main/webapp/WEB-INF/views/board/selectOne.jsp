@@ -14,9 +14,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/modal.css">
+<link rel="stylesheet" href="resources/css/comments.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
@@ -155,27 +155,27 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 						<td colspan="6"><hr /></td>
 					</tr>
 					<tr>
-						<td rowspan="2">\${vo.writer}</td>`;
+						<td rowspan="2" class="nick">\${vo.writer}</td>`;
 					
 				if(cnum === vo.cnum){	// 댓글 수정인 경우
 					tag_comments += `
-							<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
+							<td rowspan="2"><textarea style="width:100%" rows="3" id="comm_content">\${vo.content}</textarea><td>
 							<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
 							<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
+							<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
 						</tr>`;
 				}
 				else{	// 댓글 출력
 					if(vo.secret === 1){	// 비밀 댓글인 경우
 						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
-							tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+							tag_comments += `<td rowspan="2" class="comm_content">\${vo.content}</td>`;
 						else
-							tag_comments += `<td rowspan="2">비밀댓글 입니다</td>`;
+							tag_comments += `<td rowspan="2" class="comm_content">비밀댓글 입니다</td>`;
 					}
 					else	// 비밀 댓글이 아닌 경우
-						tag_comments += `<td rowspan="2">\${vo.content}</td>`;
+						tag_comments += `<td rowspan="2" class="comm_content">\${vo.content}</td>`;
 				}
 					
 				tag_comments += `<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
@@ -189,12 +189,12 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
 						<td colspan="2" id="cdate_\${vo.cnum}">\${cdate}</td>
 					</tr>
-					<tr><td colspan="6"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
+					<tr><td colspan="9"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
 				
 				if(insert_num === vo.cnum){	// 대댓글 작성
 					tag_comments += `<tr>
 						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td colspan="3" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
+						<td colspan="3" rowspan="2"><textarea style="width:100%" rows="3" id="comm_content" /></textarea></td>
 						<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
 						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
 					</tr>
@@ -207,7 +207,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
 				tag_comments += `
 					<tr>
-						<td colspan="5" rowspan="2"><textarea cols="50" rows="3" id="comm_content" /></textarea></td>
+						<td colspan="5" rowspan="2"><textarea style="width:100%" rows="3" id="comm_content" /></textarea></td>
 						<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
 					</tr>
 					<tr>
@@ -518,7 +518,7 @@ function checkviewer(writer){
 					<!-- 	페이스북 공유 sdk -->
 						<div id="fb-root"></div>
 						<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v17.0" nonce="NOEk7uEg"></script>
-						<table>
+						<table class="table">
 							<thead>
 								<tr>
 									<td>${vo2.writer}</td>
@@ -555,7 +555,7 @@ function checkviewer(writer){
 						</table>
 					</div>
 					<div class="card-footer">	
-						<table id="comments">
+						<table class="comments" id="comments">
 						</table>
 					</div>
 				</div>

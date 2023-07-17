@@ -64,12 +64,13 @@ function input_check(){
 </head>
 
 <body class="">
-  <div class="wrapper ">
   <jsp:include page="../mini_top_menu.jsp"></jsp:include>
+  <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+	  <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="card card-user">
              <form action="mb_insertOK.do?id=${mh_attr.id}" method="post" enctype="multipart/form-data" id="insert_form">
               <div class="card-header">

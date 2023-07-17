@@ -66,7 +66,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body onload="gameStart()">
-    <jsp:include page="../../top_menu.jsp"></jsp:include>
     <jsp:include page="../mini_top_menu.jsp"></jsp:include>
     <h1>mini/game/game.jsp</h1>
     <div

@@ -14,56 +14,56 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-	function NickCheck(currentUserNickname) {
-		console.log("NickCheck....", $('#nickname').val());
+function NickCheck(currentUserNickname) {
+	console.log("NickCheck....", $('#nickname').val());
 
-		if ($('#nickname').val() === currentUserNickname) {
-			alert("기존 닉네임입니다.");
-			return;
-		}
+	if ($('#nickname').val() === currentUserNickname) {
+		alert("기존 닉네임입니다.");
+		return;
+	}
 
-		$.ajax({
-			url : "json_m_NickCheck.do",
-			data : {
-				nickname : $('#nickname').val(),
-				currentUserNickname : currentUserNickname
-			},
-			method : 'GET',
-			dataType : 'json',
-			success : function(obj) {
-				console.log('ajax...success:', obj);
-				console.log('ajax...success:', obj.result);
-				let msg = '';
-				if (obj.result === 'OK') {
-					msg = '사용가능한 닉네임입니다.';
-				} else {
-					msg = '사용중인 닉네임입니다.';
-				}
-				$('#demo2').text(msg);
-			},
-			error : function(xhr, status, error) {
-				console.log('xhr.status:', xhr.status);
+	$.ajax({
+		url : "json_m_NickCheck.do",
+		data : {
+			nickname : $('#nickname').val(),
+			currentUserNickname : currentUserNickname
+		},
+		method : 'GET',
+		dataType : 'json',
+		success : function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = '사용가능한 닉네임입니다.';
+			} else {
+				msg = '사용중인 닉네임입니다.';
 			}
-		});
+			$('#nick_check').text(msg);
+		},
+		error : function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}
+
+function test2() {
+	var p1 = document.getElementById('pw1').value;
+	var p2 = document.getElementById('pw2').value;
+	var text = '';
+	
+	if (p1.length < 6) {
+		text = '6글자 이상이어야 합니다.';
 	}
 
-	function test2() {
-		var p1 = document.getElementById('pw1').value;
-		var p2 = document.getElementById('pw2').value;
-
-		if (p1.length < 6) {
-			alert('입력한 글자가 6글자 이상이어야 합니다.');
-			return false;
-		}
-
-		if (p1 !== p2) {
-			alert("비밀번호불일치");
-			return false;
-		} else {
-			alert("비밀번호가 일치합니다");
-			return true;
-		}
+	if (p1 !== p2) {
+		text = '비밀번호가 불일치합니다';
+	} else {
+		text = '비밀번호가 일치합니다';
 	}
+	
+	$('#pw_check').text(text);
+}
 </script>
 
 <style>
@@ -75,6 +75,152 @@
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <div class="main-panel">
+<jsp:include page="../navbar.jsp"></jsp:include>
+<div class="wrapper ">
+	<div class="main-panel">		
+		<div class="content">
+			<div class="row">
+			
+				<!-- 왼쪽 카드 프로필, 팀멤버 카드 -->
+				<div class="col-md-4">
+				
+					<!--  프로필 이미지, 닉네임 등등  -->
+					<div class="card card-user">
+						<div class="image">
+							<img src="resources/assets/img/damir-bosnjak.jpg" alt="...">
+						</div>
+						<div class="card-body">
+							<div class="author">
+								<img class="avatar border-gray" id="profile_img" src="resources/uploadimg/${vo2.profilepic}"
+									onclick="">
+								<h5 class="title">${vo2.nickname}</h5>
+								<p class="description">${vo2.id}</p>
+							</div>
+							<p class="description text-center">
+								"I like the way you work it <br> No diggity <br> I
+								wanna bag it up"
+							</p>
+						</div>
+						<div class="card-footer">
+							<hr>
+							<div class="button-container">
+								<div class="row">
+									<div class="col-lg-3 col-md-6 col-6 ml-auto">
+										<h5>
+											12<br>
+											<small>Files</small>
+										</h5>
+									</div>
+									<div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
+										<h5>
+											2GB<br>
+											<small>Used</small>
+										</h5>
+									</div>
+									<div class="col-lg-3 mr-auto">
+										<h5>
+											24,6$<br>
+											<small>Spent</small>
+										</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+				
+				<!-- 회원정보 수정 카드 -->
+				<div class="col-md-8">
+					<div class="card card-user">
+						<div class="card-header">
+							<h5 class="card-title">회원수정</h5>
+						</div>
+						<div class="card-body">
+							<form>
+								<div class="row">
+									<div class="col-md-5 pr-1">
+										<div class="form-group">
+											<label>ID</label> <input type="text"
+												class="form-control" disabled="" value="${vo2.id}">
+										</div>
+									</div>
+									<div class="col-md-4 pr-1">
+										<div class="form-group">
+											<label>닉네임</label> <input type="text" id="nickname"
+												class="form-control" placeholder="${vo2.nickname}"
+												onfocusout="NickCheck('${vo2.nickname}')">
+											<div id="nick_check"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-5 pr-1">
+										<div class="form-group">
+											<label>비밀번호</label> <input type="text" id="pw1" 
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-md-5 pr-1">
+										<div class="form-group">
+											<label>비밀번호 확인</label> <input type="text" id="pw2" 
+												class="form-control" onfocusout="test2()">
+											<div id="pw_check"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 pr-1">
+										<div class="form-group">
+											<label>이름</label> <input type="text"
+												class="form-control" value="${vo2.name}">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 pr-1">
+										<div class="form-group">
+											<label>전화번호</label>
+											<div class="form-control">${vo2.tel}</div>
+										</div>
+									</div>
+									<div class="col-md-7 pr-1">
+										<div class="form-group">
+											<label>이메일</label>
+											<div class="form-control">${vo2.email}</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-11 pr-1">
+										<div class="form-group">
+											<label>회원정보 확인 질문</label>
+											<div class="form-control">${vo2.question}</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-11 pr-1">
+										<div class="form-group">
+											<label>회원정보 확인 답변</label>
+											<div class="form-control">${vo2.answer}</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="update ml-auto mr-auto">
+										<button onclick="location.href='m_update.do?id=${vo2.id}'" 
+										class="btn btn-primary btn-round">회원수정</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">
@@ -195,7 +341,7 @@
 
 
 		if (nickname !== currentUserNickname) {
-			if ($('#demo2').text() !== '사용가능한 닉네임입니다.') {
+			if ($('#nick_check').text() !== '사용가능한 닉네임입니다.') {
 				alert("사용중인 닉네임입니다");
 				return;
 			}

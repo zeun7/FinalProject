@@ -72,7 +72,7 @@
 							<img src="resources/assets/img/logo-small.png">
 						</div> <!-- <p>CT</p> -->
 					</a> <a href="m_selectOne.do?id=${user_id}"
-						class="simple-text logo-normal" id="myinfo"> Ilchon <!-- <div class="logo-image-big">
+						class="simple-text logo-normal" id="myinfo">${nickname} <!-- <div class="logo-image-big">
 		            <img src="../assets/img/logo-big.png">
 		          	</div> -->
 					</a> <a href="logout.do" class="simple-text logo-normal" id="logout">
@@ -109,8 +109,24 @@
 	function openMiniHomePage(event) {
 		event.preventDefault(); // 기본 동작인 링크 이동을 중지합니다.
 		let url = event.target.href;
+		let url = "mini_home.do?id=${user_id}";
+		console.log(url);
 		let name = '내 미니홈피';
 		let options = 'width=1600,height=900,menubar=yes,toolbar=yes,location=yes,resizable=no';
 		window.open(url, name, options);
 	}
 </script>
+
+<!--   Core JS Files   -->
+<script src="resources/assets/js/core/jquery.min.js"></script>
+<script src="resources/assets/js/core/popper.min.js"></script>
+<script src="resources/assets/js/core/bootstrap.min.js"></script>
+<script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!-- Chart JS -->
+<script src="resources/assets/js/plugins/chartjs.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="resources/assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>

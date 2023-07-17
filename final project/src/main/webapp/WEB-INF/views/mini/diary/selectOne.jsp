@@ -199,7 +199,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 				}
 					
 				tag_comments += `<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
+						<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
 						<td><div id="count_clikes_\${vo.mcnum}"></div></td>
 						<td><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" id="cocoment_\${vo.mcnum}">답글</button></td>
 						<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report_\${vo.mcnum}">신고</button></td>
@@ -313,7 +313,7 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 				}
 				
 				tag_cocomments += `		<td id="clike_btn_\${vo.mcnum}"><button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-										<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
+										<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/cliked.png" /></button></td>
 										<td><div id="count_clikes_\${vo.mcnum}"></div></td>
 										<td><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report__\${vo.mcnum}">신고</button></td>
 									</tr>
@@ -528,6 +528,7 @@ function checkviewer(writer){
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">
           <div class="col-md-12">
@@ -548,9 +549,9 @@ function checkviewer(writer){
 					</p>
 				</div>
 				<div>
-					<button onclick="like()" id="like_button"><img width="15px" src="resources/icon/not_like.png" /></button>
+					<button onclick="like()" id="like_button">좋아요</button>
 					<button onclick="like_cancel()" id="lcancel_button"
-						style="display: none"><img width="15px" src="resources/icon/like.png" /></button>
+						style="display: none">좋아요 취소</button>
 					<span id="likes_count">${vo2.likes }</span>
 					<button onclick="open_modal()">공유</button>
 					<button onclick="report()" id="report_button">신고</button>

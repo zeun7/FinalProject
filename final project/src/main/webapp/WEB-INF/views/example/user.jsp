@@ -19,26 +19,17 @@ Coded by www.creative-tim.com
 
 <head>
 <meta charset="utf-8" />
-<link rel="apple-touch-icon" sizes="76x76"
-	href="resources/assets/img/apple-icon.png">
-<link rel="icon" type="image/png"
-	href="resources/assets/img/favicon.png">
+<link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>Paper Dashboard 2 by Creative Tim</title>
-<meta
-	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-	name='viewport' />
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 <!--     Fonts and icons     -->
-<link
-	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
-	rel="stylesheet" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" 	rel="stylesheet">
 <!-- CSS Files -->
 <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
-<link href="resources/assets/css/paper-dashboard.css?v=2.0.1"
-	rel="stylesheet" />
+<link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="resources/assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -162,9 +153,14 @@ Coded by www.creative-tim.com
 				</div>
 			</nav>
 			<!-- End Navbar -->
+			
 			<div class="content">
 				<div class="row">
+				
+					<!-- 왼쪽 카드 프로필, 팀멤버 카드 -->
 					<div class="col-md-4">
+					
+						<!--  프로필 이미지, 닉네임 등등  -->
 						<div class="card card-user">
 							<div class="image">
 								<img src="resources/assets/img/damir-bosnjak.jpg" alt="...">
@@ -207,7 +203,9 @@ Coded by www.creative-tim.com
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> 
+						
+						<!-- 팀멤버 카드 -->
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">Team Members</h4>
@@ -275,6 +273,8 @@ Coded by www.creative-tim.com
 							</div>
 						</div>
 					</div>
+					
+					<!-- 회원정보 수정 카드 -->
 					<div class="col-md-8">
 						<div class="card card-user">
 							<div class="card-header">

@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
+<link rel="stylesheet" href="resources/css/menu.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function manage_member(page){	// 회원목록 출력
@@ -17,7 +18,7 @@ function manage_member(page){	// 회원목록 출력
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead>
+ 						<thead class="text-primary">
 							<tr>
 							<th>ID</th>
 							<th>닉네임</th>
@@ -54,7 +55,8 @@ function manage_member(page){	// 회원목록 출력
  			tag_vos += `</tbody>
  						<tfoot>
  							<tr>
- 								<td colsapn="6" id="pages">
+ 								<td colsapn="6">
+ 									<div id="pages"></div>
  								</td>
  							</tr>
  						</tfoot>
@@ -127,7 +129,7 @@ function manage_board(page){	// 신고 게시글 목록
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead>
+ 						<thead class="text-primary">
 							<tr>
 							<th>No.</th>
 							<th>제목</th>
@@ -223,7 +225,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead>
+ 						<thead class="text-primary">
 							<tr>
 							<th>No.</th>
 							<th>댓글 내용</th>
@@ -352,13 +354,26 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 <body onload="manage_member(1)">
 <jsp:include page="sidebar.jsp"></jsp:include>
 <div class="main-panel">
-	<ul>
-		<li><button onclick="manage_member(1)">회원관리</button></li>
-		<li><button onclick="manage_board(1)">신고 게시글</button></li>
-		<li><button onclick="manage_comments(1)">신고 댓글</button></li>
-	</ul>
-	<table id="vos">
-	</table>
+<jsp:include page="navbar.jsp"></jsp:include>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+					<ul class="menu">
+						<li><button onclick="manage_member(1)">회원관리</button></li>
+						<li><button onclick="manage_board(1)">신고 게시글</button></li>
+						<li><button onclick="manage_comments(1)">신고 댓글</button></li>
+					</ul>
+					</div>
+					<div class="card-body">
+						<table class="table" id="vos">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

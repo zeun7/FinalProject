@@ -53,9 +53,10 @@ function input_check(){
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <jsp:include page="../mini_navbar.jsp"></jsp:include>
       <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> 방명록</h4>
