@@ -4,6 +4,10 @@
 	list-style-type: none;
 }
 
+.comm_one .coco_img, .comm_one .cmt_box {
+	float: left;
+}
+
 .comm_nick {
 	width: 300px;
 }

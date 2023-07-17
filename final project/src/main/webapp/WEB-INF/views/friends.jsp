@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
-<link rel="stylesheet" href="resources/css/menu.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <%
 	String nickname = "";

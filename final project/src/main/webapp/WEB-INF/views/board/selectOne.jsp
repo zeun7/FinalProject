@@ -151,68 +151,132 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				checkviewer(writer);
 				tag_comments += `
-					<tr>
-						<td colspan="6"><hr /></td>
-					</tr>
-					<tr>
-						<td rowspan="2" class="nick">\${vo.writer}</td>`;
-					
+					<li class="comm_one">
+						<div class="cmt_box">
+							<div class="comm_top">	
+								<table>	
+									<tr>
+										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
+										<td class="comm_top_space"></td>
+										<td class="comm_btn_wrap">
+											<span><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></span>
+											<span><div id="count_clikes_\${vo.cnum}"></div></span>
+											<span id="clike_btn_\${vo.cnum}">
+												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						`;
+							
 				if(cnum === vo.cnum){	// 댓글 수정인 경우
 					tag_comments += `
-							<td rowspan="2"><textarea style="width:100%" rows="3" id="comm_content">\${vo.content}</textarea><td>
-							<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
-							<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
-						</tr>
-						<tr>
-							<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
-						</tr>`;
+						<div class="comm_write_box">
+							<table>
+								<tr>
+									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
+									<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
+								</tr>
+							</table>
+						</div>
+						`;
 				}
 				else{	// 댓글 출력
 					if(vo.secret === 1){	// 비밀 댓글인 경우
-						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
-							tag_comments += `<td rowspan="2" class="comm_content">\${vo.content}</td>`;
-						else
-							tag_comments += `<td rowspan="2" class="comm_content">비밀댓글 입니다</td>`;
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1'){
+							tag_comments += `
+								<div class="comm_content_box">
+									<table>
+										<tr>
+											<td><div class="comm_content">
+												<p>\${vo.content}</p>
+											</div></td>
+											<td><div id="c_update_\${vo.cnum}">
+												<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
+											</div></td>
+											<td><div id="c_delete_\${vo.cnum}">
+												<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
+											</div></td>
+										</tr>
+									</table>
+								</div>
+								`;
+						}
+						else{
+							tag_comments += `
+								<div class="comm_content_box">
+									<div class="comm_content_box"><span class="comm_content">비밀댓글 입니다</span></div>
+								</div>	
+								`;
+						}
 					}
-					else	// 비밀 댓글이 아닌 경우
-						tag_comments += `<td rowspan="2" class="comm_content">\${vo.content}</td>`;
+					else{	// 비밀 댓글이 아닌 경우
+						tag_comments += `
+							<div class="comm_content_box">
+									<table>
+									<tr>
+										<td><div class="comm_content_box">
+											<p class="comm_content">\${vo.content}</p>
+										</div></td>
+										<td><div id="c_update_\${vo.cnum}">
+											<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
+										</div></td>
+										<td><div id="c_delete_\${vo.cnum}">
+											<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
+										</div></td>
+									</tr>
+								</table>
+							</div>
+							`;
+					}
 				}
 					
-				tag_comments += `<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-						<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
-						<td><div id="count_clikes_\${vo.cnum}"></div></td>
-						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></td>
-						<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
-					</tr>
-					<tr>
-						<td><button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
-						<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-						<td colspan="2" id="cdate_\${vo.cnum}">\${cdate}</td>
-					</tr>
-					<tr><td colspan="9"><div id="cocomments_\${vo.cnum}"></div></td></tr>`;	// 대댓글 출력 위치
+				tag_comments += `</div>
+					</li>
+					<div id="cocomments_\${vo.cnum}"></div>`;	// 대댓글 출력 위치
 				
 				if(insert_num === vo.cnum){	// 대댓글 작성
-					tag_comments += `<tr>
-						<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td colspan="3" rowspan="2"><textarea style="width:100%" rows="3" id="comm_content" /></textarea></td>
-						<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
-						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
-					</tr>`; // 대댓글 입력창 출력 위치
+					tag_comments += `
+						<li>
+							<div class="comm_write_box">
+								<table>
+									<tr>
+										<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
+										<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
+										<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
+										<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
+									</tr>
+								</table>
+							</div>
+						</li>`;
 				}
 			});
 			
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
 				tag_comments += `
-					<tr>
-						<td colspan="5" rowspan="2"><textarea style="width:100%" rows="3" id="comm_content" /></textarea></td>
-						<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
-					</tr>`;
+					<li>
+						<div class="comm_write_box">
+							<table>
+								<tr>
+									<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
+									<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
+								</tr>
+							</table>
+						</div>
+					</li>`;
 			}
 			
 			$('#comments').html(tag_comments);
@@ -262,51 +326,96 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 			$.each(arr, function(index, vo){
 				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_cocomments += `
-					<tr><td colspan="6"><hr /></td></tr>
-					<tr>
-						<td><img width="15px" src="resources/icon/cocomment.png" /></td>
-						<td>
-							<table>
-								<tbody>
+					<li class="comm_one">
+						<div class="coco_img" style="float:left; padding:10px;">
+							<img width="15px" src="resources/icon/cocomment.png" /></div>
+						<div class="cmt_wrap">
+							<div class="comm_top">	
+								<table>	
 									<tr>
-										<td rowspan="2">\${vo.writer}</td>`;
+										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
+										<td class="comm_top_space"></td>
+										<td class="comm_btn_wrap">
+											<span><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></span>
+											<span><div id="count_clikes_\${vo.cnum}"></div></span>
+											<span id="clike_btn_\${vo.cnum}">
+												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						`;
 										
 				if(update_num === vo.cnum){	// 대댓글 수정인 경우
 					tag_cocomments += `
-						<td rowspan="2"><textarea cols="50" rows="3" id="comm_content">\${vo.content}</textarea><td>
-						<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
-						<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
-					</tr>`;
+						<div class="comm_write_box">
+							<table>
+								<tr>
+									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
+									<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
+								</tr>
+							</table>
+						</div>
+					`;
 				}
 				else{		// 대댓글 출력
 					if(vo.secret === 1){	// 비밀 댓글인 경우
-						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1')
-							tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
-						else
-							tag_cocomments += `<td rowspan="2">비밀 댓글 입니다</td>`;
+						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1'){
+							tag_cocomments += `
+								<div class="comm_content_box">
+									<table>
+										<tr>
+											<td><div class="comm_content">
+												<span>\${vo.content}</span>
+											</div></td>
+											<td><div id="c_update_\${vo.cnum}">
+												<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
+											</div></td>
+											<td><div id="c_delete_\${vo.cnum}">
+												<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
+											</div></td>
+										</tr>
+									</table>
+								</div>
+								`;
+						}
+						else{
+							tag_cocomments += `<div class="comm_content_box">
+								<div class="comm_content_box"><span class="comm_content">비밀댓글 입니다</span></div>
+							</div>	
+							`;
+						}
 					}
 					else{	// 비밀 댓글이 아닌 경우
-						tag_cocomments += `<td rowspan="2">\${vo.content}</td>`;
+						tag_cocomments += `
+							<div class="comm_content_box">
+								<table>
+									<tr>
+										<td><div class="comm_content_box">
+											<span class="comm_content">\${vo.content}</span>
+										</div></td>
+										<td><div id="c_update_\${vo.cnum}">
+											<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
+										</div></td>
+										<td><div id="c_delete_\${vo.cnum}">
+											<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
+										</div></td>
+									</tr>
+								</table>
+							</div>
+							`;
 					}
 				}
 				
-				tag_cocomments += `		<td id="clike_btn_\${vo.cnum}"><button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-										<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button></td>
-										<td><div id="count_clikes_\${vo.cnum}"></div></td>
-										<td><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></td>
-									</tr>
-									<tr>
-										<td><button onclick="comments('\${writer}', \${vo.cnum}, \${bnum})" id="c_update_\${vo.cnum}">수정</button></td>
-										<td><button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}">삭제</button></td>
-										<td colspan="2" id="cdate_\${vo.cnum}">\${cdate}</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>`;
+				tag_cocomments += `</div>
+					</li>`;
 				
 			});
 			
@@ -551,17 +660,18 @@ function checkviewer(writer){
 										<button onclick="open_modal()">공유</button>					
 										<button onclick="report()" id="report_button">신고</button>
 									</td>
-									<td id="update_delete">
-										<a href="b_update.do?bnum=${vo2.bnum}" class="myButton">수정</a> 
-										<a href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}" class="myButton">삭제</a>
-									</td>
+									<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum}">수정</a> <a
+										href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a></td>
+									<td></td>
 								</tr>
 							</tfoot>
 						</table>
 					</div>
 					<div class="card-footer">	
-						<table class="comments" id="comments">
-						</table>
+						<div class="comments wrap" id="comments wrap">
+							<ul class="comments" id="comments">
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
