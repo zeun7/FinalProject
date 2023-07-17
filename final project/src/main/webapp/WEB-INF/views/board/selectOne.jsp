@@ -240,10 +240,10 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 					
 				tag_comments += `</div>
 					</li>
-					<div id="cocomments_\${vo.cnum}"></div>`;	// 대댓글 출력 위치
+					<li id="cocomments_\${vo.cnum}">`;	// 대댓글 출력 위치
 				
 				if(insert_num === vo.cnum){	// 대댓글 작성
-					tag_comments += `
+					tag_comments += `</li>
 						<li>
 							<div class="comm_write_box">
 								<table>
@@ -263,7 +263,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 			});
 			
 			if(insert_num === 0){	// 답글을 누르지 않았을 때
-				tag_comments += `
+				tag_comments += `</li>
 					<li>
 						<div class="comm_write_box">
 							<table>
