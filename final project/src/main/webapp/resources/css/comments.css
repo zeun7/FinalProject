@@ -1,9 +1,20 @@
 @charset "EUC-KR";
 
-.comments .nick {
-	width: 10%;
+.comments li {
+	list-style-type: none;
 }
 
-.comments .comm_content {
-	width: 70%;
+.comm_nick {
+	width: 300px;
+}
+
+.comm_top_space {
+}
+
+.comm_btn_wrap {
+	width: 200px;
+}
+
+.comm_btn_wrap span {
+	float: right;
 }

@@ -79,11 +79,11 @@ function test2() {
 <div class="wrapper ">
 	<div class="main-panel">		
 		<div class="content">
+				<form>
 			<div class="row">
 			
 				<!-- 왼쪽 카드 프로필, 팀멤버 카드 -->
 				<div class="col-md-4">
-				
 					<!--  프로필 이미지, 닉네임 등등  -->
 					<div class="card card-user">
 						<div class="image">
@@ -136,7 +136,6 @@ function test2() {
 							<h5 class="card-title">회원수정</h5>
 						</div>
 						<div class="card-body">
-							<form>
 								<div class="row">
 									<div class="col-md-5 pr-1">
 										<div class="form-group">
@@ -147,7 +146,7 @@ function test2() {
 									<div class="col-md-4 pr-1">
 										<div class="form-group">
 											<label>닉네임</label> <input type="text" id="nickname"
-												class="form-control" placeholder="${vo2.nickname}"
+												class="form-control" value="${vo2.nickname}"
 												onfocusout="NickCheck('${vo2.nickname}')">
 											<div id="nick_check"></div>
 										</div>
@@ -212,11 +211,11 @@ function test2() {
 										class="btn btn-primary btn-round">회원수정</button>
 									</div>
 								</div>
-							</form>
 						</div>
 					</div>
 				</div>
 			</div>
+							</form>
 		</div>
 	</div>
 </div>

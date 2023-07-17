@@ -71,14 +71,13 @@
 						<div class="logo-image-small">
 							<img src="resources/assets/img/logo-small.png">
 						</div> <!-- <p>CT</p> -->
-					</a> <a href="m_selectOne.do?id=${user_id}"
-						class="simple-text logo-normal" id="myinfo">${nickname} <!-- <div class="logo-image-big">
-		            <img src="../assets/img/logo-big.png">
-		          	</div> -->
-					</a> <a href="logout.do" class="simple-text logo-normal" id="logout">
-						로그아웃 </a> <a href="login.do" class="simple-text logo-normal"
-						id="login"> 로그인 </a> <a href="m_insert.do"
-						class="simple-text logo-normal" id="m_insert"> 회원가입 </a>
+					</a>
+					<a href="m_selectOne.do?id=${user_id}" class="simple-text logo-normal" id="myinfo">${nickname}
+						<!-- <div class="logo-image-big"> <img src="../assets/img/logo-big.png"> </div> -->
+					</a>
+					<a href="logout.do" class="simple-text logo-normal" id="logout">로그아웃</a>
+					<a href="login.do" class="simple-text logo-normal" id="login">로그인</a>
+					<a href="m_insert.do" class="simple-text logo-normal" id="m_insert">회원가입</a>
 				</div>
 			</li>
 		</ul>
@@ -108,7 +107,6 @@
 
 	function openMiniHomePage(event) {
 		event.preventDefault(); // 기본 동작인 링크 이동을 중지합니다.
-		let url = event.target.href;
 		let url = "mini_home.do?id=${user_id}";
 		console.log(url);
 		let name = '내 미니홈피';
