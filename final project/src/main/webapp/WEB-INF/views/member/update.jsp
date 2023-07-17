@@ -67,7 +67,6 @@
             messageDiv.classList.add('success-message');
         }
 
-        $('#pw_check').text(text);
         messageDiv.innerHTML = text;
         messageDiv.style.display = (p1 === p2 && p1.length >= 6) ? 'block' : 'none';
     }
@@ -198,7 +197,6 @@
 												<label id="pwConfirmationLabel" style="display: none;">비밀번호
 													확인</label> <input type="password" id="pw2" class="form-control"
 													oninput="test2()" style="display: none;">
-												<div id="pw_check"></div>
 												<div id="pw_match_message" style="display: none;"></div>
 											</div>
 										</div>
@@ -249,7 +247,7 @@
 									<div class="row">
 										<div class="col-md-11 pr-1">
 											<div class="form-group">
-												<label>회원정보 확인 답변</label> <input type="answer" id="answer"
+												<label>회원정보 확인 답변</label> <input type="text" id="answer"
 													name="answer" class="form-control" value="${vo2.answer}">
 											</div>
 										</div>
