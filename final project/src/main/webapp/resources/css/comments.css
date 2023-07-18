@@ -1,24 +1,48 @@
 @charset "EUC-KR";
 
+.comments {
+	padding: 0px;
+}
+
 .comments li {
 	list-style-type: none;
 }
 
-.comm_one .coco_img, .comm_one .cmt_box {
+.comments li > div {
 	float: left;
+}
+
+.cmt_box {
+	border-top: 1px;
+}
+
+.comm_wrap {
+	width: 100%;
 }
 
 .comm_nick {
 	width: 300px;
 }
 
-.comm_top_space {
-}
-
-.comm_btn_wrap {
+.comm_btn_wrap, .updel_wrap {
 	width: 200px;
 }
 
 .comm_btn_wrap span {
 	float: right;
+	padding-left: 5px;
+}
+
+.updel_wrap span {
+	float: right;
+	padding-left: 5px;
+}
+
+.update_btn_wrap span, .secret_check, .insert_wrap span {
+	float: right;
+	padding-left: 5px;
+}
+
+#comm_content {
+	width: 100%;
 }

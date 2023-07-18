@@ -152,9 +152,10 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 				checkviewer(writer);
 				tag_comments += `
 					<li class="comm_one">
+						<hr/>
 						<div class="cmt_box">
-							<div class="comm_top">	
-								<table>	
+							<div class="comm_top" style="display: flex">	
+								<table style="flex: 1 500px">	
 									<tr>
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
@@ -174,15 +175,21 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 							
 				if(cnum === vo.cnum){	// 댓글 수정인 경우
 					tag_comments += `
-						<div class="comm_write_box">
-							<table>
+						<div class="comm_write_box" style="display: flex">
+							<table style="flex: 1 500px">
 								<tr>
-									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
-									<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
-									<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td width="130px;">
+										<div class="update_btn_wrap">	
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
+											<span><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></span>
+										</div>
+									</td>
 								</tr>
 								<tr>
-									<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
+									<td class="secret_check">
+										<span width="150px;"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</span>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -192,18 +199,20 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 					if(vo.secret === 1){	// 비밀 댓글인 경우
 						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1'){
 							tag_comments += `
-								<div class="comm_content_box">
-									<table>
+								<div class="comm_content_box" style="display: flex">
+									<table style="flex: 1 500px">
 										<tr>
 											<td><div class="comm_content">
 												<p>\${vo.content}</p>
 											</div></td>
-											<td><div id="c_update_\${vo.cnum}">
-												<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
-											</div></td>
-											<td><div id="c_delete_\${vo.cnum}">
-												<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
-											</div></td>
+											<td width="200px;">
+												<div class="updel_wrap">
+													<span id="c_delete_\${vo.cnum}">
+														<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+													<span id="c_update_\${vo.cnum}">
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+												</div>
+											</td>
 										</tr>
 									</table>
 								</div>
@@ -219,18 +228,20 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 					}
 					else{	// 비밀 댓글이 아닌 경우
 						tag_comments += `
-							<div class="comm_content_box">
-									<table>
+							<div class="comm_content_box" style="display: flex">
+									<table style="flex: 1 500px">
 									<tr>
 										<td><div class="comm_content_box">
 											<p class="comm_content">\${vo.content}</p>
 										</div></td>
-										<td><div id="c_update_\${vo.cnum}">
-											<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
-										</div></td>
-										<td><div id="c_delete_\${vo.cnum}">
-											<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
-										</div></td>
+										<td width="200px;">
+											<div class="updel_wrap">
+												<span id="c_delete_\${vo.cnum}">
+													<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+												<span id="c_update_\${vo.cnum}">
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+											</div>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -245,16 +256,23 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 				if(insert_num === vo.cnum){	// 대댓글 작성
 					tag_comments += `</li>
 						<li>
-							<div class="comm_write_box">
-								<table>
+							<hr/>
+							<div class="coco_img" style="float:left; padding:10px;">
+								<img width="15px" src="resources/icon/cocomment.png" /></div>
+							<div class="comm_write_box" styel="display: flex">
+								<table style="flex: 1 500px; width:100%;">
 									<tr>
-										<td rowspan="2"><img width="15px" src="resources/icon/cocomment.png" /></td>
-										<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
-										<td><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></td>
-										<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+										<td rowspan="2" width="90%;"><textarea cols="100%" rows="3" id="comm_content"></textarea></td>
+										<td width="100px;">
+											<div width="130px;" class="insert_wrap">
+												<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
+												<span><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></span>
+											</div>
 									</tr>
 									<tr>
-										<td colspan="2"><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
+										<td colspan="2" class="secret_check">
+											<span><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</span>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -262,17 +280,24 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 				}
 			});
 			
-			if(insert_num === 0){	// 답글을 누르지 않았을 때
+			if(insert_num === 0){	// 답글을 누르지 않았을 때 댓글 입력창
 				tag_comments += `</li>
 					<li>
-						<div class="comm_write_box">
-							<table>
+						<hr/>
+						<div class="comm_write_box" styel="display: flex">
+							<table style="flex: 1 500px; width:100%;">
 								<tr>
 									<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
-									<td><button onclick="c_insertOK(0, \${bnum})">등록</button></td>
+									<td width="100px;">
+										<div width="130px;" class="insert_wrap">
+											<span><button width="100px;" onclick="c_insertOK(0, \${bnum})">등록</button></span>
+										</div>
+									</td>
 								</tr>
 								<tr>
-									<td><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</td>
+									<td class="secret_check">
+										<span width="150px;"><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</span>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -327,17 +352,17 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 				let cdate = moment(vo.cdate).format('YYYY-MM-DD HH:mm:ss');
 				tag_cocomments += `
 					<li class="comm_one">
+						<hr/>
 						<div class="coco_img" style="float:left; padding:10px;">
 							<img width="15px" src="resources/icon/cocomment.png" /></div>
 						<div class="cmt_wrap">
-							<div class="comm_top">	
-								<table>	
+							<div class="comm_top" style="display: flex">	
+								<table style="flex: 1 500px">	
 									<tr>
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
 											<span><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></span>
-											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></span>
 											<span><div id="count_clikes_\${vo.cnum}"></div></span>
 											<span id="clike_btn_\${vo.cnum}">
 												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
@@ -351,15 +376,21 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 										
 				if(update_num === vo.cnum){	// 대댓글 수정인 경우
 					tag_cocomments += `
-						<div class="comm_write_box">
-							<table>
+						<div class="comm_write_box" style="display: flex">
+							<table style="flex: 1 500px">
 								<tr>
-									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
-									<td><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></td>
-									<td><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></td>
+									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td width="130px;">
+										<div class="update_btn_wrap">	
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
+											<span><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></span>
+										</div>
+									</td>
 								</tr>
 								<tr>
-									<td colspan="2"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</td>
+									<td class="secret_check">
+										<span width="150px;"><input type="checkbox" name="update_secret" id="update_secret" value="1" />비밀댓글</span>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -369,18 +400,20 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 					if(vo.secret === 1){	// 비밀 댓글인 경우
 						if(vo.writer === '${nickname}' || iswriter || '${mclass}' === '1'){
 							tag_cocomments += `
-								<div class="comm_content_box">
-									<table>
+								<div class="comm_content_box" style="display: flex">
+									<table style="flex: 1 500px">
 										<tr>
 											<td><div class="comm_content">
 												<span>\${vo.content}</span>
 											</div></td>
-											<td><div id="c_update_\${vo.cnum}">
-												<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
-											</div></td>
-											<td><div id="c_delete_\${vo.cnum}">
-												<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
-											</div></td>
+											<td width="200px;">
+												<div class="updel_wrap">
+													<span id="c_delete_\${vo.cnum}">
+														<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+													<span id="c_update_\${vo.cnum}">
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+												</div>
+											</td>
 										</tr>
 									</table>
 								</div>
@@ -395,18 +428,20 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 					}
 					else{	// 비밀 댓글이 아닌 경우
 						tag_cocomments += `
-							<div class="comm_content_box">
-								<table>
+							<div class="comm_content_box" style="display: flex">
+								<table style="flex: 1 500px">
 									<tr>
 										<td><div class="comm_content_box">
 											<span class="comm_content">\${vo.content}</span>
 										</div></td>
-										<td><div id="c_update_\${vo.cnum}">
-											<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button>
-										</div></td>
-										<td><div id="c_delete_\${vo.cnum}">
-											<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button>
-										</div></td>
+										<td width="200px;">
+											<div class="updel_wrap">
+												<span id="c_delete_\${vo.cnum}">
+													<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+												<span id="c_update_\${vo.cnum}">
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+											</div>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -645,7 +680,7 @@ function checkviewer(writer){
 					<!-- 			</tr> -->
 								<tr>
 <%-- 									<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td> --%>
-									<td colspan="2">
+									<td colspan="3">
 								        <p>${vo2.content}</p>
 								        <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 								    </td>
@@ -667,7 +702,7 @@ function checkviewer(writer){
 							</tfoot>
 						</table>
 					</div>
-					<div class="card-footer">	
+					<div class="card-footer">
 						<div class="comments wrap" id="comments wrap">
 							<ul class="comments" id="comments">
 							</ul>
