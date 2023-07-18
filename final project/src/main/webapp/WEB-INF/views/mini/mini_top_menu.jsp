@@ -54,25 +54,27 @@
             <img src="resources/uploadimg/${m_attr.profilepic}">
           </div>
           <!-- <p>CT</p> -->
-          <div>${mh_attr.id}</div>
-          <div id="mini_update">
-			<a href="mini_update.do?id=${mh_attr.id}" class=" text-primary">미니홈피 수정</a>
-			</div>
-			<div>${mh_attr.message}</div>
-			<div>
-				<audio controls style="width: 230px">
-					<source src="resources/uploadbgm/${mh_attr.bgm}" type="audio/mp3">
-				</audio>
-			</div>
-			<div>vtoday : ${mh_attr.vtoday}</div>
-			<div>vtotal : ${mh_attr.vtotal}</div>
-			<br>
-			<div>
-				<button onclick="goToNewestDiary()" style="border: 0; background: white;" class=" text-primary">최신 다이어리</button>
-				<button onclick="goToNewestGallery()" style="border: 0; background: white;" class=" text-primary">최신 사진</button>
-			</div>
-			<div>
-				<a href="mini_random.do?id=${mh_attr.id}" class="btn btn-primary btn-block">랜덤 미니홈피 가기</a>
+          <div style="text-align:center;">
+	          <div>${m_attr.nickname}</div>
+	          <div id="mini_update">
+				<a href="mini_update.do?id=${mh_attr.id}" class=" text-primary">미니홈피 수정</a>
+				</div>
+				<div>${mh_attr.message}</div>
+				<div>
+					<audio controls style="width: 230px">
+						<source src="resources/uploadbgm/${mh_attr.bgm}" type="audio/mp3">
+					</audio>
+				</div>
+				<div>TODAY : ${mh_attr.vtoday}</div>
+				<div id="vtotal">TOTAL : ${mh_attr.vtotal}</div>
+				<br>
+				<div>
+					<button onclick="goToNewestDiary()" style="border: 0; background: white;" class=" text-primary">최신 다이어리</button>
+					<button onclick="goToNewestGallery()" style="border: 0; background: white;" class=" text-primary">최신 사진</button>
+				</div>
+				<div>
+					<a href="mini_random.do?id=${mh_attr.id}" class="btn btn-primary btn-block" style="border-radius: 10px;">랜덤 미니홈피 가기</a>
+				</div>
 			</div>
       </div>
       <div class="sidebar-wrapper">
@@ -121,6 +123,7 @@
 	if ('${user_id}' != '${mh_attr.id}') {
 		$('#mini_update').hide();
 		$('#jukebox').hide();
+		$('#vtotal').hide();
 	}
 	
 	//li태그의 active 클래스 바꾸는 함수

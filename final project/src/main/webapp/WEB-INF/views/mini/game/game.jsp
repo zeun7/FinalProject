@@ -39,6 +39,7 @@ Coded by www.creative-tim.com
 <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 
+<link href="resources/css/game.css" rel="stylesheet" />
 <style type="text/css">
 #remainingTime {
 	width: 150px;
@@ -57,14 +58,17 @@ Coded by www.creative-tim.com
 <body class="" onload="gameStart()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
 	<div class="wrapper ">
-		<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
-		<jsp:include page="../mini_navbar.jsp"></jsp:include>
-			<div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+		<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
+		    <jsp:include page="../mini_navbar.jsp"></jsp:include>
+		      <div class="content" style="height: 90vh;">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
+						<div class="card" style="background-image: url('resources/assets/img/sketchbook.png'); background-size: cover;">
+							<div class="card-header game-header">
 								<h4 class="card-title text-center">끝말잇기 게임</h4>
+								<div id="gameBackground">
+					                <p id="remainingTime" class="text-center"></p>
+					            </div>
 							</div>
 							<div class="card-body">
 								<div id="gameContainer" class="text-center">
@@ -72,11 +76,19 @@ Coded by www.creative-tim.com
 						                <p id="remainingTime"></p>
 						            </div>
 						            <div id="gameContent">
-						                <p>시작 단어: 사과</p>
+						                <div class="col-md-6 word-start text-center">
+							                <p>시작 단어: 사과</p>
+						            	</div>
 						                <ul id="wordList"></ul>
-						                <input type="text" id="inputWord" placeholder="단어를 입력하세요">
-						                <button id="startButton" class="btn btn-primary btn-round"></button><br><br>
-								       	<button id="showRank" class="btn btn-round">랭킹보기</button>
+						                 <div class="word-input text-center">
+						                	<div class="word-input-div">
+								                <input type="text" id="inputWord" placeholder="단어 입력">
+								            </div>
+							                <button id="startButton" class="btn-start">게임 시작</button>
+							                <button id="nextButton" class="btn-start">다음단어</button>
+						                </div>
+						                <br><br>
+								       	<button id="showRank" class="btn-rank">랭킹보기</button>
 						            </div>
 						            <div id="rankingContent" style="display: none;">
 						            </div>
@@ -122,6 +134,7 @@ Coded by www.creative-tim.com
 </body>
 
 <script type="text/javascript">
+$('#nextButton').hide();           // --------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     let Game = { // Game 객체 선언
         currentWord: '사과',
         score: 0,
@@ -135,7 +148,7 @@ Coded by www.creative-tim.com
     }
 	
  	// 버튼의 초기 텍스트 설정
-    Game.startButton.textContent = '게임 시작';
+    //     Game.startButton.textContent = '게임 시작';
     Game.timeDisplay.textContent = '남은 시간: 60';
     
     function startTimer() {
@@ -184,6 +197,8 @@ Coded by www.creative-tim.com
 
         $('#startButton').on('click', function() {
             startGame();
+            $('#startButton').hide();
+            $('#nextButton').show();
         });
 
         $('#startButton').on('keyup', function(event) {
@@ -196,10 +211,12 @@ Coded by www.creative-tim.com
 	
     function startGame() {
         if (!Game.gameStarted) {
-            Game.startButton.textContent = '다음 단어';
             Game.startButton.removeEventListener('click', startGame);
             Game.startButton.removeEventListener('keyup', startGame);
-            Game.startButton.addEventListener('click', validateAndAddWord);
+            $('#nextButton').on('click', function(event) {
+                event.preventDefault();
+                validateAndAddWord();
+            });
             $('#inputWord').on('keyup', function(event) { // inputWord에서 엔터를 입력했을 때의 처리
                 if (event.which === 13) {
                     event.preventDefault();
@@ -265,7 +282,7 @@ Coded by www.creative-tim.com
                     records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
                 }
 
-                let rankingTable = '<table class="table"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
+                let rankingTable = '<table class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
                 for(let i = 0; i < records.length; i++) {
                     let row = records[i];
@@ -294,13 +311,12 @@ Coded by www.creative-tim.com
                     Game.score = 0;
                     Game.gameStarted = false;
                     Game.remainingTime = 60;
-                    Game.startButton.textContent = '게임 시작';
                     Game.timeDisplay.textContent = '남은 시간: ' + Game.remainingTime;
                     clearInterval(Game.timerInterval); // 이미 설정된 timerInterval을 취소
                     clearTimeout(Game.gameTimeout); // 이미 설정된 gameTimeout을 취소
 
                     $('#inputWord').val(''); // inputWord 초기화
-                    $('#wordList').val(''); // wordList 초기화
+                    $('#wordList').html('<li>사과</li>'); // wordList 초기화
                     gameStart();
                 });
                 
@@ -329,7 +345,7 @@ Coded by www.creative-tim.com
                     records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
                 }
 
-                let rankingTable = '<table class="table"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
+        		let rankingTable = '<table class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
                 for(let i = 0; i < records.length; i++) {
                     let row = records[i];

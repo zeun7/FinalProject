@@ -48,35 +48,36 @@
 	}
 
 	function test2() {
-        var p1 = document.getElementById('pw1').value;
-        var p2 = document.getElementById('pw2').value;
-        var text = '';
-        var messageDiv = document.getElementById('pw_match_message');
+	    var p1 = document.getElementById('pw1').value;
+	    var p2 = document.getElementById('pw2').value;
+	    var text = '';
+	    var messageDiv = document.getElementById('pw_match_message');
 
-        if (p1.length < 6) {
-            text = '6글자 이상이어야 합니다.';
-            messageDiv.classList.remove('success-message');
-            messageDiv.classList.add('error-message');
-        } else if (p1 !== p2) {
-            text = '비밀번호가 불일치합니다';
-            messageDiv.classList.remove('success-message');
-            messageDiv.classList.add('error-message');
-        } else {
-            text = '비밀번호가 일치합니다';
-            messageDiv.classList.remove('error-message');
-            messageDiv.classList.add('success-message');
-        }
+	    if (p1.length < 6) {
+	        text = '6글자 이상이어야 합니다.';
+	        messageDiv.classList.remove('success-message');
+	        messageDiv.classList.add('error-message');
+	    } else if (p1 !== p2) {
+	        text = '비밀번호가 불일치합니다';
+	        messageDiv.classList.remove('success-message');
+	        messageDiv.classList.add('error-message');
+	    } else {
+	        text = '비밀번호가 일치합니다';
+	        messageDiv.classList.remove('error-message');
+	        messageDiv.classList.add('success-message');
+	    }
 
-        messageDiv.innerHTML = text;
-        messageDiv.style.display = (p1 === p2 && p1.length >= 6) ? 'block' : 'none';
-    }
-</script>
+	    messageDiv.innerHTML = text;
+	    messageDiv.style.display = (p1 === p2 || p1.length < 6) ? 'none' : 'block';
+	}
 
-<script>
+
 	function changeProfilePic() {
 		document.getElementById("m_file").click();
 	}
 </script>
+
+
 
 <style>
     .error-message {
@@ -127,29 +128,20 @@
 									<!-- 파일 선택용 input (style="display: none;"로 숨김) -->
 									<input type="file" id="m_file" name="m_file"
 										style="display: none;">
-									<p class="description text-center">
-										"I like the way you work it <br> No diggity <br> I
-										wanna bag it up"
-									</p>
+									
 								</div>
 								<div class="card-footer">
 									<hr>
 									<div class="button-container">
 										<div class="row">
 											<div class="col-lg-3 col-md-6 col-6 ml-auto">
-												<h5>
-													12<br> <small>Files</small>
-												</h5>
+												
 											</div>
 											<div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-												<h5>
-													2GB<br> <small>Used</small>
-												</h5>
+												
 											</div>
 											<div class="col-lg-3 mr-auto">
-												<h5>
-													24,6$<br> <small>Spent</small>
-												</h5>
+												
 											</div>
 										</div>
 									</div>

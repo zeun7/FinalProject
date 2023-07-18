@@ -1,4 +1,15 @@
 @charset "UTF-8";
 
-textarea {
+tr[data-mbnum]:hover {
+    background-color: #4dccc6; 
+    cursor: pointer;
+}
+
+tr[data-bnum]:hover {
+    background-color: #79d9d5; 
+    cursor: pointer;
+}
+
+table td {
+    text-align: left;
 }

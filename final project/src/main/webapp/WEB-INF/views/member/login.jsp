@@ -32,6 +32,11 @@
     max-width: 900px;
   }
   </style>
+  <style>
+  .fa-exclamation-triangle {
+    color: #94b5e0 ; /* 원하는 아이콘의 색상을 지정합니다. */
+  }
+</style>
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
@@ -41,7 +46,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header"style="text-align: center;">
 					<h3>Log In</h3>
 				</div>
 				<div>
@@ -59,10 +64,10 @@
 							</span> <input class="w3-input" id="pw" name="pw" type="password" required />
 						</p>
 						<p class="w3-center">
-							<button type="submit" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">
+							<button type="submit" class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">
 								Log in</button>
 							<button type="button"
-								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"
+								class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0"
 								onclick="history.go(-1)">Cancel</button>
 						</p>
 						<input type="checkbox" name="_spring_security_remember_me" id="remember_me" value="True" />

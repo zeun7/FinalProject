@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+td {
+   text-align: center; /* 셀 내용을 가운데 정렬 */
+ }
+
+ table {
+   border-collapse: collapse; /* 셀 간의 간격을 없애줍니다 */
+ }

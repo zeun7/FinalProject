@@ -20,3 +20,8 @@
 	width: 80%;
 	text-align: center;
 }
+
+.sns_share li {
+	list-style-type: none;
+	float: left;
+}

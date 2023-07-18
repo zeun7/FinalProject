@@ -15,23 +15,32 @@
 	})
 </script>
 <title>아이디 찾기</title>
+<style>
+ .card{ 
+  padding: 80px 30px; /* 상단/하단 80px, 좌우 30px의 공간을 설정합니다. */
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  </style>
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
-<div class="main-panel">
 <jsp:include page="../navbar.jsp"></jsp:include>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>아이디 찾기 검색결과</h3>
-			</div>
+<div class="main-panel">
+		<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header"style="text-align: center;">
+					<h3>아이디 찾기 결과</h3>
+				</div>
 			<div>
 				<h5>
 					${ id }
 				</h5>
 				<p class="w3-center">
-					<button type="button" id=loginBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Login</button>
-					<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
+					<button type="button" id=loginBtn  class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">Login</button>
+					<button type="button" onclick="history.go(-1);"  class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">Cancel</button>
 				</p>
 			</div>
 		</div>

@@ -671,11 +671,9 @@ function checkviewer(writer){
 <body class="" onload="minicomments('${vo2.writer}')">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
 <div class="wrapper ">
-	<div class="main-panel"
-		style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+	<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
 		<jsp:include page="../mini_navbar.jsp"></jsp:include>
-		<div class="content"
-			style="background-size: cover; width: 100%; height: 100vh;">
+		<div class="content" style="height: 90vh;">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card">
@@ -686,29 +684,39 @@ function checkviewer(writer){
 								</h4>
 								<div>닉네임 : ${vo2.writer}</div>
 								<div>작성일자 : ${vo2.wdate}</div>
+								<hr>
 							</div>
 						</div>
 						<div class="card-body">
 							<div>
 								<p id="content">
 									<span id="contentSpan">${vo2.content}</span>
+									<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 								</p>
 							</div>
-							<div>
-								<button onclick="like()" id="like_button">좋아요</button>
-								<button onclick="like_cancel()" id="lcancel_button"
-									style="display: none">좋아요 취소</button>
-								<span id="likes_count">${vo2.likes }</span>
-								<button onclick="open_modal()">공유</button>
-								<button onclick="report()" id="report_button">신고</button>
-							</div>
-							<div id="buttonContainer">
-								<a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
-									class="myButton">수정</a> <a
-									href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
-									class="myButton">삭제</a>
-							</div>
-
+							<table class="table">
+								<tr>
+									<td>
+										<div>
+											<button onclick="like()" id="like_button">좋아요</button>
+											<button onclick="like_cancel()" id="lcancel_button"
+												style="display: none">좋아요 취소</button>
+											<span id="likes_count">${vo2.likes }</span>
+											<button onclick="open_modal()">공유</button>
+											<button onclick="report()" id="report_button">신고</button>
+										</div>
+									</td>
+									<td class="text-right">
+										<div id="buttonContainer">
+											<a href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
+												class="myButton">수정</a> <a
+												href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
+												class="myButton">삭제</a>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<br>
 						</div>
 						<div class="card-footer">
 							<div class="comments wrap" id="comments wrap">

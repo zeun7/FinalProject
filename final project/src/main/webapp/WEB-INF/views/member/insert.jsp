@@ -200,12 +200,7 @@
 </script>
 
 </head>
-<body>
-<jsp:include page="../sidebar.jsp"></jsp:include>
-<jsp:include page="../navbar.jsp"></jsp:include>
-<div class="main-panel">
 <style>
-
 
   .card{ 
   padding: 80px 30px; 
@@ -214,11 +209,15 @@
   }
   
 </style>
+<body>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<jsp:include page="../navbar.jsp"></jsp:include>
+<div class="main-panel">
 		<div class="content">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header"style="text-align: center;">
 				<h3>회원가입</h3>
 			</div>
 			<div>
@@ -229,7 +228,7 @@
 							<td><strong for="id">id:</strong></td>
 							<td><input class="w3-input" type="text" id="id" name="id"
 								placeholder="아이디">
-								<button type="button" onclick="idCheck()" class="myButton">ID중복체크</button>
+								<button type="button" onclick="idCheck()" class="btn btn-outline-primarys">ID중복체크</button>
 								<span id="demo1"></span></td>
 						</tr>
 
@@ -239,7 +238,7 @@
 								name="pw" placeholder="비밀번호"> <input class="w3-input"
 								type="password" id="pw2" name="pw2" placeholder="비밀번호 한번더 입력">
 								<input type="button" onclick="test()" value="확인"
-								class="myButton"></td>
+								class="btn btn-outline-primarys"></td>
 
 
 						</tr>
@@ -248,7 +247,7 @@
 							<td><strong for="nickname">nickname:</strong></td>
 							<td><input class="w3-input" type="text" id="nickname"
 								name="nickname" placeholder="닉네임">
-								<button type="button" onclick="NickCheck()" class="myButton">닉네임
+								<button type="button" onclick="NickCheck()" class="btn btn-outline-primarys">닉네임
 									중복체크</button> <span id="demo2"></span></td>
 						</tr>
 						<tr>
@@ -275,7 +274,7 @@
 							<td><strong for="tel">tel:</strong></td>
 							<td><input class="w3-input" type="text" id="tel" name="tel"
 								placeholder="010-0000-0000">
-								<button type="button" onclick="TelCheck()" class="myButton">전화번호
+								<button type="button" onclick="TelCheck()"class="btn btn-outline-primarys">전화번호
 									중복체크</button> <span id="demo3"></span></td>
 						</tr>
 
@@ -284,7 +283,7 @@
 							<td><i class="bi bi-at"></i> <span class="userEmail"><input
 									placeholder="이메일을 입력하세요" class="w3-input" type="text"
 									id="email" name="email" oninput="fn_emailChk_Ajax()" />
-									<button type="button" class="btn btn-outline-primary"
+									<button type="button" class="btn btn-outline-primarys"
 										id="showDiv" onclick="fn_sendEmail_Ajax()">
 										<i class="fa fa-search"></i>이메일 인증
 									</button>
@@ -292,7 +291,7 @@
 									<td style="display: none;" id="checkCodeDiv"><input
 										type="text" id=verification_code name="verification_code"
 										placeholder="인증코드 입력" class="w3-input" />
-										<button type="button" class="btn btn-outline-primary"
+										<button type="button" class="btn btn-outline-primarys"
 											onclick="fn_checkCode()">확인</button></td> </span></td>
 						</tr>
 
@@ -303,13 +302,14 @@
 						</tr>
 						<tr>
 							<button type="button" onclick=" submitForm() " id="joinBtn"
-								class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Join</button>
-							<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
+								class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">Join</button>
+							<button type="button" onclick="history.go(-1);"	class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">Cancel</button>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 	</div>
 	</div>

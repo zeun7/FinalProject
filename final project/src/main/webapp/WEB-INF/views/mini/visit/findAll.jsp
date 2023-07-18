@@ -32,7 +32,8 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-
+  <link rel="stylesheet" href="resources/css/pagination.css">
+  
 <link rel="stylesheet" href="resources/css/postit.css">
 <style>
 .row-check {
@@ -61,8 +62,9 @@ function findAllCount(){	// 방명록 목록의 페이징 버튼 출력
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=findAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=findAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
@@ -80,6 +82,13 @@ function findAllCount(){	// 방명록 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }
 
+function setActive(button) {
+    // 모든 버튼에서 'active' 클래스 제거
+    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+    // 클릭한 버튼에 'active' 클래스 추가
+    button.classList.add('active');
+}
+
 function findAll(page){
     $.ajax({
         url: "json_mc_findAll2.do",
@@ -92,6 +101,14 @@ function findAll(page){
         dataType: "json",
         success: function(arr) {
             let visit_log = ``;
+            
+        	// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+            
             for ( let i in arr) {
             	let vo = arr[i];
  				console.log(vo); 
@@ -186,19 +203,19 @@ function select_diary_deleteOK() {
 <body class="" onload="findAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+      <div class="content" style="height: 90vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header" style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
                 <h4 class="card-title"> 방명록</h4>
               </div>
               <div class="card-body">
-              	<div id="buttonContainer">
-					<a href="visit_insert.do?id=${mh_attr.id}&writer=${nickname}" id="visit_insert" class="btn btn-outline-success">방명록 쓰기</a>
-					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
+              	<div id="buttonContainer" style="display: flex; justify-content: space-between;">
+					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger" style="border-radius: 10px;">선택삭제</button>
+					<a href="visit_insert.do?id=${mh_attr.id}&writer=${nickname}" id="visit_insert" class="btn btn-outline-success" style="border-radius: 10px;">방명록 쓰기</a>
 				</div>
 				<hr>
                 <div id="visitors_log"></div>

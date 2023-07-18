@@ -15,6 +15,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/modal.css">
 <link rel="stylesheet" href="resources/css/comments.css">
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -645,6 +646,10 @@ function checkviewer(writer){
 	
 	console.log('iswriter is...', iswriter);
 }
+
+function goBack() {
+	  window.history.back();
+} 
 </script>
 </head>
 <body onload="comments('${vo2.writer}')">
@@ -688,16 +693,24 @@ function checkviewer(writer){
 							</tbody>
 							<tfoot>
 								<tr>
-									<td>
-										<button onclick="like()" id="like_button"><img width="15px" src="resources/icon/not_like.png" /></button>
-										<button onclick="like_cancel()" id="lcancel_button" style="display: none"><img width="15px" src="resources/icon/like.png" /></button>
-										<span id="likes_count">${vo2.likes }</span>
-										<button onclick="open_modal()">공유</button>					
-										<button onclick="report()" id="report_button">신고</button>
+									<td colspan="3">
+										<div id="buttonss" style="display: flex; justify-content: space-between;">
+											<button class="custom-btn btn-1" onclick="goBack()">게시판</button>
+											<div style="display: flex; justify-content: center; align-items: center;">
+												<button onclick="like()" class="heartButton" id="like_button"><img width="25px" src="resources/icon/not_like.png" /></button>
+												<button onclick="like_cancel()" class="heartButton" id="lcancel_button" style="display: none"><img width="25px" src="resources/icon/like.png" /></button>
+												<span id="likes_count" style="margin-left:5px;">${vo2.likes }</span>
+											</div>
+											<div style="display: flex; justify-content: end;">
+												<button class="custom-btn btn-11" onclick="open_modal()">공유</button>					
+												<button class="custom-btn btn-11" onclick="report()" id="report_button">신고</button>
+												<div id="update_delete">
+													<a class="custom-btn btn-12" href="b_update.do?bnum=${vo2.bnum}">수정</a> 
+													<a class="custom-btn btn-12" href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a>
+												</div>
+											</div>
+										</div>
 									</td>
-									<td id="update_delete"><a href="b_update.do?bnum=${vo2.bnum}">수정</a> <a
-										href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a></td>
-									<td></td>
 								</tr>
 							</tfoot>
 						</table>
@@ -715,11 +728,14 @@ function checkviewer(writer){
 </div>
 
 <div id="modal">
-	<div class="modal-content">
+	<div class="modal-content" style="top:5%; left:10%; width:300px; height:300px">
 		<h6>공유하기</h6>
-		<button onclick="share_twitter()" id="share_button">트위터로 공유</button>
-		<button onclick="share_facebook()" id="share_button">페이스북으로 공유</button>
-		<button id="kakaotalk-sharing-btn">카카오톡으로 공유</button>
+		<button onclick="share_twitter()" id="share_button">
+			<img width="30px" src="resources/icon/twitter.png"/>트위터로 공유하기</button>
+		<button onclick="share_facebook()" id="share_button">
+			<img width="30px" src="resources/icon/facebook.png"/>페이스북으로 공유하기</button>
+		<button id="kakaotalk-sharing-btn">
+			<img width="30px" src="resources/icon/kakaotalk.png"/>카카오톡으로 공유하기</button>
 		<div>
 			<label for="copy_url_btn" id="url"></label>			
 			<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
@@ -729,7 +745,48 @@ function checkviewer(writer){
 		</div>
 	</div>
 </div>
+
+<div id="cmt_modal">
+	<div class="modal-content" id="report_content" style="top:5%; left:10%; width:300px; height:500px">
+		<div><strong>신고사유를 선택하세요</strong></div>
+		<input type="radio" id="reason1" name="reason" value="욕설/혐오/차별적 표현입니다">
+		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br/>
+		<input type="radio" id="reason2" name="reason" value="스팸홍보/도배글입니다">
+		<label for="reason2">스팸홍보/도배글입니다</label><br/>
+		<input type="radio" id="reason3" name="reason" value="음란물입니다">
+		<label for="reason3">음란물입니다</label><br/>
+		<input type="radio" id="reason4" name="reason" value="개인정보 노출 게시물입니다">
+		<label for="reason4">개인정보 노출 게시물입니다</label><br/>
+		<input type="radio" id="reason5" name="reason" value="명예훼손 또는 저작권이 침해되었습니다">
+		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
+		<input type="radio" id="reason6" name="reason" value="불쾌한 표현이 있습니다">
+		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
+		<button type="button" onclick="submitReport()" class="report_btn">신고</button>
+	</div>
+</div>
+
 <script type="text/javascript">
+function submit_board_report(){
+	console.log('submit board report...');
+	$.ajax({
+		url: 'c_reportOK.do',
+		data: {cnum: ${param.cnum},
+			ccnum: ${param.ccnum},
+			bnum: ${param.bnum},
+			reason: $('input[name=reason]:checked').val()},
+		method: 'POST',
+		dataType: 'json',
+		success: function(response){
+			$('#report_content').empty();
+			$('#report_content').txt("신고가 완료되었습니다.");
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+		
+	});
+}
+
 	if('${nickname}' === '${vo2.writer}'){
 		$('#update_delete').show();
 	}else{
@@ -746,10 +803,15 @@ function checkviewer(writer){
 		
 	$('#url').html(url);
 	let modal = document.getElementById("modal");
+	let cmt_modal = document.getElementById("cmt_modal")
 	
 	function open_modal(){
 		modal.style.display = "block";
 		document.body.style.overflow = "hidden"; // 스크롤바 제거
+	}
+	
+	function cmt_report_modal(){
+		
 	}
 	
 	function close_modal(){

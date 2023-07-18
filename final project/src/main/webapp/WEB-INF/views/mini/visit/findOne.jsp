@@ -57,9 +57,12 @@ function visitFindOne() {
 				<div>
 					<p id="content">
 						<span id="contentSpan">\${miniComment.content}</span>
+						<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 					</p>
 				</div>
+				<hr/>
 				<div>작성일자 : \${miniComment.cdate}</div>
+				<br/>
 				<div id="buttonContainer">
 					<button id="editButton" class="myButton" onclick="visitUpdate(\${miniComment.mcnum})">수정</button>
 					<a href="visit_deleteOK.do?id=\${mh_attr_id}&mcnum=\${miniComment.mcnum}" class="myButton">삭제</a>
@@ -125,9 +128,9 @@ function visitUpdate(mcnum){
 <body class="" onload="visitFindOne()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+      <div class="content" style="height: 90vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">

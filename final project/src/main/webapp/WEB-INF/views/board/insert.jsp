@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글쓰기</title>
 <link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -37,7 +37,7 @@
 <div class="main-panel">
 	<div class="col-md-12">
 		<div class="card">
-			<div class="card-header">
+			<div class="card-header" style="margin-top:20px; margin-left:20px">
 				<h1>${param.bname }</h1>
 			</div>
 			<div class="card-body" style="width: 100%">
@@ -81,7 +81,7 @@
 					<button type="button" class="custom-btn btn-4" onclick="input_check()">글쓰기</button>
 				</div>
 				</form>
-			</div>
+			</div> <!-- end "card-body"-->
 		</div> <!-- end "card"-->
 	</div> <!-- end "col-md-12"-->
 </div> <!-- end "main-panel"-->

@@ -32,6 +32,7 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link rel="stylesheet" href="resources/css/pagination.css">
 
 <style>
 .row-check {
@@ -101,8 +102,9 @@ function selectAllCount(){	// gallery 목록의 페이징 버튼 출력
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
@@ -120,6 +122,13 @@ function selectAllCount(){	// gallery 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }
 
+function setActive(button) {
+    // 모든 버튼에서 'active' 클래스 제거
+    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+    // 클릭한 버튼에 'active' 클래스 추가
+    button.classList.add('active');
+}
+
 function selectAll(page){
 	$.ajax({
 		url : "json_mb_selectAll.do",
@@ -132,6 +141,14 @@ function selectAll(page){
 		dataType : 'json', 
 		success : function(arr) {
 			let tag_vos = '';
+			
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+			
 			for ( let i in arr) {
  				let vo = arr[i];
  				console.log(vo);
@@ -229,54 +246,51 @@ function select_gallery_deleteOK() {
 
 <body class="" onload="selectAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}');">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+      <div class="content" style="height: 90vh;">
         <div class="row">
-          <div class="col-md-4" id="buttonContainer">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> 이미지추가</h4>
-              </div>
-              <div class="card-body">
-              	<div>
-              		<div class="form-group">
-						<label>title</label>
-				        <input type="text" id="title" class="form-control" name="title" placeholder="제목을 입력하세요.">
-					</div>
-              		<div>
-						<label>file</label>
-				        <input type="file" id="file" class="form-control" name="file" multiple="multiple">
-					</div>
-			        <button id="uploadButton" onclick="gallery_insertOK()" class="btn btn-primary btn-round">사진올리기</button>
-		        </div>
-              </div>
-            </div>
-          </div>
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> 사진첩</h4>
-                <button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
-              </div>
-              <div class="card-body">
-                <div>
-                  <table class="table">
-                    <tbody>
-                    	<tr>
-                    		<td><div id="vos"></div></td>
-                    	</tr>
-                    </tbody>
-                    <tr>
-                    	<td id="page" class="text-center"></td>
-                    </tr>
-                  </table>
+              	<div style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
+             		<h4 class="card-title"> 사진첩</h4>
+              	</div>
+                <div style="text-align:right;">
+	                <button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger" style="border-radius: 10px; font-weight: bold; font-size: 12px">선택삭제</button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              <div class="card-body">
+                 <table class="table">
+                   <tbody>
+                   	<tr>
+                   		<td><div id="vos"></div></td>
+                   	</tr>
+                   </tbody>
+                   <tr>
+                   	<td id="page" class="text-center"></td>
+                   </tr>
+                 </table>
+              </div><!-- end card-body -->
+            </div><!-- end card -->
+            <div class="col-md-4" id="buttonContainer">
+            <div class="card">
+              <div class="card-body">
+            	<div class="form-group">
+					<label>title</label>
+			        <input type="text" id="title" class="form-control" name="title" placeholder="제목을 입력하세요.">
+				</div>
+             	<div>
+					<label>file</label>
+			        <input type="file" id="file" class="form-control" name="file" multiple="multiple">
+				</div>
+		        <button id="uploadButton" onclick="gallery_insertOK()" class="btn btn-primary" style="border-radius: 10px;">사진올리기</button>
+              </div><!-- end card-body -->
+            </div><!-- end card -->
+          </div><!-- end buttonContainer -->
+          </div><!-- end col-md-8 -->
+        </div><!-- end row -->
+      </div><!-- end content -->
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">

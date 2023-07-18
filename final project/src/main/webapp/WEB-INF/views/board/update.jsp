@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글수정</title>
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 // 	$(function(){
@@ -64,56 +65,64 @@
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <div class="main-panel">
-	<h1>${param.bname }</h1>
-	
-	<h3>글수정</h3>
-	<form action="b_updateOK.do" method="post" enctype="multipart/form-data" id="update_form" style="width:800px">
-	<table style="width: 100%">
-		<thead>
-			<tr>
-				<td>
-					<input type="text" name="title" id="title" placeholder="제목을 입력하세요." value="${vo2.title }">
-					<input type="hidden" name="bnum" id="bnum" value="${vo2.bnum }">
-					<input type="hidden" name="bname" id="bname" value="${vo2.bname }">
-					<input type="hidden" name="writer" id="writer" value="${vo2.writer }">
-				</td>
-				<td>
-					<select name="caname" id="caname">
-						<option id="general" value="general">일반</option>						
-						<option id="notice" value="notice">공지</option>
-						<option id="question" value="question">질문</option>
-					</select>
-				</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					<label for="file">
-						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
-					</label>
-					<input type="hidden" id="isFileExist" name="isFileExist" value="0">
-				</td>
-				<td>
-					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<textarea rows="20" cols="50" name="content" id="content"></textarea>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td>
-					<button type="button" onclick="history.back()">취소</button>
-					<button type="button" onclick="input_check()">수정완료</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	</form>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header" style="margin-top:20px; margin-left:20px">
+				<h2>글 수정</h2>
+			</div>
+			<div class="card-body" style="width: 100%">
+				<form action="b_updateOK.do" method="post" enctype="multipart/form-data" id="update_form" style="width:800px">
+				<table style="width: 100%">
+					<thead>
+						<tr>
+							<td>
+								<input type="text" name="title" id="title" style="width:400px" placeholder="제목을 입력하세요." value="${vo2.title }">
+								<input type="hidden" name="bnum" id="bnum" value="${vo2.bnum }">
+								<input type="hidden" name="bname" id="bname" value="${vo2.bname }">
+								<input type="hidden" name="writer" id="writer" value="${vo2.writer }">
+							</td>
+							<td>
+								<select name="caname" id="caname">
+									<option id="general" value="general">일반</option>						
+									<option id="notice" value="notice">공지</option>
+									<option id="question" value="question">질문</option>
+								</select>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<label for="file">
+									<span class="btn-two cyan mini" id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+								</label>
+								<input type="hidden" id="isFileExist" name="isFileExist" value="0">
+							</td>
+							<td>
+								<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<textarea rows="20" cols="50" name="content" id="content" style="width:100%;"></textarea>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2">
+								<div class="card-footer"  style="display: flex; justify-content: flex-end;">
+									<button type="button" onclick="history.back()" class="custom-btn btn-4" style="margin-right: 10px;">취소</button>
+									<button type="button" onclick="input_check()" class="custom-btn btn-4">수정</button>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+				</form>
+			</div> <!-- end "card-body" -->
+		</div> <!-- end "card" -->
+	</div> <!-- end "col-md-12 -->
 </div>
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">

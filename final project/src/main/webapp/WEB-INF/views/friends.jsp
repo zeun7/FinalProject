@@ -4,6 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage</title>
+<link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/button2.css">
+<link rel="stylesheet" href="resources/css/friends_table.css">
+<style>
+#vos, #tag_vos td {
+  text-align: center;
+  border: none;
+  padding: 0;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <%
 	String nickname = "";
@@ -23,33 +33,21 @@ function friends_list(){		// 친구목록
 		dataType:'json',
 		success : function(arr) {
 			console.log('ajax...success:', arr);
-			
- 			let tag_vos = `
-					<thead class="text-primary">
-						<tr>
-							<th>닉네임</th>
-							<th>미니홈피 가기</th>
-							<th>차단</th>
-							<th>친구삭제</th>
-							<th>친구등급</th>
-							<th>적용</th>
-						</tr>
-					</thead>
-					<tbody>`; 			
+ 			let tag_vos = `<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button onclick="location.href='mng_mini_home.do?nickname=\${vo.nickname2}'">
+	 						<button class="btn-gradient purple mini" onclick="location.href='mng_mini_home.do?nickname=\${vo.nickname2}'">
 	 						미니홈피</button>
 	 					</td>
 	 					<td>
-	 						<button onclick="add_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
+	 						<button class="btn-gradient red mini" onclick="add_ban('\${vo.nickname2}')" id="ban_\${vo.nickname2}">
 	 						차단</button>
 	 					</td>
 	 					<td>
-							<button onclick="del_friend('\${vo.nickname2}')" id="del_\${vo.nickname2}">
+							<button class="btn-gradient red mini" onclick="del_friend('\${vo.nickname2}')" id="del_\${vo.nickname2}">
 							친구삭제</button>
 	 					</td>
 	 					<td>
@@ -59,7 +57,7 @@ function friends_list(){		// 친구목록
 								<option value="2">친구</option>
 							</select>
 	 					</td>
-	 					<td><button onclick="update_grade(\${vo.fnum}, \$('#\${vo.fnum} :selected').val())">적용</button></td>
+	 					<td><button class="btn-gradient orange mini" onclick="update_grade(\${vo.fnum}, \$('#\${vo.fnum} :selected').val())">적용</button></td>
 	 				</tr>
  					`;
  			});
@@ -109,20 +107,13 @@ function friends_ban(){	// 차단 목록 출력
 		success : function(arr) {
 			console.log('ajax...success:', arr);
 			
- 			let tag_vos = `
-					<thead class="text-primary">
-						<tr>
-							<th>닉네임</th>
-							<th>차단해제</th>
-						</tr>
-					</thead>
-					<tbody>`; 			
+ 			let tag_vos = `<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
  					<tr>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button onclick="del_ban('\${vo.nickname2}')">차단해제</button>
+	 						<button class="btn-gradient purple mini" onclick="del_ban('\${vo.nickname2}')">차단해제</button>
 	 					</td>
  					</tr>
  				`;
@@ -143,14 +134,9 @@ function friends_add(){ // 친구추가 화면 출력
 		<thead class="text-primary">
 			<tr>
 				<td colspan="2">
-					<input type="text" name="searchWord" id="searchWord" />
-					<button onclick="searchUser()">검색</button>
+					<input type="text" name="searchWord" id="searchWord" placeholder="친구의 닉네임을 검색해보세요." style="width:300px;"/>
+					<button class="btn-gradient purple mini" onclick="searchUser()">검색</button>
 				</td>
-			</tr>
-			<tr>
-				<th>닉네임</th>
-				<th>친구추가</th>
-				<th>차단</th>
 			</tr>
 		</thead>
 		<tbody>`; 	
@@ -228,16 +214,11 @@ function searchUser(){	// 유저 검색 결과 출력
  			let tag_vos = `
 				<thead class="text-primary">
 					<tr>
- 						<td>
-		 					<input type="text" name="searchWord" id="searchWord" />
-		 					<button onclick="searchUser()">검색</button>
+ 						<td colspan="3">
+ 							<input type="text" name="searchWord" id="searchWord" placeholder="친구의 닉네임을 검색해보세요." style="width:300px;"/>
+ 							<button class="btn-gradient purple mini" onclick="searchUser()">검색</button>
 		 				</td>
 						</tr>
-					<tr>
-						<th>닉네임</th>
-						<th>친구추가</th>
-						<th>차단</th>
-					</tr>
 				</thead>
 				<tbody>`; 			
  			$.each(arr,function(index,vo){
@@ -245,11 +226,11 @@ function searchUser(){	// 유저 검색 결과 출력
 				<tr>
  					<td id="nickname">\${vo.nickname}</td>
  					<td>
- 						<button onclick="add_friend('\${vo.nickname}')" id="add_\${vo.nickname}">
+ 						<button class="btn-gradient purple mini" onclick="add_friend('\${vo.nickname}')" id="add_\${vo.nickname}">
  							<span id="txt_\${vo.nickname}">친구추가</span></button>
  					</td>
  					<td>
-						<button onclick="new_ban('\${vo.nickname}')" id="ban_\${vo.nickname}">
+						<button class="btn-gradient red mini" onclick="new_ban('\${vo.nickname}')" id="ban_\${vo.nickname}">
 						차단</button>
 					</td>
  				</tr>
@@ -350,13 +331,13 @@ function del_ban(nickname2) {	// 차단 해제
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-					<ul class="menu">
-						<li><button onclick="friends_list()">친구목록</button></li>
-						<li><button onclick="friends_ban()">차단목록</button></li>
-						<li><button onclick="friends_add()">친구추가</button></li>
-					</ul>
+						<ul class="menu" style="list-style-type: none; display: flex; margin-left:360px;">
+							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_list()">친구목록</button></li>
+							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_ban()">차단목록</button></li>
+							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_add()">친구추가</button></li>
+						</ul>
 					</div>
-					<table class="table" id="vos">
+					<table class="table" id="vos" style="border-collapse: collapse;">
 					</table>
 				</div>
 			</div>

@@ -32,7 +32,9 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-  
+  <link rel="stylesheet" href="resources/css/pagination.css">
+  <link rel="stylesheet" href="resources/css/board_table.css">
+  <link rel="stylesheet" href="resources/css/button2.css">
 <style>
 .row-check {
     display: none;
@@ -60,8 +62,9 @@ function selectAllCount(){	// diary 목록의 페이징 버튼 출력
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
@@ -79,6 +82,13 @@ function selectAllCount(){	// diary 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }
 
+function setActive(button) {
+    // 모든 버튼에서 'active' 클래스 제거
+    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+    // 클릭한 버튼에 'active' 클래스 추가
+    button.classList.add('active');
+}
+
 function selectAll(page){
 	$.ajax({
 		url : "json_mb_selectAll.do",
@@ -91,6 +101,14 @@ function selectAll(page){
 		dataType : 'json', 
 		success : function(arr) {
 			let tag_vos = '';
+			
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+			
 			for ( let i in arr) {
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YY년 MM월 DD일 HH시mm분');
@@ -103,10 +121,10 @@ function selectAll(page){
  				tag_vos += `
  					<tr data-mbnum="\${vo.mbnum}">
 	 			        <td><input type="checkbox" class="row-check" /></td>
-	 			        <td>\${vo.title}</td>
+	 			        <td><a href="diary_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>
 	 			        <td>\${vo.writer}</td>
 	 			        <td>\${date}</td>
-	 			        <td><a href="diary_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">자세히 보기</a></td>
+	 			        <td></td>
 	 			    </tr>
  				`;
  			}
@@ -119,6 +137,18 @@ function selectAll(page){
 		}
 	});//end $.ajax()
 }//end selectAll()
+
+$(document).ready(function(){
+	$("body").on("click", "tr[data-mbnum]", function(){
+	        window.location = $(this).find("a").attr("href");
+	        return false; // 이벤트 전파를 중지합니다.
+	});
+
+    $(".row-check").click(function(event){
+        event.stopPropagation(); // 이벤트 전파를 중지합니다.
+    });
+});
+
 
 let deleteMode = false;
 
@@ -173,7 +203,7 @@ function select_diary_deleteOK() {
 
  	// 모든 요청이 완료됐을 때 알림을 표시합니다.
     $.when(...promises).done(function() {
-        alert('선택된 사진 완료');
+        alert('선택된 사진 삭제완료');
     });
  	
     // 체크박스 숨기기
@@ -186,25 +216,24 @@ function select_diary_deleteOK() {
 <body class="" onload="selectAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+      <div class="content" style="height: 90vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> 다이어리</h4>
               </div>
-              <div class="card-header" id="buttonContainer">
-				<a href="diary_insert.do?id=${mh_attr.id}" id="diary_insert" class="btn btn-outline-success">다이어리 작성</a>
-				<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger">선택삭제</button>
+              <div class="card-header" id="buttonContainer" style="display: flex; justify-content: space-between;">
+				<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger" style="border-radius: 10px; font-weight: bold; font-size: 12px">선택삭제</button>
+				<a href="diary_insert.do?id=${mh_attr.id}" id="diary_insert" class="btn btn-outline-success" style="border-radius: 10px; font-weight: bold; font-size: 12px">다이어리 작성</a>
               </div>
               <div class="card-body">
                 <div class="">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
-                        선택
                       </th>
                       <th>
                         제목

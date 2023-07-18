@@ -32,6 +32,8 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link rel="stylesheet" href="resources/css/pagination.css">
+  <link rel="stylesheet" href="resources/css/board_table.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -49,15 +51,17 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 		dataType : 'json',
 		success : function(result){
 			let tag_page = 0;
-			let tag_pages = '';
+			let tag_pages = `<div class="paging-btn-container">`;
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
+			tag_pages += `</div>`;
 			
 			if(curPage > tag_page){
 				curPage = tag_page;
@@ -72,6 +76,13 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }//end selectAllCount()
 
+// function setActive(button) {
+//     // 모든 버튼에서 'active' 클래스 제거
+//     document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+//     // 클릭한 버튼에 'active' 클래스 추가
+//     button.classList.add('active');
+// }
+
 function selectAll(page){
 	$.ajax({
 		url : "json_j_selectAll.do",
@@ -83,16 +94,24 @@ function selectAll(page){
 		dataType : 'json',
 		success : function(arr){
 			let tag_vos = '';
+			
+// 			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+//             const pageButtons = document.querySelectorAll('.paging-btn');
+//             pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+//             // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+//             pageButtons[page - 1].classList.add('active');
+			
 			for(let i in arr){
 				let vo = arr[i];
 				let date = moment(vo.jdate).format('YY/MM/DD HH시mm분ss초');
 				console.log(vo);
 				tag_vos +=`
 					<tr>
-					<td>\${vo.bgm}
+					<td style="text-align:center;">\${vo.bgm}
 					<span id="btn_\${i}"><btn class="btn btn-sm btn-outline-success btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
 					<i class="nc-icon nc-headphones"></i></btn></span></td>
-					<td>\${date}</td>
+					<td style="text-align:center;">\${date}</td>
 		        	</tr>	
 				`;
 			}
@@ -128,21 +147,25 @@ function buyBGM(){
 <body class="" onload="selectAllCount()">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
+     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+       <div class="content" style="height: 90vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card card-plain">
               <div class="card-header">
-                <h4 class="card-title"> 쥬크박스</h4>
-                <button onclick="buyPeach()" class="btn btn-primary btn-round" id="peachButton">peach 결제하기</button>
-        		<button onclick="buyBGM()" class="btn btn-primary btn-round" id="bgmButton">음악 구매하기</button>
+              	<div style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
+	                <h4 class="card-title"> 쥬크박스</h4>
+              	</div>
+                <div style="text-align:center;">
+	                <button onclick="buyPeach()" class="btn btn-primary" style="border-radius: 10px; margin-left: 690px;margin-right: 10px;" id="peachButton">peach 결제하기</button>
+	        		<button onclick="buyBGM()" class="btn btn-primary" style="border-radius: 10px;" id="bgmButton">음악 구매하기</button>
+                </div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">
+                    <thead class=" text-primary" style="text-align:center;">
                       <th>
                         보유 음악
                       </th>

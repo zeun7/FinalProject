@@ -9,6 +9,47 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>비밀번호 찾기</title>
 
+	<style>
+ .card{ 
+  padding: 80px 30px; /* 상단/하단 80px, 좌우 30px의 공간을 설정합니다. */
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  </style>
+</head>
+
+<body>
+<jsp:include page="../../sidebar.jsp"></jsp:include>
+<jsp:include page="../../navbar.jsp"></jsp:include>
+<div class="main-panel">
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header"style="text-align: center;">
+					<h3>비밀번호 찾기</h3>
+				</div>
+				<div>
+			<form action="find_pass.do" method="post">
+				<p>
+					<strong>아이디</strong>
+					<input class="w3-input" type="text" id="id" name="id" placeholder="회원가입한 아이디를 입력하세요" required>
+				</p>
+				<p>
+					<strong>이메일</strong>
+					<input class="w3-input" type="text" id="email" name="email" placeholder="회원가입한 이메일주소를 입력하세요" required>
+				</p>
+					<p class="w3-center">
+						<button type="submit" id=findBtn class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">find</button>
+						<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">Cancel</button>
+					</p>
+			</form>
+				</div>
+		</div>
+	</div>
+</div>
+	</div>
+	</div>
  <%-- 아이디 또는 이메일이 없는 경우 알림창 표시 --%>
     <script>
         var findBtn = document.getElementById("findBtn");
@@ -19,6 +60,7 @@
             if (emailInput.value.trim() === "" && idInput.value.trim() === "") {
                 e.preventDefault();
                 alert("아이디 또는 이메일을 입력해주세요.");
+                window.location.href = "find_pw_from.do";
             }
         });
     </script>
@@ -30,38 +72,9 @@
     %>
     <script>
         alert("<%= message %>");
-    </script>
+        window.location.href = "find_pw_from.do";
     <% } %>
-	
-</head>
-
-<body>
-<jsp:include page="../../sidebar.jsp"></jsp:include>
-<div class="main-panel">
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			<form action="find_pass.do" method="post">
-				<div class="w3-center w3-large w3-margin-top">
-					<h3>비밀번호 찾기</h3>
-				</div>
-				<div>
-					<p>
-						<label>Email</label>
-						<input class="w3-input" type="text" id="email" name="email" required>
-					</p>
-					<p>
-						<label>ID</label>
-						<input class="w3-input" type="text" id="id" name="id" required>
-					</p>
-					<p class="w3-center">
-						<button type="submit" id=findBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">find</button>
-						<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-					</p>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-	
+    });
+    </script>
 </body>
 </html>

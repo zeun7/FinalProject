@@ -1,0 +1,87 @@
+@charset "UTF-8";
+	
+.game-header{
+	margin: 5% 0% 0% 0%;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.game-header div{
+	display: flex;
+	align-content: center;
+}
+
+.game-header p{
+	align-self: center;
+	margin: auto;
+}
+
+.btn-start{
+	background: url('../assets/img/crayon_green.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 200px;
+	height: 50px;
+	border: none;
+}
+
+.btn-rank{
+	background-image: url('../assets/img/crayon_yellow.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 200px;
+	height: 50px;
+	border: none;
+	background-color: #FDFBF9;
+	margin: 5% auto;
+}
+
+.word-start{
+	background-image: url('../assets/img/crayonline_beige.PNG');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 30px;
+	align-items: center;
+	margin: auto;
+}
+
+/* .word-start > p{ */
+/* 	padding: 20px; */
+/* } */
+
+.word-input{
+	float: left;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	margin: 5% 0% 0% 0%;
+}
+
+.word-input-div{
+	background-image: url('../assets/img/crayonline_green.PNG');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.word-input input{
+	border: 0;
+	outline: none;
+	background: transparent;
+}
+
+.word-input input::placeholder{
+	color: #000;
+}
+
+li{
+	list-style: none;
+}
+
+#gameContent{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

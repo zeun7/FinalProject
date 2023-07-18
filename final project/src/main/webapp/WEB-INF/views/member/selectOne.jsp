@@ -5,6 +5,15 @@
 <meta charset="UTF-8">
 <title>selectOne</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(function() {
+
+		$("#upatefrom").click(function() {
+			location.href = 'm_update.do?id=${vo2.id}';
+		});
+	});
+	</script>
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
@@ -25,35 +34,23 @@
 						<div class="card-body">
 							<div class="author">
 								<img class="avatar border-gray" src="resources/uploadimg/${vo2.profilepic}">
-								<h5 class="title">${vo2.nickname}</h5>
-								<p class="description">${vo2.id}</p>
+								<h5 class="title">nickname: ${vo2.nickname}</h5>
+								<p class="description">ID: ${vo2.id}</p>
 							</div>
-							<p class="description text-center">
-								"I like the way you work it <br> No diggity <br> I
-								wanna bag it up"
-							</p>
+					
 						</div>
 						<div class="card-footer">
 							<hr>
 							<div class="button-container">
 								<div class="row">
 									<div class="col-lg-3 col-md-6 col-6 ml-auto">
-										<h5>
-											12<br>
-											<small>Files</small>
-										</h5>
+										
 									</div>
 									<div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-										<h5>
-											2GB<br>
-											<small>Used</small>
-										</h5>
+										
 									</div>
 									<div class="col-lg-3 mr-auto">
-										<h5>
-											24,6$<br>
-											<small>Spent</small>
-										</h5>
+									
 									</div>
 								</div>
 							</div>
@@ -122,8 +119,7 @@
 								</div>
 								<div class="row">
 									<div class="update ml-auto mr-auto">
-										<button onclick="location.href='m_update.do?id=${vo2.id}'" 
-										class="btn btn-primary btn-round">회원수정</button>
+										<button id="upatefrom"type="button" class="btn btn-outline-primarys">회원수정</button>
 									</div>
 								</div>
 							</form>

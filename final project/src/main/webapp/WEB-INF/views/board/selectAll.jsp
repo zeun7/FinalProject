@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="resources/css/button.css">
 <link rel="stylesheet" href="resources/css/input.css">
 <link rel="stylesheet" href="resources/css/pagination.css">
+<link rel="stylesheet" href="resources/css/board_table.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
@@ -104,7 +105,7 @@ function selectAll(page, limit){
 					vo.caname = '질문';
 				}
  				tag_vos += `
- 					<tr>
+ 					<tr data-bnum="\${vo.bnum}">
  						<td><a>\${vo.bnum}</a></td>
  						<td>[\${vo.caname}]`;
  				
@@ -129,6 +130,13 @@ function selectAll(page, limit){
 		}
 	});//end $.ajax()
 }//end selectAll()
+
+$(document).ready(function(){
+	$("body").on("click", "tr[data-bnum]", function(){
+	        window.location = $(this).find("a[href]").attr("href");
+	        return false; // 이벤트 전파를 중지합니다.
+	});
+});
 
 function searchListCount(){
 // 	console.log('searchListCount()');
@@ -251,7 +259,7 @@ function changeLimit(){
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<h3 class="card-title">${param.bname}</h3>
+						<h1 class="card-title" style="margin-left:470px;">${param.bname}</h1>
 					</div>
 					<div class="card-body">
 						<div style="display: flex; justify-content: space-between;">

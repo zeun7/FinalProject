@@ -19,21 +19,22 @@ Coded by www.creative-tim.com
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    다이어리 작성
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
-  <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-
+ <meta charset="utf-8" />
+ <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
+ <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
+ 
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <title>
+   다이어리 작성
+ </title>
+ <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+ <!--     Fonts and icons     -->
+ <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+ <!-- CSS Files -->
+ <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
+ <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function input_check(){
@@ -66,9 +67,9 @@ function input_check(){
 <body class="">
   <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
-    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}')">
-	  <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="background-size: cover; width: 100%; height: 100vh;">
+    <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
+    <jsp:include page="../mini_navbar.jsp"></jsp:include>
+      <div class="content" style="height: 90vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card card-user">
@@ -83,14 +84,14 @@ function input_check(){
 						value="${m_attr.nickname}">
 				</div>
 				<div>
-					<input type="text" class="form-control" id="title" name="title"
+					<input type="text" class="form-control col-md-6" id="title" name="title"
 						value="" placeholder="제목을 입력하세요.">
 				</div>
               </div>
               <div class="card-body">
 				  <div>
 					<label for="file">
-						<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+						<span id="filepath_text" class="btn-two cyan mini" style="border: 1px solid black">사진/동영상 첨부</span>
 					</label>
 					<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
 					<input type="hidden" id="isFileExist" name="isFileExist" value="0">
