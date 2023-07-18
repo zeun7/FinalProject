@@ -198,7 +198,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 						<div class="comm_write_box" style="display: flex">
 							<table style="flex: 1 500px">
 								<tr>
-									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
 											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></span>
@@ -279,10 +279,10 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 							<hr/>
 							<div class="coco_img" style="float:left; padding:10px;">
 								<img width="15px" src="resources/icon/cocomment.png" /></div>
-							<div class="comm_write_box" styel="display: flex">
+							<div class="comm_write_box" style="display: flex">
 								<table style="flex: 1 500px; width:100%;">
 									<tr>
-										<td rowspan="2" width="90%;"><textarea cols="100%" rows="3" id="comm_content"></textarea></td>
+										<td rowspan="2" width="90%;"><textarea rows="3" id="comm_content"></textarea></td>
 										<td width="100px;">
 											<div width="130px;" class="insert_wrap">
 												<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></span>

@@ -178,7 +178,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 						<div class="comm_write_box" style="display: flex">
 							<table style="flex: 1 500px">
 								<tr>
-									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
+									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
 											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
@@ -257,12 +257,12 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 					tag_comments += `</li>
 						<li>
 							<hr/>
-							<div class="coco_img" style="float:left; padding:10px;">
+							<div class="coco_img" style="float: left; padding:10px;">
 								<img width="15px" src="resources/icon/cocomment.png" /></div>
-							<div class="comm_write_box" styel="display: flex">
+							<div class="comm_write_box" style="display: flex">
 								<table style="flex: 1 500px; width:100%;">
 									<tr>
-										<td rowspan="2" width="90%;"><textarea cols="100%" rows="3" id="comm_content"></textarea></td>
+										<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 										<td width="100px;">
 											<div width="130px;" class="insert_wrap">
 												<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>

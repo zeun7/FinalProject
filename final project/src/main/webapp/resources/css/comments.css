@@ -8,10 +8,6 @@
 	list-style-type: none;
 }
 
-.comments li > div {
-	float: left;
-}
-
 .cmt_box {
 	border-top: 1px;
 }
