@@ -42,6 +42,8 @@ Coded by www.creative-tim.com
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/gallery_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+let report_cnum = 0;
+let report_ccnum = 0;
 
 $(document).on('click', '#editButton', function(e) {
     e.preventDefault();
@@ -272,7 +274,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report_\${vo.mcnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" id="report_\${vo.mcnum}">신고</button></span>
 											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" id="cocoment_\${vo.mcnum}">답글</button></span>
 											<span><div id="count_clikes_\${vo.mcnum}"></div></span>
 											<span id="clike_btn_\${vo.mcnum}">
@@ -473,7 +475,7 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="mc_report(\${vo.mcnum}, \${vo.mccnum}, \${mbnum})" id="report_\${vo.mcnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" id="report_\${vo.mcnum}">신고</button></span>
 											<span><div id="count_clikes_\${vo.mcnum}"></div></span>
 											<span id="clike_btn_\${vo.mcnum}">
 												<button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
@@ -784,7 +786,7 @@ function checkviewer(writer){
 									style="display: none">좋아요 취소</button>
 								<span id="likes_count">${vo2.likes }</span>
 								<button onclick="open_modal()">공유</button>
-								<button onclick="report()" id="report_button">신고</button>
+								<button onclick="open_board_report()" id="report_button">신고</button>
 							</div>
 							<div id="buttonContainer">
 								<button id="editButton" class="myButton">
@@ -799,24 +801,6 @@ function checkviewer(writer){
 							<div class="comments wrap" id="comments wrap">
 								<ul class="comments" id="minicomments">
 								</ul>
-							</div>
-						</div>
-
-						<div id="modal">
-							<div class="modal-content">
-								<h6>공유하기</h6>
-								<button onclick="share_twitter()" id="share_button">트위터로
-									공유</button>
-								<button onclick="share_facebook()" id="share_button">페이스북으로
-									공유</button>
-								<button id="kakaotalk-sharing-btn">카카오톡으로 공유</button>
-								<div>
-									<label for="copy_url_btn" id="url"></label>
-									<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
-								</div>
-								<div>
-									<button onclick="close_modal()">닫기</button>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -848,23 +832,126 @@ function checkviewer(writer){
 		</footer>
 	</div>
 </div>
-<!--   Core JS Files   -->
-<script src="resources/assets/js/core/jquery.min.js"></script>
-<script src="resources/assets/js/core/popper.min.js"></script>
-<script src="resources/assets/js/core/bootstrap.min.js"></script>
-<script
-	src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1"
-	type="text/javascript"></script>
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+
+<div id="modal">
+	<div class="modal-content" style="top:5%; left:10%; width:300px; height:300px">
+		<h6>공유하기</h6>
+		<button onclick="share_twitter()" class="share_button">
+			<img width="30px" src="resources/icon/twitter.png"/>트위터로 공유하기</button>
+		<button onclick="share_facebook()" class="share_button">
+			<img width="30px" src="resources/icon/facebook.png"/>페이스북으로 공유하기</button>
+		<button id="kakaotalk-sharing-btn">
+			<img width="30px" src="resources/icon/kakaotalk.png"/>카카오톡으로 공유하기</button>
+		<div>
+			<label for="copy_url_btn" id="url"></label>			
+			<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
+		</div>
+		<div>
+			<button onclick="close_modal()">닫기</button>
+		</div>
+	</div>
+</div>
+
+<div id="board_report_modal">
+	<div class="report_content" id="report_content" style="width:400px; height:400px">
+		<h4>신고사유를 선택하세요</h4>
+		<input type="radio" id="reason1" name="b_reason" value="욕설/혐오/차별적 표현입니다">
+		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br/>
+		<input type="radio" id="reason2" name="b_reason" value="스팸홍보/도배글입니다">
+		<label for="reason2">스팸홍보/도배글입니다</label><br/>
+		<input type="radio" id="reason3" name="b_reason" value="음란물입니다">
+		<label for="reason3">음란물입니다</label><br/>
+		<input type="radio" id="reason4" name="b_reason" value="개인정보 노출 게시물입니다">
+		<label for="reason4">개인정보 노출 게시물입니다</label><br/>
+		<input type="radio" id="reason5" name="b_reason" value="명예훼손 또는 저작권이 침해되었습니다">
+		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
+		<input type="radio" id="reason6" name="b_reason" value="불쾌한 표현이 있습니다">
+		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
+		<button type="button" onclick="close_board_modal()" class="close_btn">닫기</button>
+		<button type="button" onclick="submit_board_report()" class="report_btn">신고</button>
+	</div>
+</div>
+
+<div id="cmt_report_modal">
+	<div class="report_content" id="report_content" style="width:400px; height:400px">
+		<h4>신고사유를 선택하세요</h4>
+		<input type="radio" id="reason1" name="c_reason" value="욕설/혐오/차별적 표현입니다">
+		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br/>
+		<input type="radio" id="reason2" name="c_reason" value="스팸홍보/도배글입니다">
+		<label for="reason2">스팸홍보/도배글입니다</label><br/>
+		<input type="radio" id="reason3" name="c_reason" value="음란물입니다">
+		<label for="reason3">음란물입니다</label><br/>
+		<input type="radio" id="reason4" name="c_reason" value="개인정보 노출 게시물입니다">
+		<label for="reason4">개인정보 노출 게시물입니다</label><br/>
+		<input type="radio" id="reason5" name="c_reason" value="명예훼손 또는 저작권이 침해되었습니다">
+		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
+		<input type="radio" id="reason6" name="c_reason" value="불쾌한 표현이 있습니다">
+		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
+		<button type="button" onclick="close_cmt_modal()" class="close_btn">닫기</button>
+		<button type="button" onclick="submit_cmt_report()" class="report_btn">신고</button>
+	</div>
+</div>
 
 <script type="text/javascript">
+function submit_board_report(){
+	console.log('submit board report...');
+	$.ajax({
+		url: 'mb_reportOK.do',
+		data: {mbnum: ${param.mbnum},
+			id: '${mh_attr.id}',
+			reason: $('input[name=b_reason]:checked').val()},
+		method: 'POST',
+		dataType: 'json',
+		success: function(response){
+			close_board_modal();
+			alert('신고가 접수되었습니다.');
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+	});
+}
+
+function submit_cmt_report(){
+	console.log('submit cmt report...');
+	$.ajax({
+		url: 'mc_reportOK.do',
+		data: {cnum: cnum,
+			ccnum: ccnum,
+			mbnum: ${param.mbnum},
+			id: '${mh_attr.id}',
+			reason: $('input[name=c_reason]:checked').val()},
+		method: 'POST',
+		dataType: 'json',
+		success: function(response){
+			close_cmt_modal();
+			alert('신고가 접수되었습니다.');
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
+	});
+}
+
 $('#url').html(url);
 let modal = document.getElementById("modal");
+let board_report_modal = document.getElementById("board_report_modal");
+let cmt_report_modal = document.getElementById("cmt_report_modal");
 
 function open_modal(){
 	modal.style.display = "block";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+}
+
+function open_board_report(){
+	board_report_modal.style.display = "flex";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+}
+
+function open_cmt_report(tmp_cnum, tmp_ccnum){
+	cnum = tmp_cnum;
+	ccnum = tmp_ccnum;
+	cmt_report_modal.style.display = "flex";
 	document.body.style.overflow = "hidden"; // 스크롤바 제거
 }
 
@@ -872,7 +959,23 @@ function close_modal(){
 	modal.style.display = "none";
 	document.body.style.overflow = "auto"; // 스크롤바
 }
-</script>
-</body>
 
+function close_board_modal(){
+	board_report_modal.style.display = "none";
+	document.body.style.overflow = "auto";
+}
+
+function close_cmt_modal(){
+	cmt_report_modal.style.display = "none";
+	document.body.style.overflow = "auto";
+}
+</script>
+<!--   Core JS Files   -->
+<script src="resources/assets/js/core/jquery.min.js"></script>
+<script src="resources/assets/js/core/popper.min.js"></script>
+<script src="resources/assets/js/core/bootstrap.min.js"></script>
+<script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+</body>
 </html>

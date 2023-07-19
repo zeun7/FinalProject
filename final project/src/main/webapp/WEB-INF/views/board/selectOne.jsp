@@ -716,9 +716,9 @@ function goBack() {
 <div id="modal">
 	<div class="modal-content" style="top:5%; left:10%; width:300px; height:300px">
 		<h6>공유하기</h6>
-		<button onclick="share_twitter()" id="share_button">
+		<button onclick="share_twitter()" class="share_button">
 			<img width="30px" src="resources/icon/twitter.png"/>트위터로 공유하기</button>
-		<button onclick="share_facebook()" id="share_button">
+		<button onclick="share_facebook()" class="share_button">
 			<img width="30px" src="resources/icon/facebook.png"/>페이스북으로 공유하기</button>
 		<button id="kakaotalk-sharing-btn">
 			<img width="30px" src="resources/icon/kakaotalk.png"/>카카오톡으로 공유하기</button>
@@ -811,56 +811,48 @@ function submit_cmt_report(){
 	});
 }
 
-	if('${nickname}' === '${vo2.writer}'){
-		$('#update_delete').show();
-	}else{
-		$('#update_delete').hide();
-	}
-		
-// 	첨부파일이 video인지 img인지
-// 	let str = '${vo2.filepath}'.substr(-3);
-// 	if(str === 'mp4'){
-// 		$('#img').hide();
-// 	}else{
-// 		$('#video').hide();
-// 	}
-		
-	$('#url').html(url);
-	let modal = document.getElementById("modal");
-	let board_report_modal = document.getElementById("board_report_modal")
-	let cmt_report_modal = document.getElementById("cmt_report_modal") 
+if('${nickname}' === '${vo2.writer}'){
+	$('#update_delete').show();
+}else{
+	$('#update_delete').hide();
+}
 	
-	function open_modal(){
-		modal.style.display = "block";
-		document.body.style.overflow = "hidden"; // 스크롤바 제거
-	}
-	
-	function open_board_report(){
-		board_report_modal.style.display = "flex";
-		document.body.style.overflow = "hidden"; // 스크롤바 제거
-	}
-	
-	function open_cmt_report(tmp_cnum, tmp_ccnum){
-		cnum = tmp_cnum;
-		ccnum = tmp_ccnum;
-		cmt_report_modal.style.display = "flex";
-		document.body.style.overflow = "hidden"; // 스크롤바 제거
-	}
-	
-	function close_modal(){
-		modal.style.display = "none";
-		document.body.style.overflow = "auto"; // 스크롤바
-	}
-	
-	function close_board_modal(){
-		board_report_modal.style.display = "none";
-		document.body.style.overflow = "auto";
-	}
-	
-	function close_cmt_modal(){
-		cmt_report_modal.style.display = "none";
-		document.body.style.overflow = "auto";
-	}
+$('#url').html(url);
+let modal = document.getElementById("modal");
+let board_report_modal = document.getElementById("board_report_modal")
+let cmt_report_modal = document.getElementById("cmt_report_modal") 
+
+function open_modal(){
+	modal.style.display = "block";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+}
+
+function open_board_report(){
+	board_report_modal.style.display = "flex";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+}
+
+function open_cmt_report(tmp_cnum, tmp_ccnum){
+	cnum = tmp_cnum;
+	ccnum = tmp_ccnum;
+	cmt_report_modal.style.display = "flex";
+	document.body.style.overflow = "hidden"; // 스크롤바 제거
+}
+
+function close_modal(){
+	modal.style.display = "none";
+	document.body.style.overflow = "auto"; // 스크롤바
+}
+
+function close_board_modal(){
+	board_report_modal.style.display = "none";
+	document.body.style.overflow = "auto";
+}
+
+function close_cmt_modal(){
+	cmt_report_modal.style.display = "none";
+	document.body.style.overflow = "auto";
+}
 </script>
 </body>
 </html>

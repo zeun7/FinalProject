@@ -744,9 +744,9 @@ function checkviewer(writer){
 <div id="modal">
 	<div class="modal-content" style="top:5%; left:10%; width:300px; height:300px">
 		<h6>공유하기</h6>
-		<button onclick="share_twitter()" id="share_button">
+		<button onclick="share_twitter()" class="share_button">
 			<img width="30px" src="resources/icon/twitter.png"/>트위터로 공유하기</button>
-		<button onclick="share_facebook()" id="share_button">
+		<button onclick="share_facebook()" class="share_button">
 			<img width="30px" src="resources/icon/facebook.png"/>페이스북으로 공유하기</button>
 		<button id="kakaotalk-sharing-btn">
 			<img width="30px" src="resources/icon/kakaotalk.png"/>카카오톡으로 공유하기</button>
@@ -804,8 +804,9 @@ function checkviewer(writer){
 function submit_board_report(){
 	console.log('submit board report...');
 	$.ajax({
-		url: 'b_reportOK.do',
-		data: {bnum: ${param.bnum},
+		url: 'mb_reportOK.do',
+		data: {mbnum: ${param.mbnum},
+			id: '${mh_attr.id}',
 			reason: $('input[name=b_reason]:checked').val()},
 		method: 'POST',
 		dataType: 'json',
@@ -822,10 +823,11 @@ function submit_board_report(){
 function submit_cmt_report(){
 	console.log('submit cmt report...');
 	$.ajax({
-		url: 'c_reportOK.do',
+		url: 'mc_reportOK.do',
 		data: {cnum: cnum,
 			ccnum: ccnum,
-			bnum: ${param.bnum},
+			mbnum: ${param.mbnum},
+			id: '${mh_attr.id}',
 			reason: $('input[name=c_reason]:checked').val()},
 		method: 'POST',
 		dataType: 'json',
@@ -880,7 +882,7 @@ function close_cmt_modal(){
  if('${user_id}' != '${mh_attr.id}'){	
      $('#buttonContainer').hide();
  }
- if('${vo2.filepath}' == ''){
+ if('${vo2.filepath}' === ''){
   $('#imageContainer').hide();
  }
 </script>
