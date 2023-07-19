@@ -119,7 +119,7 @@
 								</div>
 								<div class="row">
 									<div class="update ml-auto mr-auto">
-										<button id="upatefrom"type="button" class="btn btn-outline-primarys">회원수정</button>
+										<button id="upatefrom"type="button"class="btn btn-primary btn-round"  style="background-color: #94b5e0">회원수정</button>
 									</div>
 								</div>
 							</form>

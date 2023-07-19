@@ -5,10 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -33,7 +29,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -218,6 +213,7 @@ public class MemberController {
 			session.setAttribute("user_id", vo.getId());
 			session.setAttribute("nickname", vo.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
+			session.setAttribute("profilepic", vo2.getProfilepic());
 			
 			return "redirect:m_selectOne.do?id=" + vo.getId();
 		} else {
@@ -371,7 +367,7 @@ public class MemberController {
 		log.info("find_pass.....{}",vo);
 	MemberVO vo2= service.find_user(vo);
 	
-	model.addAttribute("vos", vo2);
+	model.addAttribute("vo2", vo2);
 	
 	if (vo2 == null) {
         response_email.setContentType("text/html; charset=UTF-8");
@@ -433,8 +429,8 @@ public class MemberController {
 	}
 
 	//인증번호를 입력한 후에 확인 버튼을 누르면 자료가 넘어오는 컨트롤러
-    @RequestMapping(value = "pass_injeung.do{dice},{email}", method = RequestMethod.POST)
-        public ModelAndView pass_injeung(String pass_injeung, @PathVariable String dice, @PathVariable String email, 
+	@RequestMapping(value = "/pass_injeung.do", method = RequestMethod.POST)
+    public ModelAndView pass_injeung(String pass_injeung,  String dice, MemberVO vo,
                 HttpServletResponse response_equals) throws IOException{
         
         System.out.println("마지막 : pass_injeung : "+pass_injeung);
@@ -445,7 +441,7 @@ public class MemberController {
         
         mv.setViewName("member/find/pass_change");
         
-        mv.addObject("email",email);
+        mv.addObject("email",vo.getEmail());
         
         if (pass_injeung.equals(dice)) {
             
@@ -453,7 +449,7 @@ public class MemberController {
         
             mv.setViewName("member/find/pass_change");
             
-            mv.addObject("email",email);
+            mv.addObject("email",vo.getEmail());
             
             //만약 인증번호가 같다면 이메일을 비밀번호 변경 페이지로 넘기고, 활용할 수 있도록 한다.
             
@@ -488,7 +484,7 @@ public class MemberController {
     //변경할 비밀번호를 입력한 후에 확인 버튼을 누르면 넘어오는 컨트롤러
     @RequestMapping(value = "pass_change.do", method = RequestMethod.POST)
     public ModelAndView pass_change(MemberVO vo) throws Exception{
-    
+	log.info("vo:{}" ,vo);
     service.pass_change(vo);
     
     ModelAndView mv = new ModelAndView();
@@ -514,6 +510,7 @@ public class MemberController {
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
+			session.setAttribute("profilepic", vo2.getProfilepic());
 		}else {
 			String username = principal.toString();
 		}

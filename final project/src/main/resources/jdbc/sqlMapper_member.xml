@@ -81,13 +81,13 @@
 	<select id="FIND_USER"
 		parameterType="multi.com.finalproject.member.model.MemberVO"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select id, email from member where id = #{id} and email = #{email}
+		select * from member where id = #{id} and email = #{email}
 	</select>
 	
 	<select id="FINDUSER"
 		parameterType="multi.com.finalproject.member.model.MemberVO"
 		resultType="multi.com.finalproject.member.model.MemberVO">
-		select email from member where  email = #{email}
+		select * from member where  email = #{email}
 	</select>
 	
 	<!-- 비밀번호 변경 관련 mapper -->

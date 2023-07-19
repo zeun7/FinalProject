@@ -252,14 +252,14 @@ function changeLimit(){
 </head>
 <body onload="selectAllCount()">
 <jsp:include page="../sidebar.jsp"></jsp:include>
-<div class="main-panel">
 <jsp:include page="../navbar.jsp"></jsp:include>
+<div class="main-panel">
 	<div class="content">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<h1 class="card-title" style="margin-left:470px;">${param.bname}</h1>
+						<h1 class="card-title" style="text-align:center;">${param.bname}</h1>
 					</div>
 					<div class="card-body">
 						<div style="display: flex; justify-content: space-between;">
@@ -301,11 +301,11 @@ function changeLimit(){
 						<input type="text" name="searchWord" id="searchWord" value="${param.searchWrod}" class="inputS-1">
 						<button onclick="searchListCount()" class="custom-btn btn-4">검색</button>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+				</div> <!-- end "card" -->
+			</div> <!-- end "col-md-12" -->
+		</div> <!-- end "row" -->
+	</div> <!-- end "content" -->
+</div> <!-- end "main-panel" -->
 </body>
 <script type="text/javascript">
 if ('${user_id}' === '') { // 로그아웃 상태

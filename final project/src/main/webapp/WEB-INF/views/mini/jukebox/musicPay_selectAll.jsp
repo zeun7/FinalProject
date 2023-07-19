@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -33,6 +19,7 @@ Coded by www.creative-tim.com
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 
+<link rel="stylesheet" href="resources/css/pagination.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let page = 1;
@@ -63,15 +50,17 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 		dataType : 'json',
 		success : function(result){
 			let tag_page = 0;
-			let tag_pages = '';
+			let tag_pages = `<div class="paging-btn-container">`;
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
+			tag_pages += `</div>`;
 			
 			if(curPage > tag_page){
 				curPage = tag_page;
@@ -185,7 +174,7 @@ function gotoMusic_selectOne(bgm){
                     <tbody id="vos">
                     </tbody>
                     <tfoot>
-						<tr><td id="page"></td></tr>
+						<tr><td colspan="3" id="page"></td></tr>
 					</tfoot>
                   </table>
                 </div>
@@ -198,31 +187,44 @@ function gotoMusic_selectOne(bgm){
         <div class="container-fluid">
           <div class="row">
             <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
+				<ul>
+					<li>Contact Us</li>
+					<li><a class="nav-link btn-magnify"
+						href="https://www.instagram.com/" target="_blank"> <i class="fa-brands fa-github"></i>
+							<p>
+								<span class="d-lg-none d-md-block">github</span>
+							</p>
+					</a></li>
+					<li><a class="nav-link btn-magnify"
+						href="https://www.instagram.com/" target="_blank"> <i class="fa-brands fa-instagram"></i>
+							<p>
+								<span class="d-lg-none d-md-block">instagram</span>
+							</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link btn-magnify"
+						href="https://twitter.com/" target="_blank"> <i class="fa-brands fa-twitter"></i>
+							<p>
+								<span class="d-lg-none d-md-block">twitter</span>
+							</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link btn-rotate"
+						href="https://ko-kr.facebook.com/" target="_blank"> <i class="fa-brands fa-facebook"></i>
+							<p>
+								<span class="d-lg-none d-md-block">facebook</span>
+							</p>
+					</a></li>
+				</ul>
+			</nav>
+			<div class="credits ml-auto">
+				<span class="copyright"> © <script>document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by
+					일촌맺어죠
+				</span>
+			</div>
           </div>
         </div>
       </footer>
     </div>
   </div>
-  <!--   Core JS Files   -->
-  <script src="resources/assets/js/core/jquery.min.js"></script>
-  <script src="resources/assets/js/core/popper.min.js"></script>
-  <script src="resources/assets/js/core/bootstrap.min.js"></script>
-  <script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 </body>
-
 </html>

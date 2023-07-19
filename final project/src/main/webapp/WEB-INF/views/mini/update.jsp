@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -172,7 +158,7 @@ function setBGM(bgm){
 													type="hidden" id="backimg" name="backimg"
 													value="${vo2.backimg}">
 											</div>
-											<input type="file" id="file" name="file">
+											<input type="file" id="file" name="file" class="form-control">
 										</div>
 									</div>
 									<br>
@@ -188,7 +174,7 @@ function setBGM(bgm){
 													</audio>
 												</div>
 												<!-- 					<input type="file" id="musicFile" name="musicFile">  -->
-												<button type="button" onclick="open_modal()">bgm 선택</button>
+												<button type="button" onclick="open_modal()" class="btn">bgm 선택</button>
 												<input type="hidden" id="bgm" name="bgm" value="${vo2.bgm}">
 											</div>
 										</div>
@@ -235,19 +221,37 @@ function setBGM(bgm){
 					<div class="row">
 						<nav class="footer-nav">
 							<ul>
-								<li><a href="https://www.creative-tim.com" target="_blank">Creative
-										Tim</a></li>
-								<li><a href="https://www.creative-tim.com/blog"
-									target="_blank">Blog</a></li>
-								<li><a href="https://www.creative-tim.com/license"
-									target="_blank">Licenses</a></li>
+								<li>Contact Us</li>
+								<li><a class="nav-link btn-magnify"
+									href="https://www.instagram.com/" target="_blank"> <i class="fa-brands fa-github"></i>
+										<p>
+											<span class="d-lg-none d-md-block">github</span>
+										</p>
+								</a></li>
+								<li><a class="nav-link btn-magnify"
+									href="https://www.instagram.com/" target="_blank"> <i class="fa-brands fa-instagram"></i>
+										<p>
+											<span class="d-lg-none d-md-block">instagram</span>
+										</p>
+								</a></li>
+								<li class="nav-item"><a class="nav-link btn-magnify"
+									href="https://twitter.com/" target="_blank"> <i class="fa-brands fa-twitter"></i>
+										<p>
+											<span class="d-lg-none d-md-block">twitter</span>
+										</p>
+								</a></li>
+								<li class="nav-item"><a class="nav-link btn-rotate"
+									href="https://ko-kr.facebook.com/" target="_blank"> <i class="fa-brands fa-facebook"></i>
+										<p>
+											<span class="d-lg-none d-md-block">facebook</span>
+										</p>
+								</a></li>
 							</ul>
 						</nav>
 						<div class="credits ml-auto">
-							<span class="copyright"> © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by
-								Creative Tim
+							<span class="copyright"> © <script>document.write(new Date().getFullYear())
+			                </script>, made with <i class="fa fa-heart heart"></i> by
+								일촌맺어죠
 							</span>
 						</div>
 					</div>
@@ -255,16 +259,6 @@ function setBGM(bgm){
 			</footer>
 		</div>
 	</div>
-	<!--   Core JS Files   -->
-	<script src="resources/assets/js/core/jquery.min.js"></script>
-	<script src="resources/assets/js/core/popper.min.js"></script>
-	<script src="resources/assets/js/core/bootstrap.min.js"></script>
-	<script
-		src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-	<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1"
-		type="text/javascript"></script>
-	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 
 	<script type="text/javascript">
 		function open_modal(){
@@ -278,5 +272,4 @@ function setBGM(bgm){
 		}
 	</script>
 </body>
-
 </html>

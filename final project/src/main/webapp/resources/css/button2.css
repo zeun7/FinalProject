@@ -65,7 +65,6 @@ button[class*="btn"] {border: 0;}
   padding: 15px 25px;
   display: inline-block;
   text-align: center;
-  color: white;
 }
 .btn:active {
   top: 4px; 

@@ -54,29 +54,17 @@
 					class="nc-icon nc-caps-small"></i>
 					<p>board5</p>
 			</a></li>
-			<li id="friends"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
+			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
 					<p>친구목록</p>
 			</a></li>
 			<li id="manage"><a href="manage.do"> <i
 					class="nc-icon nc-caps-small"></i>
 					<p>관리</p>
 			</a></li>
-			<li class="active-pro">
-				<div class="logo">
-					<a href="m_selectOne.do?id=${user_id}"
-						class="simple-text logo-mini" id="profile">
-						<div class="logo-image-small">
-							<img src="resources/uploadimg/${profilepic}">
-						</div> <!-- <p>CT</p> -->
-					</a>
-					<a href="m_selectOne.do?id=${user_id}" class="simple-text logo-normal" id="myinfo">${nickname}
-						<!-- <div class="logo-image-big"> <img src="../assets/img/logo-big.png"> </div> -->
-					</a>
-					<a href="logout.do" class="simple-text logo-normal" id="logout">로그아웃</a>
-					<a href="login.do" class="simple-text logo-normal" id="login">로그인</a>
-					<a href="m_insert.do" class="simple-text logo-normal" id="m_insert">회원가입</a>
-				</div>
-			</li>
+			<li><a href="dashboard.do"> <i class="nc-icon nc-caps-small"></i>
+					<p>대시보드</p>
+			</a></li>
+			
 		</ul>
 	</div>
 </div>
@@ -88,14 +76,14 @@
 		$('#myinfo').hide();
 		$('#login').show();
 		$('#profile').hide();
-		$('#friends').hide();
+		$('#friendsList').hide();
 	} else { // 로그인 상태
 		$('#logout').show();
 		$('#m_insert').hide();
 		$('#myinfo').show();
 		$('#login').hide();
 		$('#profile').show();
-		$('#friends').show();
+		$('#friendsList').show();
 	}
 
 	if ('${mclass}' === '1') { // 관리자
@@ -119,11 +107,3 @@
 <script src="resources/assets/js/core/popper.min.js"></script>
 <script src="resources/assets/js/core/bootstrap.min.js"></script>
 <script src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!-- Chart JS -->
-<script src="resources/assets/js/plugins/chartjs.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="resources/assets/js/plugins/bootstrap-notify.js"></script>
-<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>

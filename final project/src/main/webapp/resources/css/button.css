@@ -31,9 +31,9 @@
   margin: 40px auto;
   text-align: center;
 }
-button {
-  margin: 20px;
-}
+/* button { */
+/*   margin: 20px; */
+/* } */
 .custom-btn {
   display: inline-block;
   width: 130px;

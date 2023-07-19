@@ -632,13 +632,13 @@ Copyright (c) 2015 Daniel Eden
     background-color: transparent !important;
     border-color: #66615B !important; }
 
-.btn-outline-primarys {
+.btn-outline-primary {
   background: transparent;
   border: 2px solid #51cbce !important;
   color: #51cbce;
   opacity: 1;
   filter: alpha(opacity=100); }
-  .btn-outline-primarys:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary:focus:active, .btn-outline-primary.active,
+  .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary:focus:active, .btn-outline-primary.active,
   .open > .btn-outline-primary.dropdown-toggle {
     background-color: #51cbce !important;
     color: rgba(255, 255, 255, 0.8) !important;
@@ -653,14 +653,14 @@ Copyright (c) 2015 Daniel Eden
   filter: alpha(opacity=100);
    border-radius: 10px; /* 끝을 10px로 깎음 */
    }
-  .btn-outline-primarys:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary:focus:active, .btn-outline-primary.active,
+  .btn-outline-primarys:hover, .btn-outline-primarys:focus, .btn-outline-primarys:active, .btn-outline-primarys:focus:active, .btn-outline-primarys.active,
   .open > .btn-outline-primarys.dropdown-toggle {
     background-color: #94b5e0 !important;
     color: rgba(255, 255, 255, 0.8) !important;
     border-color: ##94b5e0 !important; 
     border-radius: 10px; /* 끝을 10px로 깎음 */
   }
-    .btn-outline-primarys:hover .caret, .btn-outline-primary:focus .caret, .btn-outline-primary:active .caret, .btn-outline-primary:focus:active .caret, .btn-outline-primary.active .caret{
+    .btn-outline-primarys:hover .caret, .btn-outline-primarys:focus .caret, .btn-outline-primarys:active .caret, .btn-outline-primarys:focus:active .caret, .btn-outline-primarys.active .caret{
     border-top-width: 0; /* 삼각형의 위쪽 선을 제거하여 깎음 효과 적용 */
    border-bottom-width: 5px; /* 삼각형의 아래쪽 선 높이 조절 */
    border-left-width: 5px; /* 삼각형의 왼쪽 선 높이 조절 */
@@ -684,18 +684,20 @@ Copyright (c) 2015 Daniel Eden
     background-color: transparent !important;
     border-color: #51cbce !important; }
 
-.btn-outline-success {
-  background: transparent;
-  border: 2px solid #6bd098 !important;
-  color: #6bd098;
-  opacity: 1;
-  filter: alpha(opacity=100); }
-  .btn-outline-success:hover, .btn-outline-success:focus, .btn-outline-success:active, .btn-outline-success:focus:active, .btn-outline-success.active,
-  .open > .btn-outline-success.dropdown-toggle {
-    background-color: #6bd098 !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    border-color: #6bd098 !important; }
-    .btn-outline-success:hover .caret, .btn-outline-success:focus .caret, .btn-outline-success:active .caret, .btn-outline-success:focus:active .caret, .btn-outline-success.active .caret,
+.open > .btn-outline-primarys.dropdown-toggle .caret {
+      border-top-color: rgba(255, 255, 255, 0.8) !important; }
+  .btn-outline-primarys .caret {
+    border-top-color: #FFFFFF !important; }
+  .btn-outline-primarys.disabled, .btn-outline-primarys.disabled:hover, .btn-outline-primarys.disabled:focus, .btn-outline-primarys.disabled.focus, .btn-outline-primarys.disabled:active, .btn-outline-primarys.disabled.active, .btn-outline-primarys:disabled, .btn-outline-primarys:disabled:hover, .btn-outline-primarys:disabled:focus, .btn-outline-primarys:disabled.focus, .btn-outline-primarys:disabled:active, .btn-outline-primarys:disabled.active, .btn-outline-primarys[disabled], .btn-outline-primarys[disabled]:hover, .btn-outline-primarys[disabled]:focus, .btn-outline-primarys[disabled].focus, .btn-outline-primarys[disabled]:active, .btn-outline-primarys[disabled].active,
+  fieldset[disabled] .btn-outline-primarys,
+  fieldset[disabled] .btn-outline-primarys:hover,
+  fieldset[disabled] .btn-outline-primarys:focus,
+  fieldset[disabled] .btn-outline-primarys.focus,
+  fieldset[disabled] .btn-outline-primarys:active,
+  fieldset[disabled] .btn-outline-primarys.active {
+    background-color: transparent !important;
+    border-color: #94b5e0 !important; }
+    
     .open > .btn-outline-success.dropdown-toggle .caret {
       border-top-color: rgba(255, 255, 255, 0.8) !important; }
   .btn-outline-success .caret {
@@ -735,6 +737,32 @@ Copyright (c) 2015 Daniel Eden
   fieldset[disabled] .btn-outline-info.active {
     background-color: transparent !important;
     border-color: #51bcda !important; }
+    
+    .btn-outline-infos {
+  background: transparent;
+  border: 2px solid #94b5e0 !important;
+  color: #94b5e0;
+  opacity: 1;
+  filter: alpha(opacity=100); }
+  .btn-outline-infos:hover, .btn-outline-info:focus, .btn-outline-info:active, .btn-outline-info:focus:active, .btn-outline-info.active,
+  .open > .btn-outline-infos.dropdown-toggle {
+    background-color: #94b5e0 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border-color: #94b5e0 !important; }
+    .btn-outline-infos:hover .caret, .btn-outline-infos:focus .caret, .btn-outline-infos:active .caret, .btn-outline-infos:focus:active .caret, .btn-outline-infos.active .caret,
+    .open > .btn-outline-infos.dropdown-toggle .caret {
+      border-top-color: rgba(255, 255, 255, 0.8) !important; }
+  .btn-outline-infos .caret {
+    border-top-color: #FFFFFF !important; }
+  .btn-outline-infos.disabled, .btn-outline-infos.disabled:hover, .btn-outline-infos.disabled:focus, .btn-outline-infos.disabled.focus, .btn-outline-infos.disabled:active, .btn-outline-infos.disabled.active, .btn-outline-infos:disabled, .btn-outline-infos:disabled:hover, .btn-outline-infos:disabled:focus, .btn-outline-infos:disabled.focus, .btn-outline-infos:disabled:active, .btn-outline-infos:disabled.active, .btn-outline-infos[disabled], .btn-outline-infos[disabled]:hover, .btn-outline-infos[disabled]:focus, .btn-outline-infos[disabled].focus, .btn-outline-infos[disabled]:active, .btn-outline-infos[disabled].active,
+  fieldset[disabled] .btn-outline-infos,
+  fieldset[disabled] .btn-outline-infos:hover,
+  fieldset[disabled] .btn-outline-infos:focus,
+  fieldset[disabled] .btn-outline-infos.focus,
+  fieldset[disabled] .btn-outline-infos:active,
+  fieldset[disabled] .btn-outline-infos.active {
+    background-color: transparent !important;
+    border-color: #94b5e0 !important; }
 
 .btn-outline-warning {
   background: transparent;

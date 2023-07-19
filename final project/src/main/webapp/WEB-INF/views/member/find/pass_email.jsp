@@ -31,13 +31,14 @@
 					<h3>인증번호 확인</h3>
 					</div>
 					<div>
-			<form action="pass_injeung.do${dice},${email}" method="post">
+			<form action="pass_injeung.do" method="post">
 
 				<br><br>
 				<p>
 					<strong>인증번호 입력:</strong> <input class="w3-input" type="text"
 						id="email" name="pass_injeung" required=" 인증번호를 입력하세요.">
 				</p>
+				<input type="hidden" name="dice" value="${dice}">
 
 				<button type="submit" name="submit"
 					 class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0">인증번호

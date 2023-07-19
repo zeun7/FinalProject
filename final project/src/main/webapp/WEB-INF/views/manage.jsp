@@ -361,7 +361,7 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-					<ul class="menu" style="list-style-type: none; display: flex; margin-left:320px;">
+					<ul class="menu" style="list-style-type: none; display: flex; justify-content: center; align-items: center;">
 						<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_member(1)">회원관리</button></li>
 						<li><button class="custom-btn btn-16" style="width: 200px; color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_board(1)">신고 게시글</button></li>
 						<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_comments(1)">신고 댓글</button></li>

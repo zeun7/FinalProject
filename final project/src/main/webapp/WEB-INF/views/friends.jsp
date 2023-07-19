@@ -331,7 +331,7 @@ function del_ban(nickname2) {	// 차단 해제
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<ul class="menu" style="list-style-type: none; display: flex; margin-left:360px;">
+						<ul class="menu" style="list-style-type: none; display: flex; justify-content: center; align-items: center;">
 							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_list()">친구목록</button></li>
 							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_ban()">차단목록</button></li>
 							<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="friends_add()">친구추가</button></li>

@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -35,6 +21,7 @@ Coded by www.creative-tim.com
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <link rel="stylesheet" href="resources/css/modal.css">
 <link rel="stylesheet" href="resources/css/comments.css">
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js"
 	integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC"
 	crossorigin="anonymous"></script>
@@ -764,38 +751,53 @@ function checkviewer(writer){
 
 <body class="" onload="minicomments('${vo2.writer}')">
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
-<div class="wrapper ">
-	<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
-    <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<h4 class="card-title">${vo2.title}</h4>
-							<h6>
-								올린날 : ${vo2.wdate}<span id=modifiedIndicator></span>
-							</h6>
+	<div class="wrapper ">
+		<div class="main-panel"
+			style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
+			<jsp:include page="../mini_navbar.jsp"></jsp:include>
+			<div class="content" style="height: 90vh;">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">${vo2.title}</h4>
+								<h6>
+									올린날 : ${vo2.wdate}<span id=modifiedIndicator></span>
+								</h6>
 						</div>
 						<div class="card-body">
-							<div id="file"></div>
-							<br>
-							<div>
-								<button onclick="like()" id="like_button">좋아요</button>
-								<button onclick="like_cancel()" id="lcancel_button"
-									style="display: none">좋아요 취소</button>
-								<span id="likes_count">${vo2.likes }</span>
-								<button onclick="open_modal()">공유</button>
-								<button onclick="open_board_report()" id="report_button">신고</button>
-							</div>
-							<div id="buttonContainer">
-								<button id="editButton" class="myButton">
-									수정<span id="modifiedIndicator"></span>
-								</button>
-								<a
-									href="gallery_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}"
-									class="myButton">삭제</a>
-							</div>
+								<div id="file"></div>
+								<br>
+								<div id="buttonss"
+									style="display: flex; justify-content: space-between;">
+									<button class="custom-btn btn-1" onclick="goBack()"
+										style="margin: 0;">목록으로</button>
+									<div
+										style="display: flex; justify-content: center; align-items: center;">
+										<button onclick="like()" class="heartButton" id="like_button"
+											style="margin: 0;">
+											<img width="25px" src="resources/icon/not_like.png" />
+										</button>
+										<button onclick="like_cancel()" class="heartButton"
+											id="lcancel_button" style="margin: 0; display: none">
+											<img width="25px" src="resources/icon/like.png" />
+										</button>
+										<span id="likes_count" style="margin-left: 5px;">${vo2.likes }</span>
+									</div>
+									<div style="display: flex; justify-content: end;">
+										<button class="custom-btn btn-11" onclick="open_modal()"
+											style="margin: 0;">공유</button>
+										<button class="custom-btn btn-11" onclick="submit_board_report()"
+											id="report_button" style="margin: 0;">신고</button>
+										<div id="buttonContainer">
+											<button id="editButton" class="custom-btn btn-12">
+												수정<span id="modifiedIndicator"></span>
+											</button>
+											<a class="custom-btn btn-12"
+												href="gallery_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}">삭제</a>
+										</div>
+									</div>
+								</div>
 						</div>
 						<div class="card-footer">
 							<div class="comments wrap" id="comments wrap">
@@ -808,25 +810,46 @@ function checkviewer(writer){
 			</div>
 		</div>
 		<footer class="footer footer-black  footer-white ">
-			<div class="container-fluid">
-				<div class="row">
-					<nav class="footer-nav">
-						<ul>
-							<li><a href="https://www.creative-tim.com" target="_blank">Creative
-									Tim</a></li>
-							<li><a href="https://www.creative-tim.com/blog"
-								target="_blank">Blog</a></li>
-							<li><a href="https://www.creative-tim.com/license"
-								target="_blank">Licenses</a></li>
-						</ul>
-					</nav>
-					<div class="credits ml-auto">
-						<span class="copyright"> © <script>
-                 document.write(new Date().getFullYear())
-               </script>, made with <i class="fa fa-heart heart"></i> by
-							Creative Tim
-						</span>
-					</div>
+				<div class="container-fluid">
+					<div class="row">
+						<nav class="footer-nav">
+							<ul>
+								<li>Contact Us</li>
+								<li><a class="nav-link btn-magnify"
+									href="https://www.instagram.com/" target="_blank"> <i
+										class="fa-brands fa-github"></i>
+										<p>
+											<span class="d-lg-none d-md-block">github</span>
+										</p>
+								</a></li>
+								<li><a class="nav-link btn-magnify"
+									href="https://www.instagram.com/" target="_blank"> <i
+										class="fa-brands fa-instagram"></i>
+										<p>
+											<span class="d-lg-none d-md-block">instagram</span>
+										</p>
+								</a></li>
+								<li class="nav-item"><a class="nav-link btn-magnify"
+									href="https://twitter.com/" target="_blank"> <i
+										class="fa-brands fa-twitter"></i>
+										<p>
+											<span class="d-lg-none d-md-block">twitter</span>
+										</p>
+								</a></li>
+								<li class="nav-item"><a class="nav-link btn-rotate"
+									href="https://ko-kr.facebook.com/" target="_blank"> <i
+										class="fa-brands fa-facebook"></i>
+										<p>
+											<span class="d-lg-none d-md-block">facebook</span>
+										</p>
+								</a></li>
+							</ul>
+						</nav>
+						<div class="credits ml-auto">
+							<span class="copyright"> © <script>document.write(new Date().getFullYear())
+		                </script>, made with <i class="fa fa-heart heart"></i> by 일촌맺어죠
+							</span>
+						</div>
 				</div>
 			</div>
 		</footer>
