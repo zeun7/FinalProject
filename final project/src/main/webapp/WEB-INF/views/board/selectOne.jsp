@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="resources/css/modal.css">
 <link rel="stylesheet" href="resources/css/comments.css">
 <link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/cmt_button.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -156,12 +157,12 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" id="report_\${vo.cnum}">신고</button></span>
-											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></span>
+											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" class="cmt_report_btn" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" class="cmt_reply_btn" id="cocoment_\${vo.cnum}">답글</button></span>
 											<span><div id="count_clikes_\${vo.cnum}"></div></span>
 											<span id="clike_btn_\${vo.cnum}">
-												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-												<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+												<button onclick="clike(\${vo.cnum})" class="clike_btn" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.cnum})" class="clike_btn" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
 											</span>
 										</td>
 									</tr>
@@ -177,8 +178,8 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
-											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
-											<span><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></span>
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)" class="cmt_cancel_btn"> 취소</button></span>
+											<span><button onclick="c_updateOK(\${vo.cnum})" class="cmt_reply_btn">수정완료</button></span>
 										</div>
 									</td>
 								</tr>
@@ -204,9 +205,9 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="c_delete_\${vo.cnum}">
-														<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+														<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
 													<span id="c_update_\${vo.cnum}">
-														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -233,9 +234,9 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 										<td width="200px;">
 											<div class="updel_wrap">
 												<span id="c_delete_\${vo.cnum}">
-													<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
 												<span id="c_update_\${vo.cnum}">
-													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
 											</div>
 										</td>
 									</tr>
@@ -261,8 +262,8 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 										<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 										<td width="100px;">
 											<div width="130px;" class="insert_wrap">
-												<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
-												<span><button onclick="c_insertOK(\${vo.cnum}, \${bnum})">등록</button></span>
+												<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+												<span><button onclick="c_insertOK(\${vo.cnum}, \${bnum})" class="cmt_reply_btn">등록</button></span>
 											</div>
 									</tr>
 									<tr>
@@ -285,14 +286,14 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 								<tr>
 									<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 									<td width="100px;">
-										<div width="130px;" class="insert_wrap">
-											<span><button width="100px;" onclick="c_insertOK(0, \${bnum})">등록</button></span>
+										<div width="80px;" class="insert_wrap">
+											<span><button width="100px;" class="cmt_insert_btn" onclick="c_insertOK(0, \${bnum})">등록</button></span>
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<td class="secret_check">
-										<span width="150px;"><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</span>
+										<span width="80px;"><input type="checkbox" name="secret" id="secret" value="1" />비밀댓글</span>
 									</td>
 								</tr>
 							</table>
@@ -358,11 +359,11 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" class="cmt_report_btn" id="report_\${vo.cnum}">신고</button></span>
 											<span><div id="count_clikes_\${vo.cnum}"></div></span>
 											<span id="clike_btn_\${vo.cnum}">
-												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-												<button onclick="cancel_clike(\${vo.cnum})" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+												<button onclick="clike(\${vo.cnum})" class="clike_btn" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.cnum})" class="clike_btn" id="cancel_clike_\${vo.cnum}"><img width="15px" src="resources/icon/clike.png" /></button>
 											</span>
 										</td>
 									</tr>
@@ -378,8 +379,8 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
-											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)">취소</button></span>
-											<span><button onclick="c_updateOK(\${vo.cnum})">수정완료</button></span>
+											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+											<span><button onclick="c_updateOK(\${vo.cnum})" class="cmt_reply_btn">수정완료</button></span>
 										</div>
 									</td>
 								</tr>
@@ -405,9 +406,9 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="c_delete_\${vo.cnum}">
-														<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+														<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
 													<span id="c_update_\${vo.cnum}">
-														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -433,9 +434,9 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 										<td width="200px;">
 											<div class="updel_wrap">
 												<span id="c_delete_\${vo.cnum}">
-													<button onclick="c_deleteOK(\${vo.cnum})" >삭제</button></span>
+													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
 												<span id="c_update_\${vo.cnum}">
-													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" >수정</button></span>
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
 											</div>
 										</td>
 									</tr>
@@ -688,12 +689,12 @@ function goBack() {
 												<span id="likes_count" style="margin-left:5px;">${vo2.likes }</span>
 											</div>
 											<div style="display: flex; justify-content: end;">
-												<button class="custom-btn btn-11" onclick="open_modal()">공유</button>					
-												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button">신고</button>
 												<div id="update_delete">
 													<a class="custom-btn btn-12" href="b_update.do?bnum=${vo2.bnum}">수정</a> 
 													<a class="custom-btn btn-12" href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a>
 												</div>
+												<button class="custom-btn btn-11" onclick="open_modal()">공유</button>					
+												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button">신고</button>
 											</div>
 										</div>
 									</td>
@@ -710,7 +711,7 @@ function goBack() {
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
 
 <div id="modal">

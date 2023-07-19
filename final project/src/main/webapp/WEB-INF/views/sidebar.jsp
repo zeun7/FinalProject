@@ -60,11 +60,7 @@
 			<li id="manage"><a href="manage.do"> <i
 					class="nc-icon nc-caps-small"></i>
 					<p>관리</p>
-			</a></li>
-			<li><a href="dashboard.do"> <i class="nc-icon nc-caps-small"></i>
-					<p>대시보드</p>
-			</a></li>
-			
+			</a></li>			
 		</ul>
 	</div>
 </div>

@@ -34,8 +34,8 @@
 						<div class="card-body">
 							<div class="author">
 								<img class="avatar border-gray" src="resources/uploadimg/${vo2.profilepic}">
-								<h5 class="title">nickname: ${vo2.nickname}</h5>
-								<p class="description">ID: ${vo2.id}</p>
+								<h5 class="title">${vo2.nickname}</h5>
+								<p class="description">${vo2.id}</p>
 							</div>
 					
 						</div>

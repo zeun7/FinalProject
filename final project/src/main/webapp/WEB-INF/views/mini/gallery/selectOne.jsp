@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="resources/css/modal.css">
 <link rel="stylesheet" href="resources/css/comments.css">
 <link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/cmt_button.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js"
 	integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC"
 	crossorigin="anonymous"></script>
@@ -261,12 +262,12 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" id="report_\${vo.mcnum}">신고</button></span>
-											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" id="cocoment_\${vo.mcnum}">답글</button></span>
+											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" class="cmt_report_btn" id="report_\${vo.mcnum}">신고</button></span>
+											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, \${vo.mcnum})" class="cmt_reply_btn" id="cocoment_\${vo.mcnum}">답글</button></span>
 											<span><div id="count_clikes_\${vo.mcnum}"></div></span>
 											<span id="clike_btn_\${vo.mcnum}">
-												<button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-												<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+												<button onclick="clike(\${vo.mcnum})" class="clike_btn" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.mcnum})" class="clike_btn" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button>
 											</span>
 										</td>
 									</tr>
@@ -282,8 +283,8 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 									<td rowspan="2"><textarea rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
-											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></span>
-											<span><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></span>
+											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+											<span><button onclick="mc_updateOK(\${vo.mcnum})" class="cmt_reply_btn">수정완료</button></span>
 										</div>
 									</td>
 								</tr>
@@ -309,9 +310,9 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="mc_delete_\${vo.mcnum}">
-														<button onclick="mc_deleteOK(\${vo.mcnum})" >삭제</button></span>
+														<button onclick="mc_deleteOK(\${vo.mcnum})" class="updel_btn">삭제</button></span>
 													<span id="mc_update_\${vo.mcnum}">
-														<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" >수정</button></span>
+														<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" class="updel_btn">수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -338,9 +339,9 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 									<td width="200px;">
 										<div class="updel_wrap">
 											<span id="mc_delete_\${vo.mcnum}">
-												<button onclick="mc_deleteOK(\${vo.mcnum})" >삭제</button></span>
+												<button onclick="mc_deleteOK(\${vo.mcnum})" class="updel_btn">삭제</button></span>
 											<span id="mc_update_\${vo.mcnum}">
-												<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" >수정</button></span>
+												<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" class="updel_btn">수정</button></span>
 										</div>
 									</td>
 								</tr>
@@ -366,8 +367,8 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 										<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 										<td width="100px;">
 											<div width="130px;" class="insert_wrap">
-												<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></span>
-												<span><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})">등록</button></span>
+												<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+												<span><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})" class="cmt_reply_btn">등록</button></span>
 											</div>
 									</tr>
 									<tr>
@@ -391,7 +392,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 									<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 									<td width="100px;">
 										<div width="130px;" class="insert_wrap">
-											<span><button width="100px;" onclick="mc_insertOK(0, \${mbnum})">등록</button></span>
+											<span><button width="100px;" onclick="mc_insertOK(0, \${mbnum})" class="cmt_insert_btn">등록</button></span>
 										</div>
 									</td>
 								</tr>
@@ -462,11 +463,11 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" id="report_\${vo.mcnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.mcnum}, \${vo.mccnum})" class="cmt_report_btn" id="report_\${vo.mcnum}">신고</button></span>
 											<span><div id="count_clikes_\${vo.mcnum}"></div></span>
 											<span id="clike_btn_\${vo.mcnum}">
-												<button onclick="clike(\${vo.mcnum})" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
-												<button onclick="cancel_clike(\${vo.mcnum})" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button>
+												<button onclick="clike(\${vo.mcnum})" class="clike_btn" id="clike_\${vo.mcnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
+												<button onclick="cancel_clike(\${vo.mcnum})" class="clike_btn" id="cancel_clike_\${vo.mcnum}"><img width="15px" src="resources/icon/clike.png" /></button>
 											</span>
 										</td>
 									</tr>
@@ -482,8 +483,8 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 									<td rowspan="2"><textarea cols="100%;" rows="3" id="comm_content">\${vo.content}</textarea></td>
 									<td width="130px;">
 										<div class="update_btn_wrap">	
-											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)">취소</button></span>
-											<span><button onclick="mc_updateOK(\${vo.mcnum})">수정완료</button></span>
+											<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+											<span><button onclick="mc_updateOK(\${vo.mcnum})" class="cmt_reply_btn">수정완료</button></span>
 										</div>
 									</td>
 								</tr>
@@ -509,9 +510,9 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="mc_delete_\${vo.mcnum}">
-														<button onclick="mc_deleteOK(\${vo.mcnum})" >삭제</button></span>
+														<button onclick="mc_deleteOK(\${vo.mcnum})" class="updel_btn">삭제</button></span>
 													<span id="mc_update_\${vo.mcnum}">
-														<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" >수정</button></span>
+														<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" class="updel_btn">수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -537,9 +538,9 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 										<td width="200px;">
 											<div class="updel_wrap">
 												<span id="mc_delete_\${vo.mcnum}">
-													<button onclick="mc_deleteOK(\${vo.mcnum})" >삭제</button></span>
+													<button onclick="mc_deleteOK(\${vo.mcnum})" class="updel_btn">삭제</button></span>
 												<span id="mc_update_\${vo.mcnum}">
-													<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" >수정</button></span>
+													<button onclick="minicomments('\${writer}', \${vo.mcnum}, \${vo.mccnum}, \${mbnum})" class="updel_btn">수정</button></span>
 											</div>
 										</td>
 									</tr>
@@ -816,7 +817,7 @@ function checkviewer(writer){
 							<ul>
 								<li>Contact Us</li>
 								<li><a class="nav-link btn-magnify"
-									href="https://www.instagram.com/" target="_blank"> <i
+									href="https://github.com/zeun7/FinalProject" target="_blank"> <i
 										class="fa-brands fa-github"></i>
 										<p>
 											<span class="d-lg-none d-md-block">github</span>
