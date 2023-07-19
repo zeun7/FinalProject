@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
@@ -114,8 +115,9 @@ public class BoardController {
 		}
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/b_reportOK.do", method = RequestMethod.POST)
-	public String b_reportOK(BoardVO vo, String reason) {
+	public Map<String, Integer> b_reportOK(BoardVO vo, String reason) {
 		log.info("/b_reportOK.do...{}", vo);
 		log.info("reason:{}", reason);
 		
@@ -126,11 +128,10 @@ public class BoardController {
 		int result = service.report(map);
 		log.info("result:{}", result);
 		
-		if(result == 1) {
-			return "redirect:b_report.do?bnum=0";
-		}else {
-			return "redirect:b_report.do?bnum="+vo.getBnum();
-		}
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		map2.put("result", result);
+		
+		return map2;
 	}
 	
 }

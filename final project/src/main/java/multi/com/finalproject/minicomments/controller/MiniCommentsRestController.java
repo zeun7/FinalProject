@@ -139,15 +139,9 @@ public class MiniCommentsRestController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/mc_report.do", method = RequestMethod.GET)
-	public String json_mc_report(MiniCommentsVO vo) {
-		log.info("/mc_report.do...{}",vo);
-			
-		return "mini/diary/report_comments";
-	}
-	
+	@ResponseBody
 	@RequestMapping(value = "/mc_reportOK.do", method = RequestMethod.POST)
-	public String mc_reportOK(MiniCommentsVO vo, String reason, String id) {
+	public Map<String, Integer> mc_reportOK(MiniCommentsVO vo, String reason, String id) {
 		log.info("/mc_reportOK.do...{}",vo);
 		log.info("reason: {}", reason);
 		
@@ -159,12 +153,10 @@ public class MiniCommentsRestController {
 		int result = service.report(map);
 		log.info("result: {}", result);
 		
-		if(result == 1) {
-			return "redirect:mc_report.do?mcnum=0";
-		}
-		else {
-			return "Redirect:mc_report.do?mcnum="+vo.getMcnum();
-		}
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		map2.put("result", result);
+		
+		return map2;
 	}
 	
 	@ResponseBody

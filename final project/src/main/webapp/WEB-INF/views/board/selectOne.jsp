@@ -22,6 +22,8 @@
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
 let iswriter = false;
+let report_cnum = 0;
+let report_ccnum = 0;
 console.log(encodeUrl);
 
 $(function(){
@@ -103,13 +105,6 @@ function like_cancel(){
 	});//end $.ajax()
 }//end dislike()
 
-function report(){
-	let url = "b_report.do?bnum="+${vo2.bnum};
-	let name = "신고하기";
-	let option = "width = 500, height = 500";
-	window.open(url, name, option);
-}//end report()
-
 function share_twitter(){
 	let option = "width = 500, height = 500";
 	let name = "트위터로 공유";
@@ -161,7 +156,7 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" id="report_\${vo.cnum}">신고</button></span>
 											<span><button onclick="comments('\${writer}', 0, 0, \${bnum}, \${vo.cnum})" id="cocoment_\${vo.cnum}">답글</button></span>
 											<span><div id="count_clikes_\${vo.cnum}"></div></span>
 											<span id="clike_btn_\${vo.cnum}">
@@ -363,7 +358,7 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 										<td class="comm_nick"><strong>\${vo.writer}</strong>\t(\${cdate})</td>
 										<td class="comm_top_space"></td>
 										<td class="comm_btn_wrap">
-											<span><button onclick="c_report(\${vo.cnum}, \${vo.ccnum}, \${bnum})" id="report_\${vo.cnum}">신고</button></span>
+											<span><button onclick="open_cmt_report(\${vo.cnum}, \${vo.ccnum})" id="report_\${vo.cnum}">신고</button></span>
 											<span><div id="count_clikes_\${vo.cnum}"></div></span>
 											<span id="clike_btn_\${vo.cnum}">
 												<button onclick="clike(\${vo.cnum})" id="clike_\${vo.cnum}"><img width="15px" src="resources/icon/not_clike.png" /></button>
@@ -551,15 +546,6 @@ function c_deleteOK(cnum){		// 댓글 삭제
 	}
 }
 
-function c_report(cnum, ccnum, bnum){	// 댓글 신고하기
-	console.log('report comment...cnum: ', cnum, 'ccnum: ', ccnum, 'bnum: ');
-	
-	let url = "c_report.do?cnum="+cnum+'&ccnum='+ccnum+'&bnum='+bnum;
-	let name = "신고하기";
-	let option = "width = 400, height = 500";
-	window.open(url, name, option);
-}
-
 function is_clike(cnum){		// 유저가 해당 댓글의 좋아요를 눌렀는지 체크
 	console.log('check clikes...cnum: ', cnum);
 	
@@ -703,7 +689,7 @@ function goBack() {
 											</div>
 											<div style="display: flex; justify-content: end;">
 												<button class="custom-btn btn-11" onclick="open_modal()">공유</button>					
-												<button class="custom-btn btn-11" onclick="report()" id="report_button">신고</button>
+												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button">신고</button>
 												<div id="update_delete">
 													<a class="custom-btn btn-12" href="b_update.do?bnum=${vo2.bnum}">수정</a> 
 													<a class="custom-btn btn-12" href="b_deleteOK.do?bnum=${vo2.bnum }&bname=${vo2.bname}">삭제</a>
@@ -746,22 +732,43 @@ function goBack() {
 	</div>
 </div>
 
-<div id="cmt_modal">
-	<div class="modal-content" id="report_content" style="top:5%; left:10%; width:300px; height:500px">
-		<div><strong>신고사유를 선택하세요</strong></div>
-		<input type="radio" id="reason1" name="reason" value="욕설/혐오/차별적 표현입니다">
+<div id="board_report_modal">
+	<div class="report_content" id="report_content" style="top:5%; left:10%; width:400px; height:400px">
+		<h4>신고사유를 선택하세요</h4>
+		<input type="radio" id="reason1" name="b_reason" value="욕설/혐오/차별적 표현입니다">
 		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br/>
-		<input type="radio" id="reason2" name="reason" value="스팸홍보/도배글입니다">
+		<input type="radio" id="reason2" name="b_reason" value="스팸홍보/도배글입니다">
 		<label for="reason2">스팸홍보/도배글입니다</label><br/>
-		<input type="radio" id="reason3" name="reason" value="음란물입니다">
+		<input type="radio" id="reason3" name="b_reason" value="음란물입니다">
 		<label for="reason3">음란물입니다</label><br/>
-		<input type="radio" id="reason4" name="reason" value="개인정보 노출 게시물입니다">
+		<input type="radio" id="reason4" name="b_reason" value="개인정보 노출 게시물입니다">
 		<label for="reason4">개인정보 노출 게시물입니다</label><br/>
-		<input type="radio" id="reason5" name="reason" value="명예훼손 또는 저작권이 침해되었습니다">
+		<input type="radio" id="reason5" name="b_reason" value="명예훼손 또는 저작권이 침해되었습니다">
 		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
-		<input type="radio" id="reason6" name="reason" value="불쾌한 표현이 있습니다">
+		<input type="radio" id="reason6" name="b_reason" value="불쾌한 표현이 있습니다">
 		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
-		<button type="button" onclick="submitReport()" class="report_btn">신고</button>
+		<button type="button" onclick="close_board_modal()" class="close_btn">닫기</button>
+		<button type="button" onclick="submit_board_report()" class="report_btn">신고</button>
+	</div>
+</div>
+
+<div id="cmt_report_modal">
+	<div class="report_content" id="report_content" style="top:5%; left:10%; width:400px; height:400px">
+		<h4>신고사유를 선택하세요</h4>
+		<input type="radio" id="reason1" name="c_reason" value="욕설/혐오/차별적 표현입니다">
+		<label for="reason1">욕설/혐오/차별적 표현입니다</label><br/>
+		<input type="radio" id="reason2" name="c_reason" value="스팸홍보/도배글입니다">
+		<label for="reason2">스팸홍보/도배글입니다</label><br/>
+		<input type="radio" id="reason3" name="c_reason" value="음란물입니다">
+		<label for="reason3">음란물입니다</label><br/>
+		<input type="radio" id="reason4" name="c_reason" value="개인정보 노출 게시물입니다">
+		<label for="reason4">개인정보 노출 게시물입니다</label><br/>
+		<input type="radio" id="reason5" name="c_reason" value="명예훼손 또는 저작권이 침해되었습니다">
+		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
+		<input type="radio" id="reason6" name="c_reason" value="불쾌한 표현이 있습니다">
+		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
+		<button type="button" onclick="close_cmt_modal()" class="close_btn">닫기</button>
+		<button type="button" onclick="submit_cmt_report()" class="report_btn">신고</button>
 	</div>
 </div>
 
@@ -769,21 +776,38 @@ function goBack() {
 function submit_board_report(){
 	console.log('submit board report...');
 	$.ajax({
-		url: 'c_reportOK.do',
-		data: {cnum: ${param.cnum},
-			ccnum: ${param.ccnum},
-			bnum: ${param.bnum},
-			reason: $('input[name=reason]:checked').val()},
+		url: 'b_reportOK.do',
+		data: {bnum: ${param.bnum},
+			reason: $('input[name=b_reason]:checked').val()},
 		method: 'POST',
 		dataType: 'json',
 		success: function(response){
-			$('#report_content').empty();
-			$('#report_content').txt("신고가 완료되었습니다.");
+			close_board_modal();
+			alert('신고가 접수되었습니다.');
 		},
 		error: function(xhr, status, error){
 			console.log('xhr:', xhr.status);
 		}
-		
+	});
+}
+
+function submit_cmt_report(){
+	console.log('submit cmt report...');
+	$.ajax({
+		url: 'c_reportOK.do',
+		data: {cnum: cnum,
+			ccnum: ccnum,
+			bnum: ${param.bnum},
+			reason: $('input[name=c_reason]:checked').val()},
+		method: 'POST',
+		dataType: 'json',
+		success: function(response){
+			close_cmt_modal();
+			alert('신고가 접수되었습니다.');
+		},
+		error: function(xhr, status, error){
+			console.log('xhr:', xhr.status);
+		}
 	});
 }
 
@@ -803,20 +827,39 @@ function submit_board_report(){
 		
 	$('#url').html(url);
 	let modal = document.getElementById("modal");
-	let cmt_modal = document.getElementById("cmt_modal")
+	let board_report_modal = document.getElementById("board_report_modal")
+	let cmt_report_modal = document.getElementById("cmt_report_modal") 
 	
 	function open_modal(){
 		modal.style.display = "block";
 		document.body.style.overflow = "hidden"; // 스크롤바 제거
 	}
 	
-	function cmt_report_modal(){
-		
+	function open_board_report(){
+		board_report_modal.style.display = "flex";
+		document.body.style.overflow = "hidden"; // 스크롤바 제거
+	}
+	
+	function open_cmt_report(tmp_cnum, tmp_ccnum){
+		cnum = tmp_cnum;
+		ccnum = tmp_ccnum;
+		cmt_report_modal.style.display = "flex";
+		document.body.style.overflow = "hidden"; // 스크롤바 제거
 	}
 	
 	function close_modal(){
 		modal.style.display = "none";
 		document.body.style.overflow = "auto"; // 스크롤바
+	}
+	
+	function close_board_modal(){
+		board_report_modal.style.display = "none";
+		document.body.style.overflow = "auto";
+	}
+	
+	function close_cmt_modal(){
+		cmt_report_modal.style.display = "none";
+		document.body.style.overflow = "auto";
 	}
 </script>
 </body>

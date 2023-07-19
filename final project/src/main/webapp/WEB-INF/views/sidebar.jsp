@@ -54,22 +54,19 @@
 					class="nc-icon nc-caps-small"></i>
 					<p>board5</p>
 			</a></li>
-			<li><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
+			<li id="friends"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
 					<p>친구목록</p>
 			</a></li>
 			<li id="manage"><a href="manage.do"> <i
 					class="nc-icon nc-caps-small"></i>
 					<p>관리</p>
 			</a></li>
-			<li><a href="dashboard.do"> <i class="nc-icon nc-caps-small"></i>
-					<p>대시보드</p>
-			</a></li>
 			<li class="active-pro">
 				<div class="logo">
 					<a href="m_selectOne.do?id=${user_id}"
 						class="simple-text logo-mini" id="profile">
 						<div class="logo-image-small">
-							<img src="resources/assets/img/logo-small.png">
+							<img src="resources/uploadimg/${profilepic}">
 						</div> <!-- <p>CT</p> -->
 					</a>
 					<a href="m_selectOne.do?id=${user_id}" class="simple-text logo-normal" id="myinfo">${nickname}
@@ -91,12 +88,14 @@
 		$('#myinfo').hide();
 		$('#login').show();
 		$('#profile').hide();
+		$('#friends').hide();
 	} else { // 로그인 상태
 		$('#logout').show();
 		$('#m_insert').hide();
 		$('#myinfo').show();
 		$('#login').hide();
 		$('#profile').show();
+		$('#friends').show();
 	}
 
 	if ('${mclass}' === '1') { // 관리자

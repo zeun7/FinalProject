@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.member.model.MemberVO;
@@ -218,15 +219,9 @@ public class MiniBoardController {
 		}
 	}
 	
-	@RequestMapping(value = "/mb_report.do", method = RequestMethod.GET)
-	public String mb_report() {
-		log.info("/mb_report.do...");
-		
-		return "mini/diary/report";
-	}
-	
+	@ResponseBody
 	@RequestMapping(value = "/mb_reportOK.do", method = RequestMethod.POST)
-	public String mb_reportOK(MiniBoardVO vo, String id, String reason) {
+	public Map<String, Integer> mb_reportOK(MiniBoardVO vo, String id, String reason) {
 		log.info("/mb_reportOK.do...{}", vo);
 		log.info("reason:{}", reason);
 		
@@ -238,11 +233,10 @@ public class MiniBoardController {
 		int result = service.report(map);
 		log.info("result:{}", result);
 		
-		if(result == 1) {
-			return "redirect:mb_report.do?mbnum=0&id="+id;
-		}else {
-			return "redirect:mb_report.do?mbnum="+vo.getMbnum()+"&id="+id;
-		}
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		map2.put("result", result);
+		
+		return map2;
 	}
 	
 	

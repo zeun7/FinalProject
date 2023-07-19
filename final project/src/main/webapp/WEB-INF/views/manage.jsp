@@ -3,7 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Manage</title>
+<title>관리</title>
+<link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/button2.css">
+<link rel="stylesheet" href="resources/css/pagination.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function manage_member(page){	// 회원목록 출력
@@ -46,7 +49,7 @@ function manage_member(page){	// 회원목록 출력
 							<option value="2">일반 사용자</option>
 						</select>
  					</td>
- 					<td><button onclick="update_mclass('\${vo.id}', \$('#\${vo.id} :selected').val(), \${page})">적용</button></td>
+ 					<td><button class="btn-gradient cyan mini" onclick="update_mclass('\${vo.id}', \$('#\${vo.id} :selected').val(), \${page})">적용</button></td>
  				</tr>
  				`;
  			});
@@ -54,8 +57,7 @@ function manage_member(page){	// 회원목록 출력
  			tag_vos += `</tbody>
  						<tfoot>
  							<tr>
- 								<td colsapn="6">
- 									<div id="pages"></div>
+ 								<td colspan="7" id="pages" style="text-align:center;">
  								</td>
  							</tr>
  						</tfoot>
@@ -103,14 +105,14 @@ function member_pages(page){	// 회원목록의 페이징 버튼 출력
 			let page_bttn = '';
  			let index = 1;
  			while(count > 0){
- 				page_bttn += `<button onclick="manage_member(\${index})" id="page_\${index}">
+ 				page_bttn += `<button class="paging-btn" onclick="manage_member(\${index})" id="page_\${index}">
  								\${index}
  							</button>`;
  				index++;
  				count -= 10;	// 한 페이지에 10개씩 출력
  			}
  			$("#pages").html(page_bttn);
- 			$("#page_"+page).css("background-color", "skyblue");
+ 			$("#page_"+page).css("background-color", "#89d8d3");
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -128,7 +130,7 @@ function manage_board(page){	// 신고 게시글 목록
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead class="text-primary">
+ 						<thead class="text-primary" style="text-align:center;">
 							<tr>
 							<th>No.</th>
 							<th>제목</th>
@@ -141,13 +143,13 @@ function manage_board(page){	// 신고 게시글 목록
 						<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
- 					<tr>
+ 					<tr style="text-align:center;">
  					<td>\${vo.rnum}</td>
  					<td><a href="mng_selectOne.do?bnum=\${vo.bnum}&mbnum=\${vo.mbnum}&id=\${vo.id}">\${vo.title}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
- 					<td><button onclick="del_board(\${vo.bnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_b_report(\${vo.rnum}, \${page})">완료</button></td>
+ 					<td><button class="btn-gradient red mini" onclick="del_board(\${vo.bnum}, \${page})">삭제</button></td>
+ 					<td><button class="btn-gradient orange mini" onclick="del_b_report(\${vo.rnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
@@ -155,7 +157,7 @@ function manage_board(page){	// 신고 게시글 목록
  			tag_vos += `</tbody>
 		 				<tfoot>
 							<tr>
-								<td colsapn="6" id="pages">
+								<td colspan="7" id="pages" style="text-align:center;">
 								</td>
 							</tr>
 						</tfoot>
@@ -181,7 +183,7 @@ function board_pages(page){	// 신고 게시글 목록 페이징 버튼 출력
 			let page_bttn = '';
  			let index = 1;
  			while(count > 0){
- 				page_bttn += `<button onclick="manage_board(\${index})" id="page_\${index}">
+ 				page_bttn += `<button class="paging-btn" onclick="manage_board(\${index})" id="page_\${index}">
  								\${index}
  							</button>`;
  				index++;
@@ -224,7 +226,7 @@ function manage_comments(page){	// 신고 댓글 목록 출력
 			console.log('ajax...success:', arr);
 			
  			let tag_vos = `
- 						<thead class="text-primary">
+ 						<thead class="text-primary" style="text-align:center;">
 							<tr>
 							<th>No.</th>
 							<th>댓글 내용</th>
@@ -237,21 +239,21 @@ function manage_comments(page){	// 신고 댓글 목록 출력
 						<tbody>`; 			
  			$.each(arr,function(index,vo){
  				tag_vos += `
- 					<tr>
+ 					<tr style="text-align:center;">
  					<td>\${vo.rnum}</td>
  					<td><a href="mng_selectOne.do?bnum=\${vo.bnum}&mbnum=\${vo.mbnum}&id=\${vo.id}">\${vo.content}</a></td>
  					<td>\${vo.writer}</td>
  					<td>\${vo.reason}</td>
- 					<td><button onclick="del_comments(\${vo.cnum}, \${vo.ccnum}, \${page})">삭제</button></td>
- 					<td><button onclick="del_c_report(\${vo.rnum}, \${page})">완료</button></td>
+ 					<td><button class="btn-gradient red mini" onclick="del_comments(\${vo.cnum}, \${vo.ccnum}, \${page})">삭제</button></td>
+ 					<td><button class="btn-gradient orange mini" onclick="del_c_report(\${vo.rnum}, \${page})">완료</button></td>
  				</tr>
  				`;
  			});
 			
  			tag_vos += `</tbody>
  				<tfoot>
-					<tr>
-						<td colsapn="6" id="pages">
+ 					<tr>
+						<td colspan="7" id="pages" style="text-align:center;">
 						</td>
 					</tr>
 				</tfoot>
@@ -277,7 +279,7 @@ function comments_pages(page){	// 신고 댓글 목록 페이징 버튼 출력
 			let page_bttn = '';
  			let index = 1;
  			while(count > 0){
- 				page_bttn += `<button onclick="manage_comments(\${index})" id="page_\${index}">
+ 				page_bttn += `<button class="paging-btn" onclick="manage_comments(\${index})" id="page_\${index}">
  								\${index}
  							</button>`;
  				index++;
@@ -359,10 +361,10 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-					<ul class="menu">
-						<li><button onclick="manage_member(1)">회원관리</button></li>
-						<li><button onclick="manage_board(1)">신고 게시글</button></li>
-						<li><button onclick="manage_comments(1)">신고 댓글</button></li>
+					<ul class="menu" style="list-style-type: none; display: flex; margin-left:320px;">
+						<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_member(1)">회원관리</button></li>
+						<li><button class="custom-btn btn-16" style="width: 200px; color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_board(1)">신고 게시글</button></li>
+						<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_comments(1)">신고 댓글</button></li>
 					</ul>
 					</div>
 					<div class="card-body">

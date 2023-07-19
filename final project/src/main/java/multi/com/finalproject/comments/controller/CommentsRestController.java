@@ -92,15 +92,9 @@ public class CommentsRestController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/c_report.do", method = RequestMethod.GET)
-	public String json_c_report(CommentsVO vo) {
-		log.info("/c_report.do...{}",vo);
-			
-		return "board/report_comments";
-	}
-	
+	@ResponseBody
 	@RequestMapping(value = "/c_reportOK.do", method = RequestMethod.POST)
-	public String c_reportOK(CommentsVO vo, String reason) {
+	public Map<String, Integer> c_reportOK(CommentsVO vo, String reason) {
 		log.info("/c_reportOK.do...{}",vo);
 		log.info("reason: {}", reason);
 		
@@ -111,12 +105,9 @@ public class CommentsRestController {
 		int result = service.report(map);
 		log.info("result: {}", result);
 		
-		if(result == 1) {
-			return "redirect:c_report.do?cnum=0";
-		}
-		else {
-			return "Redirect:c_report.do?cnum="+vo.getCnum();
-		}
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		
+		return map2;
 	}
 	
 	@ResponseBody

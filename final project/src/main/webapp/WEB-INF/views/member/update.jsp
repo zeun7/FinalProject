@@ -180,7 +180,7 @@
 											<div class="form-group">
 												<label>비밀번호</label> <input type="password" id="pw1"
 													name="pw" class="form-control" value="${vo2.pw}"
-													oninput="test2()"
+													oninput="test2()" placeholder="${vo2.pw}"
 													onmouseenter="togglePasswordConfirmation()">
 											</div>
 										</div>
