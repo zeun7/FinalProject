@@ -32,7 +32,8 @@
 						<h3>비밀번호 찾기</h3>
 					</div>
 					<div>
-						<form action="find_pass.do" method="post">
+						<form action="find_pass.do" method="post"onsubmit="return submitForm();">
+
 							<p>
 								<strong>아이디</strong> <input class="w3-input" type="text"
 									id="id" name="id" placeholder="회원가입한 아이디를 입력하세요" required>

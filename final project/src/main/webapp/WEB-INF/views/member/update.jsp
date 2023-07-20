@@ -201,7 +201,7 @@ width: 71px;
 											type="hidden" id="profilepic" name="profilepic"
 											value="${vo2.profilepic}">
 										<h5 class="title">${vo2.nickname}</h5>
-										<p class="description">${vo2.id}</p>
+										<p class="description">id:${vo2.id}</p>
 									</div>
 
 									<button type="button" class="btn btn-outline-primarys btn-sm mt-2"

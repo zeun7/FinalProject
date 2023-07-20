@@ -36,7 +36,7 @@
 							<div class="author">
 								<img class="avatar border-gray" src="resources/uploadimg/${vo2.profilepic}">
 								<h5 class="title">${vo2.nickname}</h5>
-								<p class="description">${vo2.id}</p>
+								<p class="description">id:${vo2.id}</p>
 							</div>
 					
 						</div>

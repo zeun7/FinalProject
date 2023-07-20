@@ -60,10 +60,6 @@
 			<li id="manage"><a href="manage.do"> <i
 					class="nc-icon nc-caps-small"></i>
 					<p>°ü¸®</p>
-			</a></li>
-			<li><a href="gpt.do"> <i
-					class="nc-icon nc-caps-small"></i>
-					<p>GPT</p>
 			</a></li>	
 		</ul>
 	</div>
