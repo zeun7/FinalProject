@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>selectOne</title>
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
