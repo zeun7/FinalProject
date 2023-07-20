@@ -2,6 +2,9 @@ package multi.com.finalproject.member.model;
 
 import java.util.List;
 
+import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
+
 public interface MemberDAO {
 
 	public int insert(MemberVO vo);
@@ -41,6 +44,10 @@ public interface MemberDAO {
 	public MemberVO findUser(String email);
 
 	public MemberVO find_id_question(MemberVO vo);
+
+	public MiniBoardVO FindMiniBoard(MiniBoardVO vo);
+
+	public BoardVO FindBoard(BoardVO vo2);
     
  
 }

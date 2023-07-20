@@ -104,6 +104,7 @@
 		]]>
 	</select>
 	
+	
 	<select id="B_SEARCH_ALL_WRITER" resultType="multi.com.finalproject.board.model.BoardVO">
 		select * from board where writer = #{nickname}
 	</select>
@@ -181,5 +182,10 @@
 	<delete id="B_DELETE_LIKE_ID">
 		delete from likes where id = #{id}
 	</delete>
+	
+	<select id="B_COUNT_BY_WRITER"
+	resultType="Integer">
+	select count(*) from board where writer = #{nickname}
+	</select>
 
   </mapper>

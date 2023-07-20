@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 @Slf4j
 @Repository
@@ -141,4 +143,15 @@ public class MemberDAOimpl implements MemberDAO {
 		return sqlSession.selectOne("FIND_ID_QUESTION", vo);
 	}
 
-}
+	@Override
+	public MiniBoardVO FindMiniBoard(MiniBoardVO vo) {
+		return sqlSession.selectOne("FIND_MINI_BOARD", vo);
+	}
+
+	@Override
+	public BoardVO FindBoard(BoardVO vo2) {
+		return sqlSession.selectOne("FIND_BOARD", vo2);
+	}
+
+	}
+

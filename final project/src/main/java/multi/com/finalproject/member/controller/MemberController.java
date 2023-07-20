@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.service.BoardService;
@@ -139,9 +140,26 @@ public class MemberController {
 	public String m_selectOne(MemberVO vo, Model model) {
 		log.info("/m_selectOne.do...{}", vo);
 
+		
 		MemberVO vo2 = service.selectOne(vo);
 
 		model.addAttribute("vo2", vo2);
+		
+		int count1=board_service.m_count(vo2);
+		
+		int count2=miniboard_service.m_count2(vo2);
+		
+		int total = count1+count2;
+		
+		int likes1=board_service.b_likes(vo2);
+		
+		int likes2=miniboard_service.mb_likes(vo2);
+		
+		int total_likes = likes1+likes2;
+		
+		model.addAttribute("total_likes",total_likes);
+		
+		model.addAttribute("total",total);
 
 		return "member/selectOne";
 	}
@@ -363,7 +381,7 @@ public class MemberController {
 
 	@RequestMapping(value = "find_pass.do", method = RequestMethod.POST)
 	public ModelAndView find_pass(HttpServletRequest request, String id, String email,
-			HttpServletResponse response_email, MemberVO vo, Model model) throws IOException {
+			RedirectAttributes redirectAttributes,HttpServletResponse response_email, MemberVO vo, Model model) throws IOException {
 		log.info("find_pass.....{}", vo);
 		MemberVO vo2 = service.find_user(vo);
 		log.info("{}", vo2);
@@ -372,12 +390,11 @@ public class MemberController {
 
 		if (vo2 == null) {
 			response_email.setContentType("text/html; charset=UTF-8");
-			PrintWriter out_email = response_email.getWriter();
-			out_email.println("<script>alert('아이디 또는 이메일이 일치하지 않습니다.');window.location.href='/forgot-password';</script>");
-			out_email.flush();
+			
+			 redirectAttributes.addFlashAttribute("message", "아이디 또는 이메일이 일치하지 않습니다.");
+			 
+		        return new ModelAndView("redirect:/find_pw_from.do");
 
-			// 알림창을 표시한 후 이전 페이지로 돌아감
-			return new ModelAndView("redirect:/forgot-password");
 		}
 
 		// 랜덤한 난수 (인증번호) 생성

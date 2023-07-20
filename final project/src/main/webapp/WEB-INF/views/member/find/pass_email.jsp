@@ -11,6 +11,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <title>비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(function() {
+		$("#Cancel").click(function() {
+			location.href = 'login.do';
+		})
+	})
+</script>
 <style>
 .card {
 	padding: 80px 30px; /* 상단/하단 80px, 좌우 30px의 공간을 설정합니다. */
@@ -46,7 +54,7 @@
 									class="w3-button w3-block w3-ripple w3-margin-top w3-round"
 									style="background-color: #94b5e0">인증번호 확인</button>
 
-								<button type="button" onclick="history.go(-1);"
+								<button type="button" id="Cancel"
 									class="w3-button w3-block w3-ripple w3-margin-top w3-round"
 									style="background-color: #94b5e0">Cancel</button>
 

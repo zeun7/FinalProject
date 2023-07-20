@@ -186,4 +186,23 @@ public class BoardDAOimpl implements BoardDAO {
 		log.info("result: {}", result);
 	}
 
+	@Override
+	public int m_count(MemberVO vo) {
+		log.info("m_count..{}",vo);
+		return sqlSession.selectOne("B_COUNT_BY_WRITER", vo);
+	}
+
+	@Override
+	public int b_likes(MemberVO vo2) {
+		log.info("b_likes..{}",vo2);
+	int count = 0;
+		
+		List <BoardVO> vos=  sqlSession.selectList("B_SEARCH_ALL_WRITER", vo2);
+		for(BoardVO vo: vos ) {
+			count += vo.getLikes(); 
+		}
+		return count;
+	}
+	
+
 }

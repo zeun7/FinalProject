@@ -45,5 +45,9 @@ public interface MiniBoardDAO {
 	public void deleteAll(MemberVO vo);
 
 	public void deleteLikesAll(MemberVO vo);
+
+	public int m_count2(MemberVO vo);
+
+	public int mb_likes(MemberVO vo2);
 	
 }

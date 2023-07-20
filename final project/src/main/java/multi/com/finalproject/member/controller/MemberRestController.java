@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.member.service.MailService;
 import multi.com.finalproject.member.service.MemberService;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 @Controller
 @Slf4j
@@ -88,6 +90,7 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/checkEmailAjax.do",method = RequestMethod.POST)

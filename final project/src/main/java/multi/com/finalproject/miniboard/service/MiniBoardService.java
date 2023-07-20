@@ -98,4 +98,13 @@ public class MiniBoardService {
 		dao.deleteLikesAll(vo);
 	}
 
+	public int m_count2(MemberVO vo) {
+		return dao.m_count2(vo);
+	}
+
+	public int mb_likes(MemberVO vo2) {
+		
+		return dao.mb_likes(vo2);
+	}
+
 }
