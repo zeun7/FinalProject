@@ -36,7 +36,8 @@
 		<script>
 			alert('${message}');
 		</script>
-	</c:if> 
+	</c:if>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </div>
 </body>
 </html>

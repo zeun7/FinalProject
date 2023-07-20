@@ -343,6 +343,7 @@ function del_ban(nickname2) {	// 차단 해제
 			</div>
 		</div>
 	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 </div>
 </body>
 </html>

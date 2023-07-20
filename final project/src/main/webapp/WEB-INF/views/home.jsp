@@ -202,6 +202,7 @@ $(document).ready(function(){
 			</div> <!-- end "col-md-12" -->
 		</div> <!-- end "row" -->
 	</div> <!-- end "content" -->
+	<jsp:include page="footer.jsp"></jsp:include>
 </div> <!-- end "main-panel" -->
 </body>
 </html>

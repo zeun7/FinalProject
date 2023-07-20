@@ -349,6 +349,7 @@ width: 71px;
 					</div>
 				</form>
 			</div>
+			<jsp:include page="../footer.jsp"></jsp:include>
 		</div>
 	</div>
 

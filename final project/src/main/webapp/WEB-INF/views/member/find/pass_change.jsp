@@ -50,10 +50,10 @@
                                 <br> <br>
                                 <p>
                                 <div>
-                                    <strong for="pw">변경할 비밀번호 입력:</strong>
+                                    <strong>변경할 비밀번호 입력:</strong>
                                 </div>
                                 <div>
-                                <input type="text" name="id" id="id" value="${vo2.id} ">
+                                <input type="hidden" name="id" id="id" value="${vo.id} ">
                                     <input class="w3-input" type="password" id="pw1" name="pw"
                                         placeholder="비밀번호" >
                                     <h6 style="color: green;">※ 6글자 이상으로 작성해 주세요</h6>
@@ -75,6 +75,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

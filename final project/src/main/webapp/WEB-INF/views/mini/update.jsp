@@ -257,6 +257,7 @@ function setBGM(bgm){
 					</div>
 				</div>
 			</footer>
+			<jsp:include page="../footer.jsp"></jsp:include>
 		</div>
 	</div>
 

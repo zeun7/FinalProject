@@ -123,6 +123,7 @@
 			</div> <!-- end "card-body" -->
 		</div> <!-- end "card" -->
 	</div> <!-- end "col-md-12 -->
+	<jsp:include page="../footer.jsp"></jsp:include>
 </div>
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">

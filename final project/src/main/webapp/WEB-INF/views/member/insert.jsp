@@ -211,32 +211,31 @@
 }
 
 .button-container {
-  display: flex;
-  justify-content: center; 
-  margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 .w3-button {
-  width: 140px; 
-  margin: 10px; 
+	width: 140px;
+	margin: 10px;
 }
-
 </style>
 <body>
-	<jsp:include page="../sidebar.jsp"></jsp:include>
-	<jsp:include page="../navbar.jsp"></jsp:include>
-	<div class="main-panel">
-		<div class="content">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header" style="text-align: center;">
-							<h3>회원가입</h3>
-						</div>
-						<div>
-							<form id="joinForm" action="m_insertOK.do" method="post"
-								enctype="multipart/form-data">
-<table>
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<jsp:include page="../navbar.jsp"></jsp:include>
+<div class="main-panel">
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						<h3>회원가입</h3>
+					</div>
+					<div>
+						<form id="joinForm" action="m_insertOK.do" method="post"
+							enctype="multipart/form-data">
+							<table>
 								<tr>
 									<td><strong for="id">id:</strong></td>
 									<td><input class="w3-input" type="text" id="id" name="id"
@@ -303,9 +302,9 @@
 											<button type="button" class="btn btn-outline-primarys"
 												id="showDiv" onclick="fn_sendEmail_Ajax()">
 												<i class="fa fa-search"></i>이메일 인증
-											</button>								
+											</button>
 											<h6 style="color: green;">※ 이메일을 입력해주세요</h6>
-											
+
 											<td style="display: none;" id="checkCodeDiv"><input
 												type="text" id=verification_code name="verification_code"
 												placeholder="인증코드 입력" class="w3-input" />
@@ -318,71 +317,74 @@
 									<td><input class="w3-input" type="file" id="m_file"
 										name="m_file" placeholder=" "></td>
 								</tr>
-								</table>
-								<div class="button-container">
-									<button type="button" onclick="submitForm()" id="joinBtn"
-										class="w3-button w3-ripple w3-round btn-round""
-										style="background-color: #94b5e0">Join</button>
-									<button type="button" onclick="history.go(-1);"
-										class="w3-button w3-ripple w3-round btn-round""
-										style="background-color: #94b5e0">Cancel</button>
-								</div>
+							</table>
+							<div class="button-container">
+								<button type="button" onclick="submitForm()" id="joinBtn"
+									class="w3-button w3-ripple w3-round btn-round"
+									"
+									style="background-color: #94b5e0">Join</button>
+								<button type="button" onclick="history.go(-1);"
+									class="w3-button w3-ripple w3-round btn-round"
+									"
+									style="background-color: #94b5e0">Cancel</button>
+							</div>
 
-							</form>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-		function submitForm() {
-			var pw1 = document.getElementById("pw1").value;
-			var pw2 = document.getElementById("pw2").value;
+	<jsp:include page="../footer.jsp"></jsp:include>
+</div>
+<script>
+	function submitForm() {
+		var pw1 = document.getElementById("pw1").value;
+		var pw2 = document.getElementById("pw2").value;
 
-			if (pw1 !== pw2) {
-				alert("비밀번호가 일치하지 않습니다.");
-				return;
-			}
-
-			// Rest of the code for form submission
-			var id = document.getElementById("id").value;
-			var nickname = document.getElementById("nickname").value;
-			var email = document.getElementById("email").value;
-			var tel = document.getElementById("tel").value;
-			var question = document.getElementById("question").value;
-			var answer = document.getElementById("answer").value;
-
-			if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === ''
-					|| nickname.trim() === '' || email.trim() === ''
-					|| tel.trim() === '' || question.trim() === ''
-					|| answer.trim() === '') {
-				alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
-				return;
-			}
-
-			// 중복 체크를 통한 회원가입 제어
-			if ($('#demo1').text() !== '사용가능한 아이디입니다.') {
-				alert("사용중인 아이디입니다.");
-				return;
-			}
-			if ($('#demo2').text() !== ' 사용 가능한 닉네임 입니다') {
-				alert("사용중인 닉네임 입니다");
-				return;
-			}
-			if ($('#demo3').text() !== '사용가능 합니다 ') {
-				alert("로그인 되어있는 전화번호입니다.");
-				return;
-			}
-			if ($('#verification_code').val().trim() === '') {
-				alert("이메일 인증이 필요합니다.");
-				return;
-			}
-
-			// 나머지 처리 로직
-			document.getElementById("joinForm").submit();
+		if (pw1 !== pw2) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return;
 		}
-	</script>
+
+		// Rest of the code for form submission
+		var id = document.getElementById("id").value;
+		var nickname = document.getElementById("nickname").value;
+		var email = document.getElementById("email").value;
+		var tel = document.getElementById("tel").value;
+		var question = document.getElementById("question").value;
+		var answer = document.getElementById("answer").value;
+
+		if (id.trim() === '' || pw1.trim() === '' || pw2.trim() === ''
+				|| nickname.trim() === '' || email.trim() === ''
+				|| tel.trim() === '' || question.trim() === ''
+				|| answer.trim() === '') {
+			alert("빈칸을 채워주세요. 모든 필드는 필수 입력 항목입니다.");
+			return;
+		}
+
+		// 중복 체크를 통한 회원가입 제어
+		if ($('#demo1').text() !== '사용가능한 아이디입니다.') {
+			alert("사용중인 아이디입니다.");
+			return;
+		}
+		if ($('#demo2').text() !== ' 사용 가능한 닉네임 입니다') {
+			alert("사용중인 닉네임 입니다");
+			return;
+		}
+		if ($('#demo3').text() !== '사용가능 합니다 ') {
+			alert("로그인 되어있는 전화번호입니다.");
+			return;
+		}
+		if ($('#verification_code').val().trim() === '') {
+			alert("이메일 인증이 필요합니다.");
+			return;
+		}
+
+		// 나머지 처리 로직
+		document.getElementById("joinForm").submit();
+	}
+</script>
 
 </body>
 </html>

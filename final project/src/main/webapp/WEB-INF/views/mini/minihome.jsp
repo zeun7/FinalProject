@@ -123,17 +123,12 @@ function gotoFindOne(mcnum){
 										target="_blank"><img src="resources/assets/img/github.png" width="25px" height="25px"></a></li>
 								</ul>
 							</nav>
-							<div class="credits ml-auto">
-								<span class="copyright"> © <script>document.write(new Date().getFullYear())
-				                </script>, made with <i class="fa fa-heart heart"></i> by
-									일촌맺어죠
-								</span>
-							</div>
 						</div>
 					</div>
 				</footer>
 			</div>
 		</div>
+		<jsp:include page="../footer.jsp"></jsp:include>
 	</div>
 	<!--   Core JS Files   -->
 	<script src="resources/assets/js/core/jquery.min.js"></script>

@@ -93,6 +93,6 @@
 	<!-- 비밀번호 변경 관련 mapper -->
 
 	<update id="PASS_CHANGE" parameterType="hashMap">
-		update member set pw=#{pw} where email=#{email}
+		update member set pw = #{pw} where id = #{id}
 	</update>
 </mapper>

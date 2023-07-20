@@ -55,6 +55,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </div>
 <%-- 아이디 또는 이메일이 없는 경우 알림창 표시 --%>
 <script>

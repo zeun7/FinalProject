@@ -375,6 +375,7 @@ function del_c_report(rnum, page){	// 댓글 신고 대응 완료 버튼
 			</div>
 		</div>
 	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 </div>
 </body>
 </html>
