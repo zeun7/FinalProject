@@ -99,12 +99,17 @@ function findAll(page){
             for ( let i in arr) {
             	let vo = arr[i];
  				console.log(vo); 
+ 				
+ 				let content = vo.content;
+ 				if (content.length > 20) {
+ 					  content = content.substring(0, 20) + '...';
+ 				}
+ 				
  				visit_log += `
  					<div class="postit">
- 					<span data-mcnum="\${vo.mcnum}" onclick="gotoFindOne(\${vo.mcnum})">
+ 					<span data-mcnum="\${vo.mcnum}" onclick="if (!deleteMode) {gotoFindOne(\${vo.mcnum})};">
 	 					<input type="checkbox" class="row-check" />
-				        <h5>\${vo.writer}</h5>
-				        <p>\${vo.content}</p>
+				        <h5>\${vo.writer}</h5><br><br>
 				        <span>\${vo.cdate}</span>
 			        </span>
 			        </div>
@@ -177,7 +182,7 @@ function select_diary_deleteOK() {
 
  	// 모든 요청이 완료됐을 때 알림을 표시합니다.
     $.when(...promises).done(function() {
-        alert('선택된 사진 완료');
+        alert('선택된 사진 삭제완료');
     });
  	
     // 체크박스 숨기기

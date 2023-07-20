@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="resources/css/pagination.css">
   <link rel="stylesheet" href="resources/css/board_table.css">
   <link rel="stylesheet" href="resources/css/button2.css">
+  <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <style>
 .row-check {
     display: none;
@@ -99,9 +100,9 @@ function selectAll(page){
  				let vo = arr[i];
  				let date = moment(vo.wdate).format('YY년 MM월 DD일 HH시mm분');
  				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
- 					date = moment(vo.wdate).format('HH:mm');
+ 					date = moment(vo.wdate).format('오늘 HH시 mm분');
  				} else{											// 오늘 이전에 작성한 게시글
- 					date = moment(vo.wdate).format('MM-DD');
+ 					date = moment(vo.wdate).format('MM월 DD일 HH시');
  				}
  				console.log(vo); 
  				tag_vos += `

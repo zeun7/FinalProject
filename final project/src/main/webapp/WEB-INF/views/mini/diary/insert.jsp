@@ -21,8 +21,60 @@
  <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
  <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <link rel="stylesheet" href="resources/css/button.css">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+let userPeach = 0;
+let cost = 1;
+
+$(function(){
+// 	$('#cost').html(cost);	
+	
+	$.ajax({	//이용자가 보유한 peach 개수 출력
+		url : "json_peach_count.do",
+		method : 'get',
+		data : {
+			id : '${user_id}'
+		},
+		dataType : 'json',
+		success : function(vo){
+			$('#peach').html('보유 peach: '+vo.peach);
+			userPeach = vo.peach;
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+});//end onload
+
+function pcount_down(){
+	let presult = 1;
+	
+	if(userPeach - cost < 0){
+		alert('peach가 부족합니다.');
+		presult = 0;
+		return presult;
+	}else{
+		$.ajax({
+			url : "json_pcount_down.do",
+			method : 'get',
+			data : {
+				id : '${user_id}',
+				peach: cost
+			},
+			dataType : 'json',
+			success : function(result){
+				console.log(result.result);
+			},
+			error : function(xhr, status, error){
+				console.log('xhr', xhr.status);
+			}
+		});//end ajax
+	}
+	
+	return presult;
+}
+
 function input_check(){
 	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	console.log($("#content").val());
@@ -34,6 +86,7 @@ function input_check(){
 		let input = document.getElementById("isFileExist");
 		input.value = 1;
 	}
+	
 	console.log(content_val);
 	content_val = content_val.replaceAll('<img src="../../', '<img src="');
 	content_val = content_val.replaceAll('<video src="../../', '<video src="');
@@ -44,8 +97,19 @@ function input_check(){
 	}else if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
 		alert('내용을 입력하세요');
 	}else{
-		document.getElementById("insert_form").submit();
+		if($('#AI_Image').is(':checked')){
+			var result = pcount_down();
+			if(result == 1){
+				document.getElementById("insert_form").submit();
+			}
+		}else{
+			document.getElementById("insert_form").submit();
+		}
 	}
+}
+
+function buyPeach(){
+	window.location.href="mini_peachPay.do?id=${user_id}";
 }
 </script>
 </head>
@@ -83,9 +147,16 @@ function input_check(){
 					<input type="hidden" id="isFileExist" name="isFileExist" value="0">
 		<!-- 			<input type="file" id="file" name="file">  -->
 		<!-- 			<input type="hidden" id="filepath" name="filepath"> -->
+					<label for="AI_Image" style="margin-left: 5px;">
+						<input type="checkbox" id="AI_Image" name="AI_Image" value="true"> 
+						AI로 이미지 생성
+					</label>
+					<label id="peach" style="margin-left: 23%"></label>
+					<button type="button" onclick="buyPeach()" class="btn-two cyan mini" style="border: 1px solid black">peach 충전</button>
 				  </div>
                   <div>
 					<textarea rows="20" cols="100" id="content" name="content"></textarea>
+					<textarea rows="20" cols="100" id="content_only_txt" name="content_only_txt" style="display: none;"></textarea>
 				  </div>
                   <button type="button" class="btn btn-primary btn-round" onclick="input_check()">다이어리 작성완료</button>
               </div>
@@ -156,8 +227,6 @@ function uploadFile(){
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-	//			console.log('status:', status);
-	//			console.log('error:', error);
 			}
 		});//end $.ajax()
 	}//end if

@@ -20,7 +20,7 @@
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link rel="stylesheet" href="resources/css/pagination.css">
   <link rel="stylesheet" href="resources/css/board_table.css">
-
+  <link rel="stylesheet" href="resources/css/button2.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -143,8 +143,9 @@ function buyBGM(){
               	<div style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
 	                <h4 class="card-title"> 쥬크박스</h4>
               	</div>
-                <div style="text-align:center;">
-	                <button onclick="buyPeach()" class="btn btn-primary" style="border-radius: 10px; margin-left: 690px;margin-right: 10px;" id="peachButton">peach 결제하기</button>
+              	<div style="display: flex; justify-content: flex-end;">
+              		<div class="btn-gradient red" style="border-radius: 10px; margin-right: 10px;">보유 peach : ${m_attr.peach}</div>
+	                <button onclick="buyPeach()" class="btn btn-primary" style="border-radius: 10px; margin-right: 10px;" id="peachButton">peach 결제하기</button>
 	        		<button onclick="buyBGM()" class="btn btn-primary" style="border-radius: 10px;" id="bgmButton">음악 구매하기</button>
                 </div>
               </div>

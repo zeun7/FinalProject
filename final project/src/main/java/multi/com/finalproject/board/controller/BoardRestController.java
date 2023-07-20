@@ -196,7 +196,7 @@ public class BoardRestController {
 				String realPath = sContext.getRealPath("resources/uploadimg_board");
 				log.info("realPath : {}", realPath);
 				
-				File f = new File(realPath + "\\" + getOriginalFilename);
+				File f = new File(realPath + File.separator + getOriginalFilename);
 				fileList.get(i).transferTo(f);
 				
 				filepathList.add(filepath);

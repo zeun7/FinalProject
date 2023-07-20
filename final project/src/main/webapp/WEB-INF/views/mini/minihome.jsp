@@ -52,11 +52,15 @@ function recent_visitLog(){
         	console.log(data);
             let visit_log = ``;
             $.each(data, function(index, miniComment){
+            	let content = miniComment.content;
+ 				if (content.length > 20) {
+ 					  content = content.substring(0, 20) + '...';
+ 				}
+            	
                 visit_log += `
 			        <div class="postit">
  					<span onclick="gotoFindOne(\${miniComment.mcnum})">
-				        <h5>\${miniComment.writer}</h5>
-				        <p>\${miniComment.content}</p>
+				        <h5>\${miniComment.writer}</h5><br><br>
 				        <span>\${miniComment.cdate}</span>
 			        </span>
 			        </div>

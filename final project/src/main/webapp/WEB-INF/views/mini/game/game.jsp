@@ -86,19 +86,22 @@
 	let Game = { // Game 객체 선언
 		currentWord : '사과',
 		score : 0,
-		gameDuration : 60 * 1000,
+		gameDuration : 10 * 1000,	// 10초
 		gameStarted : false,
-		remainingTime : 60, // 제한 시간
+		remainingTime : 10, // 제한 시간
 		startButton : document.getElementById('startButton'),
 		timeDisplay : document.getElementById('remainingTime'),
 		timerInterval : null, // timerInterval 초기화
 		gameTimeout : null
 	// gameTimeout 초기화
 	}
+	
+	var WordList = new Array();	// 입력한 단어 리스트
+	WordList[0] = '사과';
 
 	// 버튼의 초기 텍스트 설정
 	//     Game.startButton.textContent = '게임 시작';
-	Game.timeDisplay.textContent = '남은 시간: 60';
+	Game.timeDisplay.textContent = '남은 시간: 10';
 
 	function startTimer() {
 		Game.timerInterval = setInterval(function() {
@@ -291,8 +294,7 @@
 	}
 
 	function show_today_ranking(userProfilePic, userScore, userId, playDate) {
-		$
-				.ajax({
+		$.ajax({
 					url : "game_ranking_today.do",
 					method : "get",
 					success : function(records) {
@@ -374,17 +376,34 @@
 					if (hangulWord.test(inputWord)
 							&& inputWord.charAt(0) === Game.currentWord
 									.charAt(Game.currentWord.length - 1)) {
-						let listItem = $('<li>').text('입력한 단어: ' + inputWord);
-						$('#wordList').empty(); // 리스트 비우기
-						$('#wordList').append(listItem); // 단어 리스트에 추가
-						Game.currentWord = inputWord; // 다음 차례 설정
-						Game.score++; // 점수 증가
-						$('#inputWord').val(''); // 입력 필드 초기화
-						$('#wordList').show();
+						
+						let isRepeated = false;
+						for(let i of WordList){	// 단어 중복 검사
+							if(inputWord === i)
+								isRepeated = true;
+						}
+						WordList[WordList.length] = inputWord;	// 입력한 단어 기억
+						
+						if(!isRepeated){	// 단어가 중복되지 않았을 경우
+							let listItem = $('<li>').text('입력한 단어: ' + inputWord);
+							$('#wordList').empty(); // 리스트 비우기
+							$('#wordList').append(listItem); // 단어 리스트에 추가
+							Game.currentWord = inputWord; // 다음 차례 설정
+							Game.score++; // 점수 증가
+							$('#inputWord').val(''); // 입력 필드 초기화
+							$('#wordList').show();
+							Game.gameDuration = 10 * 1000;	// 남은 시간을 10초로 세팅
+							Game.remainingTime = 10;
+						} else {	// 단어가 중복됐을 경우
+							WordList.length = 1;	// 입력한 단어 초기화
+							alert('이전에 입력한 단어와 중복!');
+						}
 					} else if (!hangulWord.test(inputWord)) {
+						WordList.length = 1;	// 입력한 단어 초기화
 						alert('한글만 입력!'); // '한글만 입력!' 알림창 표시
 					} else {
-						//                         alert('땡!'); // '땡!' 알림창 표시
+						WordList.length = 1;	// 입력한 단어 초기화
+						alert('땡!');	// '땡!' 알림창 표시
 					}
 				}
 			});

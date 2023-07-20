@@ -18,11 +18,11 @@
 	</update>
 
 	<select id="SELECT_NICK_PIC" resultType="multi.com.finalproject.member.model.MemberVO">
-		select profilepic, nickname from member where id=#{id}
+		select profilepic, nickname, peach from member where id=#{id}
 	</select>
 		
 	<select id="SELECT_PIC" resultType="multi.com.finalproject.member.model.MemberVO">
-		select id, profilepic from member where nickname=#{nickname}
+		select id, profilepic, peach from member where nickname=#{nickname}
 	</select>
 		
 	<select id="HAS_VISITED_TODAY" resultType="Integer">

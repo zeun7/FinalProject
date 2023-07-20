@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.LikesVO;
+import multi.com.finalproject.jukebox.service.JukeboxService;
+import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
 
@@ -32,6 +34,9 @@ public class MiniBoardRestController {
 
 	@Autowired
 	MiniBoardService service;
+	
+	@Autowired
+	JukeboxService jukeService;
 	
 	@Autowired
 	ServletContext sContext;
@@ -324,7 +329,7 @@ public class MiniBoardRestController {
 				String realPath = sContext.getRealPath("resources/uploadimg");
 				log.info("realPath : {}", realPath);
 				
-				File f = new File(realPath + "\\" + getOriginalFilename);
+				File f = new File(realPath + File.separator + getOriginalFilename);
 				fileList.get(i).transferTo(f);
 				
 				filepathList.add(filepath);
@@ -332,6 +337,20 @@ public class MiniBoardRestController {
 		}
 		
 		map.put("filepathList", filepathList);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/json_pcount_down.do", method = RequestMethod.GET)
+	public Map<String, Integer> json_pcount_down(MemberVO vo) {
+		log.info("/json_pcount_down.do...{}", vo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		jukeService.pcountDown(vo);
+		
+		int result = 1;
+		map.put("result", result);
 		
 		return map;
 	}

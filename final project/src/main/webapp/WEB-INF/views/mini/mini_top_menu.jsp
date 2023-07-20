@@ -75,6 +75,9 @@
 				<div>
 					<a href="mini_random.do?id=${mh_attr.id}" class="btn btn-primary btn-block" style="border-radius: 10px;">랜덤 미니홈피 가기</a>
 				</div>
+				<div>
+					<a href="mini_home.do?id=${user_id}" class="btn btn-primary btn-block" style="border-radius: 10px;">My 미니홈피</a>
+				</div>
 			</div>
       </div>
       <div class="sidebar-wrapper">
