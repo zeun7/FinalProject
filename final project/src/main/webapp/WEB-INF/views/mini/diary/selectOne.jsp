@@ -684,7 +684,7 @@ function goBack() {
 											</div>
 											<div style="display: flex; justify-content: end;">
 												<button class="custom-btn btn-11" onclick="open_modal()" style="margin: 0;">공유</button>					
-												<button class="custom-btn btn-11" onclick="submit_board_report()" id="report_button" style="margin: 0;">신고</button>
+												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button" style="margin: 0;">신고</button>
 												<div id="buttonContainer">
 													<a class="custom-btn btn-12" href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}">수정</a> 
 													<a class="custom-btn btn-12" href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}">삭제</a>

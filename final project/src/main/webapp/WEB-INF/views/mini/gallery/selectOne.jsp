@@ -788,7 +788,7 @@ function checkviewer(writer){
 									<div style="display: flex; justify-content: end;">
 										<button class="custom-btn btn-11" onclick="open_modal()"
 											style="margin: 0;">공유</button>
-										<button class="custom-btn btn-11" onclick="submit_board_report()"
+										<button class="custom-btn btn-11" onclick="open_board_report()"
 											id="report_button" style="margin: 0;">신고</button>
 										<div id="buttonContainer">
 											<button id="editButton" class="custom-btn btn-12">
