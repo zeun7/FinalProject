@@ -258,6 +258,7 @@ public class ManageRestController {
 		log.info("/json_mng_ccount.do...");
 		
 		int count = service.ccount();
+		log.info("count: {}", count);
 		
 		return count;
 	}

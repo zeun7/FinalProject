@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="resources/css/button2.css">
 <link rel="stylesheet" href="resources/css/pagination.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function manage_member(page){	// 회원목록 출력
 	console.log('manage member...');

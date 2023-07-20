@@ -259,9 +259,13 @@ public class ManageDAOimpl implements ManageDAO {
 	public int ccount() {
 		log.info("comments count()...");
 		
-		int count1 = sqlSession.selectOne("MNG_CCOUNT"); 
+		int count1 = sqlSession.selectOne("MNG_CCOUNT");
 		
-		return count1; 
+		Bson filter = Filters.eq("report", 1);
+		
+		long count2 = MiniComments.count(filter);
+		
+		return count1 + Long.valueOf(count2).intValue();
 	}
 	
 	@Override
