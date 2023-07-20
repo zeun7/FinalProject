@@ -26,8 +26,9 @@
 <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1"
 	rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="resources/css/postit.css">
+<link rel="stylesheet" href="resources/css/visitors_log.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -85,50 +86,29 @@ function gotoFindOne(mcnum){
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
-							<div class="card-header">
-								<h4 class="card-title">1촌 미니홈피로 이동</h4>
-							</div>
-							<div class="card-body">
-								<select onchange="redirectToMiniHome(this)">
-									<option>1촌목록</option>
-									<c:forEach var="vo" items="${vos}">
-										<option value="${vo.nickname2}">${vo.nickname2}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card">
 							<div class="card-header"
 								style="text-align: center; font-family: Georgia; font-size: 20px; font-weight: bold;">
 								<div class="card-header">
-									<h4 class="card-title">방명록</h4>
+									<h4 class="card-title" style="display: flex; justify-content: center;">최근 방명록</h4>
+									<div style="display: flex; justify-content: flex-end;">
+										<select onchange="redirectToMiniHome(this)">
+												<option>1촌목록</option>
+											<c:forEach var="vo" items="${vos}">
+												<option value="${vo.nickname2}">${vo.nickname2}</option>
+											</c:forEach>
+										</select>
+									</div>
 								</div>
-								<div class="card-body">
+								<div class="card-body" style="height: 600px;">
 									<div id="visitors_log"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<footer class="footer footer-black  footer-white ">
-					<div class="container-fluid">
-						<div class="row">
-							<nav class="footer-nav">
-								<ul>
-									<li><a href="https://github.com/zeun7/FinalProject"
-										target="_blank"><img src="resources/assets/img/github.png" width="25px" height="25px"></a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</footer>
 			</div>
+			<jsp:include page="../footer.jsp"></jsp:include>
 		</div>
-		<jsp:include page="../footer.jsp"></jsp:include>
 	</div>
 	<!--   Core JS Files   -->
 	<script src="resources/assets/js/core/jquery.min.js"></script>

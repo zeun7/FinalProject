@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="resources/css/comments.css">
 <link rel="stylesheet" href="resources/css/button.css">
 <link rel="stylesheet" href="resources/css/cmt_button.css">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 let iswriter = false;
@@ -749,6 +750,7 @@ function goBack() {
 			</div>
 		</footer>
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </div>
 
 <div id="modal">

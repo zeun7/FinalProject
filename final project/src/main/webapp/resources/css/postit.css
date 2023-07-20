@@ -1,12 +1,15 @@
 @charset "UTF-8";
+
 .postit {
-    border: 1px solid white;
+    border: 1px solid #E8E8E8; 
     font-size: 16px;
     width: 200px;
     display: block;
     position: relative;
     cursor: pointer;
-    background-color: #d4f0f0;
+    background-color: #d4f0f0; /* 포스트잇이 보통 연한 색이므로, 이를 반영합니다. */
     color: black;
     padding-top: 15px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1); /* 그림자 효과를 추가합니다. */
+    border-radius: 5px; /* 모서리를 약간 둥글게 만듭니다. */
 }

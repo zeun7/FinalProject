@@ -114,7 +114,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		//방문한 미니홈피 주인의 방명록(or 댓글)들만 가져오기
 		Bson filter = Filters.and(Filters.eq("id", id), Filters.eq("mccnum", 0), Filters.eq("mbnum", 0));
 
-		FindIterable<Document> docs = MiniComments.find(filter).sort(sort).limit(4); // 최신순, 4개만 가져오기..
+		FindIterable<Document> docs = MiniComments.find(filter).sort(sort).limit(10); // 최신순, 10개만 가져오기..
 
 		for (Document doc : docs) {
 			log.info("{}", doc);

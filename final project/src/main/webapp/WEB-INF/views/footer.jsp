@@ -6,7 +6,7 @@
 							<ul>
 								<li>Contact Us</li>
 								<li><a class="nav-link btn-magnify"
-									href="https://www.instagram.com/" target="_blank"> <i class="fa-brands fa-github"></i>
+									href="https://github.com/zeun7/FinalProject" target="_blank"> <i class="fa-brands fa-github"></i>
 										<p>
 											<span class="d-lg-none d-md-block">github</span>
 										</p>

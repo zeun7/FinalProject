@@ -57,13 +57,13 @@ function post_friends(sortKey){
 					<thead>
 						<tr>
 							<th colspan="3" style="text-align: center;"><친구들의 소식></th>
-							<th colspan="2" style="display: flex;">
+							<th style="display: flex;">
 								<button style="margin-right:2px;" class="button btnPush" onclick="post_friends('vcount')">인기순</button>
 								<button class="button btnPush" onclick="post_friends('wdate')">최신순</button>
 							</th>
 						</tr>
 					</thead>
-					<tbody>`;
+					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
 				let date = moment(vo.wdate).format('YY/MM/DD HH:mm');
@@ -121,13 +121,13 @@ function post_board(boardName, sortKey){
 							<th colspan="3" style="text-align: center;">`;
 			tag_vos += `<a href="b_selectAll.do?bname=`+bname+`">`+boardName+`</a>`;
 			tag_vos += `			</th>
-							<th colspan="2" style="display: flex;">
+							<th style="display: flex;">
 								<button style="margin-right:2px;" class="button btnPush" onclick="post_board('`+boardName+`', 'vcount')">인기순</button>
 								<button class="button btnPush" onclick="post_board('`+boardName+`', 'wdate')">최신순</button>
 							</th>
 						</tr>
 					</thead>
-					<tbody>`;
+					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
 				let date = moment(vo.wdate).format('YY/MM/DD HH:mm');
@@ -182,20 +182,20 @@ $(document).ready(function(){
 					<div class="card-body" style="display: flex; justify-content: center; flex: 1;">
 						<table style="display:flex; justify-content: space-between;">
 							<tr style="display:flex;">
-								<td id="hot"></td>
-								<td id="board1" style="margin-left: 80px;"></td>
+								<td id="hot" style="width: 500px;"></td>
+								<td id="board1" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
-							<tr><td colspan="2"><hr></td></tr>
+							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
 							<tr style="display:flex;">
-								<td id="board2"></td>
-								<td id="board3" style="margin-left: 80px;"></td>
+								<td id="board2" style="width: 500px;"></td>
+								<td id="board3" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
-							<tr><td colspan="2"><hr></td></tr>
+							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
 							<tr style="display:flex;">
-								<td id="board4"></td>
-								<td id="board5" style="margin-left: 80px;"></td>
+								<td id="board4" style="width: 500px;"></td>
+								<td id="board5" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
-							<tr><td colspan="2"><br></td></tr>
+							<tr><td colspan="2" style="width: 1000px;"><br></td></tr>
 						</table>
 					</div> <!-- end "card-body" -->
 				</div> <!-- end "card" -->

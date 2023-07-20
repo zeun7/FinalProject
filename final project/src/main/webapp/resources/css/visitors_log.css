@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+#visitors_log {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#visitors_log .postit {
+  flex: 1 1 18%; /* 이 부분은 한 줄에 5개의 항목이 오도록 설정합니다. */
+  max-width: 18%; /* 이 부분은 한 줄에 5개의 항목이 오도록 설정합니다. */
+  margin: 1%; /* 이 부분은 항목들 사이에 1%의 공간을 추가합니다. */
+  max-height: 200px; /* 이 부분은 항목의 최대 높이를 설정합니다. */
+  overflow: hidden; /* 이 부분은 항목의 내용이 너무 많을 경우 숨기게 합니다. */
+  text-overflow: ellipsis; /* 이 부분은 항목의 내용이 너무 많을 경우 ...으로 표시하게 합니다. */
+}
