@@ -45,8 +45,8 @@
 	</select>
 	
 	<insert id="MB_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		insert into miniboard(mbnum,mbname,writer,title,content,filepath) 
-		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath})
+		insert into miniboard(mbnum,mbname,writer,title,content,filepath,ai_path) 
+		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath},#{ai_path})
 	</insert>
 	
 	<update id="MB_UPDATE_NICKNAME">
@@ -111,4 +111,9 @@
 	<insert id="MB_REPORT" parameterType="Map">
 		insert into report(rnum, mbnum, reason, id) values(seq_report.nextval, #{vo.mbnum}, #{reason}, #{id})
 	</insert>
+	
+	<select id="MB_COUNT_BY_NICKNAME" 
+	resultType="Integer">
+	select count(*) from miniboard where writer = #{nickname}
+	</select>
 </mapper>

@@ -10,7 +10,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <title>비밀번호 찾기</title>
-
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(function() {
+		$("#back").click(function() {
+			location.href = 'login.do';
+		})
+	})
+</script>
 <style>
 .card {
 	padding: 80px 30px; /* 상단/하단 80px, 좌우 30px의 공간을 설정합니다. */
@@ -47,7 +54,7 @@
 								<button type="submit" id=findBtn
 									class="w3-button w3-block w3-ripple w3-margin-top w3-round"
 									style="background-color: #94b5e0">find</button>
-								<button type="button" onclick="history.go(-1);"
+								<button type="button" id="back"
 									class="w3-button w3-block w3-ripple w3-margin-top w3-round"
 									style="background-color: #94b5e0">Cancel</button>
 							</p>
@@ -69,21 +76,19 @@
            if (emailInput.value.trim() === "" && idInput.value.trim() === "") {
                e.preventDefault();
                alert("아이디 또는 이메일을 입력해주세요.");
-               window.location.href = "find_pw_from.do";
            }
        });
-   </script>
+  
 
 <%-- 아이디와 이메일이 동시에 일치하는 사용자가 없는 경우 알림창 표시 --%>
-<%
-String message = (String) request.getAttribute("message");
-if (message != null && !message.isEmpty()) {
-%>
-<script>
-   alert("<%=message%>");
-   window.location.href = "find_pw_from.do";
-   <%}%>
-   });
+<%-- 알림 메시지를 가져옴 --%>
+
+var message = '<%= request.getAttribute("message") %>';
+<%-- 알림 메시지가 존재하고 값이 null이 아니면 alert로 보여줌 --%>
+if (message && message.trim() !== "null" && message.trim() !== "") {
+    alert(message);
+}
+
    </script>
 </body>
 </html>

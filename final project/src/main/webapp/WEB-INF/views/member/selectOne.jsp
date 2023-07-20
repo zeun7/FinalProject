@@ -36,22 +36,24 @@
 							<div class="author">
 								<img class="avatar border-gray" src="resources/uploadimg/${vo2.profilepic}">
 								<h5 class="title">${vo2.nickname}</h5>
-								<p class="description">id:${vo2.id}</p>
+								<p class="description">${vo2.id}</p>
 							</div>
 					
 						</div>
 						<div class="card-footer">
 							<hr>
 							<div class="button-container">
+							
 								<div class="row">
-									<div class="col-lg-3 col-md-6 col-6 ml-auto">
+									<div class="col-lg-4 col-md-3 col-5 ml-auto">
+								<h8 class=" peach">peach<br><small>${vo2.peach}</small></h8>
 										
 									</div>
-									<div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-										
+									<div class="col-lg-4 col-md-3 col-5 ml-auto mr-auto">
+										<h8>게시물수<br><small>${total}</small></h8>
 									</div>
-									<div class="col-lg-3 mr-auto">
-									
+									<div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center">
+									 <h7><img src="resources/icon/like.png"><br><small>${total_likes}</small></h7>
 									</div>
 								</div>
 							</div>

@@ -856,6 +856,7 @@ function close_cmt_modal(){
 	cmt_report_modal.style.display = "none";
 	document.body.style.overflow = "auto";
 }
+
 </script>
 </body>
 </html>

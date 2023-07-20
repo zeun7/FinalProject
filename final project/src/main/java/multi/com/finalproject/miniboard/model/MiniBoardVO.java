@@ -20,5 +20,6 @@ public class MiniBoardVO {
 	private MultipartFile file;
 	private int likes;
 	private int isFileExist;
+	private String ai_path;
 	
 }

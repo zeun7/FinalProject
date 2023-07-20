@@ -18,6 +18,13 @@
 	$(function() {
 		console.log("onload....");
 	});
+	
+	$(function() {
+
+		$("#gohome").click(function() {
+			location.href = 'home.do';
+		});
+	});
 
 	function fn_emailChk_Ajax() {
 		var userEmail = $("#email").val().trim();
@@ -324,7 +331,7 @@
 									class="w3-button w3-ripple w3-round btn-round"
 									"
 									style="background-color: #94b5e0">Join</button>
-								<button type="button" onclick="history.go(-1);"
+								<button type="button" id="gohome"
 									class="w3-button w3-ripple w3-round btn-round"
 									"
 									style="background-color: #94b5e0">Cancel</button>

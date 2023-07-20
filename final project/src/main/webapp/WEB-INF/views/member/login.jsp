@@ -25,6 +25,13 @@
 			location.href = 'find_pw_from.do';
 		});
 	});
+	
+	$(function() {
+
+		$("#gohome").click(function() {
+			location.href = 'home.do';
+		});
+	});
 </script>
 <style>
  .card{ 
@@ -69,7 +76,7 @@
 								Log in</button>
 							<button type="button"
 								class="w3-button w3-block w3-ripple w3-margin-top w3-round" style="background-color: #94b5e0"
-								onclick="history.go(-1)">Cancel</button>
+								id="gohome">Cancel</button>
 						</p>
 						<input type="checkbox" name="_spring_security_remember_me" id="remember_me" value="True" />
 							로그인 유지<br>

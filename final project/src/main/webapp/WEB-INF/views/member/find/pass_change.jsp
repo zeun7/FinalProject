@@ -13,7 +13,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
-
+   
+    	$(function() {
+    		$("#Email").click(function() {
+    			location.href = 'find_pw_from.do';
+    		})
+    	})
+   
     function submitForm() {
         var pw1 = document.getElementById("pw1").value;
         var pw2 = document.getElementById("pw2").value;
@@ -66,7 +72,7 @@
                                     변경</button>
 
 
-                                <button type="button" onclick="history.go(-1);"
+                                <button type="button" id="Email"
                                     class="w3-button w3-block w3-ripple w3-margin-top w3-round"
                                     style="background-color: #94b5e0">Cancel</button>
                             </form>

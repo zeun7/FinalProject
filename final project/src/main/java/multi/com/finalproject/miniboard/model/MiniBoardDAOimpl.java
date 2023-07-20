@@ -174,5 +174,23 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 		int result = sqlSession.delete("MB_DELETE_LIKE_ID", vo);	// id로 좋아요 모두 삭제
 		log.info("result: {}", result);
 	}
+	
+	@Override
+	public int m_count2(MemberVO vo) {
+		log.info("vo: {}", vo);
+		return sqlSession.insert("MB_COUNT_BY_NICKNAME", vo);
+	}
+
+	@Override
+	public int mb_likes(MemberVO vo2) {
+		log.info("mb_likes: {}", vo2);
+	int count = 0;
+		 List<MiniBoardVO> vos =sqlSession.selectList("MB_SEARCH_LIST_WRITER", vo2);
+		 for(MiniBoardVO vo:vos) {
+			 count += vo.getLikes();
+		 }
+		 return count;
+	}
+
 
 }

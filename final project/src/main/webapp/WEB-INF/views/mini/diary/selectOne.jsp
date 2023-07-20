@@ -669,7 +669,6 @@ function goBack() {
 						<div class="card-body">
 							<div>
 								<p id="content">
-								<img width="500px" height="500px" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-Li613yFrsM4RevEHD89REanl/user-5pF4ZPgjRycm3YuGtj4k7Pkm/img-hExeepc6zbQS4JSDbaqR5gTV.png?st=2023-07-20T05%3A25%3A59Z&se=2023-07-20T07%3A25%3A59Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-19T20%3A03%3A58Z&ske=2023-07-20T20%3A03%3A58Z&sks=b&skv=2021-08-06&sig=7di3DQRMWeseEpJsqMyS2b4hbJn9r/zp4opQb0PH1h0%3D">
 									<span id="contentSpan">${vo2.content}</span>
 									<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 								</p>

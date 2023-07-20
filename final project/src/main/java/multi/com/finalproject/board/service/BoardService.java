@@ -95,4 +95,13 @@ public class BoardService {
 		dao.deleteLikesAll(vo);
 	}
 	
+	public int m_count(MemberVO vo) {
+		return dao.m_count(vo);
+	}
+
+	public int b_likes(MemberVO vo2) {
+		
+		return dao.b_likes(vo2);
+	}
+	
 }

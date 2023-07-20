@@ -185,5 +185,23 @@ public class BoardDAOimpl implements BoardDAO {
 		int result = sqlSession.delete("B_DELETE_LIKE_ID", vo);	// id로 게시글 좋아요 모두 삭제
 		log.info("result: {}", result);
 	}
+	
+	@Override
+	public int m_count(MemberVO vo) {
+		log.info("m_count..{}",vo);
+		return sqlSession.selectOne("B_COUNT_BY_WRITER", vo);
+	}
+
+	@Override
+	public int b_likes(MemberVO vo2) {
+		log.info("b_likes..{}",vo2);
+	int count = 0;
+		
+		List <BoardVO> vos=  sqlSession.selectList("B_SEARCH_ALL_WRITER", vo2);
+		for(BoardVO vo: vos ) {
+			count += vo.getLikes(); 
+		}
+		return count;
+	}
 
 }

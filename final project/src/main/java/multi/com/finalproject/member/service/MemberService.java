@@ -2,18 +2,14 @@ package multi.com.finalproject.member.service;
 
 
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
-
-
+import multi.com.finalproject.board.model.BoardVO;
 import multi.com.finalproject.member.model.MemberDAO;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.miniboard.model.MiniBoardVO;
 
 
 @Service
@@ -60,7 +56,15 @@ public class MemberService {
 	public MemberVO TelCheck(MemberVO vo) {
 		return dao.TelCheck(vo);
 	}
-
+	
+	public MiniBoardVO FindMiniBoard(MiniBoardVO vo) {
+		return dao.FindMiniBoard(vo);
+	}
+	
+	public BoardVO FindBoard(BoardVO vo2) {
+		return dao.FindBoard(vo2);
+	}
+	
 	public MemberVO find_id(MemberVO vo)  {
 
 		return dao.find_id(vo);

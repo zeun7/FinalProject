@@ -140,7 +140,19 @@ public class MemberController {
 		log.info("/m_selectOne.do...{}", vo);
 
 		MemberVO vo2 = service.selectOne(vo);
-
+		
+		int count1=board_service.m_count(vo2);
+		int count2=miniboard_service.m_count2(vo2);
+		
+		int total = count1+count2;
+		
+		int likes1=board_service.b_likes(vo2);
+		int likes2=miniboard_service.mb_likes(vo2);
+		
+		int total_likes = likes1+likes2;
+		
+		model.addAttribute("total_likes",total_likes);
+		model.addAttribute("total",total);
 		model.addAttribute("vo2", vo2);
 
 		return "member/selectOne";
@@ -285,10 +297,12 @@ public class MemberController {
 			return "member/login";
 
 		} else {
+			log.info("내가 보유한 peach 갯수 : {}", vo2.getPeach());
 			session.setAttribute("user_id", vo2.getId());
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
 			session.setAttribute("profilepic", vo2.getProfilepic());
+			session.setAttribute("myPeach", vo2.getPeach());
 			session.setMaxInactiveInterval(60 * 120); // 60초 * 120 = 2시간
 			return "redirect:home.do";
 		}
@@ -373,7 +387,7 @@ public class MemberController {
 		if (vo2 == null) {
 			response_email.setContentType("text/html; charset=UTF-8");
 			PrintWriter out_email = response_email.getWriter();
-			out_email.println("<script>alert('아이디 또는 이메일이 일치하지 않습니다.');window.location.href='/forgot-password';</script>");
+			out_email.println("<script>alert('아이디 또는 이메일이 일치하지 않습니다.');</script>");
 			out_email.flush();
 
 			// 알림창을 표시한 후 이전 페이지로 돌아감
@@ -511,6 +525,8 @@ public class MemberController {
 			session.setAttribute("nickname", vo2.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
 			session.setAttribute("profilepic", vo2.getProfilepic());
+			session.setAttribute("myPeach", vo2.getPeach());
+			session.setMaxInactiveInterval(60 * 120); // 60초 * 120 = 2시간
 		} else {
 			String username = principal.toString();
 		}

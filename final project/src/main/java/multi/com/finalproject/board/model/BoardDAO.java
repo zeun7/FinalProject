@@ -42,5 +42,9 @@ public interface BoardDAO {
 	public void deleteAll(MemberVO vo);
 
 	public void deleteLikesAll(MemberVO vo);
+	
+	public int m_count(MemberVO vo);
+
+	public int b_likes(MemberVO vo2);
 
 }

@@ -392,8 +392,12 @@
 							Game.score++; // 점수 증가
 							$('#inputWord').val(''); // 입력 필드 초기화
 							$('#wordList').show();
-							Game.gameDuration = 10 * 1000;	// 남은 시간을 10초로 세팅
 							Game.remainingTime = 10;
+							
+							clearInterval(Game.timerInterval); // 돌아가는 타이머 멈추기
+							clearTimeout(Game.gameTimeout); // 돌아가는 타임아웃 멈추기
+							startTimer(); // 타이머 재시작
+							startGameTimeout(); // 타임아웃 재시작
 						} else {	// 단어가 중복됐을 경우
 							WordList.length = 1;	// 입력한 단어 초기화
 							alert('이전에 입력한 단어와 중복!');

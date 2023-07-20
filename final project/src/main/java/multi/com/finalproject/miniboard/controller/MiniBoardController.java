@@ -26,6 +26,7 @@ import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
 import multi.com.finalproject.minihome.model.MiniHomeVO;
 import multi.com.finalproject.minihome.service.MiniHomeService;
+import multi.com.finalproject.openai.service.GptService;
 
 @Slf4j
 @Controller
@@ -42,6 +43,9 @@ public class MiniBoardController {
 
 	@Autowired
 	MemberService member_service;
+	
+	@Autowired
+	GptService gpt_service;
 	
 	@ModelAttribute("mh_attr")
 	public MiniHomeVO getMh_attr(MiniHomeVO vo, MemberVO mvo) {
@@ -112,6 +116,10 @@ public class MiniBoardController {
 		log.info("mb_insertOK(vo)...{}", vo);
 
 		vo.setFilepath("");
+		
+		if(vo.getAi_path() == null) {
+			vo.setAi_path("");
+		}
 		
 		int result = service.mb_insert(vo);
 		log.info("result: {}", result);

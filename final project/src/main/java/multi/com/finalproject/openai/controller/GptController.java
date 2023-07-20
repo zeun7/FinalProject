@@ -23,12 +23,14 @@ public class GptController {
 	@RequestMapping(value = "/gptTranslate.do", method = RequestMethod.GET)
 	public ResponseVO makeConversation(@Valid RequestQuestionVO requestQuestionVO) {
 		log.info("makeConversation(requestQuestionVO)...{}", requestQuestionVO);
-		String Query = requestQuestionVO.getQuestion() + "\n. Could you summarize this under 100 words and translate it to English?";
+		String Query = requestQuestionVO.getQuestion() + ".\n Could you summarize this under 100 letters while translating it to English?";
 		requestQuestionVO.setQuestion(Query);
-		ResponseVO responseVo = gptService.getConversation(requestQuestionVO);
+		
+		requestQuestionVO.setQuestion(Query);
+		ResponseVO responseVO = gptService.getConversation(requestQuestionVO);
 
-		log.info("responseVo : {}", responseVo);
-		return responseVo;
+		log.info("responseVO : {}", responseVO);
+		return responseVO;
 	}
 
 	@ResponseBody

@@ -90,6 +90,7 @@
 		select * from member where  email = #{email}
 	</select>
 	
+	
 	<!-- 비밀번호 변경 관련 mapper -->
 
 	<update id="PASS_CHANGE" parameterType="hashMap">

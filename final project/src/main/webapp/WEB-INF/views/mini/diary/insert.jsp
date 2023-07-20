@@ -26,6 +26,7 @@
 <script type="text/javascript">
 let userPeach = 0;
 let cost = 1;
+let gptTxt = '';
 
 $(function(){
 // 	$('#cost').html(cost);	
@@ -80,6 +81,8 @@ function input_check(){
 	console.log($("#content").val());
 	
 	let content_val = $("#content").val();
+	let content_txtonly = content_val.replace(/[<][^>]*[>]/gi, "");	//gpt용 텍스트
+	console.log('txtonly:', content_txtonly);
 	
 	//파일이 첨부되어있는지 확인
 	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
@@ -100,17 +103,81 @@ function input_check(){
 		if($('#AI_Image').is(':checked')){
 			var result = pcount_down();
 			if(result == 1){
-				document.getElementById("insert_form").submit();
+				gpt_translate(content_txtonly);
 			}
 		}else{
-			document.getElementById("insert_form").submit();
+			submit_form();
 		}
 	}
-}
+}//end input_check()
 
 function buyPeach(){
 	window.location.href="mini_peachPay.do?id=${user_id}";
 }
+
+function gpt_translate(content_txtonly){
+	
+	$.ajax({
+		url : "gptTranslate.do",
+		method : 'get',
+		data : {
+			question : content_txtonly
+		},
+		dataType : 'json',
+		success : function(vo){
+			console.log(vo.response);
+			gptTxt = vo.response;
+			gpt_make_image(gptTxt);
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}//end gpt_translate()
+
+function gpt_make_image(gptTxt){
+	$.ajax({
+		url : "gptMakeImage.do",
+		method : 'get',
+		data : {
+			question : gptTxt
+		},
+		dataType : 'json',
+		success : function(vo){
+			console.log(vo.response);
+			let imgUrl = vo.response;
+			gpt_download_image(imgUrl);
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}//end gpt_make_image()
+
+function gpt_download_image(imgUrl){
+	$.ajax({
+		url : "json_download_image.do",
+		method : 'get',
+		data : {
+			url : imgUrl,
+			id : '${user_id}'
+		},
+		dataType : 'json',
+		success : function(map){
+			console.log(map.filepath);
+			$('#ai_path').val(map.filepath);
+			submit_form();
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}
+
+function submit_form(){
+	document.getElementById("insert_form").submit();
+}
+
 </script>
 </head>
 
@@ -128,6 +195,7 @@ function buyPeach(){
                 <h5 class="card-title">다이어리</h5>
                 <div>
 					<input type="hidden" id="mbname" name="mbname" value="diary">
+					<input type="hidden" id="ai_path" name = "ai_path" value="">
 				</div>
 				<div>
 					<input type="hidden" id="writer" name="writer"
@@ -156,7 +224,6 @@ function buyPeach(){
 				  </div>
                   <div>
 					<textarea rows="20" cols="100" id="content" name="content"></textarea>
-					<textarea rows="20" cols="100" id="content_only_txt" name="content_only_txt" style="display: none;"></textarea>
 				  </div>
                   <button type="button" class="btn btn-primary btn-round" onclick="input_check()">다이어리 작성완료</button>
               </div>

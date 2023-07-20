@@ -16,6 +16,8 @@
 <!-- CSS Files -->
 <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+<link rel="stylesheet" href="resources/css/pagination.css">
+<link rel="stylesheet" href="resources/css/button2.css">
 <style type="text/css">
 .pr-1 {
 	margin: auto;
@@ -40,8 +42,9 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 			
 			while(result > 0){
 				tag_page++;
+				let activeClass = (tag_page === curPage) ? 'active' : '';
 				tag_pages += `
-					<button onclick=selectAll(\${tag_page})>\${tag_page}</button>
+					<button class="paging-btn \${activeClass}" onclick=selectAll(\${tag_page})>\${tag_page}</button>
 				`;
 				result -= 10;
 			}
@@ -59,6 +62,13 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }//end selectAllCount()
 
+function setActive(button) {
+    // 모든 버튼에서 'active' 클래스 제거
+    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
+    // 클릭한 버튼에 'active' 클래스 추가
+    button.classList.add('active');
+}
+
 function selectAll(page){
 	$.ajax({
 		url : "json_j_selectAll.do",
@@ -70,14 +80,22 @@ function selectAll(page){
 		dataType : 'json',
 		success : function(arr){
 			let tag_vos = '';
+			
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+			
 			for(let i in arr){
 				let vo = arr[i];
 				console.log(vo);
 				tag_vos +=`
 					<tr>
 					<td>\${vo.bgm}</td>
-					<td><button type="button" id="btn_\${i}" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">\${vo.bgm}</button></td>
-					<td><button type="button" onclick="setBGM('\${vo.bgm}')">설정하기</button></td>
+					<td><button class="btn-gradient yellow mini" type="button" id="btn_\${i}" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">\${vo.bgm}</button></td>
+					<td><button class="btn-gradient cyan mini" type="button" onclick="setBGM('\${vo.bgm}')">설정하기</button></td>
 		        	</tr>	
 				`;
 			}
