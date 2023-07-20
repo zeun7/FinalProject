@@ -373,7 +373,7 @@ public class MemberController {
 		if (vo2 == null) {
 			response_email.setContentType("text/html; charset=UTF-8");
 			PrintWriter out_email = response_email.getWriter();
-			out_email.println("<script>alert('아이디 또는 이메일이 일치하지 않습니다.');</script>");
+			out_email.println("<script>alert('아이디 또는 이메일이 일치하지 않습니다.');window.location.href='/forgot-password';</script>");
 			out_email.flush();
 
 			// 알림창을 표시한 후 이전 페이지로 돌아감
