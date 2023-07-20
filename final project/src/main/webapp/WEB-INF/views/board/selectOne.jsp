@@ -717,20 +717,20 @@ function goBack() {
 </div>
 
 <div id="modal">
-	<div class="modal-content" style="top:5%; left:10%; width:300px; height:300px">
-		<h6>공유하기</h6>
+	<div class="modal-content" style="top:5%; left:10%; width:350px; height:350px">
+		<h4>공유하기</h4>
 		<button onclick="share_twitter()" class="share_button">
 			<img width="30px" src="resources/icon/twitter.png"/>트위터로 공유하기</button>
 		<button onclick="share_facebook()" class="share_button">
 			<img width="30px" src="resources/icon/facebook.png"/>페이스북으로 공유하기</button>
-		<button id="kakaotalk-sharing-btn">
+		<button id="kakaotalk-sharing-btn" class="share_button">
 			<img width="30px" src="resources/icon/kakaotalk.png"/>카카오톡으로 공유하기</button>
 		<div>
 			<label for="copy_url_btn" id="url"></label>			
-			<button id="copy_url_btn" onclick="copy_url()">링크복사</button>
+			<button id="copy_url_btn" onclick="copy_url()" class="cmt_reply_btn">링크복사</button>
 		</div>
 		<div>
-			<button onclick="close_modal()">닫기</button>
+			<button onclick="close_modal()" class="cmt_cancel_btn">닫기</button>
 		</div>
 	</div>
 </div>
@@ -750,8 +750,8 @@ function goBack() {
 		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
 		<input type="radio" id="reason6" name="b_reason" value="불쾌한 표현이 있습니다">
 		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
-		<button type="button" onclick="close_board_modal()" class="close_btn">닫기</button>
-		<button type="button" onclick="submit_board_report()" class="report_btn">신고</button>
+		<button type="button" onclick="close_board_modal()" class="cmt_cancel_btn">닫기</button>
+		<button type="button" onclick="submit_board_report()" class="cmt_report_btn">신고</button>
 	</div>
 </div>
 
@@ -770,8 +770,8 @@ function goBack() {
 		<label for="reason5">명예훼손 또는 저작권이 침해되었습니다</label><br/>
 		<input type="radio" id="reason6" name="c_reason" value="불쾌한 표현이 있습니다">
 		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
-		<button type="button" onclick="close_cmt_modal()" class="close_btn">닫기</button>
-		<button type="button" onclick="submit_cmt_report()" class="report_btn">신고</button>
+		<button type="button" onclick="close_cmt_modal()" class="cmt_cancel_btn">닫기</button>
+		<button type="button" onclick="submit_cmt_report()" class="cmt_report_btn">신고</button>
 	</div>
 </div>
 
