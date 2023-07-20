@@ -683,12 +683,12 @@ function goBack() {
 												<span id="likes_count" style="margin-left:5px;">${vo2.likes }</span>
 											</div>
 											<div style="display: flex; justify-content: end;">
-												<button class="custom-btn btn-11" onclick="open_modal()" style="margin: 0;">공유</button>					
-												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button" style="margin: 0;">신고</button>
 												<div id="buttonContainer">
 													<a class="custom-btn btn-12" href="diary_update.do?id=${mh_attr.id}&mbnum=${param.mbnum}">수정</a> 
 													<a class="custom-btn btn-12" href="diary_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}">삭제</a>
 												</div>
+												<button class="custom-btn btn-11" onclick="open_modal()" style="margin: 0;">공유</button>					
+												<button class="custom-btn btn-11" onclick="open_board_report()" id="report_button" style="margin: 0;">신고</button>
 											</div>
 										</div>
 									</td>
@@ -889,12 +889,15 @@ function close_cmt_modal(){
 }
 
  // 다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
- if('${user_id}' != '${mh_attr.id}'){	
-     $('#buttonContainer').hide();
- }
- if('${vo2.filepath}' === ''){
-  $('#imageContainer').hide();
- }
+if('${user_id}' === '${mh_attr.id}' || '${mclass}' === '1'){
+	$('#buttonContainer').show();
+}else{
+	$('#buttonContainer').hide();
+}
+
+if('${vo2.filepath}' === ''){
+	$('#imageContainer').hide();
+}
 </script>
 <!--   Core JS Files   -->
 <script src="resources/assets/js/core/jquery.min.js"></script>

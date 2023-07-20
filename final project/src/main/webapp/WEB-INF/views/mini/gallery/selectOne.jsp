@@ -102,8 +102,10 @@ $(document).on('click', '#saveButton', function(e) {
 
 //다른 사람의 미니홈피 방문시 다이어리 작성 버튼 숨김
 $(document).ready(function () {
-	if('${user_id}' != '${mh_attr.id}'){	
-	    $('#buttonContainer').hide();
+	if('${user_id}' === '${mh_attr.id}' || '${mclass}' === '1'){
+		$('#buttonContainer').show();
+	}else{
+		$('#buttonContainer').hide();
 	}
 });
 
@@ -786,10 +788,6 @@ function checkviewer(writer){
 										<span id="likes_count" style="margin-left: 5px;">${vo2.likes }</span>
 									</div>
 									<div style="display: flex; justify-content: end;">
-										<button class="custom-btn btn-11" onclick="open_modal()"
-											style="margin: 0;">공유</button>
-										<button class="custom-btn btn-11" onclick="open_board_report()"
-											id="report_button" style="margin: 0;">신고</button>
 										<div id="buttonContainer">
 											<button id="editButton" class="custom-btn btn-12">
 												수정<span id="modifiedIndicator"></span>
@@ -797,6 +795,10 @@ function checkviewer(writer){
 											<a class="custom-btn btn-12"
 												href="gallery_deleteOK.do?id=${mh_attr.id}&mbnum=${param.mbnum}">삭제</a>
 										</div>
+										<button class="custom-btn btn-11" onclick="open_modal()"
+											style="margin: 0;">공유</button>
+										<button class="custom-btn btn-11" onclick="open_board_report()"
+											id="report_button" style="margin: 0;">신고</button>
 									</div>
 								</div>
 						</div>

@@ -813,7 +813,7 @@ function submit_cmt_report(){
 	});
 }
 
-if('${nickname}' === '${vo2.writer}'){
+if('${nickname}' === '${vo2.writer}' || '${mclass}' === '1'){
 	$('#update_delete').show();
 }else{
 	$('#update_delete').hide();
