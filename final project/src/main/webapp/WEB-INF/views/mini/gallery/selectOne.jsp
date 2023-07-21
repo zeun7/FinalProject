@@ -59,15 +59,6 @@ $(document).on('click', '#saveButton', function(e) {
         const title = $("#title").val().trim();
         const file = $("#file")[0].files;
         const filepath = $("#filepath").val();
-//         if(title === ''){
-//             alert('제목을 입력해주세요.');
-//             return;
-//         }
-        
-//         if(!file){
-//             alert('파일을 업로드해주세요.');
-//             return;
-//         }
 
         var formData = new FormData();
         formData.append("mbnum", ${vo2.mbnum})
@@ -135,8 +126,6 @@ $(function(){
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-//				console.log('status:', status);
-//				console.log('error:', error);
 			}
 		});//end $.ajax()
 	}
@@ -611,8 +600,9 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
@@ -634,8 +624,9 @@ function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
 			},
 			error: function(xhr, status, error){
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function mc_deleteOK(mcnum){		// 댓글 삭제
