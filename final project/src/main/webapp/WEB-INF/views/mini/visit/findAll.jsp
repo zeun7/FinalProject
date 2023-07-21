@@ -103,11 +103,11 @@ function findAll(page){
  					<div>
  					<span>
 	 					<input type="checkbox" class="row-check" />
-				        <h5>\${vo.writer}</h5>
 				        <div class="postit-content">\${vo.content}</div><br>
 			        </span>
 			        </div>
-			        <div style="margin-top: auto;">\${vo.cdate}</div>
+			        <div style="margin-top: auto;">- \${vo.writer} -</div>
+			        <div>\${vo.cdate}</div>
 			        </div>
 			        `;
             }
@@ -144,7 +144,7 @@ function toggleDeleteMode() {
 
 function select_diary_deleteOK() {
     // 체크된 행을 찾기
-    const checkedRows = $('.row-check:checked').parents('span');
+    const checkedRows = $('.row-check:checked').parents('.postit');
 
     // 체크된 행이 없다면 함수를 종료
     if (checkedRows.length === 0) {
@@ -160,14 +160,14 @@ function select_diary_deleteOK() {
         const row = $(this);
         const mcnum = row.data('mcnum');  // 데이터 mcnum을 가져옵니다.
 
-        $.ajax({
+	const promise = $.ajax({
             url: 'select_mc_deleteOK.do',
             method: 'POST',
             data: {
                 mcnum: mcnum
             },
             success: function(response) {
-                location.href='./mini_visit.do?id=' + '${mh_attr.id}';
+            	console.log('삭제 성공:', response);
             },
             error: function(xhr, status, error) {
                 // 삭제 실패: 에러 메시지를 표시합니다.
@@ -176,9 +176,10 @@ function select_diary_deleteOK() {
         });
     });
 
- 	// 모든 요청이 완료됐을 때 알림을 표시합니다.
+	// 모든 요청이 완료됐을 때 알림을 표시하고 페이지를 새로고침합니다.
     $.when(...promises).done(function() {
         alert('선택된 사진 삭제완료');
+        location.href='./mini_visit.do?id=' + '${mh_attr.id}';
     });
  	
     // 체크박스 숨기기

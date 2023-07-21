@@ -62,13 +62,6 @@ function selectAllCount(){ // 음악 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }//end selectAllCount()
 
-// function setActive(button) {
-//     // 모든 버튼에서 'active' 클래스 제거
-//     document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
-//     // 클릭한 버튼에 'active' 클래스 추가
-//     button.classList.add('active');
-// }
-
 function selectAll(page){
 	$.ajax({
 		url : "json_j_selectAll.do",
@@ -81,12 +74,12 @@ function selectAll(page){
 		success : function(arr){
 			let tag_vos = '';
 			
-// 			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
-//             const pageButtons = document.querySelectorAll('.paging-btn');
-//             pageButtons.forEach((btn) => btn.classList.remove('active'));
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
 
-//             // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
-//             pageButtons[page - 1].classList.add('active');
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
 			
 			for(let i in arr){
 				let vo = arr[i];
@@ -95,7 +88,7 @@ function selectAll(page){
 				tag_vos +=`
 					<tr>
 					<td style="text-align:center;">\${vo.bgm}
-					<span id="btn_\${i}"><btn class="btn btn-sm btn-outline-success btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
+					<span id="btn_\${i}"><btn class="btn btn-sm btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
 					<i class="nc-icon nc-headphones"></i></btn></span></td>
 					<td style="text-align:center;">\${date}</td>
 		        	</tr>	

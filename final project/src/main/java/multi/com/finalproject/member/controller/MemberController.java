@@ -109,7 +109,7 @@ public class MemberController {
 			String realPath = sContext.getRealPath("resources/uploadimg");
 			log.info("realPath : {}", realPath);
 
-			File f = new File(realPath + "\\" + vo.getProfilepic());
+			File f = new File(realPath + File.separator + vo.getProfilepic());
 			vo.getM_file().transferTo(f);
 
 			//// create thumbnail image/////////
@@ -118,7 +118,7 @@ public class MemberController {
 			Graphics2D graphic = thumb_buffer_img.createGraphics();
 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
 
-			File thumb_file = new File(realPath + "/thumb_" + vo.getProfilepic());
+			File thumb_file = new File(realPath + File.separator + "thumb_" + vo.getProfilepic());
 			String formatName = vo.getProfilepic().substring(vo.getProfilepic().lastIndexOf(".") + 1);
 			log.info("formatName : {}", formatName);
 			ImageIO.write(thumb_buffer_img, formatName, thumb_file);
@@ -144,12 +144,14 @@ public class MemberController {
 		
 		int count1=board_service.m_count(vo2);
 		int count2=miniboard_service.m_count2(vo2);
-		
+		log.info("count1: {}", count1);
+		log.info("count2: {}", count2);
 		int total = count1+count2;
 		
 		int likes1=board_service.b_likes(vo2);
 		int likes2=miniboard_service.mb_likes(vo2);
-		
+		log.info("likes1: {}", likes1);
+		log.info("likes2: {}", likes2);
 		int total_likes = likes1+likes2;
 		
 		model.addAttribute("total_likes",total_likes);
@@ -188,7 +190,7 @@ public class MemberController {
 			String realPath = sContext.getRealPath("resources/uploadimg");
 			log.info("realPath : {}", realPath);
 
-			File f = new File(realPath + "\\" + vo.getProfilepic());
+			File f = new File(realPath + File.separator + vo.getProfilepic());
 			vo.getM_file().transferTo(f);
 
 			//// create thumbnail image/////////
@@ -197,7 +199,7 @@ public class MemberController {
 			Graphics2D graphic = thumb_buffer_img.createGraphics();
 			graphic.drawImage(original_buffer_img, 0, 0, 50, 50, null);
 
-			File thumb_file = new File(realPath + "/thumb_" + vo.getProfilepic());
+			File thumb_file = new File(realPath + File.separator + "thumb_" + vo.getProfilepic());
 			String formatName = vo.getProfilepic().substring(vo.getProfilepic().lastIndexOf(".") + 1);
 			log.info("formatName : {}", formatName);
 			ImageIO.write(thumb_buffer_img, formatName, thumb_file);

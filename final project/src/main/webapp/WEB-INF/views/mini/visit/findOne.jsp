@@ -19,6 +19,7 @@
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link rel="stylesheet" href="resources/css/button.css">
 
 <style type="text/css">
 #contentArea {
@@ -67,7 +68,10 @@ function visitFindOne() {
 				<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 				<hr/>
 				<div id="buttonss" style="display: flex; justify-content: space-between;">
-					<div>작성일자 : \${miniComment.cdate}</div>
+					<div>
+						<a class="custom-btn btn-1" href="mini_visit.do?id=\${mh_attr_id}">목록으로</a>
+						작성일자 : \${miniComment.cdate}
+					</div>
 					<br/>
 					<div id="buttonContainer">
 						<button id="editButton" class="custom-btn btn-12" onclick="visitUpdate(\${miniComment.mcnum})">수정</button>

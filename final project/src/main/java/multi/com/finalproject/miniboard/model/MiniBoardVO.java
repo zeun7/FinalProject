@@ -21,5 +21,6 @@ public class MiniBoardVO {
 	private int likes;
 	private int isFileExist;
 	private String ai_path;
+	private int ccount;
 	
 }

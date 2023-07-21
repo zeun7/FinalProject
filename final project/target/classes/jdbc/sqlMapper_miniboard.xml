@@ -112,8 +112,7 @@
 		insert into report(rnum, mbnum, reason, id) values(seq_report.nextval, #{vo.mbnum}, #{reason}, #{id})
 	</insert>
 	
-	<select id="MB_COUNT_BY_NICKNAME" 
-	resultType="Integer">
-	select count(*) from miniboard where writer = #{nickname}
+	<select id="MB_COUNT_BY_NICKNAME" resultType="Integer">
+		select count(*) from miniboard where writer = #{nickname}
 	</select>
 </mapper>

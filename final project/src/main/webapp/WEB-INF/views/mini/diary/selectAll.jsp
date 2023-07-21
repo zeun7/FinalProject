@@ -114,8 +114,15 @@ function selectAll(page){
 	 				tag_vos += `<i class="fa-regular fa-image"></i>`;
 	 			}
 	 			        		
-	 			tag_vos +=        		`\${vo.title}</a></td>
-	 			        <td>\${vo.writer}</td>
+	 			tag_vos += `\${vo.title} `;
+	 			
+	 			if(vo.ccount !== 0){
+					tag_vos += `[\${vo.ccount}]</a></td>`;
+				} else {
+					tag_vos += `</a></td>`;
+				}
+	 			
+	 			tag_vos += `<td>\${vo.writer}</td>
 	 			        <td>\${date}</td>
 	 			        <td></td>
 	 			    </tr>

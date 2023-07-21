@@ -419,4 +419,33 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 		}
 	}
 
+	@Override
+	public int mb_ccount(MiniBoardVO vo) {
+		log.info("mb_ccount()...{}", vo);
+		
+		Bson filter = Filters.eq("mbnum", vo.getMbnum());
+
+	    int count = (int) MiniComments.count(filter);
+		
+		return count;
+	}
+	
+	@Override
+	public int select_delete(MiniCommentsVO vo) {
+		log.info("select_delete(vo)...{}", vo);
+		int flag = 0;
+
+		try {
+			Bson filter = new Document("mcnum", vo.getMcnum());
+
+			DeleteResult result = MiniComments.deleteOne(filter);
+			log.info("DeletedCount : {}", result.getDeletedCount());
+
+			flag = (int)result.getDeletedCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
 }

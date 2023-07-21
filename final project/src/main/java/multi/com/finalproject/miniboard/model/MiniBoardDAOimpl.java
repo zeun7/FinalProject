@@ -178,7 +178,7 @@ public class MiniBoardDAOimpl implements MiniBoardDAO {
 	@Override
 	public int m_count2(MemberVO vo) {
 		log.info("vo: {}", vo);
-		return sqlSession.insert("MB_COUNT_BY_NICKNAME", vo);
+		return sqlSession.selectOne("MB_COUNT_BY_NICKNAME", vo);
 	}
 
 	@Override

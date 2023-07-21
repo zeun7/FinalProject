@@ -93,8 +93,9 @@ function selectAll(page){
 				console.log(vo);
 				tag_vos +=`
 					<tr>
-					<td>\${vo.bgm}</td>
-					<td><button class="btn-gradient yellow mini" type="button" id="btn_\${i}" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">\${vo.bgm}</button></td>
+					<td style="text-align:center;">\${vo.bgm}
+					<span id="btn_\${i}"><btn class="btn btn-sm btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
+					<i class="nc-icon nc-headphones"></i></btn></span></td>
 					<td><button class="btn-gradient cyan mini" type="button" onclick="setBGM('\${vo.bgm}')">설정하기</button></td>
 		        	</tr>	
 				`;
@@ -107,6 +108,16 @@ function selectAll(page){
 		}
 	});//end $.ajax()
 }//end selectAll()
+
+function showMusicPlayer(btn_id ,bgm){
+    console.log(bgm);
+    let audio=`
+        <audio controls autoplay>
+            <source src="resources/uploadbgm/\${bgm}" type="audio/mp3">
+        </audio>
+    `;
+    $("#"+btn_id).html(audio);
+}
 
 function setBGM(bgm){
 	let tag_mp = `
@@ -212,13 +223,12 @@ function setBGM(bgm){
 				</div>
 
 				<div id="modal">
-					<div class="modal-content">
+					<div class="juke-modal-content">
 						<h1>쥬크박스</h1>
 						<table>
 							<thead>
 								<tr>
 									<th>보유 음악</th>
-									<th>미리듣기</th>
 								</tr>
 							</thead>
 							<tbody id="vos">

@@ -6,19 +6,19 @@
   <mapper namespace="multi.com.finalproject.board">
   	<select id="B_SELECT_ALL" resultType="multi.com.finalproject.board.model.BoardVO" parameterType="Map">
   		<![CDATA[
-		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist 
+		SELECT bnum, caname, title, writer, wdate, vcount, likes, isfileexist, ccount 
 		FROM
 		  (
-		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
+		  SELECT SEQ, bnum, caname, title, writer, wdate, vcount, likes, isfileexist, ccount  
 		  FROM
 		  (
-		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist  
+		    SELECT ROWNUM AS seq, bnum, caname, title, writer, wdate, vcount, likes, isfileexist, ccount 
 		    FROM
 		      (
-		        SELECT *
-		        FROM board
+		        SELECT b.*, (SELECT COUNT(*) FROM COMMENTS C WHERE C.BNUM = b.bnum) as ccount 
+		        FROM board b 
 		        where bname=#{vo.bname} 
-		        ORDER BY (case when caname = 'notice' then 1 else 2 end), bnum DESC
+		        ORDER BY (case when caname = 'category00' then 1 else 2 end), bnum DESC
 		      )
 		  )
 		WHERE SEQ >= (#{page}-1)*#{limit}+1 
@@ -183,9 +183,8 @@
 		delete from likes where id = #{id}
 	</delete>
 	
-	<select id="B_COUNT_BY_WRITER"
-	resultType="Integer">
-	select count(*) from board where writer = #{nickname}
+	<select id="B_COUNT_BY_WRITER" resultType="Integer">
+		select count(*) from board where writer = #{nickname}
 	</select>
 
   </mapper>

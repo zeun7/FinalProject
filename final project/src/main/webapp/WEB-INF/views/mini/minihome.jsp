@@ -58,9 +58,9 @@ function recent_visitLog(){
  				}
             	
                 visit_log += `
-			        <div class="postit" style="background-color:\${miniComment.color}">
+                	<div class="postit" style="background-color:\${miniComment.color}" onclick="gotoFindOne(\${miniComment.mcnum})">
                 	<div>
- 					<span onclick="gotoFindOne(\${miniComment.mcnum})">
+ 					<span>
 				        <h5>\${miniComment.writer}</h5>
 				        <div class="postit-content">\${miniComment.content}</div>
 			        </span>

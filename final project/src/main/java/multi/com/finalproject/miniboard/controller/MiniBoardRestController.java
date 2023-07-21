@@ -33,6 +33,7 @@ import multi.com.finalproject.jukebox.service.JukeboxService;
 import multi.com.finalproject.member.model.MemberVO;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
+import multi.com.finalproject.minicomments.service.MiniCommentsService;
 
 @Slf4j
 @Controller
@@ -46,6 +47,9 @@ public class MiniBoardRestController {
 	
 	@Autowired
 	ServletContext sContext;
+	
+	@Autowired
+	MiniCommentsService minicomments_service;
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mb_count.do", method = RequestMethod.GET)
@@ -69,6 +73,10 @@ public class MiniBoardRestController {
 		List<MiniBoardVO> vos = service.mb_selectAll(map);
 		for (MiniBoardVO x : vos) {
 			log.info(x.toString());
+		}
+		
+		for(MiniBoardVO vo2 : vos) {
+			vo2.setCcount(minicomments_service.mb_ccount(vo2));
 		}
 		
 		return vos;

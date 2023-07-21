@@ -90,4 +90,12 @@ public class MiniCommentsService {
 		dao.deleteWriter(vo);
 	}
 
+	public int mb_ccount(MiniBoardVO vo) {
+		return dao.mb_ccount(vo);
+	}
+	
+	public int select_delete(MiniCommentsVO vo) {
+		return dao.select_delete(vo);
+	}
+
 }

@@ -91,7 +91,7 @@ function selectAll(page){
 				tag_vos +=`
 					<tr>
 					<td>\${vo.bgm}</td>
-					<td><span id="btn_\${i}"><btn class="btn btn-sm btn-outline-success btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
+					<td><span id="btn_\${i}"><btn class="btn btn-sm btn-round btn-icon" onclick="showMusicPlayer('btn_\${i}', '\${vo.bgm}')">
 					<i class="nc-icon nc-headphones"></i></btn></span></td>
 					<td><button onclick="jukebox_check('\${vo.bgm}')" class="btn btn-primary btn-round">구매하기</button></td>
 		        	</tr>	

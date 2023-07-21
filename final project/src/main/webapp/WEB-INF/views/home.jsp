@@ -83,9 +83,21 @@ function post_friends(sortKey){
 				}
 				
 				if(vo.mbname === 'diary'){
-					tag_vos += `<a style="width: 200px;" href="diary_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>`;
+					tag_vos += `<a style="width: 200px;" href="diary_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
+					
+					if(vo.ccount !== 0){
+						tag_vos += `[\${vo.ccount}]</a></td>`;
+					} else {
+						tag_vos += `</a></td>`;
+					}
 				}else{
-					tag_vos += `<a style="width: 200px;" href="gallery_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>`;
+					tag_vos += `<a style="width: 200px;" href="gallery_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
+
+					if(vo.ccount !== 0){
+						tag_vos += `[\${vo.ccount}]</a></td>`;
+					} else {
+						tag_vos += `</a></td>`;
+					}
 				}
 				
 				tag_vos += `<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>

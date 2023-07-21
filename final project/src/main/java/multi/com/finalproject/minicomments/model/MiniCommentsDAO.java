@@ -45,4 +45,8 @@ public interface MiniCommentsDAO {
 
 	public void deleteWriter(MemberVO vo);
 
+	public int mb_ccount(MiniBoardVO vo);
+	
+	public int select_delete(MiniCommentsVO vo);
+
 }

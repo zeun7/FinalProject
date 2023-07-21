@@ -99,7 +99,7 @@ function selectAll(page, limit){
  					date = moment(vo.wdate).format('MM-DD');
  				}
  				
- 				if(vo.caname === 'category01'){ <!-- 카테고리 -->
+ 				if(vo.caname === 'category00'){ <!-- 카테고리 -->
  					vo.caname = '공지';
  				} else if(vo.caname === 'category01'){
 					vo.caname = '자유';
@@ -156,7 +156,15 @@ function selectAll(page, limit){
  					tag_vos += `<i class="fa-regular fa-image"></i>`;
  				}
  				tag_vos += `
- 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
+ 						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title} `;
+ 				
+ 				if(vo.ccount !== 0){
+ 					tag_vos += `[\${vo.ccount}]</a></td>`;
+ 				} else {
+ 					tag_vos += `</a></td>`;
+ 				}
+ 				
+ 				tag_vos += `
 						<td>\${vo.writer}</td>
 						<td>\${vo.vcount}</td>
 						<td>\${vo.likes}</td>

@@ -211,4 +211,18 @@ public class MiniCommentsRestController {
 		
 		return map;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/select_mc_deleteOK.do", method = RequestMethod.POST)
+	public String select_mc_deleteOK(MiniCommentsVO vo) {
+		log.info("/select_mc_deleteOK(vo)...{}", vo);
+
+		int result = service.select_delete(vo);
+		log.info("result : {}", result);
+		if (result == 1) {
+		    return "success";
+	    } else {
+	        return "error";
+	    }
+	}
 }
