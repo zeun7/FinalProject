@@ -23,7 +23,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let url = '175.45.201.175:8080/finalproject/b_selectOne.do?bnum='+${param.bnum};
-let encodeUrl = encodeURIComponent(location.href)
+let encodeUrl = encodeURIComponent(location.href);
 let iswriter = false;
 let report_cnum = 0;
 let report_ccnum = 0;
@@ -510,8 +510,9 @@ function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function c_updateOK(cnum){		// 댓글 수정 완료 버튼
@@ -534,8 +535,9 @@ function c_updateOK(cnum){		// 댓글 수정 완료 버튼
 			},
 			error: function(xhr, status, error){
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function c_deleteOK(cnum){		// 댓글 삭제
@@ -824,8 +826,8 @@ if('${nickname}' === '${vo2.writer}' || '${mclass}' === '1'){
 	
 $('#url').html(url);
 let modal = document.getElementById("modal");
-let board_report_modal = document.getElementById("board_report_modal")
-let cmt_report_modal = document.getElementById("cmt_report_modal") 
+let board_report_modal = document.getElementById("board_report_modal");
+let cmt_report_modal = document.getElementById("cmt_report_modal");
 
 function open_modal(){
 	modal.style.display = "block";

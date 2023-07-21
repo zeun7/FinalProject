@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,59 +8,38 @@
 <title>글수정</title>
 <link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
-// 	$(function(){
-// 		if('${vo2.filepath}' === ''){
-// 			$('#filepath_text').html('파일 업로드');
-// 			$('#del_file_button').hide();
-// 		}else{
-// 			let file_name = '${vo2.filepath}';
-// 			file_name = file_name.replace('resources/uploadimg_board/', '');
-// 			$('#filepath_text').html(file_name);
-// 			$('#del_file_button').show();
-// 		}
-// 	});//end onload
+$(function(){
+	let content_val = '${vo2.content}';
+	content_val = content_val.replaceAll('<img src="', '<img src="../../');
+	content_val = content_val.replaceAll('<video src="', '<video src="../../');
+	$("#content").val(content_val);
+});//end onload
+
+function input_check(){
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	let content_val = $("#content").val();
 	
-// 	function delete_file(){
-// 		$('#filepath').val('');
-// 		$('#filepath_text').html('파일 업로드');
-// 	}//end delete_file()
+	//파일이 첨부되어있는지 확인
+	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
+		let input = document.getElementById("isFileExist");
+		input.value = 1;
+	}
 	
-// 	function show_file(){
-// 		$('#filepath_text').html($('#file').val());
-// 		$('#del_file_button').show();
-// 	}//end show_file()
+	console.log(content_val);
+	content_val = content_val.replaceAll('<img src="../../', '<img src="');
+	content_val = content_val.replaceAll('<video src="../../', '<video src="');
+	$("#content").val(content_val);
 	
-	$(function(){
-		let content_val = '${vo2.content}';
-		content_val = content_val.replaceAll('<img src="', '<img src="../../');
-		content_val = content_val.replaceAll('<video src="', '<video src="../../');
-		$("#content").val(content_val);
-	});//end onload
-	
-	function input_check(){
-		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-		let content_val = $("#content").val();
-		
-		//파일이 첨부되어있는지 확인
-		if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
-			let input = document.getElementById("isFileExist");
-			input.value = 1;
-		}
-		
-		console.log(content_val);
-		content_val = content_val.replaceAll('<img src="../../', '<img src="');
-		content_val = content_val.replaceAll('<video src="../../', '<video src="');
-		$("#content").val(content_val);
-		
-		if($("#title").val() === ''){
-			alert('제목을 입력하세요');
-		}else if($("#content").val() === ''){
-			alert('내용을 입력하세요');
-		}else{
-			document.getElementById("update_form").submit();
-		}
-	}//end input_check()
+	if($("#title").val() === ''){
+		alert('제목을 입력하세요');
+	}else if($("#content").val() === ''){
+		alert('내용을 입력하세요');
+	}else{
+		document.getElementById("update_form").submit();
+	}
+}//end input_check()
 </script>
 </head>
 <body>
@@ -82,11 +62,60 @@
 								<input type="hidden" name="writer" id="writer" value="${vo2.writer }">
 							</td>
 							<td>
-								<select name="caname" id="caname">
-									<option id="general" value="general">일반</option>						
-									<option id="notice" value="notice">공지</option>
-									<option id="question" value="question">질문</option>
-								</select>
+								<c:set var="bname" value="${vo2.bname}"></c:set>
+								<c:choose>
+									<c:when test="${bname eq 'board01'}"> <!-- 자유 -->
+										<select name="caname" id="board01">
+											<option value="category01">자유</option>
+											<option value="category02">질문</option>
+											<option value="category03">썰</option>
+											<option id="announcement" value="category00">공지</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq 'board02'}"> <!-- 일상 -->
+										<select name="caname" id="board02">
+											<option value="category04">일상</option>
+											<option value="category05">맛집</option>
+											<option value="category06">고민</option>
+											<option value="category07">OOTD</option>
+											<option value="category08">뷰티</option>
+											<option id="announcement" value="category00">공지</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq 'board03'}"> <!-- 유머 -->
+										<select name="caname" id="board03">
+											<option value="category09">유머</option>
+											<option value="category10">이슈</option>
+											<option id="announcement" value="category00">공지</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
+										<select name="caname" id="board04">
+											<option value="category11">가수</option>
+											<option value="category12">아이돌</option>
+											<option value="category13">배우</option>
+											<option value="category14">드라마</option>
+											<option value="category15">영화</option>
+											<option value="category16">유튜브</option>
+											<option id="announcement" value="category00">공지</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
+										<select name="caname" id="board05">
+											<option value="category17">축구</option>
+											<option value="category18">야구</option>
+											<option value="category19">농구</option>
+											<option value="category20">배구</option>
+											<option value="category21">골프</option>
+											<option value="category22">e스포츠</option>
+											<option id="announcement" value="category00">공지</option>
+										</select>
+									</c:when>
+								</c:choose>
 							</td>
 						</tr>
 					</thead>
@@ -127,7 +156,7 @@
 </div>
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-	let caname = document.querySelector('#${vo2.caname}');
+	let caname = document.querySelector('#${vo2.bname}');
 	caname.setAttribute('selected', true);
 	
 	var oEditors = [];
@@ -186,8 +215,6 @@
 				},
 				error : function(xhr, status, error) {
 					console.log('xhr:', xhr.status);
-		//			console.log('status:', status);
-		//			console.log('error:', error);
 				}
 			});//end $.ajax()
 		}//end if
