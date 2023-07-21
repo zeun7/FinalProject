@@ -98,7 +98,7 @@ function post_friends(sortKey){
 				</table>
 				`;
 			
-			$('#hot').html(tag_vos);
+			$('#인기글').html(tag_vos);
 		}
 	});
 }
@@ -117,7 +117,10 @@ function post_board(boardName, sortKey){
 		bname = '엔터';
 	} else if(boardName === 'board05'){
 		bname = '스포츠';
+	}else if(boardName === 'hot'){
+		bname = '인기글';
 	}
+	
 	
 	$.ajax({
 		url: 'json_post_board.do',
@@ -205,7 +208,7 @@ $(document).ready(function(){
 					<div class="card-body" style="display: flex; justify-content: center; flex: 1;">
 						<table style="display:flex; justify-content: space-between;">
 							<tr style="display:flex;">
-								<td id="hot" style="width: 500px;"></td>
+								<td id="인기글" style="width: 500px;"></td>
 								<td id="자유" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
 							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
