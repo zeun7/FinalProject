@@ -18,7 +18,7 @@ import multi.com.finalproject.openai.model.ResponseVO;
 @Slf4j
 @Service
 public class GptService {
-	private String API_KEY = "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";
+	private String API_KEY = "";
     private static final String COMPLETION_ENDPOINT = "https://api.openai.com/v1/completions";
     private static final String IMAGES_ENDPOINT = "https://api.openai.com/v1/images/generations";
 
