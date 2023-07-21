@@ -669,6 +669,11 @@ function goBack() {
 						<div class="card-body">
 							<div>
 								<p id="content">
+									<c:set var="ai_path" value="${vo2.ai_path}"></c:set>
+									<c:if test="${not empty ai_path}">
+										<img src="${vo2.ai_path}" width="600px" height="600px">
+										<hr>
+									</c:if>
 									<span id="contentSpan">${vo2.content}</span>
 									<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 								</p>

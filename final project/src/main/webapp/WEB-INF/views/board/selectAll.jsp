@@ -204,13 +204,6 @@ function searchList(page, limit){
  					date = moment(vo.wdate).format('MM-DD');
  				}
 
- 				if(vo.caname === 'general'){
-					vo.caname = '일반';
-				}else if(vo.caname === 'notice'){
-					vo.caname = '공지';
-				}else{
-					vo.caname = '질문';
-				}
 				tag_vos += `
  					<tr>
  						<td><a>\${vo.bnum}</a></td>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,11 +51,55 @@
 								<input type="hidden" name="writer" id="writer" value="${nickname }">
 							</td>
 							<td>
-								<select name="caname" id="caname">
-									<option value="general">일반</option>
-									<option id="announcement" value="notice">공지</option>
-									<option value="question">질문</option>
-								</select>
+								<c:set var="bname" value="${param.bname}"></c:set>
+								<c:choose>
+									<c:when test="${bname eq '자유'}"> <!-- 자유 -->
+										<select name="caname" id="caname">
+											<option value="자유">자유</option>
+											<option value="질문">질문</option>
+											<option value="썰">썰</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq '일상'}"> <!-- 일상 -->
+										<select name="caname" id="caname">
+											<option value="일상">일상</option>
+											<option value="맛집">맛집</option>
+											<option value="고민">고민</option>
+											<option value="OOTD">OOTD</option>
+											<option value="뷰티">뷰티</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq '유머'}"> <!-- 유머 -->
+										<select name="caname" id="caname">
+											<option value="유머">유머</option>
+											<option value="이슈">이슈</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq '엔터'}"> <!-- 엔터 -->
+										<select name="caname" id="caname">
+											<option value="가수">가수</option>
+											<option value="아이돌">아이돌</option>
+											<option value="배우">배우</option>
+											<option value="드라마">드라마</option>
+											<option value="영화">영화</option>
+											<option value="유튜브">유튜브</option>
+										</select>
+									</c:when>
+									
+									<c:when test="${bname eq '스포츠'}"> <!-- 스포츠 -->
+										<select name="caname" id="caname">
+											<option value="축구">축구</option>
+											<option value="야구">야구</option>
+											<option value="농구">농구</option>
+											<option value="배구">배구</option>
+											<option value="골프">골프</option>
+											<option value="e스포츠">e스포츠</option>
+										</select>
+									</c:when>
+								</c:choose>
 							</td>
 						</tr>
 					</thead>

@@ -21,6 +21,7 @@
  <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
  <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/modal.css">
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -103,6 +104,9 @@ function input_check(){
 		if($('#AI_Image').is(':checked')){
 			var result = pcount_down();
 			if(result == 1){
+				let modal = document.getElementById("modal");
+				modal.style.display = "block";
+				document.body.style.overflow = "hidden"; // 스크롤바 제거
 				gpt_translate(content_txtonly);
 			}
 		}else{
@@ -127,6 +131,7 @@ function gpt_translate(content_txtonly){
 		success : function(vo){
 			console.log(vo.response);
 			gptTxt = vo.response;
+			gptTxt += "I imagine this in cute cartoon style.";
 			gpt_make_image(gptTxt);
 		},
 		error : function(xhr, status, error){
@@ -166,6 +171,8 @@ function gpt_download_image(imgUrl){
 		success : function(map){
 			console.log(map.filepath);
 			$('#ai_path').val(map.filepath);
+			let input = document.getElementById("isFileExist");
+			input.value = 1;
 			submit_form();
 		},
 		error : function(xhr, status, error){
@@ -186,7 +193,7 @@ function submit_form(){
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card card-user">
@@ -235,6 +242,13 @@ function submit_form(){
       <jsp:include page="../../footer.jsp"></jsp:include>
     </div>
   </div>
+  
+  <div id="modal">
+	<div class="modal-content" style="top:5%; left:10%; width:350px; height:350px; align-content: center;">
+		<h4 style="margin-top: auto; margin-bottom: auto;">AI 이미지 생성중...</h4>
+		
+	</div>
+</div>
 
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">

@@ -2,7 +2,6 @@
 <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Paper Dashboard 2 by Creative Tim</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 <!--     Fonts and icons     -->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -28,31 +27,31 @@
 		<ul class="nav">
 			<li class="active "><a href="home.do"> <i
 					class="nc-icon nc-bank"></i>
-					<p>Home</p>
+					<p>홈</p>
 			</a></li>
 			<li><a href="mini_home.do?id=${user_id}"
 				onclick="openMiniHomePage(event)"> <i class="nc-icon nc-diamond"></i>
-					<p>Minihome</p>
+					<p>미니홈피</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board1"> <i
+			<li><a href="b_selectAll.do?bname=자유"> <i
 					class="nc-icon nc-pin-3"></i>
-					<p>board1</p>
+					<p>자유</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board2"> <i
+			<li><a href="b_selectAll.do?bname=일상"> <i
 					class="nc-icon nc-bell-55"></i>
-					<p>board2</p>
+					<p>일상</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board3"> <i
+			<li><a href="b_selectAll.do?bname=유머"> <i
 					class="nc-icon nc-single-02"></i>
-					<p>board3</p>
+					<p>유머</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board4"> <i
+			<li><a href="b_selectAll.do?bname=엔터"> <i
 					class="nc-icon nc-tile-56"></i>
-					<p>board4</p>
+					<p>엔터</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board5"> <i
+			<li><a href="b_selectAll.do?bname=스포츠"> <i
 					class="nc-icon nc-caps-small"></i>
-					<p>board5</p>
+					<p>스포츠</p>
 			</a></li>
 			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
 					<p>친구목록</p>
