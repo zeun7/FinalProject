@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,13 +98,52 @@ function selectAll(page, limit){
  					date = moment(vo.wdate).format('MM-DD');
  				}
  				
- 				if(vo.caname === 'general'){
-					vo.caname = '일반';
-				}else if(vo.caname === 'notice'){
-					vo.caname = '공지';
-				}else{
+ 				if(vo.caname === 'category01'){ <!-- 카테고리 -->
+					vo.caname = '자유';
+ 				} else if(vo.caname === 'category02'){
 					vo.caname = '질문';
-				}
+ 				} else if(vo.caname === 'category03'){
+					vo.caname = '썰';
+ 				} else if(vo.caname === 'category04'){
+ 					vo.caname = '일상';
+ 				} else if(vo.caname === 'category05'){
+	 				vo.caname = '맛집';
+ 				} else if(vo.caname === 'category06'){
+	 				vo.caname = '고민';
+ 				} else if(vo.caname === 'category07'){
+	 				vo.caname = 'OOTD';
+ 				} else if(vo.caname === 'category08'){
+	 				vo.caname = '뷰티';
+ 				} else if(vo.caname === 'category09'){
+ 					vo.caname = '유머';
+ 				} else if(vo.caname === 'category10'){
+ 					vo.caname = '이슈';
+ 				} else if(vo.caname === 'category11'){
+ 					vo.caname = '가수'; 
+ 				} else if(vo.caname === 'category12'){
+ 					vo.caname = '아이돌';
+ 				} else if(vo.caname === 'category13'){
+ 					vo.caname = '배우';
+ 				} else if(vo.caname === 'category14'){
+ 					vo.caname = '드라마';
+ 				} else if(vo.caname === 'category15'){
+ 					vo.caname = '영화';
+ 				} else if(vo.caname === 'category16'){
+ 					vo.caname = '유튜브';
+ 				} else if(vo.caname === 'category17'){
+ 					vo.caname = '축구';
+ 				} else if(vo.caname === 'category18'){
+ 					vo.caname = '야구';
+ 				} else if(vo.caname === 'category19'){
+ 					vo.caname = '농구';
+ 				} else if(vo.caname === 'category20'){
+ 					vo.caname = '배구';
+ 				} else if(vo.caname === 'category21'){
+ 					vo.caname = '골프';
+ 				} else if(vo.caname === 'category22'){
+ 					vo.caname = 'e스포츠';
+ 				}
+ 				
  				tag_vos += `
  					<tr data-bnum="\${vo.bnum}">
  						<td><a>\${vo.bnum}</a></td>
@@ -252,7 +292,24 @@ function changeLimit(){
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<h1 class="card-title" style="text-align:center;">${param.bname}</h1>
+						<h1 class="card-title" style="text-align:center;">
+							<c:set var="bname" value="${param.bname}"></c:set>
+							<c:choose><c:when test="${bname eq 'board01'}"> <!-- 자유 -->
+									자유
+							</c:when></c:choose>
+							<c:choose><c:when test="${bname eq 'board02'}"> <!-- 일상 -->
+									일상
+							</c:when></c:choose>
+							<c:choose><c:when test="${bname eq 'board03'}"> <!-- 유머 -->
+									유머
+							</c:when></c:choose>
+							<c:choose><c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
+									엔터
+							</c:when></c:choose>
+							<c:choose><c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
+									스포츠
+							</c:when></c:choose>
+						</h1>
 					</div>
 					<div class="card-body">
 						<div style="display: flex; justify-content: space-between;">

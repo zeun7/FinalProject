@@ -7,6 +7,7 @@
 <title>글쓰기</title>
 <link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	function input_check(){
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -53,50 +54,50 @@
 							<td>
 								<c:set var="bname" value="${param.bname}"></c:set>
 								<c:choose>
-									<c:when test="${bname eq '자유'}"> <!-- 자유 -->
+									<c:when test="${bname eq 'board01'}"> <!-- 자유 -->
 										<select name="caname" id="caname">
-											<option value="자유">자유</option>
-											<option value="질문">질문</option>
-											<option value="썰">썰</option>
+											<option value="category01">자유</option>
+											<option value="category02">질문</option>
+											<option value="category03">썰</option>
 										</select>
 									</c:when>
 									
-									<c:when test="${bname eq '일상'}"> <!-- 일상 -->
+									<c:when test="${bname eq 'board02'}"> <!-- 일상 -->
 										<select name="caname" id="caname">
-											<option value="일상">일상</option>
-											<option value="맛집">맛집</option>
-											<option value="고민">고민</option>
-											<option value="OOTD">OOTD</option>
-											<option value="뷰티">뷰티</option>
+											<option value="category04">일상</option>
+											<option value="category05">맛집</option>
+											<option value="category06">고민</option>
+											<option value="category07">OOTD</option>
+											<option value="category08">뷰티</option>
 										</select>
 									</c:when>
 									
-									<c:when test="${bname eq '유머'}"> <!-- 유머 -->
+									<c:when test="${bname eq 'board03'}"> <!-- 유머 -->
 										<select name="caname" id="caname">
-											<option value="유머">유머</option>
-											<option value="이슈">이슈</option>
+											<option value="category09">유머</option>
+											<option value="category10">이슈</option>
 										</select>
 									</c:when>
 									
-									<c:when test="${bname eq '엔터'}"> <!-- 엔터 -->
+									<c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
 										<select name="caname" id="caname">
-											<option value="가수">가수</option>
-											<option value="아이돌">아이돌</option>
-											<option value="배우">배우</option>
-											<option value="드라마">드라마</option>
-											<option value="영화">영화</option>
-											<option value="유튜브">유튜브</option>
+											<option value="category11">가수</option>
+											<option value="category12">아이돌</option>
+											<option value="category13">배우</option>
+											<option value="category14">드라마</option>
+											<option value="category15">영화</option>
+											<option value="category16">유튜브</option>
 										</select>
 									</c:when>
 									
-									<c:when test="${bname eq '스포츠'}"> <!-- 스포츠 -->
+									<c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
 										<select name="caname" id="caname">
-											<option value="축구">축구</option>
-											<option value="야구">야구</option>
-											<option value="농구">농구</option>
-											<option value="배구">배구</option>
-											<option value="골프">골프</option>
-											<option value="e스포츠">e스포츠</option>
+											<option value="category17">축구</option>
+											<option value="category18">야구</option>
+											<option value="category19">농구</option>
+											<option value="category20">배구</option>
+											<option value="category21">골프</option>
+											<option value="category22">e스포츠</option>
 										</select>
 									</c:when>
 								</c:choose>

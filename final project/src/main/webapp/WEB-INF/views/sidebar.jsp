@@ -25,38 +25,34 @@
 	</div>
 	<div class="sidebar-wrapper">
 		<ul class="nav">
-			<li class="active "><a href="home.do"> <i
-					class="nc-icon nc-bank"></i>
-					<p>홈</p>
-			</a></li>
 			<li><a href="mini_home.do?id=${user_id}"
-				onclick="openMiniHomePage(event)"> <i class="nc-icon nc-diamond"></i>
+				onclick="openMiniHomePage(event)"> <i class="nc-icon nc-album-2"></i>
 					<p>미니홈피</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=자유"> <i
-					class="nc-icon nc-pin-3"></i>
+			<li><a href="b_selectAll.do?bname=board01"> <i
+					class="nc-icon nc-bulb-63"></i>
 					<p>자유</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=일상"> <i
-					class="nc-icon nc-bell-55"></i>
+			<li><a href="b_selectAll.do?bname=board02"> <i
+					class="nc-icon nc-button-play"></i>
 					<p>일상</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=유머"> <i
-					class="nc-icon nc-single-02"></i>
+			<li><a href="b_selectAll.do?bname=board03"> <i
+					class="nc-icon nc-satisfied"></i>
 					<p>유머</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=엔터"> <i
-					class="nc-icon nc-tile-56"></i>
+			<li><a href="b_selectAll.do?bname=board04"> <i
+					class="nc-icon nc-diamond"></i>
 					<p>엔터</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=스포츠"> <i
-					class="nc-icon nc-caps-small"></i>
+			<li><a href="b_selectAll.do?bname=board05"> <i
+					class="nc-icon nc-user-run"></i>
 					<p>스포츠</p>
 			</a></li>
-			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
+			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-single-02"></i>
 					<p>친구목록</p>
 			</a></li>
-			<li id="manage"><a href="manage.do"><i class="nc-icon nc-caps-small"></i>
+			<li id="manage"><a href="manage.do"><i class="nc-icon nc-settings"></i>
 					<p>관리</p>
 			</a></li>
 		</ul>
