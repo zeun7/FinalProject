@@ -23,11 +23,11 @@ let limit = 5;
 $(function(){
 	console.log('load posts...');
 	
-	post_board('board1', 'wdate');
-	post_board('board2', 'wdate');
-	post_board('board3', 'wdate');
-	post_board('board4', 'wdate');
-	post_board('board5', 'wdate');
+	post_board('board01', 'wdate');
+	post_board('board02', 'wdate');
+	post_board('board03', 'wdate');
+	post_board('board04', 'wdate');
+	post_board('board05', 'wdate');
 	if(uid === ''){
 		post_board('hot', 'wdate');
 	}
@@ -65,7 +65,13 @@ function post_friends(sortKey){
 					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
-				let date = moment(vo.wdate).format('YY/MM/DD HH:mm');
+				let date = '';
+				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
+ 					date = moment(vo.wdate).format('HH:mm');
+ 				} else{											// 오늘 이전에 작성한 게시글
+ 					date = moment(vo.wdate).format('MM-DD');
+ 				}
+				
 				tag_vos += `
 					<tr data-bnum="\${vo.mbnum}">
 						<td style="width: 50px">\${vo.mbnum}</td>
@@ -99,12 +105,24 @@ function post_friends(sortKey){
 
 function post_board(boardName, sortKey){
 	console.log('load board posts...'+boardName);
-	let bname = boardName;
+	
+	let bname = '';
+	if(boardName === 'board01'){
+		bname = '자유';
+	} else if(boardName === 'board02'){
+		bname = '일상';
+	} else if(boardName === 'board03'){
+		bname = '유머';
+	} else if(boardName === 'board04'){
+		bname = '엔터';
+	} else if(boardName === 'board05'){
+		bname = '스포츠';
+	}
 	
 	$.ajax({
 		url: 'json_post_board.do',
 		data: {
-			bname: bname,
+			bname: boardName,
 			limit: limit,
 			sortKey: sortKey
 			},
@@ -118,7 +136,7 @@ function post_board(boardName, sortKey){
 					<thead>
 						<tr>
 							<th colspan="3" style="text-align: center;">`;
-			tag_vos += `<a href="b_selectAll.do?bname=`+bname+`">`+boardName+`</a>`;
+			tag_vos += `<a href="b_selectAll.do?bname=`+bname+`">`+bname+`</a>`;
 			tag_vos += `			</th>
 							<th style="display: flex;">
 								<button style="margin-right:2px;" class="button btnPush" onclick="post_board('`+boardName+`', 'vcount')">인기순</button>
@@ -129,7 +147,13 @@ function post_board(boardName, sortKey){
 					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
-				let date = moment(vo.wdate).format('YY/MM/DD HH:mm');
+				let date = '';
+				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
+ 					date = moment(vo.wdate).format('HH:mm');
+ 				} else{											// 오늘 이전에 작성한 게시글
+ 					date = moment(vo.wdate).format('MM-DD');
+ 				}
+				
 				tag_vos += `
 					<tr data-bnum="\${vo.bnum}">
 						<td style="width: 50px">\${vo.bnum}</td>
@@ -182,17 +206,17 @@ $(document).ready(function(){
 						<table style="display:flex; justify-content: space-between;">
 							<tr style="display:flex;">
 								<td id="hot" style="width: 500px;"></td>
-								<td id="board1" style="margin-left: 80px; width: 500px;"></td>
+								<td id="자유" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
 							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
 							<tr style="display:flex;">
-								<td id="board2" style="width: 500px;"></td>
-								<td id="board3" style="margin-left: 80px; width: 500px;"></td>
+								<td id="일상" style="width: 500px;"></td>
+								<td id="유머" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
 							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
 							<tr style="display:flex;">
-								<td id="board4" style="width: 500px;"></td>
-								<td id="board5" style="margin-left: 80px; width: 500px;"></td>
+								<td id="엔터" style="width: 500px;"></td>
+								<td id="스포츠" style="margin-left: 80px; width: 500px;"></td>
 							</tr>
 							<tr><td colspan="2" style="width: 1000px;"><br></td></tr>
 						</table>

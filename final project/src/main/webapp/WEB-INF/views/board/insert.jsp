@@ -39,7 +39,22 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" style="margin-top:20px; margin-left:20px">
-				<h1>${param.bname }</h1>
+				<h1><c:set var="bname" value="${param.bname}"></c:set>
+					<c:choose><c:when test="${bname eq 'board01'}"> <!-- 자유 -->
+							자유
+					</c:when></c:choose>
+					<c:choose><c:when test="${bname eq 'board02'}"> <!-- 일상 -->
+							일상
+					</c:when></c:choose>
+					<c:choose><c:when test="${bname eq 'board03'}"> <!-- 유머 -->
+							유머
+					</c:when></c:choose>
+					<c:choose><c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
+							엔터
+					</c:when></c:choose>
+					<c:choose><c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
+							스포츠
+					</c:when></c:choose></h1>
 			</div>
 			<div class="card-body" style="width: 100%">
 				<form action="b_insertOK.do" method="post" enctype="multipart/form-data" id="insert_form" style="width:800px">
