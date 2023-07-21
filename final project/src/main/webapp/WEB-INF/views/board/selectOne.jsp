@@ -21,7 +21,7 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-let url = 'https://861c-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum='+${param.bnum};
+let url = '175.45.201.175:8080/finalproject/b_selectOne.do?bnum='+${param.bnum};
 let encodeUrl = encodeURIComponent(location.href)
 let iswriter = false;
 let report_cnum = 0;
@@ -771,7 +771,7 @@ function goBack() {
 		<input type="radio" id="reason6" name="c_reason" value="불쾌한 표현이 있습니다">
 		<label for="reason6">불쾌한 표현이 있습니다</label><br/><br/>
 		<button type="button" onclick="close_cmt_modal()" class="cmt_cancel_btn">닫기</button>
-		<button type="button" onclick="submit_cmt_report()" class="cmt_report_btn">신고</button>
+		<button type="button" style="overflow:hidden;" onclick="submit_cmt_report()" class="cmt_report_btn">신고</button>
 	</div>
 </div>
 

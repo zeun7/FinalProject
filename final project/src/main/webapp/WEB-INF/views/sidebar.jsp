@@ -57,6 +57,9 @@
 			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-caps-small"></i>
 					<p>模备格废</p>
 			</a></li>
+			<li id="manage"><a href="manage.do"><i class="nc-icon nc-caps-small"></i>
+					<p>包府</p>
+			</a></li>
 		</ul>
 	</div>
 </div>
