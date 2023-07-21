@@ -352,11 +352,6 @@ public class MemberController {
 		return "member/find_id_from";
 	}
 
-	@RequestMapping(value = "/find_id_from_tel.do")
-	public String find_id_from_tel() throws Exception {
-
-		return "member/find_id_from_tel";
-	}
 
 	@RequestMapping(value = "/find_id_from_email.do")
 	public String find_id_from_email() throws Exception {
