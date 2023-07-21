@@ -30,6 +30,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 let url = '175.45.201.175:8080/finalproject/gallery_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+let iswriter = false;
 let report_cnum = 0;
 let report_ccnum = 0;
 

@@ -511,8 +511,9 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
@@ -535,8 +536,9 @@ function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
 			},
 			error: function(xhr, status, error){
 				console.log('xhr:', xhr.status);
-		}
-	});
+			}
+		});
+	}
 }
 
 function mc_deleteOK(mcnum){		// 댓글 삭제

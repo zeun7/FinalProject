@@ -100,6 +100,8 @@ function selectAll(page, limit){
  				}
  				
  				if(vo.caname === 'category01'){ <!-- 카테고리 -->
+ 					vo.caname = '공지';
+ 				} else if(vo.caname === 'category01'){
 					vo.caname = '자유';
  				} else if(vo.caname === 'category02'){
 					vo.caname = '질문';

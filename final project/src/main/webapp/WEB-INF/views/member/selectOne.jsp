@@ -46,7 +46,7 @@
 							
 								<div class="row">
 									<div class="col-lg-4 col-md-3 col-4 ">
-								<h8 class=" peach">peach<br><small>${vo2.peach}</small></h8>
+								<h8 class=" peach">Peach<br><small>${vo2.peach}</small></h8>
 										
 									</div>
 									<div class="col-lg-5 col-md-3 col-4 ">

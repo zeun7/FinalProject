@@ -392,7 +392,7 @@ public class MiniBoardRestController {
         generatedName += ".png";
         
         //파일 이름 랜덤하게 생성
-        String filepath = "/resources/uploadimg/" + vo.getId() + generatedName;
+        String filepath = "resources/uploadimg/" + vo.getId() + generatedName;
         
         String realPath = sContext.getRealPath("resources/uploadimg");
 		log.info("realPath : {}", realPath);
@@ -404,9 +404,9 @@ public class MiniBoardRestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         log.info("Image downloaded.");
-        filepath = filepath.substring(1);
+        
         log.info("filepath:{}", filepath);
         
         Map<String, String> map = new HashMap<String, String>();

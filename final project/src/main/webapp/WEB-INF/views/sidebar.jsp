@@ -16,7 +16,7 @@
 	<div class="logo">
 		<a href="home.do" class="simple-text logo-mini">
 			<div class="logo-image-small">
-				<img src="resources/assets/img/logo-small.png">
+				<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%;">
 			</div> <!-- <p>CT</p> -->
 		</a> <a href="home.do" class="simple-text logo-normal"> Ilchon <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">

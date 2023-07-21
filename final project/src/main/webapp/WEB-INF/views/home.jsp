@@ -138,7 +138,7 @@ function post_board(boardName, sortKey){
 					<thead>
 						<tr>
 							<th colspan="3" style="text-align: center;">`;
-			tag_vos += `<a href="b_selectAll.do?bname=`+bname+`">`+bname+`</a>`;
+			tag_vos += `<a href="b_selectAll.do?bname=`+boardName+`">`+bname+`</a>`;
 			tag_vos += `			</th>
 							<th style="display: flex;">
 								<button style="margin-right:2px;" class="button btnPush" onclick="post_board('`+boardName+`', 'vcount')">인기순</button>

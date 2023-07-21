@@ -144,7 +144,7 @@ function buyBGM(){
 	                <h4 class="card-title"> 쥬크박스</h4>
               	</div>
               	<div style="display: flex; justify-content: flex-end;">
-              		<div class="btn btn-primary peach" style="border-radius: 10px; margin-right: 10px; background-color: rgb(247,150,192);">보유 peach : ${myPeach}</div>
+              		<div id="userPeach" class="btn btn-primary peach" style="border-radius: 10px; margin-right: 10px; background-color: rgb(247,150,192);">보유 peach : ${m_attr.peach}</div>
 	                <button onclick="buyPeach()" class="btn btn-primary" style="border-radius: 10px; margin-right: 10px;" id="peachButton">peach 결제하기</button>
 	        		<button onclick="buyBGM()" class="btn btn-primary" style="border-radius: 10px;" id="bgmButton">음악 구매하기</button>
                 </div>
@@ -182,6 +182,7 @@ function buyBGM(){
 	if('${user_id}' != '${mh_attr.id}'){	
 	    $('#peachButton').hide();
 	    $('#bgmButton').hide();
+	    $('#userPeach').hide();
 	}
 </script>
 </body>

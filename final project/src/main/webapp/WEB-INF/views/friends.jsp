@@ -6,7 +6,7 @@
 <title>Manage</title>
 <link rel="stylesheet" href="resources/css/button.css">
 <link rel="stylesheet" href="resources/css/button2.css">
-<link rel="stylesheet" href="resources/css/friends_table.css">
+<link rel="stylesheet" href="resources/css/friend_table.css">
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <style>
 #vos, #tag_vos td {
