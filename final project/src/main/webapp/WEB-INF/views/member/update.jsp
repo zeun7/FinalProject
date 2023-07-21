@@ -73,46 +73,51 @@
 	}
 
 	function togglePasswordConfirmation() {
-		  var pwConfirmation = document.getElementById("pw2");
-		  var pwConfirmationLabel = document.getElementById("pwConfirmationLabel");
-		  var messageDiv = document.getElementById("pw_match_message");
-		  var pw1Input = document.getElementById("pw1");
-		  var updatePasswordButton = document.getElementById("updatePasswordButton");
+		var pwConfirmation = document.getElementById("pw2");
+		var pwConfirmationLabel = document
+				.getElementById("pwConfirmationLabel");
+		var messageDiv = document.getElementById("pw_match_message");
+		var pw1Input = document.getElementById("pw1");
+		var updatePasswordButton = document
+				.getElementById("updatePasswordButton");
 
-		  if (pwConfirmation.style.display === "none") {
-		    // Show the password confirmation field and label
-		    pwConfirmation.style.display = "block";
-		    pwConfirmationLabel.style.display = "block";
-		    messageDiv.style.display = "block";
+		if (pwConfirmation.style.display === "none") {
+			// Show the password confirmation field and label
+			pwConfirmation.style.display = "block";
+			pwConfirmationLabel.style.display = "block";
+			messageDiv.style.display = "block";
 
-		    // Enable editing the password field
-		    pw1Input.removeAttribute("readonly");
-		    // Reset the password field to its original value
-		    pw1Input.value = "${vo2.pw}";
-		    // Reset the password confirmation field
-		    pwConfirmation.value = "";
-		    // Clear the password matching message
-		    messageDiv.innerHTML = "";
+			// Enable editing the password field
+			pw1Input.removeAttribute("readonly");
+			
+			// Reset the password field to its original value
+			pw1Input.value = "${vo2.pw}";
+			
+			// Reset the password confirmation field
+			pwConfirmation.value = "";
+			
+			// Clear the password matching message
+			messageDiv.innerHTML = "";
 
-		    // Change the button text to "취소"
-		    updatePasswordButton.textContent = "취소";
-		  } else {
-		    // Hide the password confirmation field and label
-		    pwConfirmation.style.display = "none";
-		    pwConfirmationLabel.style.display = "none";
-		    messageDiv.style.display = "none";
+			// Change the button text to "취소"
+			updatePasswordButton.textContent = "취소";
+		} else {
+			// Hide the password confirmation field and label
+			pwConfirmation.style.display = "none";
+			pwConfirmationLabel.style.display = "none";
+			messageDiv.style.display = "none";
 
-		    // Reset the password field to its original value
-		    pw1Input.value = "${vo2.pw}";
+			// Reset the password field to its original value
+			pw1Input.value = "${vo2.pw}";
 
-		    // Disable editing the password field again
-		    pw1Input.setAttribute("readonly", "readonly");
+			// Disable editing the password field again
+			pw1Input.setAttribute("readonly", "readonly");
 
-		    // Run the password matching check again
-		    test2();
+			// Run the password matching check again
+			test2();
 
-		    // Change the button text back to "비밀번호 수정"
-		    updatePasswordButton.textContent = "비밀번호 수정";
+			// Change the button text back to "비밀번호 수정"
+			updatePasswordButton.textContent = "비밀번호 수정";
 		  }
 		}
 
@@ -138,35 +143,35 @@
 
 /* Custom CSS class to adjust button size */
 #updatePasswordButton {
-width: 71px;
-  padding: 0.7rem 0.1rem;
-  font-size: 0.5rem;
+	width: 71px;
+	padding: 0.7rem 0.1rem;
+	font-size: 0.5rem;
 }
 
 .modals {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  top:10%;
-  left: 25%;
-  width: 35%;
-  height: 60%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.9);
+	display: none;
+	position: fixed;
+	z-index: 1;
+	top: 10%;
+	left: 25%;
+	width: 35%;
+	height: 60%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modals-content {
-  position: absolute;
-  margin:10% 15%;
-  width: 70%;
-  height: 80%;
-  max-width: 80%;
-  max-height: 80%;
-  overflow: auto;
-  background-color: #fefefe;
-  border: 1px solid #888;
-  border-radius: 4px;
-  padding: 20px;
+	position: absolute;
+	margin: 10% 15%;
+	width: 70%;
+	height: 80%;
+	max-width: 80%;
+	max-height: 80%;
+	overflow: auto;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 4px;
+	padding: 20px;
 }
 
 
@@ -204,8 +209,11 @@ width: 71px;
 										<p class="description">id:${vo2.id}</p>
 									</div>
 
-									<button type="button" class="btn btn-outline-primarys btn-sm mt-2"
-										onclick="changeProfilePic()">프로필 사진 변경</button>
+									<div class="text-center">
+										<button type="button"
+											class="btn btn-outline-primarys btn-sm mt-2"
+											onclick="changeProfilePic()">프로필 사진 변경</button>
+									</div>
 
 									<!-- 파일 선택용 input (style="display: none;"로 숨김) -->
 									<input type="file" id="m_file" name="m_file"
@@ -338,9 +346,11 @@ width: 71px;
 									<div class="row">
 										<div class="update ml-auto mr-auto">
 											<input type="button" value="회원수정완료"
-												class="btn btn-primary btn-round"  style="background-color: #94b5e0"onclick="submitForm()">
+												class="btn btn-primary btn-round"
+												style="background-color: #94b5e0" onclick="submitForm()">
 											<button type="button" onclick="m_deleteOK()"
-												class="btn btn-primary btn-round" style="background-color: #94b5e0">탈퇴하기</button>
+												class="btn btn-primary btn-round"
+												style="background-color: #94b5e0">탈퇴하기</button>
 										</div>
 									</div>
 
@@ -395,38 +405,38 @@ width: 71px;
 		}
 
 		function submitForm() {
-		    var pw1 = document.getElementById("pw1").value;
-		    var pw2 = document.getElementById("pw2").value;
-		    var currentUserNickname = "${vo2.nickname}";
-		    var nickname = document.getElementById("nickname").value;
-		    var email = document.getElementById("email").value;
-		    var tel = document.getElementById("tel").value;
+			var pw1 = document.getElementById("pw1").value;
+			var pw2 = document.getElementById("pw2").value;
+			var currentUserNickname = "${vo2.nickname}";
+			var nickname = document.getElementById("nickname").value;
+			var email = document.getElementById("email").value;
+			var tel = document.getElementById("tel").value;
 
-		    console.log("currentUserNickname:", currentUserNickname);
-		    console.log("nickname:", nickname);
+			console.log("currentUserNickname:", currentUserNickname);
+			console.log("nickname:", nickname);
 
-		    // 비밀번호 수정 입력란이 보여질 때만 비밀번호 일치 여부 확인
-		    if (document.getElementById("pw2").style.display === "block") {
-		      if (pw1 !== pw2) {
-		        alert("비밀번호가 일치하지 않습니다.");
-		        return;
-		      }
-		    }
+			// 비밀번호 수정 입력란이 보여질 때만 비밀번호 일치 여부 확인
+			if (document.getElementById("pw2").style.display === "block") {
+				if (pw1 !== pw2) {
+					alert("비밀번호가 일치하지 않습니다.");
+					return;
+				}
+			}
 
-		    if (pw1 === "" && pw2 !== "") {
-		      document.getElementById("pw2").value = "";
-		    }
+			if (pw1 === "" && pw2 !== "") {
+				document.getElementById("pw2").value = "";
+			}
 
-		    if (nickname !== currentUserNickname) {
-		      if ($('#nick_check').text() !== '사용가능한 닉네임입니다.') {
-		        alert("사용중인 닉네임입니다");
-		        return;
-		      }
-		    }
+			if (nickname !== currentUserNickname) {
+				if ($('#nick_check').text() !== '사용가능한 닉네임입니다.') {
+					alert("사용중인 닉네임입니다");
+					return;
+				}
+			}
 
-		    // 나머지 처리 로직
-		    document.getElementById("joinForm").submit();
-		  }
+			// 나머지 처리 로직
+			document.getElementById("joinForm").submit();
+		}
 	</script>
 </body>
 </html>

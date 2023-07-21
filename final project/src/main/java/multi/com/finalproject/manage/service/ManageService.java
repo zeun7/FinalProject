@@ -116,5 +116,9 @@ public class ManageService {
 	public void delfriendAll(MemberVO vo) {
 		dao.delfriendAll(vo);
 	}
+	
+	public List<FriendsVO> selectBanned(FriendsVO vo) {
+		return dao.selectBanned(vo);
+	}
 
 }

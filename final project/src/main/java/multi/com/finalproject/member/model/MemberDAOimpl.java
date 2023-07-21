@@ -152,5 +152,10 @@ public class MemberDAOimpl implements MemberDAO {
 	public BoardVO FindBoard(BoardVO vo2) {
 		return sqlSession.selectOne("FIND_BOARD", vo2);
 	}
+	
+	@Override
+	public String selectOneByNick(String bNick) {
+		return sqlSession.selectOne("M_SELECT_ONE_BY_NICK", bNick);
+	}
 
 }

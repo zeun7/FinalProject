@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -209,10 +210,30 @@ public class MiniHomeController {
 		log.info("mini_random()...");
 		String randomId;
 		
+		String nickname = session.getAttribute("nickname").toString();
+		FriendsVO vo = new FriendsVO();
+		vo.setNickname(nickname);
+		List<FriendsVO> vos = manage_service.selectBan(vo);
+		List<FriendsVO> vos2 = manage_service.selectBanned(vo);
+		List<String> chadanIds = new ArrayList<String>();
+		for (FriendsVO fvo : vos) {
+			String myBanNick = fvo.getNickname2();
+			String myBanId = member_service.selectOneByNick(myBanNick);
+			chadanIds.add(myBanId);
+		}
+		
+		for (FriendsVO fvo2 : vos2) {
+			String bannedNick = fvo2.getNickname();
+			String bannedId = member_service.selectOneByNick(bannedNick);
+			chadanIds.add(bannedId);
+		}
+		
+		log.info("chadaIds : {}", chadanIds);
+		
 		do {
 		MiniHomeVO randomMiniHome = service.getRandomMiniHome();
 		randomId = randomMiniHome.getId();
-		} while(randomId.equals(session.getAttribute("user_id")) || randomId.equals(param_id)); // 자신의 미니홈피나, 지금 방문한 미니홈피 제외
+		} while(randomId.equals(session.getAttribute("user_id")) || randomId.equals(param_id) || chadanIds.contains(randomId)); // 자신의 미니홈피나, 지금 방문한 미니홈피 제외
 			
 		return "redirect:mini_home.do?id=" + randomId;
 	}

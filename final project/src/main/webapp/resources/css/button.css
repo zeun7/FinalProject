@@ -180,7 +180,6 @@
 }
 .btn-11:before {
     position: absolute;
-    content: '';
     display: inline-block;
     top: -180px;
     left: 0;
@@ -277,7 +276,6 @@
 }
 .btn-12:before {
     position: absolute;
-    content: '';
     display: inline-block;
     top: -180px;
     left: 0;

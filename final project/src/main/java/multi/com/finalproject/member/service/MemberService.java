@@ -101,4 +101,8 @@ public class MemberService {
 	public MemberVO find_id_question(MemberVO vo) {
 		return dao.find_id_question(vo);
 	}
+	
+	public String selectOneByNick(String bNick) {
+		return dao.selectOneByNick(bNick);
+	}
 }

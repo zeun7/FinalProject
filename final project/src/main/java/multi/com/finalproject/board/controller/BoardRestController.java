@@ -35,7 +35,7 @@ public class BoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_selectAll.do", method = RequestMethod.GET)
-	public List<BoardVO> json_b_selectAll(BoardVO vo, int page, int limit) {
+	public List<BoardVO> json_b_selectAll(BoardVO vo, int page, int limit, String watcher) {
 		log.info("/json_b_selectAll.do...{}, {}", page, limit);
 		log.info("vo: {}", vo);
 		
@@ -43,6 +43,7 @@ public class BoardRestController {
 		map.put("vo", vo);
 		map.put("page", page);
 		map.put("limit", limit);
+		map.put("watcher", watcher);
 		
 		List<BoardVO> vos = service.selectAll(map);
 		log.info("{}", vos);
@@ -62,7 +63,8 @@ public class BoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_searchList.do", method = RequestMethod.GET)
-	public List<BoardVO> json_b_searchList(BoardVO vo, int page, int limit, String searchKey, String searchWord) {
+	public List<BoardVO> json_b_searchList(BoardVO vo, int page, int limit, String searchKey, String searchWord,
+			String watcher) {
 		log.info("/json_b_searchList.do...{}", vo);
 		log.info("page:{}, limit:{}", page, limit);
 		log.info("searchKey:{}", searchKey);
@@ -74,6 +76,7 @@ public class BoardRestController {
 		map.put("limit", limit);
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%"+searchWord+"%");
+		map.put("watcher", watcher);
 		
 		List<BoardVO> vos = service.searchList(map);
 		log.info("{}", vos);
@@ -83,7 +86,7 @@ public class BoardRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_b_searchList_count.do", method = RequestMethod.GET)
-	public int json_b_searchList_count(BoardVO vo, String searchKey, String searchWord) {
+	public int json_b_searchList_count(BoardVO vo, String searchKey, String searchWord, String watcher) {
 		log.info("/json_b_searchList_count.do...{}", vo);
 		log.info("searchKey:{}", searchKey);
 		log.info("searchWord:{}", searchWord);
@@ -92,9 +95,10 @@ public class BoardRestController {
 		map.put("vo", vo);
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%"+searchWord+"%");
+		map.put("watcher", watcher);
 		
 		int count = service.searchCount(map);
-		
+		log.info("count:{}", count);
 		return count;
 	}
 	

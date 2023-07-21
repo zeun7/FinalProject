@@ -13,4 +13,5 @@ public class MiniCommentsVO {
 	private String cdate;
 	private int secret;
 	private int report;
+	private String color;
 }

@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -81,24 +67,24 @@ function getQuantity(event){
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> 피치 구매</h4>
+                 <h4 class="card-title" style="text-align: center;"> Peach 구매</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                 <form action="mini_peachPayOK.do" method="post">
                   <table class="table">
-                    <tr>
+                    <tr style="text-align: center;">
 						<td>구매상품</td>
-						<td>피치</td>
+						<td>Peach</td>
 					</tr>    	
 					<tr>
-						<td>구매수량 선택</td>
-						<td>
+						<td style="text-align: center;">구매수량 선택</td>
+						<td style="text-align: center;">
 							<input type="radio" id="quantity5" name="quantity" value="5" onclick="getQuantity(event)" checked="checked">
 							<label for="quantity5">5개: 500원</label><br>
 							<input type="radio" id="quantity10" name="quantity" value="10" onclick="getQuantity(event)">
@@ -112,7 +98,9 @@ function getQuantity(event){
 						</td>
 					</tr>    	
 					<tr>
-						<td colspan="2"><button type="button" id="kakao_pay" class="btn btn-primary btn-round" onclick="payClick()">구매</button></td>
+						<td colspan="2" style="text-align: right; padding-right: 290px;">
+							<button type="button" id="kakao_pay" class="btn btn-primary btn-round" onclick="payClick()">구매</button>
+						</td>
 					</tr>    	
                   </table>
                 </form>

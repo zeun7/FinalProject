@@ -69,13 +69,6 @@ function findAllCount(){	// 방명록 목록의 페이징 버튼 출력
 	});//end $.ajax()
 }
 
-function setActive(button) {
-    // 모든 버튼에서 'active' 클래스 제거
-    document.querySelectorAll('.paging-btn').forEach(btn => btn.classList.remove('active'));
-    // 클릭한 버튼에 'active' 클래스 추가
-    button.classList.add('active');
-}
-
 function findAll(page){
     $.ajax({
         url: "json_mc_findAll2.do",
@@ -106,12 +99,15 @@ function findAll(page){
  				}
  				
  				visit_log += `
- 					<div class="postit">
- 					<span data-mcnum="\${vo.mcnum}" onclick="if (!deleteMode) {gotoFindOne(\${vo.mcnum})};">
+ 					<div class="postit" style="background-color:\${vo.color}" data-mcnum="\${vo.mcnum}" onclick="if (!deleteMode) {gotoFindOne(\${vo.mcnum})};">
+ 					<div>
+ 					<span>
 	 					<input type="checkbox" class="row-check" />
-				        <h5>\${vo.writer}</h5><br><br>
-				        <span>\${vo.cdate}</span>
+				        <h5>\${vo.writer}</h5>
+				        <div class="postit-content">\${vo.content}</div><br>
 			        </span>
+			        </div>
+			        <div style="margin-top: auto;">\${vo.cdate}</div>
 			        </div>
 			        `;
             }
@@ -197,7 +193,7 @@ function select_diary_deleteOK() {
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%; min-height: 85vh;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">

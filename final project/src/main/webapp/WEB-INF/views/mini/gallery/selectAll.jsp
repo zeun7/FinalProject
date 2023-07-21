@@ -146,9 +146,9 @@ function selectAll(page){
 		 		        	 <a href="gallery_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">`;
 		 		    
 		 		    if(filepath.indexOf(',') > 0){
-		 		    	tag_vos += `<img src="resources/uploadimg/thumb_\${vo.filepath.substring(0,vo.filepath.indexOf(','))}">`;
+		 		    	tag_vos += `<img src="resources/uploadimg/gallery_thumb_\${vo.filepath.substring(0,vo.filepath.indexOf(','))}">`;
 		 		    }else{
-		 		    	tag_vos += `<img src="resources/uploadimg/thumb_\${vo.filepath}">`;
+		 		    	tag_vos += `<img src="resources/uploadimg/gallery_thumb_\${vo.filepath}">`;
 		 		    }
 		 		        	 
 		 			tag_vos += `
@@ -166,6 +166,14 @@ function selectAll(page){
 		}
 	});//end $.ajax()
 }//end selectAll()
+
+$("body").on("click", "span[data-mbnum]", function(){
+    // deleteMode가 비활성화되어 있을 때만 페이지 이동을 허용합니다.
+    if (!deleteMode) {
+        window.location = $(this).find("a[href]").attr("href");
+    }
+    return false; // 이벤트 전파를 중지합니다.
+});
 
 let deleteMode = false;
 
@@ -234,9 +242,9 @@ function select_gallery_deleteOK() {
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-10">
             <div class="card">
               <div class="card-header">
               	<div style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">

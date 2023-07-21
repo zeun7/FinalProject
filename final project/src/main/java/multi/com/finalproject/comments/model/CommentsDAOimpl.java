@@ -1,5 +1,6 @@
 package multi.com.finalproject.comments.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.BoardVO;
+import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Slf4j
@@ -26,13 +28,76 @@ public class CommentsDAOimpl implements CommentsDAO {
 	public List<CommentsVO> selectAll(CommentsVO vo) {
 		log.info("selectAll()...{}", vo.getBnum());
 		
-		return sqlSession.selectList("C_SELECT_ALL", vo);
+		List<CommentsVO> vos = sqlSession.selectList("C_SELECT_ALL", vo);
+		List<CommentsVO> vos2 = new ArrayList<CommentsVO>();
+		
+		String nickname = vo.getWriter();
+		
+		List<FriendsVO> ban_vos = sqlSession.selectList("MNG_M_SELECT_BAN", nickname);	// 내가 차단 한 상대
+		List<FriendsVO> banned_vos = sqlSession.selectList("MNG_M_SELECT_BANNED", nickname);	// 나를 차단 한 상대
+		
+		boolean isBan = false;
+		
+		for(CommentsVO c_vo : vos) {
+			isBan = false;
+			
+			for(FriendsVO ban_vo : ban_vos) {
+				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
+					isBan = true;
+				}
+				
+			}
+			
+			for(FriendsVO banned_vo : banned_vos) {
+				if(c_vo.getWriter().equals(banned_vo.getNickname())) {	// 나를 차단 한 상대
+					isBan = true;
+				}
+			}
+			
+			if(!isBan) {	// 차단이 아닌 경우
+				vos2.add(c_vo);
+			}
+		}
+		
+		return vos2;
 	}
 	
 	@Override
 	public List<CommentsVO> cc_selectAll(CommentsVO vo) {
 		log.info("cc_selectAll()...{}", vo.getCnum());
-		return sqlSession.selectList("CC_SELECT_ALL", vo);
+
+		List<CommentsVO> vos = sqlSession.selectList("CC_SELECT_ALL", vo);
+		List<CommentsVO> vos2 = new ArrayList<CommentsVO>();
+		
+		String nickname = vo.getWriter();
+		
+		List<FriendsVO> ban_vos = sqlSession.selectList("MNG_M_SELECT_BAN", nickname);	// 내가 차단 한 상대
+		List<FriendsVO> banned_vos = sqlSession.selectList("MNG_M_SELECT_BANNED", nickname);	// 나를 차단 한 상대
+		
+		boolean isBan = false;
+		
+		for(CommentsVO c_vo : vos) {
+			isBan = false;
+			
+			for(FriendsVO ban_vo : ban_vos) {
+				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
+					isBan = true;
+				}
+				
+			}
+			
+			for(FriendsVO banned_vo : banned_vos) {
+				if(c_vo.getWriter().equals(banned_vo.getNickname())) {	// 나를 차단 한 상대
+					isBan = true;
+				}
+			}
+			
+			if(!isBan) {	// 차단이 아닌 경우
+				vos2.add(c_vo);
+			}
+		}
+		
+		return vos2;
 	}
 	
 	@Override

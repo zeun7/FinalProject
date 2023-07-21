@@ -23,7 +23,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 function input_check(){
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	console.log($("#content").val());
 	
 	if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
@@ -32,6 +31,8 @@ function input_check(){
 		document.getElementById("insert_form").submit();
 	}
 }
+
+
 </script>
 </head>
 
@@ -40,7 +41,7 @@ function input_check(){
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -65,6 +66,16 @@ function input_check(){
 							value="${param.writer}">
 					</div>
 					<div>
+						포스트잇 색깔 변경
+						<select name="color" id="color">
+							<option value="#9ff4f9" selected="selected" style="background-color: #9ff4f9">하늘</option>
+							<option value="#f4f885" style="background-color: #f4f885">노랑</option>
+							<option value="#fbc6ef" style="background-color: #fbc6ef">핑크</option>
+							<option value="#bafcdb" style="background-color: #bafcdb">연두</option>
+						</select>
+					</div>
+					<br>
+					<div>
 						<textarea rows="20" cols="100" id="content" name="content"></textarea>
 					</div>
 					<div>
@@ -86,18 +97,5 @@ function input_check(){
     </div>
   </div>
 
-<script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors,
-	elPlaceHolder: "content",
-	sSkinURI: "./resources/smarteditor2/SmartEditor2Skin.html",
-	htParams : {
-		bSkipXssFilter : true
-	},
-	fCreator: "createSEditor2"
-});
-</script>
 </body>
 </html>

@@ -315,7 +315,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 				is_clike(vo.mcnum);					// 댓글 좋아요 확인
 				count_clikes(vo.mcnum);				// 좋아요 카운트
 				
-				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+				if('${nickname}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
 					$("#mc_update_"+vo.mcnum).show();
 					$("#mc_delete_"+vo.mcnum).show();
 				}
@@ -463,7 +463,7 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 				is_clike(vo.mcnum);		// 댓글 좋아요 확인
 				count_clikes(vo.mcnum);	// 좋아요 카운트
 				
-				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+				if('${nickname}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
 					$("#mc_update_"+vo.mcnum).show();
 					$("#mc_delete_"+vo.mcnum).show();
 				}
@@ -491,23 +491,26 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 	console.log('insert comment...');
 	
-	$.ajax({
-		url: 'json_mc_insertOK.do',
-		data: {mccnum: mcnum,
-			mbnum: mbnum,
-			id: '${mh_attr.id}',
-			writer: '${nickname}',
-			content: $("#comm_content").val(),
-			secret: $("input[name='secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result === 1){
-				minicomments();
-			}
-		},
-		error : function(xhr, status, error) {
-			console.log('xhr:', xhr.status);
+	if($("#comm_content").val() == ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_mc_insertOK.do',
+			data: {mccnum: mcnum,
+				mbnum: mbnum,
+				id: '${mh_attr.id}',
+				writer: '${nickname}',
+				content: $("#comm_content").val(),
+				secret: $("input[name='secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result === 1){
+					minicomments();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
@@ -515,20 +518,23 @@ function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
 	console.log('update comment...mcnum: ', mcnum);
 	
-	$.ajax({
-		url: 'json_mc_updateOK.do',
-		data:{mcnum: mcnum,
-			content: $("#comm_content").val(),
-			secret: $("input[name='update_secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result === 1){
-				minicomments();
-			}
-		},
-		error: function(xhr, status, error){
-			console.log('xhr:', xhr.status);
+	if($("#comm_content").val() == ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_mc_updateOK.do',
+			data:{mcnum: mcnum,
+				content: $("#comm_content").val(),
+				secret: $("input[name='update_secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result === 1){
+					minicomments();
+				}
+			},
+			error: function(xhr, status, error){
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
@@ -652,7 +658,7 @@ function goBack() {
 <div class="wrapper ">
 	<div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
 		<jsp:include page="../mini_navbar.jsp"></jsp:include>
-		<div class="content" style="height: 90vh;">
+		<div class="content" style="height: 100%;">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card">

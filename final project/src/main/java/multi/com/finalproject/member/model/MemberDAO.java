@@ -48,5 +48,7 @@ public interface MemberDAO {
 	public MiniBoardVO FindMiniBoard(MiniBoardVO vo);
 
 	public BoardVO FindBoard(BoardVO vo2);
+	
+	public String selectOneByNick(String bNick);
  
 }

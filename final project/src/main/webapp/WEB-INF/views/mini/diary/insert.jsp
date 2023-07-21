@@ -131,7 +131,7 @@ function gpt_translate(content_txtonly){
 		success : function(vo){
 			console.log(vo.response);
 			gptTxt = vo.response;
-			gptTxt += "I imagine this in cute cartoon style.";
+			gptTxt += " I imagine this in cute cartoon style.";
 			gpt_make_image(gptTxt);
 		},
 		error : function(xhr, status, error){
@@ -248,7 +248,7 @@ function submit_form(){
 		<h4 style="margin-top: auto; margin-bottom: auto;">AI 이미지 생성중...</h4>
 		
 	</div>
-</div>
+  </div>
 
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">

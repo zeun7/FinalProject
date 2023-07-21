@@ -369,7 +369,7 @@ function minicomments(writer, mcnum=0, mccnum=0, mbnum=${param.mbnum}, insert_nu
 										<td rowspan="2"><textarea rows="3" id="comm_content"></textarea></td>
 										<td width="100px;">
 											<div width="130px;" class="insert_wrap">
-												<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)" class="cmt_cancel_btn">취소</button></span>
+												<span><button onclick="minicomments('\${writer}', 0, 0, \${mbnum}, 0)" id="mc_update_\${vo.mcnum}" class="cmt_cancel_btn">취소</button></span>
 												<span><button onclick="mc_insertOK(\${vo.mcnum}, \${mbnum})" class="cmt_reply_btn">등록</button></span>
 											</div>
 									</tr>
@@ -590,45 +590,49 @@ function minicocomments(writer, mcnum, mbnum=${param.mbnum}, update_num){		// �
 
 function mc_insertOK(mcnum, mbnum){		// 댓글 등록 버튼
 	console.log('insert comment...');
-	
-	$.ajax({
-		url: 'json_mc_insertOK.do',
-		data: {mccnum: mcnum,
-			mbnum: mbnum,
-			id: '${mh_attr.id}',
-			writer: '${nickname}',
-			content: $("#comm_content").val(),
-			secret: $("input[name='secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result === 1){
-				minicomments();
-			}
-		},
-		error : function(xhr, status, error) {
-			console.log('xhr:', xhr.status);
+	if($("#comm_content").val() === ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_mc_insertOK.do',
+			data: {mccnum: mcnum,
+				mbnum: mbnum,
+				id: '${mh_attr.id}',
+				writer: '${nickname}',
+				content: $("#comm_content").val(),
+				secret: $("input[name='secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result === 1){
+					minicomments();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
 
 function mc_updateOK(mcnum){		// 댓글 수정 완료 버튼
 	console.log('update comment...mcnum: ', mcnum);
-	
-	$.ajax({
-		url: 'json_mc_updateOK.do',
-		data:{mcnum: mcnum,
-			content: $("#comm_content").val(),
-			secret: $("input[name='update_secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result === 1){
-				minicomments();
-			}
-		},
-		error: function(xhr, status, error){
-			console.log('xhr:', xhr.status);
+	if($("#comm_content").val() === ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_mc_updateOK.do',
+			data:{mcnum: mcnum,
+				content: $("#comm_content").val(),
+				secret: $("input[name='update_secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result === 1){
+					minicomments();
+				}
+			},
+			error: function(xhr, status, error){
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
@@ -758,12 +762,12 @@ function checkviewer(writer){
 		<div class="main-panel"
 			style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
 			<jsp:include page="../mini_navbar.jsp"></jsp:include>
-			<div class="content" style="height: 90vh;">
+			<div class="content" style="height: 100%;">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="card-title">${vo2.title}</h4>
+								<h4 class="card-title" id="title">${vo2.title}</h4>
 								<h6>
 									올린날 : ${vo2.wdate}<span id=modifiedIndicator></span>
 								</h6>
@@ -773,8 +777,7 @@ function checkviewer(writer){
 								<br>
 								<div id="buttonss"
 									style="display: flex; justify-content: space-between;">
-									<button class="custom-btn btn-1" onclick="goBack()"
-										style="margin: 0;">목록으로</button>
+									<a href="mini_gallery.do?id=${mh_attr.id}" class="custom-btn btn-1" style="margin: 0;">목록으로</a>
 									<div
 										style="display: flex; justify-content: center; align-items: center;">
 										<button onclick="like()" class="heartButton" id="like_button"

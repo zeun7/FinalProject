@@ -130,7 +130,7 @@ function setBGM(bgm){
 		<div class="main-panel"
 			style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
 			<jsp:include page="./mini_navbar.jsp"></jsp:include>
-			<div class="content" style="height: 90vh;">
+			<div class="content" style="height: 100%;">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card card-user">
@@ -185,14 +185,16 @@ function setBGM(bgm){
 											<div class="form-group">
 												<label for="bgm">bgm</label>
 												<div id="bgm_title">${vo2.bgm}</div>
-												<div id="music_player">
-													<audio controls>
-														<source src="resources/uploadbgm/${vo2.bgm}"
-															type="audio/mp3">
-													</audio>
+												<div style="display: flex;">
+													<div id="music_player">
+														<audio controls>
+															<source src="resources/uploadbgm/${vo2.bgm}"
+																type="audio/mp3">
+														</audio>
+													</div>
+													<!-- 					<input type="file" id="musicFile" name="musicFile">  -->
+														<button type="button" onclick="open_modal()" class="btn">bgm 선택</button>
 												</div>
-												<!-- 					<input type="file" id="musicFile" name="musicFile">  -->
-												<button type="button" onclick="open_modal()" class="btn">bgm 선택</button>
 												<input type="hidden" id="bgm" name="bgm" value="${vo2.bgm}">
 											</div>
 										</div>

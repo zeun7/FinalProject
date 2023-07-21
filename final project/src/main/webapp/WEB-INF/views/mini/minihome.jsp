@@ -58,11 +58,14 @@ function recent_visitLog(){
  				}
             	
                 visit_log += `
-			        <div class="postit">
+			        <div class="postit" style="background-color:\${miniComment.color}">
+                	<div>
  					<span onclick="gotoFindOne(\${miniComment.mcnum})">
-				        <h5>\${miniComment.writer}</h5><br><br>
-				        <span>\${miniComment.cdate}</span>
+				        <h5>\${miniComment.writer}</h5>
+				        <div class="postit-content">\${miniComment.content}</div>
 			        </span>
+			        </div>
+			        <div style="margin-top: auto;">\${miniComment.cdate}</div>
 			        </div>
 			        `;
             });
@@ -86,7 +89,7 @@ function gotoFindOne(mcnum){
 		<div class="main-panel"
 			style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
 			<jsp:include page="./mini_navbar.jsp"></jsp:include>
-			<div class="content" style="height: 90vh;">
+			<div class="content" style="height: 100%;">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
@@ -114,18 +117,5 @@ function gotoFindOne(mcnum){
 			<jsp:include page="../footer.jsp"></jsp:include>
 		</div>
 	</div>
-	<!--   Core JS Files   -->
-	<script src="resources/assets/js/core/jquery.min.js"></script>
-	<script src="resources/assets/js/core/popper.min.js"></script>
-	<script src="resources/assets/js/core/bootstrap.min.js"></script>
-	<script
-		src="resources/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-	<!-- Chart JS -->
-	<script src="resources/assets/js/plugins/chartjs.min.js"></script>
-	<!--  Notifications Plugin    -->
-	<script src="resources/assets/js/plugins/bootstrap-notify.js"></script>
-	<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="resources/assets/js/paper-dashboard.min.js?v=2.0.1"
-		type="text/javascript"></script>
 </body>
 </html>

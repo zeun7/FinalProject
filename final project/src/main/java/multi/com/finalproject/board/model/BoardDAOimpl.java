@@ -1,5 +1,6 @@
 package multi.com.finalproject.board.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.com.finalproject.comments.model.CommentsVO;
 import multi.com.finalproject.comments.service.CommentsService;
+import multi.com.finalproject.manage.model.FriendsVO;
 import multi.com.finalproject.member.model.MemberVO;
 
 @Repository
@@ -28,8 +31,39 @@ public class BoardDAOimpl implements BoardDAO {
 	@Override
 	public List<BoardVO> selectAll(Map<String, Object> map) {
 		log.info("selectAll()...{}", map);
-
-		return sqlSession.selectList("B_SELECT_ALL", map);
+		
+		List<BoardVO> vos = sqlSession.selectList("B_SELECT_ALL", map);
+		List<BoardVO> vos2 = new ArrayList<BoardVO>();
+		
+		String nickname = (String)map.get("watcher");
+		
+		List<FriendsVO> ban_vos = sqlSession.selectList("MNG_M_SELECT_BAN", nickname);	// 내가 차단 한 상대
+		List<FriendsVO> banned_vos = sqlSession.selectList("MNG_M_SELECT_BANNED", nickname);	// 나를 차단 한 상대
+		
+		boolean isBan = false;
+		
+		for(BoardVO c_vo : vos) {
+			isBan = false;
+			
+			for(FriendsVO ban_vo : ban_vos) {
+				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
+					isBan = true;
+				}
+				
+			}
+			
+			for(FriendsVO banned_vo : banned_vos) {
+				if(c_vo.getWriter().equals(banned_vo.getNickname())) {	// 나를 차단 한 상대
+					isBan = true;
+				}
+			}
+			
+			if(!isBan) {	// 차단이 아닌 경우
+				vos2.add(c_vo);
+			}
+		}
+		
+		return vos2;
 	}
 
 	@Override
@@ -42,14 +76,47 @@ public class BoardDAOimpl implements BoardDAO {
 	@Override
 	public List<BoardVO> searchList(Map<String, Object> map) {
 		log.info("searchList...{}", map);
-
+		
+		List<BoardVO> vos = new ArrayList<BoardVO>();
+		List<BoardVO> vos2 = new ArrayList<BoardVO>();
+		
+		String nickname = (String)map.get("watcher");
+		
+		List<FriendsVO> ban_vos = sqlSession.selectList("MNG_M_SELECT_BAN", nickname);	// 내가 차단 한 상대
+		List<FriendsVO> banned_vos = sqlSession.selectList("MNG_M_SELECT_BANNED", nickname);	// 나를 차단 한 상대
+		
+		boolean isBan = false;
+		
 		if (map.get("searchKey").toString().equals("title")) {
-			return sqlSession.selectList("B_SEARCH_LIST_TITLE", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_TITLE", map);
 		} else if (map.get("searchKey").toString().equals("content")) {
-			return sqlSession.selectList("B_SEARCH_LIST_CONTENT", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_CONTENT", map);
 		} else {
-			return sqlSession.selectList("B_SEARCH_LIST_WRITER", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_WRITER", map);
 		}
+		
+		for(BoardVO c_vo : vos) {
+			isBan = false;
+			
+			for(FriendsVO ban_vo : ban_vos) {
+				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
+					isBan = true;
+				}
+				
+			}
+			
+			for(FriendsVO banned_vo : banned_vos) {
+				if(c_vo.getWriter().equals(banned_vo.getNickname())) {	// 나를 차단 한 상대
+					isBan = true;
+				}
+			}
+			
+			if(!isBan) {	// 차단이 아닌 경우
+				vos2.add(c_vo);
+			}
+		}
+		
+		return vos2;
 	}
 
 	@Override
@@ -120,13 +187,46 @@ public class BoardDAOimpl implements BoardDAO {
 	public int searchCount(Map<String, Object> map) {
 		log.info("searchCount()...{}", map);
 
+		List<BoardVO> vos = new ArrayList<BoardVO>();
+		List<BoardVO> vos2 = new ArrayList<BoardVO>();
+		
+		String nickname = (String)map.get("watcher");
+		
+		List<FriendsVO> ban_vos = sqlSession.selectList("MNG_M_SELECT_BAN", nickname);	// 내가 차단 한 상대
+		List<FriendsVO> banned_vos = sqlSession.selectList("MNG_M_SELECT_BANNED", nickname);	// 나를 차단 한 상대
+		
+		boolean isBan = false;
+		
 		if (map.get("searchKey").toString().equals("title")) {
-			return sqlSession.selectOne("B_SEARCH_COUNT_TITLE", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_TITLE_ALL", map);
 		} else if (map.get("searchKey").toString().equals("content")) {
-			return sqlSession.selectOne("B_SEARCH_COUNT_CONTENT", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_CONTENT_ALL", map);
 		} else {
-			return sqlSession.selectOne("B_SEARCH_COUNT_WRITER", map);
+			vos = sqlSession.selectList("B_SEARCH_LIST_WRITER_ALL", map);
 		}
+		
+		for(BoardVO c_vo : vos) {
+			isBan = false;
+			
+			for(FriendsVO ban_vo : ban_vos) {
+				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
+					isBan = true;
+				}
+				
+			}
+			
+			for(FriendsVO banned_vo : banned_vos) {
+				if(c_vo.getWriter().equals(banned_vo.getNickname())) {	// 나를 차단 한 상대
+					isBan = true;
+				}
+			}
+			
+			if(!isBan) {	// 차단이 아닌 경우
+				vos2.add(c_vo);
+			}
+		}
+		
+		return vos2.size();
 	}
 
 	@Override

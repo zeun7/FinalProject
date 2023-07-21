@@ -145,7 +145,11 @@ public class MiniBoardController {
 	@RequestMapping(value = "/diary_updateOK.do", method = RequestMethod.POST)
 	public String diary_updateOK(@RequestParam("id") String id, MiniBoardVO vo) throws IllegalStateException, IOException {
 		log.info("diary_updateOK(vo)...{}", vo);
-
+		
+		if(vo.getAi_path() == null) {
+			vo.setAi_path("");
+		}
+		
 		if (vo.getFile() != null && !vo.getFile().isEmpty()) {
 			String originalFilename = vo.getFile().getOriginalFilename();
 			int fileNameLength = originalFilename.length();

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,7 +140,9 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 	console.log("print comments...bnum: ", bnum);
 	$.ajax({
 		url: 'json_c_selectAll.do',
-		data: {bnum: bnum},
+		data: {bnum: bnum,
+			writer: '${nickname}'
+			},
 		method: 'GET',
 		dataType: 'json',
 		success: function(arr){
@@ -206,9 +209,9 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="c_delete_\${vo.cnum}">
-														<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
+														<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn" id="c_delete_\${vo.cnum}">삭제</button></span>
 													<span id="c_update_\${vo.cnum}">
-														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn" id="c_update_\${vo.cnum}">수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -235,9 +238,9 @@ function comments(writer, cnum=0, ccnum=0, bnum=${param.bnum}, insert_num=0){	//
 										<td width="200px;">
 											<div class="updel_wrap">
 												<span id="c_delete_\${vo.cnum}">
-													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
+													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn" id="c_delete_\${vo.cnum}">삭제</button></span>
 												<span id="c_update_\${vo.cnum}">
-													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn" id="c_delete_\${vo.cnum}">수정</button></span>
 											</div>
 										</td>
 									</tr>
@@ -340,7 +343,9 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 	console.log('iswriter: ', iswriter);
 	$.ajax({
 		url: 'json_cc_selectAll.do',
-		data: {cnum: cnum},
+		data: {cnum: cnum,
+			writer: '${nickname}'
+			},
 		method: 'GET',
 		dataType: 'json',
 		success: function(arr){
@@ -407,9 +412,9 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 											<td width="200px;">
 												<div class="updel_wrap">
 													<span id="c_delete_\${vo.cnum}">
-														<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
+														<button onclick="c_deleteOK(\${vo.cnum})" id="c_delete_\${vo.cnum}" class="updel_btn" >삭제</button></span>
 													<span id="c_update_\${vo.cnum}">
-														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
+														<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" id="c_update_\${vo.cnum}" class="updel_btn" >수정</button></span>
 												</div>
 											</td>
 										</tr>
@@ -435,9 +440,9 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 										<td width="200px;">
 											<div class="updel_wrap">
 												<span id="c_delete_\${vo.cnum}">
-													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn">삭제</button></span>
+													<button onclick="c_deleteOK(\${vo.cnum})" class="updel_btn" id="c_delete_\${vo.cnum}">삭제</button></span>
 												<span id="c_update_\${vo.cnum}">
-													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn">수정</button></span>
+													<button onclick="comments('\${writer}', \${vo.cnum}, \${vo.ccnum}, \${bnum})" class="updel_btn" id="c_update_\${vo.cnum}">수정</button></span>
 											</div>
 										</td>
 									</tr>
@@ -458,7 +463,7 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 				is_clike(vo.cnum);		// 댓글 좋아요 확인
 				count_clikes(vo.cnum);	// 좋아요 카운트
 				
-				if('${user_id}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
+				if('${nickname}' === vo.writer || '${mclass}' === '1'){	// 작성자와 관리자에게만 노출
 					$('#c_update_'+vo.cnum).show();
 					$('#c_delete_'+vo.cnum).show();
 				}
@@ -486,22 +491,25 @@ function cocomments(writer, cnum, bnum=${param.bnum}, update_num){		// 대댓글
 function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 	console.log('insert comment...');
 	
-	$.ajax({
-		url: 'json_c_insertOK.do',
-		data: {ccnum: cnum,
-			bnum: bnum,
-			writer: '${nickname}',
-			content: $('#comm_content').val(),
-			secret: $("input[name='secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result == 1){
-				comments();
-			}
-		},
-		error : function(xhr, status, error) {
-			console.log('xhr:', xhr.status);
+	if($('#comm_content').val() == ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_c_insertOK.do',
+			data: {ccnum: cnum,
+				bnum: bnum,
+				writer: '${nickname}',
+				content: $('#comm_content').val(),
+				secret: $("input[name='secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result == 1){
+					comments();
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
@@ -509,20 +517,23 @@ function c_insertOK(cnum, bnum){		// 댓글 등록 버튼
 function c_updateOK(cnum){		// 댓글 수정 완료 버튼
 	console.log('update comment...cnum: ', cnum);
 	
-	$.ajax({
-		url: 'json_c_updateOK.do',
-		data:{cnum: cnum,
-			content: $('#comm_content').val(),
-			secret: $("input[name='update_secret']").is(":checked")? 1:0},
-		method: 'POST',
-		dataType: 'json',
-		success: function(response){
-			if(response.result == 1){
-				comments();
-			}
-		},
-		error: function(xhr, status, error){
-			console.log('xhr:', xhr.status);
+	if($('#comm_content').val() == ''){
+		alert('댓글을 입력하세요.');
+	}else{
+		$.ajax({
+			url: 'json_c_updateOK.do',
+			data:{cnum: cnum,
+				content: $('#comm_content').val(),
+				secret: $("input[name='update_secret']").is(":checked")? 1:0},
+			method: 'POST',
+			dataType: 'json',
+			success: function(response){
+				if(response.result == 1){
+					comments();
+				}
+			},
+			error: function(xhr, status, error){
+				console.log('xhr:', xhr.status);
 		}
 	});
 }
@@ -664,15 +675,6 @@ function goBack() {
 								</tr>
 							</thead>
 							<tbody>
-					<!-- 			<tr> -->
-					<!-- 				<td colspan="3"> -->
-					<!-- 					<hr> -->
-					<%-- 					<video src="${vo2.filepath}" width="300" controls id="video"></video> --%>
-					<%-- 					<img width="300px" src="${vo2.filepath}" id="img"> --%>
-					<!-- 				</td> -->
-					<!-- 			</tr> -->
-								<tr>
-<%-- 									<td colspan="3"><textarea rows="15" cols="30" readonly>${vo2.content }</textarea></td> --%>
 									<td colspan="3">
 								        <p>${vo2.content}</p>
 								        <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
@@ -683,7 +685,7 @@ function goBack() {
 								<tr>
 									<td colspan="3">
 										<div id="buttonss" style="display: flex; justify-content: space-between;">
-											<button class="custom-btn btn-1" onclick="goBack()">게시판</button>
+											<a class="custom-btn btn-1" href="b_selectAll.do?bname=${vo2.bname}">게시판</a>
 											<div style="display: flex; justify-content: center; align-items: center;">
 												<button onclick="like()" class="heartButton" id="like_button"><img width="25px" src="resources/icon/not_like.png" /></button>
 												<button onclick="like_cancel()" class="heartButton" id="lcancel_button" style="display: none"><img width="25px" src="resources/icon/like.png" /></button>

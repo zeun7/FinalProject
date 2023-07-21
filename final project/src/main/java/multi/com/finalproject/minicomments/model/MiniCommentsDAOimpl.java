@@ -128,6 +128,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			vo2.setCdate(doc.getString("cdate"));
 			vo2.setSecret(doc.getInteger("secret"));
 			vo2.setReport(doc.getInteger("report"));
+			vo2.setColor(doc.getString("color"));
 
 			if(vo2.getMbnum()==0) vos.add(vo2); //방명록(mbnum!=0일 경우 댓글들임)만 가져오기...
 		}
@@ -159,6 +160,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			vo2.setCdate(doc.getString("cdate"));
 			vo2.setSecret(doc.getInteger("secret"));
 			vo2.setReport(doc.getInteger("report"));
+			vo2.setColor(doc.getString("color"));
 			if (id.equals(vo2.getId()) && vo2.getMbnum() == 0)
 				vos.add(vo2); // 방문한 페이지의 id의 방명록만 가져오기...
 		}
@@ -184,6 +186,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			vo2.setCdate(doc.getString("cdate"));
 			vo2.setSecret(doc.getInteger("secret"));
 			vo2.setReport(doc.getInteger("report"));
+			vo2.setColor(doc.getString("color"));
 		}
 
 		return vo2;
@@ -228,6 +231,7 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			doc.put("cdate", sf.format(new Date()));
 			doc.put("secret", vo.getSecret());
 			doc.put("report", vo.getReport());
+			doc.put("color", vo.getColor());
 			MiniComments.insertOne(doc);
 			flag = 1;
 		} catch(Exception e) {
@@ -248,7 +252,8 @@ public class MiniCommentsDAOimpl implements MiniCommentsDAO {
 			Bson bsons = new Document("$set", 
 					new Document("content", vo.getContent())
 					.append("cdate", sf.format(new Date()))
-					.append("secret", vo.getSecret()));
+					.append("secret", vo.getSecret())
+					.append("color", vo.getColor()));
 			
 			UpdateResult result = MiniComments.updateOne(filter, bsons);
 			log.info("result: {}", result);

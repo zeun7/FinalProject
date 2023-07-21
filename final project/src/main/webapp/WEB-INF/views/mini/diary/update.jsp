@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,20 +20,74 @@
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 
+<link rel="stylesheet" href="resources/css/modal.css">
+<link rel="stylesheet" href="resources/css/button.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+let userPeach = 0;
+let cost = 1;
+let gptTxt = '';
+
 $(function(){
+// 	$('#cost').html(cost);	
+	
 	let content_val = '${vo2.content}';
 	content_val = content_val.replaceAll('<img src="', '<img src="../../');
 	content_val = content_val.replaceAll('<video src="', '<video src="../../');
 	$("#content").val(content_val);
+	
+	$.ajax({	//이용자가 보유한 peach 개수 출력
+		url : "json_peach_count.do",
+		method : 'get',
+		data : {
+			id : '${user_id}'
+		},
+		dataType : 'json',
+		success : function(vo){
+			$('#peach').html('보유 peach: '+vo.peach);
+			userPeach = vo.peach;
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
 });//end onload
+
+function pcount_down(){
+	let presult = 1;
+	
+	if(userPeach - cost < 0){
+		alert('peach가 부족합니다.');
+		presult = 0;
+		return presult;
+	}else{
+		$.ajax({
+			url : "json_pcount_down.do",
+			method : 'get',
+			data : {
+				id : '${user_id}',
+				peach: cost
+			},
+			dataType : 'json',
+			success : function(result){
+				console.log(result.result);
+			},
+			error : function(xhr, status, error){
+				console.log('xhr', xhr.status);
+			}
+		});//end ajax
+	}
+	
+	return presult;
+}
 
 function input_check(){
 	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	console.log($("#content").val());
 	
 	let content_val = $("#content").val();
+	let content_txtonly = content_val.replace(/[<][^>]*[>]/gi, "");	//gpt용 텍스트
+	console.log('txtonly:', content_txtonly);
 	
 	//파일이 첨부되어있는지 확인
 	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
@@ -50,8 +105,88 @@ function input_check(){
 	}else if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
 		alert('내용을 입력하세요');
 	}else{
-		document.getElementById("insert_form").submit();
+		if($('#AI_Image').is(':checked')){
+			var result = pcount_down();
+			if(result == 1){
+				let modal = document.getElementById("modal");
+				modal.style.display = "block";
+				document.body.style.overflow = "hidden"; // 스크롤바 제거
+				gpt_translate(content_txtonly);
+			}
+		}else{
+			submit_form();
+		}
 	}
+}
+
+function buyPeach(){
+	window.location.href="mini_peachPay.do?id=${user_id}";
+}
+
+function gpt_translate(content_txtonly){
+	
+	$.ajax({
+		url : "gptTranslate.do",
+		method : 'get',
+		data : {
+			question : content_txtonly
+		},
+		dataType : 'json',
+		success : function(vo){
+			console.log(vo.response);
+			gptTxt = vo.response;
+			gptTxt += "I imagine this in cute cartoon style.";
+			gpt_make_image(gptTxt);
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}//end gpt_translate()
+
+function gpt_make_image(gptTxt){
+	$.ajax({
+		url : "gptMakeImage.do",
+		method : 'get',
+		data : {
+			question : gptTxt
+		},
+		dataType : 'json',
+		success : function(vo){
+			console.log(vo.response);
+			let imgUrl = vo.response;
+			gpt_download_image(imgUrl);
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}//end gpt_make_image()
+
+function gpt_download_image(imgUrl){
+	$.ajax({
+		url : "json_download_image.do",
+		method : 'get',
+		data : {
+			url : imgUrl,
+			id : '${user_id}'
+		},
+		dataType : 'json',
+		success : function(map){
+			console.log(map.filepath);
+			$('#ai_path').val(map.filepath);
+			let input = document.getElementById("isFileExist");
+			input.value = 1;
+			submit_form();
+		},
+		error : function(xhr, status, error){
+			console.log('xhr', xhr.status);
+		}
+	});//end ajax
+}
+
+function submit_form(){
+	document.getElementById("insert_form").submit();
 }
 </script>
 </head>
@@ -61,7 +196,7 @@ function input_check(){
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card card-user">
@@ -76,16 +211,35 @@ function input_check(){
               </div>
               <div class="card-body">
 					<div>
+                  		<c:set var="ai_path" value="${vo2.ai_path}"></c:set>
+						<c:if test="${not empty ai_path}">
+							<div id="ai_image_container">
+								<img src="${vo2.ai_path}" width="600px" height="600px" id="ai_image">
+								<button type="button" onclick="delete_ai_image()" class="btn-two cyan mini" style="border: 1px solid black; background-color: #ef8157;">AI 이미지 삭제</button>
+								<hr>
+							</div>
+						</c:if>
 						<div id="imageContainer"><img src="resources/uploadimg/${vo2.filepath}"></div>
 			<!-- 			<input type="file" id="file" name="file">  -->
 						<input type="hidden" id="filepath" name="filepath" value="${vo2.filepath}">
 						<label for="file">
-							<span id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+							<span id="filepath_text" class="btn-two cyan mini" style="border: 1px solid black">사진/동영상 첨부</span>
 						</label>
 						<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
 						<input type="hidden" id="isFileExist" name="isFileExist" value="0">
+						<c:if test="${empty ai_path}">
+							<span id="make_image_container">
+								<label for="AI_Image" style="margin-left: 5px;">
+									<input type="checkbox" id="AI_Image" name="AI_Image" value="true"> 
+									AI로 이미지 생성
+								</label>
+								<label id="peach" style="margin-left: 23%"></label>
+								<button type="button" onclick="buyPeach()" class="btn-two cyan mini" style="border: 1px solid black">peach 충전</button>
+							</span>
+						</c:if>
 					</div>
                   	<div>
+						<input type="hidden" id="ai_path" name="ai_path" value="${vo2.ai_path}">
 						<textarea rows="20" cols="100" id="content" name="content">${vo2.content}</textarea>
 					</div>
                     <button type="button" class="btn btn-primary btn-round" onclick="input_check()">수정완료</button>
@@ -98,6 +252,13 @@ function input_check(){
       <jsp:include page="../../footer.jsp"></jsp:include>
     </div>
   </div>
+
+<div id="modal">
+	<div class="modal-content" style="top:5%; left:10%; width:350px; height:350px; align-content: center;">
+		<h4 style="margin-top: auto; margin-bottom: auto;">AI 이미지 생성중...</h4>
+		
+	</div>
+</div>
 
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -166,6 +327,12 @@ nhn.husky.EZCreator.createInIFrame({
 			});//end $.ajax()
 		}//end if
 	}//end uploadFile()
+	
+	function delete_ai_image(){
+		$('#ai_image_container').hide();
+		$('#ai_path').val('');
+		$('#isFileExist').val(0);
+	}
 </script>
 </body>
 </html>

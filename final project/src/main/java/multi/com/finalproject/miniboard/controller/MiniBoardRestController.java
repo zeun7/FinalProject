@@ -127,11 +127,11 @@ public class MiniBoardRestController {
 	    		if(i == 0) {
 	    			// 썸네일 이미지 생성
 	    			BufferedImage originalBufferImg = ImageIO.read(f);
-	    			BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+	    			BufferedImage thumbBufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_3BYTE_BGR);
 	    			Graphics2D graphic = thumbBufferImg.createGraphics();
-	    			graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
+	    			graphic.drawImage(originalBufferImg, 0, 0, 200, 200, null);
 	    			
-	    			File thumbFile = new File(realPath + File.separator + "thumb_" + originalFilename);
+	    			File thumbFile = new File(realPath + File.separator + "gallery_thumb_" + originalFilename);
 	    			String formatName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 	    			ImageIO.write(thumbBufferImg, formatName, thumbFile);
 	    		}
@@ -148,7 +148,9 @@ public class MiniBoardRestController {
 	    }
 	    vo.setFilepath(fileNames);
 	    log.info("{}", vo);
-
+	    
+	    vo.setAi_path("");
+	    
 	    // 서비스 호출
 	    int result = service.mb_insert(vo);
 
@@ -216,11 +218,11 @@ public class MiniBoardRestController {
 				
 				// 썸네일 이미지 생성
 				BufferedImage originalBufferImg = ImageIO.read(f);
-				BufferedImage thumbBufferImg = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
+				BufferedImage thumbBufferImg = new BufferedImage(200, 200, BufferedImage.TYPE_3BYTE_BGR);
 				Graphics2D graphic = thumbBufferImg.createGraphics();
-				graphic.drawImage(originalBufferImg, 0, 0, 50, 50, null);
+				graphic.drawImage(originalBufferImg, 0, 0, 200, 200, null);
 				
-				File thumbFile = new File(realPath + File.separator + "thumb_" + originalFilename);
+				File thumbFile = new File(realPath + File.separator + "gallery_thumb_" + originalFilename);
 				String formatName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 				ImageIO.write(thumbBufferImg, formatName, thumbFile);
 				
@@ -236,6 +238,8 @@ public class MiniBoardRestController {
 		vo.setFilepath(fileNames);
 	    log.info("{}", vo);
 		
+	    vo.setAi_path("");
+	    
 		// 서비스 호출
 		int result = service.gallery_update(vo);
 		

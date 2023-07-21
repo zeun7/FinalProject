@@ -102,13 +102,19 @@ function selectAll(page){
  				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
  					date = moment(vo.wdate).format('오늘 HH시 mm분');
  				} else{											// 오늘 이전에 작성한 게시글
- 					date = moment(vo.wdate).format('MM월 DD일 HH시');
+ 					date = moment(vo.wdate).format('YY년 MM월 DD일 HH시');
  				}
  				console.log(vo); 
  				tag_vos += `
  					<tr data-mbnum="\${vo.mbnum}">
 	 			        <td><input type="checkbox" class="row-check" /></td>
-	 			        <td><a href="diary_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">\${vo.title}</a></td>
+	 			        <td><a href="diary_selectOne.do?id=\${mh_attr_id}&mbnum=\${vo.mbnum}">`
+	 			
+	 			if(vo.isFileExist == 1){
+	 				tag_vos += `<i class="fa-regular fa-image"></i>`;
+	 			}
+	 			        		
+	 			tag_vos +=        		`\${vo.title}</a></td>
 	 			        <td>\${vo.writer}</td>
 	 			        <td>\${date}</td>
 	 			        <td></td>
@@ -125,15 +131,12 @@ function selectAll(page){
 	});//end $.ajax()
 }//end selectAll()
 
-$(document).ready(function(){
-	$("body").on("click", "tr[data-mbnum]", function(){
-	        window.location = $(this).find("a").attr("href");
-	        return false; // 이벤트 전파를 중지합니다.
-	});
-
-    $(".row-check").click(function(event){
-        event.stopPropagation(); // 이벤트 전파를 중지합니다.
-    });
+$("body").on("click", "tr[data-mbnum]", function(){
+    // deleteMode가 비활성화되어 있을 때만 페이지 이동을 허용합니다.
+    if (!deleteMode) {
+        window.location = $(this).find("a").attr("href");
+    }
+    return false; // 이벤트 전파를 중지합니다.
 });
 
 
@@ -205,7 +208,7 @@ function select_diary_deleteOK() {
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">

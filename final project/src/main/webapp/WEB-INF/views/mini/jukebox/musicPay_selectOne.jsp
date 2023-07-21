@@ -86,17 +86,19 @@ function buyPeach(){
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
     <jsp:include page="../mini_navbar.jsp"></jsp:include>
-      <div class="content" style="height: 90vh;">
+      <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> 음악 구매</h4>
-                <button onclick="buyPeach()" class="btn btn-primary btn-round">peach 충전</button>
+               <h4 class="card-title" style="text-align: center;"> 음악 구매</h4>
+                <div style="text-align: right;">
+	                <button onclick="buyPeach()" class="btn btn-primary btn-round">peach 충전</button>
+                </div>
               </div>
               <div class="card-body">
                 <div class="">
-                  <table class="table">
+                  <table class="table" style="text-align: center;">
                     <tr>
 						<th class=" text-primary">구매곡</th>
 						<td>${param.bgm }</td>
@@ -110,8 +112,7 @@ function buyPeach(){
 						<td id="cost"></td>
 					</tr>
 					<tr>
-						<th class=" text-primary">구매</th>
-						<td><button onclick="buy_music()" class="btn btn-primary btn-round">구매하기</button></td>
+						<td colspan="2"><button onclick="buy_music()" class="btn btn-primary btn-round">구매하기</button></td>
 					</tr>
                   </table>
                 </div>

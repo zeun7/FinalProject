@@ -7,13 +7,13 @@
 
   	<select id="MB_SELECT_ALL" resultType="multi.com.finalproject.miniboard.model.MiniBoardVO" parameterType="Map">
   		<![CDATA[
-		SELECT mbnum, title, writer, wdate, filepath 
+		SELECT mbnum, title, writer, wdate, filepath, isfileexist 
 		FROM
 		  (
-		  SELECT SEQ, mbnum, title, writer, wdate, filepath 
+		  SELECT SEQ, mbnum, title, writer, wdate, filepath, isfileexist 
 		  FROM
 		  (
-		    SELECT ROWNUM AS SEQ, mbnum, title, writer, wdate, filepath 
+		    SELECT ROWNUM AS SEQ, mbnum, title, writer, wdate, filepath, isfileexist 
 		    FROM
 		      (
 		        SELECT *
@@ -22,9 +22,9 @@
 		        ORDER BY mbnum desc
 		      )
 		  )
-		WHERE SEQ >= (#{page}-1)*10+1 
+		WHERE SEQ >= (#{page}-1)*8+1 
 		)
-		WHERE ROWNUM <= 10
+		WHERE ROWNUM <= 8
 		]]>
 	</select>
 	
@@ -45,8 +45,8 @@
 	</select>
 	
 	<insert id="MB_INSERT" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		insert into miniboard(mbnum,mbname,writer,title,content,filepath,ai_path) 
-		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath},#{ai_path})
+		insert into miniboard(mbnum,mbname,writer,title,content,filepath,ai_path,isfileexist) 
+		values(seq_miniboard.nextval,#{mbname},#{writer},#{title, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},#{filepath},#{ai_path},#{isFileExist})
 	</insert>
 	
 	<update id="MB_UPDATE_NICKNAME">
@@ -59,7 +59,7 @@
 	</update>
 	
 	<update id="DIARY_UPDATE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">
-		update miniboard set title=#{title}, content=#{content}, filepath=#{filepath}, wdate=sysdate where mbnum=#{mbnum}
+		update miniboard set title=#{title}, content=#{content}, filepath=#{filepath}, isfileexist=#{isFileExist}, ai_path=#{ai_path}, wdate=sysdate where mbnum=#{mbnum}
 	</update>
 	
 	<delete id="MB_DELETE" parameterType="multi.com.finalproject.miniboard.model.MiniBoardVO">

@@ -9,28 +9,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
-	function input_check(){
-		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-		let content_val = $("#content").val();
-		
-		//파일이 첨부되어있는지 확인
-		if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
-			let input = document.getElementById("isFileExist");
-			input.value = 1;
-		}
-		console.log(content_val);
-		content_val = content_val.replaceAll('<img src="../../', '<img src="');
-		content_val = content_val.replaceAll('<video src="../../', '<video src="');
-		$("#content").val(content_val);
-		
-		if($("#title").val() === ''){
-			alert('제목을 입력하세요');
-		}else if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
-			alert('내용을 입력하세요');
-		}else{
-			document.getElementById("insert_form").submit();
-		}
+function input_check(){
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	let content_val = $("#content").val();
+	
+	//파일이 첨부되어있는지 확인
+	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
+		let input = document.getElementById("isFileExist");
+		input.value = 1;
 	}
+	console.log(content_val);
+	content_val = content_val.replaceAll('<img src="../../', '<img src="');
+	content_val = content_val.replaceAll('<video src="../../', '<video src="');
+	$("#content").val(content_val);
+	
+	if($("#title").val() === ''){
+		alert('제목을 입력하세요');
+	}else if($("#content").val() === '<p>&nbsp;</p>' || $("#content").val() === ''){
+		alert('내용을 입력하세요');
+	}else{
+		document.getElementById("insert_form").submit();
+	}
+}
 </script>
 </head>
 <body>
@@ -74,6 +74,7 @@
 											<option value="category01">자유</option>
 											<option value="category02">질문</option>
 											<option value="category03">썰</option>
+											<option id="announcement" value="category00">공지</option>
 										</select>
 									</c:when>
 									
@@ -84,6 +85,7 @@
 											<option value="category06">고민</option>
 											<option value="category07">OOTD</option>
 											<option value="category08">뷰티</option>
+											<option id="announcement" value="category00">공지</option>
 										</select>
 									</c:when>
 									
@@ -91,6 +93,7 @@
 										<select name="caname" id="caname">
 											<option value="category09">유머</option>
 											<option value="category10">이슈</option>
+											<option id="announcement" value="category00">공지</option>
 										</select>
 									</c:when>
 									
@@ -102,6 +105,7 @@
 											<option value="category14">드라마</option>
 											<option value="category15">영화</option>
 											<option value="category16">유튜브</option>
+											<option id="announcement" value="category00">공지</option>
 										</select>
 									</c:when>
 									
@@ -113,6 +117,7 @@
 											<option value="category20">배구</option>
 											<option value="category21">골프</option>
 											<option value="category22">e스포츠</option>
+											<option id="announcement" value="category00">공지</option>
 										</select>
 									</c:when>
 								</c:choose>

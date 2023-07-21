@@ -48,6 +48,10 @@
 		select * from friends where nickname = #{nickname} and grade = 3
 	</select>
 	
+	<select id="MNG_M_SELECT_BANNED" resultType="multi.com.finalproject.manage.model.FriendsVO">
+		select * from friends where nickname2 = #{nickname} and grade = 3
+	</select>
+	
 	<update id="MNG_M_ADD_BAN">
 		update friends set grade = 3 where nickname = #{nickname1} and nickname2 = #{nickname2}
 	</update>
@@ -151,4 +155,5 @@
 	<select id="MNG_SELECT_REPORT" resultType="multi.com.finalproject.manage.model.ReportVO">
 		select * from report where rnum = #{rnum}
 	</select>
+	
 </mapper>

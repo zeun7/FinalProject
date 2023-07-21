@@ -56,4 +56,6 @@ public interface ManageDAO {
 	public void update_nickname(Map<String, String> map);
 
 	public void delfriendAll(MemberVO vo);
+	
+	public List<FriendsVO> selectBanned(FriendsVO vo);
 }

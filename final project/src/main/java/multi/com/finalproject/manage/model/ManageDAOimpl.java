@@ -90,6 +90,12 @@ public class ManageDAOimpl implements ManageDAO {
 	}
 	
 	@Override
+	public List<FriendsVO> selectBanned(FriendsVO vo) {
+		return sqlSession.selectList("MNG_M_SELECT_BANNED", vo);
+	}
+	
+	
+	@Override
 	public int addBan(MemberVO vo, MemberVO vo2) {
 		log.info("addBan()...{}, {}", vo.getNickname(), vo2.getNickname());
 		Map<String, String> map = new HashMap<String, String>();

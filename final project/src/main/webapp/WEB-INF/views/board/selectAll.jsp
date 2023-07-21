@@ -34,7 +34,7 @@ function selectAllCount(){
 		success : function(result) {
 // 			console.log(result);
 			let tag_page = 0;
-			let tag_pages = `<div class="paging-btn-container">`;
+			let tag_pages = `<div style="display: flex; justify-content: center;">`;
 			
 			while(result > 0){
 				tag_page++;
@@ -45,7 +45,7 @@ function selectAllCount(){
 				
 				result -= limit;
 			}
-			tag_pages += `</div>`;
+			tag_pages +=`</div>`;
 			
 			if(curPage > tag_page){
 				curPage = tag_page;
@@ -75,7 +75,8 @@ function selectAll(page, limit){
 		data : {
 			bname : '${param.bname}',
 			page : page,
-			limit : limit
+			limit : limit,
+			watcher: '${nickname}'
 		},
 		dataType : 'json', 
 		success : function(arr) {
@@ -189,7 +190,8 @@ function searchListCount(){
 		data : {
 			bname : '${param.bname}',
 			searchKey : $("#searchKey").val(),
-			searchWord : $("#searchWord").val()
+			searchWord : $("#searchWord").val(),
+			watcher: '${nickname}'
 		},
 		dataType : 'json', 
 		success : function(result) {
@@ -199,12 +201,17 @@ function searchListCount(){
 			
 			while(result > 0){
 				tag_page++;
-				tag_pages += `
-					<button onclick=searchList(\${tag_page},\${limit})>\${tag_page}</button>
-				`;
+				let tag_pages = `<div style="display: flex; justify-content: center;">`;
 				
+
+				tag_pages += `
+					<button class="paging-btn \${activeClass}" onclick=searchList(\${tag_page},\${limit})>\${tag_page}</button>
+					`;
+					
 				result -= limit;
 			}
+			
+			tag_pages +=`</div>`;
 			
 			if(curPage > tag_page){
 				curPage = tag_page;
@@ -229,11 +236,20 @@ function searchList(page, limit){
 			page : page,
 			limit : limit,
 			searchKey : $("#searchKey").val(),
-			searchWord : $("#searchWord").val()
+			searchWord : $("#searchWord").val(),
+			watcher: '${nickname}'
 		},
 		dataType : 'json', 
 		success : function(arr) {
 			let tag_vos = '';
+			
+			// 모든 페이지 버튼에서 'active' 클래스를 제거합니다.
+            const pageButtons = document.querySelectorAll('.paging-btn');
+            pageButtons.forEach((btn) => btn.classList.remove('active'));
+
+            // 현재 페이지 버튼에만 'active' 클래스를 추가합니다.
+            pageButtons[page - 1].classList.add('active');
+            
 			for ( let i in arr) {
  				let vo = arr[i];
 				let date = '';
@@ -243,18 +259,64 @@ function searchList(page, limit){
  				} else{											// 오늘 이전에 작성한 게시글
  					date = moment(vo.wdate).format('MM-DD');
  				}
+ 				
+ 				if(vo.caname === 'category01'){ <!-- 카테고리 -->
+				vo.caname = '자유';
+				} else if(vo.caname === 'category02'){
+				vo.caname = '질문';
+				} else if(vo.caname === 'category03'){
+				vo.caname = '썰';
+				} else if(vo.caname === 'category04'){
+					vo.caname = '일상';
+				} else if(vo.caname === 'category05'){
+ 				vo.caname = '맛집';
+				} else if(vo.caname === 'category06'){
+ 				vo.caname = '고민';
+				} else if(vo.caname === 'category07'){
+ 				vo.caname = 'OOTD';
+				} else if(vo.caname === 'category08'){
+ 				vo.caname = '뷰티';
+				} else if(vo.caname === 'category09'){
+					vo.caname = '유머';
+				} else if(vo.caname === 'category10'){
+					vo.caname = '이슈';
+				} else if(vo.caname === 'category11'){
+					vo.caname = '가수'; 
+				} else if(vo.caname === 'category12'){
+					vo.caname = '아이돌';
+				} else if(vo.caname === 'category13'){
+					vo.caname = '배우';
+				} else if(vo.caname === 'category14'){
+					vo.caname = '드라마';
+				} else if(vo.caname === 'category15'){
+					vo.caname = '영화';
+				} else if(vo.caname === 'category16'){
+					vo.caname = '유튜브';
+				} else if(vo.caname === 'category17'){
+					vo.caname = '축구';
+				} else if(vo.caname === 'category18'){
+					vo.caname = '야구';
+				} else if(vo.caname === 'category19'){
+					vo.caname = '농구';
+				} else if(vo.caname === 'category20'){
+					vo.caname = '배구';
+				} else if(vo.caname === 'category21'){
+					vo.caname = '골프';
+				} else if(vo.caname === 'category22'){
+					vo.caname = 'e스포츠';
+				}
 
-				tag_vos += `
- 					<tr>
+ 				tag_vos += `
+ 					<tr data-bnum="\${vo.bnum}">
  						<td><a>\${vo.bnum}</a></td>
  						<td>[\${vo.caname}]`;
  				
  				if(vo.isFileExist == 1){
- 					tag_vos += `<i class="fa-regular fa-image">`;
+ 					tag_vos += `<i class="fa-regular fa-image"></i>`;
  				}
  				tag_vos += `
  						<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
- 						<td>\${vo.writer}</td>
+						<td>\${vo.writer}</td>
 						<td>\${vo.vcount}</td>
 						<td>\${vo.likes}</td>
 						<td>\${date}</td>
