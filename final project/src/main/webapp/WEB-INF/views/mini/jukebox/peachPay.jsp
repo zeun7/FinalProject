@@ -40,7 +40,7 @@ function payClick(){
 		},
 		method: 'GET',
 		success: function(response){
-			console.log(response.tid);
+			console.log(response);
 			var url = response.next_redirect_pc_url;
 			let name = '피치 결제';
 			let options = 'width=500,height=500';
