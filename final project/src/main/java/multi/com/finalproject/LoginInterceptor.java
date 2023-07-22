@@ -1,13 +1,10 @@
 package multi.com.finalproject;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +77,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				|| sPath.equals("/json_c_cancel_clike.do") // 댓글 좋아요 취소 
 				){
 			
-			if(user_id == null) {
+			if(user_id == null || user_id.isBlank()) {
 				response.sendRedirect("login.do");
 				return false;
 			}
