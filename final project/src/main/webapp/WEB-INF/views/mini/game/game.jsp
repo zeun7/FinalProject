@@ -44,7 +44,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card"
-							style="background-image: url('resources/assets/img/sketchbook.png'); background-size: cover;">
+							style="background-image: url('resources/AI_Backimg/game.png'); background-size: 100% 100%; background-repeat: no-repeat;"
+							>
 							<div class="card-header game-header">
 								<h4 class="card-title text-center game-title">끝말잇기 게임</h4>
 							</div>
@@ -66,8 +67,9 @@
 											<button id="nextButton" class="btn-start">다음단어</button>
 										</div>
 										<br>
+										<br><br>
 										<br>
-										<button id="showRank" class="btn-rank">랭킹보기</button>
+										<button id="showRank" class="btn-rank" style="background-color: transparent;">랭킹보기</button>
 									</div>
 									<div id="rankingContent" style="display: none;"></div>
 								</div>

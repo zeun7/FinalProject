@@ -37,10 +37,46 @@ let curPage = 1;
 let limit = 10;
 let isSelectAll = true;
 
+function back_img(){
+	if('${param.bname}' === 'board01'){
+		$('#back_img').css({
+				"background-image" : "url('resources/AI_Backimg/Free.png')",
+				"background-size" : "cover",
+				"background-repeat" : "no-repeat"
+		});
+	} else if('${param.bname}' === 'board02'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Daily.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${param.bname}' === 'board03'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Humor.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${param.bname}' === 'board04'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Entertainment.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${param.bname}' === 'board05'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Sports.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	}
+}
+
 function selectAllCount(){
 	console.log('selectAllCount()');
 	isSelectAll = true;
 	console.log('isSelectAll:', isSelectAll);
+	back_img();
+	
 	$.ajax({
 		url : "json_b_count.do",
 		method : 'GET',
@@ -375,8 +411,8 @@ function changeLimit(){
 <body onload="selectAllCount()">
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <jsp:include page="../navbar.jsp"></jsp:include>
-<div class="main-panel">
-	<div class="content">
+<div class="main-panel" id="back_img">
+	<div class="content" style="height:100%;">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">

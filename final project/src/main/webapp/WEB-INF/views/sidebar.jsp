@@ -11,6 +11,7 @@
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="resources/assets/demo/demo.css" rel="stylesheet" />
+<link href="resources/css/icon.css" rel="stylesheet" />
 
 <div class="sidebar" data-color="white" data-active-color="danger">
 	<div class="logo">
@@ -25,9 +26,9 @@
 	</div>
 	<div class="sidebar-wrapper">
 		<ul class="nav">
-			<li><a href="mini_home.do?id=${user_id}"
-				onclick="openMiniHomePage(event)"> <i class="nc-icon nc-album-2"></i>
-					<p>미니홈피</p>
+			<li><a href="mini_home.do?id=${user_id}" style="display:flex;" 
+				onclick="openMiniHomePage(event)"> <img src="resources/AI_Backimg/MiniHome.png" class="side_icon nc-icon">
+					<p class="side_menu">미니홈피</p>
 			</a></li>
 			<li><a href="b_selectAll.do?bname=board01"> <i
 					class="nc-icon nc-bulb-63"></i>

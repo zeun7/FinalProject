@@ -334,9 +334,10 @@ function del_ban(nickname2) {	// 차단 해제
 </head>
 <body onload="friends_list()">
 <jsp:include page="sidebar.jsp"></jsp:include>
-<div class="main-panel">
+<div class="main-panel"
+style="background-image: url('resources/AI_Backimg/Friends.png'); background-size:cover; background-repeat:no-repeat;">
 <jsp:include page="navbar.jsp"></jsp:include>
-	<div class="content">
+	<div class="content" style="height:100%;">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">

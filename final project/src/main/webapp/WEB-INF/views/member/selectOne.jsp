@@ -50,7 +50,7 @@
 										
 									</div>
 									<div class="col-lg-5 col-md-3 col-4 ">
-										<h8>게시물수<br><small>${total}</small></h8>
+										<h8>게시물<br><small>${total}</small></h8>
 									</div>
 									<div class="col-lg-2 col-md-3 col-4 d-flex justify-content-center">
 									 <h7><img src="resources/icon/like.png"alt="Like" style="width: 20px"><br><small>${total_likes}</small></h7>

@@ -74,7 +74,6 @@ function post_friends(sortKey){
 				
 				tag_vos += `
 					<tr data-bnum="\${vo.mbnum}">
-						<td style="width: 50px">\${vo.mbnum}</td>
 						<td style="width: 200px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 						`;
 				
@@ -170,7 +169,6 @@ function post_board(boardName, sortKey){
 				
 				tag_vos += `
 					<tr data-bnum="\${vo.bnum}">
-						<td style="width: 50px">\${vo.bnum}</td>
 						<td style="width: 200px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 						`;
 				
@@ -211,8 +209,9 @@ $(document).ready(function(){
 <body>
 <jsp:include page="sidebar.jsp"></jsp:include>
 <jsp:include page="navbar.jsp"></jsp:include>
-<div class="main-panel">
-	<div class="content">
+<div class="main-panel"
+	style="background-image: url('resources/AI_Backimg/MainHome.png'); background-size:cover; background-repeat:no-repeat;">
+	<div class="content" style="height:100%;">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">

@@ -18,6 +18,7 @@
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <link rel="stylesheet" href="resources/css/pagination.css">
 <link rel="stylesheet" href="resources/css/button2.css">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <style type="text/css">
 .pr-1 {
 	margin: auto;

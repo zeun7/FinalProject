@@ -82,7 +82,7 @@ function update_mclass(id, mclass, page){	// 회원등급 변경 버튼
 			url: "json_mng_mclass.do",
 			data: {id: id,
 				mclass: mclass},
-			method: "GET",
+			method: "POST",
 			dataType: "json",
 			success: function(result){
 				manage_member(page);

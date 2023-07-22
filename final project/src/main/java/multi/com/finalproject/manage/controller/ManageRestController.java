@@ -189,7 +189,7 @@ public class ManageRestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/json_mng_mclass.do",  method = RequestMethod.GET)
+	@RequestMapping(value = "/json_mng_mclass.do",  method = RequestMethod.POST)
 	public Integer json_mng_mclass(MemberVO vo) {
 		log.info("/json_mng_mclass.do...");
 		

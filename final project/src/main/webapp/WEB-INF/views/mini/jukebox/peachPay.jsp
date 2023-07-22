@@ -99,7 +99,7 @@ function getQuantity(event){
 						</td>
 					</tr>    	
 					<tr>
-						<td style="text-align: center;">
+						<td colspan="2" style="text-align: center;">
 							<button type="button" id="kakao_pay" class="btn btn-primary btn-round" onclick="payClick()">구매</button>
 						</td>
 					</tr>    	
