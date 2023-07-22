@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png"
 	href="resources/assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>방명록</title>
+<title>${m_attr.nickname}의 미니홈피</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />

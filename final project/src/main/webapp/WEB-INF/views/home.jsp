@@ -83,7 +83,7 @@ function post_friends(sortKey){
 				}
 				
 				if(vo.mbname === 'diary'){
-					tag_vos += `<a style="width: 200px;" href="diary_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
+					tag_vos += `<a style="width: 200px;" href="diary_selectOne.do?nickname=\${vo.writer}&mbnum=\${vo.mbnum}">\${vo.title} `;
 					
 					if(vo.ccount !== 0){
 						tag_vos += `<small>[\${vo.ccount}]</small></a></td>`;
@@ -91,7 +91,7 @@ function post_friends(sortKey){
 						tag_vos += `</a></td>`;
 					}
 				}else{
-					tag_vos += `<a style="width: 200px;" href="gallery_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
+					tag_vos += `<a style="width: 200px;" href="gallery_selectOne.do?nickname=\${vo.writer}&mbnum=\${vo.mbnum}">\${vo.title} `;
 
 					if(vo.ccount !== 0){
 						tag_vos += `<small>[\${vo.ccount}]</small></a></td>`;

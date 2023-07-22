@@ -8,14 +8,14 @@
   <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    다이어리
-  </title>
+ <title>음악 구매</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
+  <link rel="stylesheet" href="resources/css/button.css">
+  <link rel="stylesheet" href="resources/css/button2.css">
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
@@ -93,7 +93,7 @@ function buyPeach(){
               <div class="card-header">
                <h4 class="card-title" style="text-align: center;"> 음악 구매</h4>
                 <div style="text-align: right;">
-	                <button onclick="buyPeach()" class="btn btn-primary btn-round">peach 충전</button>
+	                <button onclick="buyPeach()" class="btn btn-primary btn-round" style="border-radius: 10px; background-color: rgb(247,150,192);">peach 충전</button>
                 </div>
               </div>
               <div class="card-body">

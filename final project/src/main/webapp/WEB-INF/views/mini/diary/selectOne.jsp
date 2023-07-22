@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href="resources/assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="resources/assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>다이어리_selectOne</title>
+<title>다이어리</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
 <!--     Fonts and icons     -->
@@ -27,8 +27,19 @@
 <link rel="stylesheet" href="resources/css/button.css">
 <link rel="stylesheet" href="resources/css/cmt_button.css">
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
+
+<!-- 로컬 서버 -->
+<meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
+<!-- 배포 서버 -->
+<%-- <meta name="twitter:url" content="https://175.45.201.175:8080/final$20project/b_selectOne.do?bnum=${param.bnum}" /> --%>
+
 <script type="text/javascript">
-let url = '175.45.201.175:8080/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+
+//로컬
+let url = 'http://localhost:8088/final%20project/b_selectOne.do?bnum='+${param.bnum};
+// 배포서버
+// let url = 'http://175.45.201.175:8080/final%20project/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+
 let iswriter = false;
 let report_cnum = 0;
 let report_ccnum = 0;
@@ -114,9 +125,19 @@ function like_cancel(){
 }//end dislike()
 
 function copy_url(){
-	navigator.clipboard.writeText(url).then(() => {
-        alert("복사완료");
-      });
+	const textArea = document.createElement('textarea');
+	textArea.value = url;
+	document.body.appendChild(textArea);
+	textArea.select();
+	textArea.setSelectionRange(0, 99999);
+	try {
+	  document.execCommand('copy');
+	} catch (err) {
+	  console.error('복사 실패', err);
+	}
+	textArea.setSelectionRange(0, 0);
+	document.body.removeChild(textArea);
+	alert('텍스트가 복사되었습니다.');
 }
 
 function share_twitter(){

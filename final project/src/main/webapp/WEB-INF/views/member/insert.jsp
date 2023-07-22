@@ -15,6 +15,8 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+let isPwChecked = false;
+
 	$(function() {
 		console.log("onload....");
 	});
@@ -205,6 +207,7 @@
 			return false;
 		} else {
 			alert("비밀번호가 일치합니다");
+			isPwChecked = true;
 			return true;
 		}
 	}
@@ -354,7 +357,13 @@
 			alert("비밀번호가 일치하지 않습니다.");
 			return;
 		}
-
+		
+		//비밀번호 확인했는지 체크
+		if(!isPwChecked){
+			alert("비밀번호 확인을 실행해주세요.");
+			return;
+		}
+		
 		// Rest of the code for form submission
 		var id = document.getElementById("id").value;
 		var nickname = document.getElementById("nickname").value;
