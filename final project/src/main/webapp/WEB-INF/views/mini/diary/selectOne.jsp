@@ -29,16 +29,16 @@
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 
 <!-- 로컬 서버 -->
-<meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
+<%-- <meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" /> --%>
 <!-- 배포 서버 -->
-<%-- <meta name="twitter:url" content="https://175.45.201.175:8080/final$20project/b_selectOne.do?bnum=${param.bnum}" /> --%>
+<meta name="twitter:url" content="https://175.45.201.175:8080/final$20project/b_selectOne.do?bnum=${param.bnum}" />
 
 <script type="text/javascript">
 
 //로컬
-let url = 'http://localhost:8088/final%20project/b_selectOne.do?bnum='+${param.bnum};
+// let url = 'http://localhost:8088/final%20project/b_selectOne.do?bnum='+${param.bnum};
 // 배포서버
-// let url = 'http://175.45.201.175:8080/final%20project/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
+let url = 'http://175.45.201.175:8080/final%20project/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 
 let iswriter = false;
 let report_cnum = 0;

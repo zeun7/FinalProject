@@ -57,12 +57,12 @@ public class JukeboxRestController {
 			param += "&tax_free_amount=0";
 			
 //			로컬에서의 리다이렉트 주소
-			param += "&approval_url=http://localhost:8088/finalproject/kakaopay_success.do?quantity="+vo.getQuantity();
-			param += "&cancel_url=http://localhost:8088/finalproject/kakaopay_cancel.do&fail_url=http://localhost:8088/finalproject/kakaopay_fail.do";
+//			param += "&approval_url=http://localhost:8088/finalproject/kakaopay_success.do?quantity="+vo.getQuantity();
+//			param += "&cancel_url=http://localhost:8088/finalproject/kakaopay_cancel.do&fail_url=http://localhost:8088/finalproject/kakaopay_fail.do";
 			
 //			배포서버에서 리다이렉트 주소
-//			param += "&approval_url=http://175.45.201.175:8080/final%20project/kakaopay_success.do?quantity="+vo.getQuantity();
-//			param += "&cancel_url=http://175.45.201.175:8080/final%20project/kakaopay_cancel.do&fail_url=http://175.45.201.175:8080/finalproject/kakaopay_fail.do";
+			param += "&approval_url=http://175.45.201.175:8080/final%20project/kakaopay_success.do?quantity="+vo.getQuantity();
+			param += "&cancel_url=http://175.45.201.175:8080/final%20project/kakaopay_cancel.do&fail_url=http://175.45.201.175:8080/finalproject/kakaopay_fail.do";
 			
 			OutputStream outputStream = huConnection.getOutputStream();
 			
