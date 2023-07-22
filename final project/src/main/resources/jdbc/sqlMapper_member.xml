@@ -10,6 +10,10 @@
 		select * from member where id = #{id, jdbcType=VARCHAR} or nickname = #{nickname, jdbcType=VARCHAR}
 	</select>
 
+	<select id="M_SELECT_ONE_BY_NICK" resultType="String">
+		select id from member where nickname = #{nickname, jdbcType=VARCHAR}
+	</select>
+
 	<select id="M_ID_CHECK"
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select id from member where id = #{id}
@@ -89,11 +93,6 @@
 		resultType="multi.com.finalproject.member.model.MemberVO">
 		select * from member where  email = #{email}
 	</select>
-	
-	<select id="M_SELECT_ONE_BY_NICK"
-		resultType="String">
-		select id from member where nickname = #{nickname, jdbcType=VARCHAR}
-	</select>	
 	
 	<!-- 비밀번호 변경 관련 mapper -->
 

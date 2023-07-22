@@ -45,8 +45,11 @@ public class JukeboxController {
 		vo.setId(user_id);
 		vo.setPeach(quantity);
 		
+		int UpdatedPeachCount = (int)session.getAttribute("myPeach") + vo.getPeach();
 		int result = service.pcountUp(vo);
 		log.info("result:{}", result);
+		
+		session.setAttribute("myPeach", UpdatedPeachCount);
 		
 		return "mini/jukebox/kakaopay_success";
 	}

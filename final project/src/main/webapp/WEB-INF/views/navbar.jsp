@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-
+<link rel="stylesheet" href="resources/css/button2.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+function buyPeach(){
+	window.location.href="mini_peachPay.do?id=${user_id}";
+}
+</script>
 <nav
 	class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
 	<div class="container-fluid">
@@ -20,6 +26,11 @@
 					id="profile" style="padding-right: 10px"> ${nickname} </a></li>
 				<li class="nav-item" id="li_insert" style="display: flex; flex-wrap: wrap; align-content: center;"><a href="m_insert.do" id="m_insert" style="padding-right: 10px">
 						회원가입 </a></li>
+				<li class="nav-item" id="li_peachCount" style="display: flex; flex-wrap: wrap; align-content: center;">
+					<button onclick="buyPeach()" class="btn-gradient purple mini" style="border-radius: 10px; background-color: rgb(247,150,192); margin-right: 20px;">
+						My Peach : ${myPeach}개
+					</button>
+				</li>
 				<li class="nav-item" id="li_logout" style="display: flex; flex-wrap: wrap; align-content: center;"><a href="logout.do" id="logout" style="padding-right: 10px"> 로그아웃
 				</a></li>
 			</ul>
@@ -37,6 +48,7 @@ if(sid === ''){
 	$('#li_profile').hide();
 	$('#li_insert').show();
 	$('#li_logout').hide();
+	$('#li_peachCount').hide();
 }else{
 	$('#li_profilepic').show();
 	$('#li_login').hide();

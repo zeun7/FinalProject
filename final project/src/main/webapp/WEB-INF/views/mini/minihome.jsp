@@ -61,11 +61,11 @@ function recent_visitLog(){
                 	<div class="postit" style="background-color:\${miniComment.color}" onclick="gotoFindOne(\${miniComment.mcnum})">
                 	<div>
  					<span>
-				        <h5>\${miniComment.writer}</h5>
 				        <div class="postit-content">\${miniComment.content}</div>
 			        </span>
 			        </div>
-			        <div style="margin-top: auto;">\${miniComment.cdate}</div>
+			        <div style="margin-top: auto;">- \${miniComment.writer} -</div>
+			        <div>\${miniComment.cdate}</div>
 			        </div>
 			        `;
             });
@@ -96,7 +96,20 @@ function gotoFindOne(mcnum){
 							<div class="card-header"
 								style="text-align: center; font-family: Georgia; font-size: 20px; font-weight: bold;">
 								<div class="card-header">
-									<h4 class="card-title" style="display: flex; justify-content: center;">최근 방명록</h4>
+									<h4 class="card-title">
+										<c:set var="title" value="${mh_attr.title}"></c:set>
+										<c:choose>
+											<c:when test="${title eq '미니홈피 제목을 변경해주세요'}">
+												${m_attr.nickname}의 미니홈피
+											</c:when>
+											<c:otherwise>
+												${mh_attr.title}
+											</c:otherwise>
+										</c:choose>
+									</h4><hr>
+								</div>
+								<div class="card-body" style="height: 600px;">
+									<h4 style="display: flex; justify-content: center;">최근 방명록</h4>
 									<div style="display: flex; justify-content: flex-end;">
 										<select onchange="redirectToMiniHome(this)">
 												<option>1촌목록</option>
@@ -105,8 +118,6 @@ function gotoFindOne(mcnum){
 											</c:forEach>
 										</select>
 									</div>
-								</div>
-								<div class="card-body" style="height: 600px;">
 									<div id="visitors_log"></div>
 								</div>
 							</div>

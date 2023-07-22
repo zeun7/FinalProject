@@ -50,7 +50,7 @@ button[class*="btn"] {border: 0;}
 .btn.blue, .btn-two.blue     {background-color: #7fb1bf;}
 .btn.green, .btn-two.green   {background-color: #9abf7f;}
 .btn.red, .btn-two.red       {background-color: #fa5a5a;}
-.btn.purple, .btn-two.purple {background-color: #cb99c5;}
+.btn.purple, .btn-two.purple {background-color: #f796c0;}
 .btn.cyan, .btn-two.cyan     {background-color: #7fccde;}
 .btn.yellow, .btn-two.yellow {background-color: #f0d264;}
 
@@ -80,8 +80,8 @@ button[class*="btn"] {border: 0;}
 .btn.red {box-shadow:0px 4px 0px #E04342;}
 .btn.red:active {box-shadow: 0 0 #ff4c4b; background-color: #ff4c4b;}
 
-.btn.purple {box-shadow:0px 4px 0px #AD83A8;}
-.btn.purple:active {box-shadow: 0 0 #BA8CB5; background-color: #BA8CB5;}
+.btn.purple {box-shadow:0px 4px 0px #f796c0;}
+.btn.purple:active {box-shadow: 0 0 #f796c0; background-color: #f796c0;}
 
 .btn.cyan {box-shadow:0px 4px 0px #73B9C9;}
 .btn.cyan:active {box-shadow: 0 0 #73B9C9; background-color: #70B4C4;}
@@ -124,7 +124,7 @@ button[class*="btn"] {border: 0;}
 .btn-3d.red:hover    {background-color: #e74c3c;}
 .btn-3d.blue:hover   {background-color: #699DD1;}
 .btn-3d.green:hover  {background-color: #80C49D;}
-.btn-3d.purple:hover {background-color: #D19ECB;}
+.btn-3d.purple:hover {background-color: #ff80c0;}
 .btn-3d.yellow:hover {background-color: #F0D264;}
 .btn-3d.cyan:hover   {background-color: #82D1E3;}
 
@@ -176,7 +176,7 @@ button[class*="btn"] {border: 0;}
 }
 
 .btn-3d.purple {
-  background-color: #cb99c5;
+  background-color: #f796c0;
   box-shadow: 0 0 0 1px #cb99c5 inset,
         0 0 0 2px rgba(255,255,255,0.15) inset,
         0 8px 0 0 rgba(189, 142, 183, .7),
@@ -184,7 +184,7 @@ button[class*="btn"] {border: 0;}
         0 8px 8px 1px rgba(0,0,0,0.5);
 }
 .btn-3d.purple:active {
-  box-shadow: 0 0 0 1px #cb99c5 inset,
+  box-shadow: 0 0 0 1px #f796c0 inset,
         0 0 0 2px rgba(255,255,255,0.15) inset,
         0 0 0 1px rgba(0,0,0,0.4);
 }
@@ -301,6 +301,6 @@ button[class*="btn"] {border: 0;}
 .btn-gradient.orange:active {background: #E8601B;}
 .btn-gradient.cyan:active   {background: #169499;}
 .btn-gradient.blue:active   {background: #608FBF;}
-.btn-gradient.purple:active {background: #BD8EB7;}
+.btn-gradient.purple:active {background: #ff80c0;}
 .btn-gradient.yellow:active {background: #DBC05B;}
 .btn-gradient.green:active  {background: #72B08E;}

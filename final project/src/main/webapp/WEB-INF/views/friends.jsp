@@ -40,7 +40,7 @@ function friends_list(){		// 친구목록
  					<tr>
 	 					<td>\${vo.nickname2}</td>
 	 					<td>
-	 						<button class="btn-gradient purple mini" onclick="openMiniHomePage(event)">
+	 						<button class="btn-gradient purple mini" onclick="openFriendMiniHome(event, '\${vo.nickname2}')">
 	 						미니홈피</button>
 	 					</td>
 	 					<td>
@@ -96,9 +96,9 @@ function update_grade(fnum, grade){
 	}
 }
 
-function openMiniHomePage(event) {	// 미니홈피 새창에서 열기
+function openFriendMiniHome(event, friend) {	// 미니홈피 새창에서 열기
 	event.preventDefault(); // 기본 동작인 링크 이동을 중지합니다.
-	let url = "mini_home.do?id=${user_id}";
+	let url = "mini_home.do?nickname="+friend;
 	console.log(url);
 	let name = '내 미니홈피';
 	let options = 'width=1600,height=900,menubar=yes,toolbar=yes,location=yes,resizable=no';

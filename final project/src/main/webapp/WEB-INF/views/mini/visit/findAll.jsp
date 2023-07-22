@@ -93,10 +93,10 @@ function findAll(page){
             	let vo = arr[i];
  				console.log(vo); 
  				
- 				let content = vo.content;
- 				if (content.length > 20) {
- 					  content = content.substring(0, 20) + '...';
- 				}
+//  				let content = vo.content;
+//  				if (content.length > 20) {
+//  					  content = content.substring(0, 20) + '...';
+//  				}
  				
  				visit_log += `
  					<div class="postit" style="background-color:\${vo.color}" data-mcnum="\${vo.mcnum}" onclick="if (!deleteMode) {gotoFindOne(\${vo.mcnum})};">
@@ -178,7 +178,7 @@ function select_diary_deleteOK() {
 
 	// 모든 요청이 완료됐을 때 알림을 표시하고 페이지를 새로고침합니다.
     $.when(...promises).done(function() {
-        alert('선택된 사진 삭제완료');
+        alert('선택된 방명록 삭제완료');
         location.href='./mini_visit.do?id=' + '${mh_attr.id}';
     });
  	

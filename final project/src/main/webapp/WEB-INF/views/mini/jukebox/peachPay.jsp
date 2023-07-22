@@ -46,9 +46,6 @@ function payClick(){
 			let options = 'width=500,height=500';
 			var popup = window.open(url, name, options);
 
-			popup.onunload=function (){
-		        window.location.href="mini_jukebox.do?id=${user_id}";
-		    }
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr:', xhr.status);
