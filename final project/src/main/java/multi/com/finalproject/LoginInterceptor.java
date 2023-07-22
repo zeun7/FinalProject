@@ -75,6 +75,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				|| sPath.equals("/c_reportOK.do") // 댓글 신고 
 				|| sPath.equals("/json_c_clike.do") // 댓글 좋아요
 				|| sPath.equals("/json_c_cancel_clike.do") // 댓글 좋아요 취소 
+				//manage
+				|| sPath.equals("/manage.do") // 관리자 페이지 
+				
 				){
 			
 			if(user_id == null || user_id.isBlank()) {

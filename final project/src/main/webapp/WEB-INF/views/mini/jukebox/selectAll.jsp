@@ -173,7 +173,7 @@ function buyBGM(){
   </div>
 
 <script type="text/javascript">
-	if('${user_id}' != '${mh_attr.id}'){	
+	if('${user_id}' != '${mh_attr.id}'){
 	    $('#peachButton').hide();
 	    $('#bgmButton').hide();
 	    $('#userPeach').hide();

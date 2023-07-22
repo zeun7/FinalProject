@@ -17,6 +17,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import multi.com.finalproject.board.model.LikesVO;
 import multi.com.finalproject.jukebox.service.JukeboxService;
 import multi.com.finalproject.member.model.MemberVO;
+import multi.com.finalproject.member.service.MemberService;
 import multi.com.finalproject.miniboard.model.MiniBoardVO;
 import multi.com.finalproject.miniboard.service.MiniBoardService;
 import multi.com.finalproject.minicomments.service.MiniCommentsService;
@@ -50,6 +52,12 @@ public class MiniBoardRestController {
 	
 	@Autowired
 	MiniCommentsService minicomments_service;
+	
+	@Autowired
+	MemberService member_service;
+	
+	@Autowired
+	HttpSession session;
 	
 	@ResponseBody
 	@RequestMapping(value = "/json_mb_count.do", method = RequestMethod.GET)
@@ -366,6 +374,9 @@ public class MiniBoardRestController {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		jukeService.pcountDown(vo);
+		MemberVO vo2 = member_service.selectOne(vo);
+		int usedPeachCount = vo2.getPeach();
+		session.setAttribute("myPeach", usedPeachCount);
 		
 		int result = 1;
 		map.put("result", result);
