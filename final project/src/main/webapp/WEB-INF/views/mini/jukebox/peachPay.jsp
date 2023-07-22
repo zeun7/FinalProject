@@ -99,7 +99,7 @@ function getQuantity(event){
 						<td>
 							<a href="home.do" class="simple-text logo-mini">
 								<div class="logo-image-small">
-									<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%; height: 50px; margin-left: 100px;">
+									<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%; height: 50px;">
 									<span>메인페이지로</span>
 								</div>
 							</a>

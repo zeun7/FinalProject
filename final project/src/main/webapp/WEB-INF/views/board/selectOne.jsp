@@ -13,7 +13,24 @@
 <meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
-<title>Insert title here</title>
+<title>
+	<c:set var="bname" value="${vo2.bname}"></c:set>
+	<c:choose><c:when test="${bname eq 'board01'}"> 
+			자유
+	</c:when></c:choose>
+	<c:choose><c:when test="${bname eq 'board02'}"> 
+			일상
+	</c:when></c:choose>
+	<c:choose><c:when test="${bname eq 'board03'}"> 
+			유머
+	</c:when></c:choose>
+	<c:choose><c:when test="${bname eq 'board04'}"> 
+			엔터
+	</c:when></c:choose>
+	<c:choose><c:when test="${bname eq 'board05'}"> 
+			스포츠
+	</c:when></c:choose>
+</title>
 <link rel="stylesheet" href="resources/css/modal.css">
 <link rel="stylesheet" href="resources/css/comments.css">
 <link rel="stylesheet" href="resources/css/button.css">
