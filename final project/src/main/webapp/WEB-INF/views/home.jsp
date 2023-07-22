@@ -86,7 +86,7 @@ function post_friends(sortKey){
 					tag_vos += `<a style="width: 200px;" href="diary_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
 					
 					if(vo.ccount !== 0){
-						tag_vos += `[\${vo.ccount}]</a></td>`;
+						tag_vos += `<small>[\${vo.ccount}]</small></a></td>`;
 					} else {
 						tag_vos += `</a></td>`;
 					}
@@ -94,7 +94,7 @@ function post_friends(sortKey){
 					tag_vos += `<a style="width: 200px;" href="gallery_selectOne.do?id=\${uid}&mbnum=\${vo.mbnum}">\${vo.title} `;
 
 					if(vo.ccount !== 0){
-						tag_vos += `[\${vo.ccount}]</a></td>`;
+						tag_vos += `<small>[\${vo.ccount}]</small></a></td>`;
 					} else {
 						tag_vos += `</a></td>`;
 					}
@@ -177,17 +177,17 @@ function post_board(boardName, sortKey){
 				if(vo.isFileExist == 1){
 					tag_vos += `<i class="fa-regular fa-image"></i>`;
 				}
+				
 				if(vo.ccount != 0){
-					tag_vos += `<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}[\${vo.ccount}]</a></td>
-							<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>
-							<td>\${date}</td>
-						</tr>`;
-				} else{
-					tag_vos += `<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>
-						<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>
+					tag_vos += `<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title} <small>[\${vo.ccount}]</small></a></td>`;
+				} else {
+					tag_vos += `<a href="b_selectOne.do?bnum=\${vo.bnum}">\${vo.title}</a></td>`;
+				}
+				
+				tag_vos += `<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>
 						<td>\${date}</td>
 					</tr>`;
-				}
+				
 			});
 			
 			tag_vos += `

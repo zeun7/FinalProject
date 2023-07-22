@@ -90,6 +90,10 @@
 		select * from member where  email = #{email}
 	</select>
 	
+	<select id="M_SELECT_ONE_BY_NICK"
+		resultType="String">
+		select id from member where nickname = #{nickname, jdbcType=VARCHAR}
+	</select>	
 	
 	<!-- 비밀번호 변경 관련 mapper -->
 

@@ -117,7 +117,7 @@ function selectAll(page){
 	 			tag_vos += `\${vo.title} `;
 	 			
 	 			if(vo.ccount !== 0){
-					tag_vos += `[\${vo.ccount}]</a></td>`;
+					tag_vos += `<small>[\${vo.ccount}]</small></a></td>`;
 				} else {
 					tag_vos += `</a></td>`;
 				}
