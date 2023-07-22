@@ -12,6 +12,7 @@
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="resources/assets/demo/demo.css" rel="stylesheet" />
 
+
 <div class="sidebar" data-color="white" data-active-color="danger">
 	<div class="logo">
 		<a href="home.do" class="simple-text logo-mini">

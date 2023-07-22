@@ -18,6 +18,7 @@
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link href="resources/assets/demo/demo.css" rel="stylesheet" />
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -95,7 +96,15 @@ function getQuantity(event){
 						</td>
 					</tr>    	
 					<tr>
-						<td colspan="2" style="text-align: right; padding-right: 290px;">
+						<td>
+							<a href="home.do" class="simple-text logo-mini">
+								<div class="logo-image-small">
+									<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%; height: 50px; margin-left: 100px;">
+									<span>메인페이지로</span>
+								</div>
+							</a>
+						</td>
+						<td style="text-align: right; padding-right: 290px;">
 							<button type="button" id="kakao_pay" class="btn btn-primary btn-round" onclick="payClick()">구매</button>
 						</td>
 					</tr>    	

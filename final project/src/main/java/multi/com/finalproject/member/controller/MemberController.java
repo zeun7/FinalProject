@@ -229,6 +229,7 @@ public class MemberController {
 			session.setAttribute("nickname", vo.getNickname());
 			session.setAttribute("mclass", vo2.getMclass());
 			session.setAttribute("profilepic", vo2.getProfilepic());
+			session.setAttribute("myPeach", vo2.getPeach());
 
 			return "redirect:m_selectOne.do?id=" + vo.getId();
 		} else {
