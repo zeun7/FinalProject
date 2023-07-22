@@ -85,7 +85,7 @@ function buyPeach(){
 <jsp:include page="../mini_top_menu.jsp"></jsp:include>
   <div class="wrapper ">
     <div class="main-panel" style="background-image: url('resources/uploadimg/${mh_attr.backimg}'); background-size:cover; background-repeat:no-repeat;">
-    <jsp:include page="../mini_navbar.jsp"></jsp:include>
+    <jsp:include page="../../navbar.jsp"></jsp:include>
       <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
