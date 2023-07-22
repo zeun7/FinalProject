@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="resources/css/comments.css">
 <link rel="stylesheet" href="resources/css/button.css">
 <link rel="stylesheet" href="resources/css/cmt_button.css">
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js"
 	integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC"
 	crossorigin="anonymous"></script>

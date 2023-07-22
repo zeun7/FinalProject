@@ -26,7 +26,7 @@
 <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link href="resources/assets/css/paper-dashboard.css?v=2.0.1"
 	rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <link href="resources/css/game.css" rel="stylesheet" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>

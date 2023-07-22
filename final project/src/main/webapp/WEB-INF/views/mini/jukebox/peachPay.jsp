@@ -18,7 +18,7 @@
   <!-- CSS Files -->
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
+  <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
   <link href="resources/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="resources/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link rel="stylesheet" href="resources/css/pagination.css">
