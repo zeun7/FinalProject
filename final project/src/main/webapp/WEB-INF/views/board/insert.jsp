@@ -35,6 +35,7 @@ function input_check(){
 </head>
 <body>
 <jsp:include page="../sidebar.jsp"></jsp:include>
+<jsp:include page="../navbar.jsp"></jsp:include>
 <div class="main-panel">
 	<div class="col-md-12">
 		<div class="card">

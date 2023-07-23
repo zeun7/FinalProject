@@ -361,7 +361,7 @@ style="background-image: url('resources/AI_Backimg/Manage.png'); background-size
 	<div class="content">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card" style="background-color: rgba(255, 255, 255, 0.9);">
+				<div class="card">
 					<div class="card-header">
 					<ul class="menu" style="list-style-type: none; display: flex; justify-content: center; align-items: center;">
 						<li><button class="custom-btn btn-16" style="color: #ff80c0; font-size: 15px; font-weight: bold;" onclick="manage_member(1)">회원관리</button></li>

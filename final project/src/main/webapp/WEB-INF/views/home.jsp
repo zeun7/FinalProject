@@ -4,10 +4,14 @@
 <html>
 <head>
 <title>Home</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/7ed6703c9d.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
 <link rel="stylesheet" href="resources/css/button3.css">
 <link rel="stylesheet" href="resources/css/board_table.css">
 <%
@@ -54,22 +58,22 @@ function post_friends(sortKey){
 			let tag_vos = `
 				<table>
 					<thead>
-						<tr>
-							<th colspan="3" style="text-align: center;"><친구들의 소식></th>
-							<th style="display: flex;">
-								<button style="margin-right:2px;" class="button btnPush" onclick="post_friends('vcount')">인기순</button>
-								<button class="button btnPush" onclick="post_friends('wdate')">최신순</button>
-							</th>
-						</tr>
+					    <tr>
+				            <th colspan="2" style="width: 120px; text-align: center;">친구들의 소식</th>
+				        	<th style="display: flex;">
+					            <button class="button btnPush" onclick="post_friends('vcount')">인기순</button>
+					            <button class="button btnPush" onclick="post_friends('wdate')">최신순</button>
+				            </th>
+					    </tr>
 					</thead>
-					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
+					<tbody><tr><td style="width: 200px;"></td><td style="width: 120px;"></td><td style="width: 100px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
 				let date = '';
 				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
- 					date = moment(vo.wdate).format('HH:mm');
+ 					date = moment(vo.wdate).format('HH시mm분');
  				} else{											// 오늘 이전에 작성한 게시글
- 					date = moment(vo.wdate).format('MM-DD');
+ 					date = moment(vo.wdate).format('MM월DD일');
  				}
 				
 				tag_vos += `
@@ -100,7 +104,7 @@ function post_friends(sortKey){
 				}
 				
 				tag_vos += `<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>
-						<td>\${date}</td>
+						<td style="width: 100px; text-align: center;">\${date}</td>
 					</tr>`;
 			});
 			
@@ -148,23 +152,23 @@ function post_board(boardName, sortKey){
 				<table>
 					<thead>
 						<tr>
-							<th colspan="3" style="text-align: center;">`;
-			tag_vos += `<a href="b_selectAll.do?bname=`+boardName+`">`+bname+`</a>`;
-			tag_vos += `			</th>
+							<th colspan="2" style="width: 120px; text-align: center;">`;
+			tag_vos += `<a href="b_selectAll.do?bname=`+boardName+`">`+bname+`</a></th>`;
+			tag_vos += `			
 							<th style="display: flex;">
-								<button style="margin-right:2px;" class="button btnPush" onclick="post_board('`+boardName+`', 'vcount')">인기순</button>
+								<button class="button btnPush" onclick="post_board('`+boardName+`', 'vcount')">인기순</button>
 								<button class="button btnPush" onclick="post_board('`+boardName+`', 'wdate')">최신순</button>
 							</th>
 						</tr>
 					</thead>
-					<tbody><tr><td style="width: 50px"></td><td style="width: 200px;"></td><td style="width: 200px;"></td><td style="width: 120px;"></td></tr>`;
+					<tbody><tr><td style="width: 200px;"></td><td style="width: 120px;"></td><td style="width: 100px;"></td></tr>`;
 					
 			$.each(arr, function(index,vo){
 				let date = '';
 				if(moment().format('YYYY-MM-DD') === moment(vo.wdate).format('YYYY-MM-DD')){	// 오늘 작성한 게시글
- 					date = moment(vo.wdate).format('HH:mm');
+ 					date = moment(vo.wdate).format('HH시mm분');
  				} else{											// 오늘 이전에 작성한 게시글
- 					date = moment(vo.wdate).format('MM-DD');
+ 					date = moment(vo.wdate).format('MM월DD일');
  				}
 				
 				tag_vos += `
@@ -183,7 +187,7 @@ function post_board(boardName, sortKey){
 				}
 				
 				tag_vos += `<td style="width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${vo.writer}</td>
-						<td>\${date}</td>
+						<td style="width: 100px; text-align: center;">\${date}</td>
 					</tr>`;
 				
 			});
@@ -207,38 +211,52 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<jsp:include page="sidebar.jsp"></jsp:include>
-<jsp:include page="navbar.jsp"></jsp:include>
-<div class="main-panel"
-	style="background-image: url('resources/AI_Backimg/MainHome.png'); background-size:cover; background-repeat:no-repeat;">
-	<div class="content" style="height:100%;">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card" style="background-color: rgba(255, 255, 255, 0.9);">
-					<div class="card-body" style="display: flex; justify-content: center; flex: 1;">
-						<table style="display:flex; justify-content: space-between;">
-							<tr style="display:flex;">
-								<td id="인기글" style="width: 500px;"></td>
-								<td id="자유" style="margin-left: 80px; width: 500px;"></td>
-							</tr>
-							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
-							<tr style="display:flex;">
-								<td id="일상" style="width: 500px;"></td>
-								<td id="유머" style="margin-left: 80px; width: 500px;"></td>
-							</tr>
-							<tr><td colspan="2" style="width: 1000px;"><hr></td></tr>
-							<tr style="display:flex;">
-								<td id="엔터" style="width: 500px;"></td>
-								<td id="스포츠" style="margin-left: 80px; width: 500px;"></td>
-							</tr>
-							<tr><td colspan="2" style="width: 1000px;"><br></td></tr>
-						</table>
-					</div> <!-- end "card-body" -->
-				</div> <!-- end "card" -->
-			</div> <!-- end "col-md-12" -->
-		</div> <!-- end "row" -->
-	</div> <!-- end "content" -->
-	<jsp:include page="footer.jsp"></jsp:include>
-</div> <!-- end "main-panel" -->
+	<jsp:include page="sidebar.jsp"></jsp:include>
+	<jsp:include page="navbar.jsp"></jsp:include>
+	<div class="main-panel"
+		style="background-image: url('resources/AI_Backimg/MainHome.png'); background-size: cover; background-repeat: no-repeat;">
+		<div class="content" style="height: 100%;">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card"
+						style="background-color: rgba(255, 255, 255, 0.9);">
+						<div class="card-body"
+							style="display: flex; justify-content: center; flex: 1;">
+							<table style="display: flex; justify-content: space-between;">
+								<tr style="display: flex;">
+									<td id="인기글" style="width: 500px;"></td>
+									<td id="자유" style="margin-left: 80px; width: 500px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="width: 1000px;"><hr></td>
+								</tr>
+								<tr style="display: flex;">
+									<td id="일상" style="width: 500px;"></td>
+									<td id="유머" style="margin-left: 80px; width: 500px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="width: 1000px;"><hr></td>
+								</tr>
+								<tr style="display: flex;">
+									<td id="엔터" style="width: 500px;"></td>
+									<td id="스포츠" style="margin-left: 80px; width: 500px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="width: 1000px;"><br></td>
+								</tr>
+							</table>
+						</div>
+						<!-- end "card-body" -->
+					</div>
+					<!-- end "card" -->
+				</div>
+				<!-- end "col-md-12" -->
+			</div>
+			<!-- end "row" -->
+		</div>
+		<!-- end "content" -->
+		<jsp:include page="footer.jsp"></jsp:include>
+	</div>
+	<!-- end "main-panel" -->
 </body>
 </html>
