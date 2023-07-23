@@ -131,7 +131,7 @@ function gpt_translate(content_txtonly){
 		success : function(vo){
 			console.log(vo.response);
 			gptTxt = vo.response;
-			gptTxt += " I imagine this in cartoon style.";
+			gptTxt += " I imagine this in cute cartoon style.";
 			gpt_make_image(gptTxt);
 		},
 		error : function(xhr, status, error){
