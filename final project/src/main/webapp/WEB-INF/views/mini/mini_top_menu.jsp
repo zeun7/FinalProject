@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link href="resources/css/icon.css" rel="stylesheet" />
   <script type="text/javascript">
   	function goToNewestDiary(){
 		$.ajax({
@@ -82,40 +83,40 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li id="li_home">
-            <a href="mini_home.do?id=${mh_attr.id}" onclick="changeActive('li_home')">
-              <i class="nc-icon nc-bank"></i>
-              <p>홈</p>
+          <li id="li_home" class="side_list">
+            <a href="mini_home.do?id=${mh_attr.id}" onclick="changeActive('li_home')" style="display:flex;">
+              <img src="resources/icon/miniHome_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">홈</p>
             </a>
           </li>
-          <li id="li_diary" >
-            <a href="mini_diary.do?id=${mh_attr.id}" onclick="changeActive('li_diary')">
-              <i class="nc-icon nc-single-copy-04"></i>
-              <p>다이어리</p>
+          <li id="li_diary" class="side_list">
+            <a href="mini_diary.do?id=${mh_attr.id}" onclick="changeActive('li_diary')" style="display:flex;">
+             <img src="resources/icon/diary_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">다이어리</p>
             </a>
           </li>
-          <li id="li_visit" >
-            <a href="mini_visit.do?id=${mh_attr.id}" onclick="changeActive('li_visit')">
-              <i class="nc-icon nc-book-bookmark"></i>
-              <p>방명록</p>
+          <li id="li_visit" class="side_list">
+            <a href="mini_visit.do?id=${mh_attr.id}" onclick="changeActive('li_visit')" style="display:flex;">
+            <img src="resources/icon/visit_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">방명록</p>
             </a>
           </li>
-          <li id="li_gallery" >
-            <a href="mini_gallery.do?id=${mh_attr.id}" onclick="changeActive('li_gallery')">
-              <i class="nc-icon nc-album-2"></i>
-              <p>사진첩</p>
+          <li id="li_gallery" class="side_list">
+            <a href="mini_gallery.do?id=${mh_attr.id}" onclick="changeActive('li_gallery')" style="display:flex;">
+              <img src="resources/icon/gallery_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">사진첩</p>
             </a>
           </li>
-          <li id="li_game" >
-            <a href="mini_game.do?id=${mh_attr.id}" onclick="changeActive('li_game')">
-              <i class="nc-icon nc-controller-modern"></i>
-              <p>게임</p>
+          <li id="li_game" class="side_list">
+            <a href="mini_game.do?id=${mh_attr.id}" onclick="changeActive('li_game')" style="display:flex;">
+              <img src="resources/icon/game_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">게임</p>
             </a>
           </li>
-          <li id="li_jukebox" >
-            <a href="mini_jukebox.do?id=${mh_attr.id}" onclick="changeActive('li_jukebox')">
-              <i class="nc-icon nc-note-03"></i>
-              <p>쥬크박스</p>
+          <li id="li_jukebox" class="side_list">
+            <a href="mini_jukebox.do?id=${mh_attr.id}" onclick="changeActive('li_jukebox')" style="display:flex;">
+              <img src="resources/icon/jukebox_icon.png" class="side_icon nc-icon">
+              <p class="side_menu">쥬크박스</p>
             </a>
           </li>
         </ul>

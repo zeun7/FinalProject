@@ -34,7 +34,17 @@ let page = 1;
 let curPage = 1;
 let mh_attr_id = '${mh_attr.id}';
 
+function back_img(){
+	$('#back_img').css({
+		"background-image" : "url('resources/AI_Backimg/cork_board.png')",
+		"background-size" : "100% 100%",
+		"background-repeat" : "no-repeat"
+	});
+}
+
 function findAllCount(){	// 방명록 목록의 페이징 버튼 출력
+	back_img();
+	
 	$.ajax({
 		url : "json_mc_count.do",
 		method : 'GET',
@@ -202,9 +212,9 @@ function select_diary_deleteOK() {
               <div class="card-header" style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
                 <h4 class="card-title"> 방명록</h4>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="height: 800px;" id="back_img">
               	<div id="buttonContainer" style="display: flex; justify-content: space-between;">
-					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger" style="border-radius: 10px;">선택삭제</button>
+					<button id="selectDeleteButton" onclick="toggleDeleteMode()" class="btn btn-outline-danger" style="border-radius: 10px; background-color:#ef8157; color:white;">선택삭제</button>
 					<a href="visit_insert.do?id=${mh_attr.id}&writer=${nickname}" id="visit_insert" class="btn btn-outline-success" style="border-radius: 10px;">방명록 쓰기</a>
 				</div>
 				<hr>

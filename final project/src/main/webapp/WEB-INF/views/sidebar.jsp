@@ -14,47 +14,50 @@
 <link href="resources/css/icon.css" rel="stylesheet" />
 
 <div class="sidebar" data-color="white" data-active-color="danger">
-	<div class="logo">
-		<a href="home.do" class="simple-text logo-mini">
+	<div class="logo" style="height:80px;">
+		<a href="home.do" class="simple-text logo-mini" style="width:50px;">
 			<div class="logo-image-small">
-				<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%;">
+				<img src="resources/assets/img/ilchon.png" style="border: 1px solid; border-radius: 50%; height:50px; width:50px;">
 			</div> <!-- <p>CT</p> -->
-		</a> <a href="home.do" class="simple-text logo-normal"> Ilchon <!-- <div class="logo-image-big">
+		</a> <a href="home.do" class="simple-text logo-normal" style="font-size:25px; padding-top:20px;">
+		 Ilchon <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
 		</a>
 	</div>
 	<div class="sidebar-wrapper">
 		<ul class="nav">
-			<li><a href="mini_home.do?id=${user_id}" style="display:flex;" 
+			<li class="side_list"><a href="mini_home.do?id=${user_id}" style="display:flex;" 
 				onclick="openMiniHomePage(event)"> <img src="resources/AI_Backimg/MiniHome.png" class="side_icon nc-icon">
 					<p class="side_menu">미니홈피</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board01"> <i
-					class="nc-icon nc-bulb-63"></i>
-					<p>자유</p>
+			<li class="side_list"><a href="b_selectAll.do?bname=board01" style="display:flex;">
+				<img src="resources/icon/free_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">자유</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board02"> <i
-					class="nc-icon nc-button-play"></i>
-					<p>일상</p>
+			<li class="side_list"><a href="b_selectAll.do?bname=board02" style="display:flex;">
+				 <img src="resources/icon/daily_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">일상</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board03"> <i
-					class="nc-icon nc-satisfied"></i>
-					<p>유머</p>
+			<li class="side_list"><a href="b_selectAll.do?bname=board03" style="display:flex;">
+					<img src="resources/icon/humor_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">유머</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board04"> <i
-					class="nc-icon nc-diamond"></i>
-					<p>엔터</p>
+			<li class="side_list"><a href="b_selectAll.do?bname=board04" style="display:flex;"> 
+					<img src="resources/icon/enter_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">엔터</p>
 			</a></li>
-			<li><a href="b_selectAll.do?bname=board05"> <i
-					class="nc-icon nc-user-run"></i>
-					<p>스포츠</p>
+			<li class="side_list"><a href="b_selectAll.do?bname=board05" style="display:flex;"> 
+				<img src="resources/icon/sports_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">스포츠</p>
 			</a></li>
-			<li id="friendsList"><a href="m_friends.do"> <i class="nc-icon nc-single-02"></i>
-					<p>친구목록</p>
+			<li id="friendsList" class="side_list"><a href="m_friends.do" style="display:flex;">
+				<img src="resources/icon/friends_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">친구목록</p>
 			</a></li>
-			<li id="manage"><a href="manage.do"><i class="nc-icon nc-settings"></i>
-					<p>관리</p>
+			<li id="manage" class="side_list"><a href="manage.do" style="display:flex;">
+				<img src="resources/icon/manage_icon.png" class="side_icon nc-icon">
+					<p class="side_menu">관리</p>
 			</a></li>
 		</ul>
 	</div>

@@ -214,7 +214,7 @@ $(document).ready(function(){
 	<div class="content" style="height:100%;">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card">
+				<div class="card" style="background-color: rgba(255, 255, 255, 0.9);">
 					<div class="card-body" style="display: flex; justify-content: center; flex: 1;">
 						<table style="display:flex; justify-content: space-between;">
 							<tr style="display:flex;">

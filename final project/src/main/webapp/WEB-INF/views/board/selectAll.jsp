@@ -411,11 +411,11 @@ function changeLimit(){
 <body onload="selectAllCount()">
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <jsp:include page="../navbar.jsp"></jsp:include>
-<div class="main-panel" id="back_img">
+<div class="main-panel" id="back_img" >
 	<div class="content" style="height:100%;">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card">
+				<div class="card" style="background-color: rgba(255, 255, 255, 0.9);">
 					<div class="card-header">
 						<h1 class="card-title" style="text-align:center;">
 							<c:set var="bname" value="${param.bname}"></c:set>

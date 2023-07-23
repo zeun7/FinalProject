@@ -90,7 +90,7 @@ function input_check(){
 	console.log('txtonly:', content_txtonly);
 	
 	//파일이 첨부되어있는지 확인
-	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1){
+	if(content_val.indexOf('<img') != -1 || content_val.indexOf('<video') != -1 || $('#ai_path').val() != ''){
 		let input = document.getElementById("isFileExist");
 		input.value = 1;
 	}

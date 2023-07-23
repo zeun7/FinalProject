@@ -46,7 +46,7 @@
 <script type="text/javascript">
 
 // 로컬
-let url = 'http://localhost:8088/final%20project/b_selectOne.do?bnum='+${param.bnum};
+let url = 'http://localhost:8088/finalproject/b_selectOne.do?bnum='+${param.bnum};
 // 배포서버
 // let url = 'http://175.45.201.175:8080/final%20project/b_selectOne.do?bnum='+${param.bnum};
 
@@ -58,6 +58,8 @@ console.log(encodeUrl);
 
 $(function(){
 	//사용자가 해당 글에 좋아요를 눌렀는지 확인하는 함수
+	back_img();
+	
 	let sid = '';
 	sid = '${user_id}';
 	if(sid != ''){
@@ -85,6 +87,40 @@ $(function(){
 		});//end $.ajax()
 	}
 });//end onload
+
+function back_img(){
+	if('${vo2.bname}' === 'board01'){
+		$('#back_img').css({
+				"background-image" : "url('resources/AI_Backimg/Free.png')",
+				"background-size" : "cover",
+				"background-repeat" : "no-repeat"
+		});
+	} else if('${vo2.bname}' === 'board02'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Daily.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${vo2.bname}' === 'board03'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Humor.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${vo2.bname}' === 'board04'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Entertainment.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	} else if('${vo2.bname}' === 'board05'){
+		$('#back_img').css({
+			"background-image" : "url('resources/AI_Backimg/Sports.png')",
+			"background-size" : "cover",
+			"background-repeat" : "no-repeat"
+		});
+	}
+}
 
 function like(){
 	let sid = '';
@@ -160,7 +196,7 @@ function copy_url(){
 	}
 	textArea.setSelectionRange(0, 0);
 	document.body.removeChild(textArea);
-	alert('텍스트가 복사되었습니다.');
+	alert('링크가 복사되었습니다.');
 }
 
 $(function(){
@@ -692,7 +728,7 @@ function goBack() {
 </head>
 <body onload="comments('${vo2.writer}')">
 <jsp:include page="../sidebar.jsp"></jsp:include>
-<div class="main-panel">
+<div class="main-panel" id="back_img">
 <jsp:include page="../navbar.jsp"></jsp:include>
 	<div class="content">
 		<div class="row">

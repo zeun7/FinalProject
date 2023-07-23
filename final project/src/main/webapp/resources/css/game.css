@@ -32,11 +32,17 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 	width: 180px;
-	height: 50px;
+	height: 100px;
 	border: none;
-	background-color: #FDFBF9;
+	background-color: transparent !important;
 	margin: 5% auto;
 	background-position: 45% 90%;
+}
+
+.show_rank {
+	position: absolute;
+	top: 85%;
+	left: 48%;
 }
 
 .word-start{

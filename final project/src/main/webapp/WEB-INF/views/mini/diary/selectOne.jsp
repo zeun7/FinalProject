@@ -29,14 +29,14 @@
 <script src="https://kit.fontawesome.com/7ed6703c9d.js" crossorigin="anonymous"></script>
 
 <!-- 로컬 서버 -->
-<meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/b_selectOne.do?bnum=${param.bnum}" />
+<meta name="twitter:url" content="https://ebd7-218-146-69-112.ngrok-free.app/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}" />
 <!-- 배포 서버 -->
-<%-- <meta name="twitter:url" content="https://175.45.201.175:8080/final$20project/b_selectOne.do?bnum=${param.bnum}" /> --%>
+<%-- <meta name="twitter:url" content="https://175.45.201.175:8080/final$20project/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}" /> --%>
 
 <script type="text/javascript">
 
 //로컬
-let url = 'http://localhost:8088/final%20project/b_selectOne.do?bnum='+${param.bnum};
+let url = 'http://localhost:8088/finalproject/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 // 배포서버
 // let url = 'http://175.45.201.175:8080/final%20project/diary_selectOne.do?id=${param.id}&mbnum=${param.mbnum}';
 
@@ -137,7 +137,7 @@ function copy_url(){
 	}
 	textArea.setSelectionRange(0, 0);
 	document.body.removeChild(textArea);
-	alert('텍스트가 복사되었습니다.');
+	alert('링크가 복사되었습니다.');
 }
 
 function share_twitter(){

@@ -69,7 +69,7 @@
 										<br>
 										<br><br>
 										<br>
-										<button id="showRank" class="btn-rank" style="background-color: transparent;">랭킹보기</button>
+										<button id="showRank" class="btn-rank"><span class="show_rank">랭킹보기</span></button>
 									</div>
 									<div id="rankingContent" style="display: none;"></div>
 								</div>
@@ -238,7 +238,7 @@
 							records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
 						}
 
-						let rankingTable = '<table class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
+						let rankingTable = '<table style="background-color:rgba(255,255,255,0.8);" class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
 						for (let i = 0; i < records.length; i++) {
 							let row = records[i];
@@ -310,7 +310,7 @@
 							records.unshift(userRecord); // 사용자의 행을 맨 처음에 추가
 						}
 
-						let rankingTable = '<table class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
+						let rankingTable = '<table style="background-color:rgba(255,255,255,0.8);" class="table text-center"><tr><th>Rank</th><th>ProfilePic</th><th>UserID</th><th>Score</th><th>PlayDate</th></tr>';
 
 						for (let i = 0; i < records.length; i++) {
 							let row = records[i];

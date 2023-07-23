@@ -41,6 +41,8 @@ let mh_attr_id = '${mh_attr.id}';
 console.log(mh_attr_id);
 
 function recent_visitLog(){
+	back_img();
+	
     $.ajax({
         url: "json_mc_findAll.do",
         method: "get",
@@ -77,6 +79,14 @@ function recent_visitLog(){
     });
 }
 
+function back_img(){
+	$('#back_img').css({
+		"background-image" : "url('resources/AI_Backimg/cork_board.png')",
+		"background-size" : "100% 100%",
+		"background-repeat" : "no-repeat"
+	});
+}
+
 function gotoFindOne(mcnum){
 	window.location.href="visit_findOne.do?id="+mh_attr_id+"&mcnum="+mcnum;
 }
@@ -108,8 +118,8 @@ function gotoFindOne(mcnum){
 										</c:choose>
 									</h4><hr>
 								</div>
-								<div class="card-body" style="height: 600px;">
-									<h4 style="display: flex; justify-content: center;">최근 방명록</h4>
+								<div class="card-body" style="height: 800px;" id="back_img">
+									<h4 style="display: flex; justify-content: center; padding-top:30px;">최근 방명록</h4>
 									<div style="display: flex; justify-content: flex-end;">
 										<select onchange="redirectToMiniHome(this)">
 												<option>1촌목록</option>

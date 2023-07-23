@@ -40,7 +40,7 @@ $(function(){
 		},
 		dataType : 'json',
 		success : function(vo){
-			$('#peach').html('보유 peach: '+vo.peach);
+			$('#peach').html('<img src="resources/icon/peach.png" style="width:15px; height:15px;"> peach: '+vo.peach);
 			userPeach = vo.peach;
 		},
 		error : function(xhr, status, error){
@@ -131,7 +131,7 @@ function gpt_translate(content_txtonly){
 		success : function(vo){
 			console.log(vo.response);
 			gptTxt = vo.response;
-			gptTxt += " I imagine this in cute cartoon style.";
+			gptTxt += " I imagine this in cartoon style.";
 			gpt_make_image(gptTxt);
 		},
 		error : function(xhr, status, error){

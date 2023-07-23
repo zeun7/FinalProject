@@ -132,7 +132,7 @@ function buyBGM(){
        <div class="content" style="height: 100%;">
         <div class="row">
           <div class="col-md-12">
-            <div class="card card-plain">
+            <div class="card">
               <div class="card-header">
               	<div style="text-align:center; font-family: Georgia; font-size: 20px; font-weight: bold;">
 	                <h4 class="card-title"> 쥬크박스</h4>
