@@ -102,7 +102,6 @@ public class BoardDAOimpl implements BoardDAO {
 				if(c_vo.getWriter().equals(ban_vo.getNickname2())) {	// 내가 차단 한 상대
 					isBan = true;
 				}
-				
 			}
 			
 			for(FriendsVO banned_vo : banned_vos) {
@@ -198,11 +197,11 @@ public class BoardDAOimpl implements BoardDAO {
 		boolean isBan = false;
 		
 		if (map.get("searchKey").toString().equals("title")) {
-			vos = sqlSession.selectList("B_SEARCH_LIST_TITLE_ALL", map);
+			vos = sqlSession.selectList("B_SEARCH_COUNT_TITLE_ALL", map);
 		} else if (map.get("searchKey").toString().equals("content")) {
-			vos = sqlSession.selectList("B_SEARCH_LIST_CONTENT_ALL", map);
+			vos = sqlSession.selectList("B_SEARCH_COUNT_CONTENT_ALL", map);
 		} else {
-			vos = sqlSession.selectList("B_SEARCH_LIST_WRITER_ALL", map);
+			vos = sqlSession.selectList("B_SEARCH_COUNT_WRITER_ALL", map);
 		}
 		
 		for(BoardVO c_vo : vos) {

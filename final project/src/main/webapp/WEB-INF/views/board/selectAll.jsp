@@ -244,7 +244,7 @@ $(document).ready(function(){
 
 function searchListCount(){
 // 	console.log('searchListCount()');
-	searchList(curPage, limit);
+// 	searchList(curPage, limit);
 	isSelectAll = false;
 	console.log('isSelectAll:', isSelectAll);
 	$.ajax({
@@ -260,11 +260,11 @@ function searchListCount(){
 		success : function(result) {
 			console.log(result);
 			let tag_page = 0;
-			let tag_pages = '';
+			let tag_pages = `<div style="display: flex; justify-content: center;">`;
+			let activeClass = (tag_page === curPage) ? 'active' : '';
 			
 			while(result > 0){
 				tag_page++;
-				let tag_pages = `<div style="display: flex; justify-content: center;">`;
 				
 
 				tag_pages += `

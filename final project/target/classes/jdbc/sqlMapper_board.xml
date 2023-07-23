@@ -113,7 +113,7 @@
 		select count(*) from board where bname=#{bname}
 	</select>
 
-	<select id="B_SEARCH_LIST_TITLE_ALL" parameterType="Map" resultType="multi.com.finalproject.board.model.BoardVO">
+	<select id="B_SEARCH_COUNT_TITLE_ALL" parameterType="Map" resultType="multi.com.finalproject.board.model.BoardVO">
 		select * from board where bname=#{vo.bname} and title like #{searchWord}
 	</select>
 
