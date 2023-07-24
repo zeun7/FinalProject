@@ -219,7 +219,7 @@ function select_diary_deleteOK() {
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header" style="text-align: center; font-family: Georgia; font-size: 20px; font-weight: bold;">
                 <h4 class="card-title"> 다이어리</h4>
               </div>
               <div class="card-header" id="buttonContainer" style="display: flex; justify-content: space-between;">
