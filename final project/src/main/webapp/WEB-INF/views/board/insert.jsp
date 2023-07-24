@@ -37,6 +37,7 @@ function input_check(){
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <jsp:include page="../navbar.jsp"></jsp:include>
 <div class="main-panel">
+<div class="content" style="height:100%;">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" style="margin-top:20px; margin-left:20px">
@@ -151,6 +152,7 @@ function input_check(){
 		</div> <!-- end "card"-->
 	</div> <!-- end "col-md-12"-->
 	<jsp:include page="../footer.jsp"></jsp:include>
+	</div>
 </div> <!-- end "main-panel"-->
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
