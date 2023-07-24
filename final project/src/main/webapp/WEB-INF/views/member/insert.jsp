@@ -248,7 +248,7 @@ let isPwChecked = false;
 							enctype="multipart/form-data">
 							<table>
 								<tr>
-									<td><strong for="id">id:</strong></td>
+									<td><strong>id:</strong></td>
 									<td><input class="w3-input" type="text" id="id" name="id"
 										placeholder="아이디">
 										<button type="button" onclick="idCheck()"
@@ -257,7 +257,7 @@ let isPwChecked = false;
 								</tr>
 
 								<tr>
-									<td><strong for="pw">pw:</strong></td>
+									<td><strong>pw:</strong></td>
 									<td><input class="w3-input" type="password" id="pw1"
 										name="pw" placeholder="비밀번호"> <input class="w3-input"
 										type="password" id="pw2" name="pw2" placeholder="비밀번호 한번더 입력">
@@ -268,7 +268,7 @@ let isPwChecked = false;
 								</tr>
 
 								<tr>
-									<td><strong for="nickname">nickname:</strong></td>
+									<td><strong>nickname:</strong></td>
 									<td><input class="w3-input" type="text" id="nickname"
 										name="nickname" placeholder="닉네임">
 										<button type="button" onclick="NickCheck()"
@@ -276,28 +276,30 @@ let isPwChecked = false;
 										id="demo2"></span></td>
 								</tr>
 								<tr>
-									<td><strong for="question">question:</strong></td>
+									<td><strong>question:</strong></td>
 									<td><select class="w3-select" id="question"
 										name="question">
 											<option value="" disabled selected>질문을 선택하세요</option>
 											<option value="가장 행복했던 순간은?">가장 행복했던 순간은?</option>
-											<option value="집주소는?">집주소는?</option>
-											<option value="가입하게 된 이유">가입하게 된 이유</option>
+											<option value="가장 좋아하는 색깔은?">가장 좋아하는 색깔은?</option>
+											<option value="나의 MBTI는?">나의 MBTI는?</option>
+											<option value="나의 혈액형은?">나의 혈액형은?</option>
+											<option value="처음 입학한 학교는?">처음 입학한 학교는?</option>
 									</select></td>
 								</tr>
 								<tr>
-									<td><strong for="answer">answer:</strong></td>
+									<td><strong>answer:</strong></td>
 									<td><input class="w3-input" type="text" id="answer"
 										name="answer" placeholder="답"></td>
 								</tr>
 
 								<tr>
-									<td><strong for="name">name:</strong></td>
+									<td><strong>name:</strong></td>
 									<td><input class="w3-input" type="text" id="name"
 										name="name" placeholder="이름"></td>
 								</tr>
 								<tr>
-									<td><strong for="tel">tel:</strong></td>
+									<td><strong>tel:</strong></td>
 									<td><input class="w3-input" type="text" id="tel"
 										name="tel" placeholder="010-0000-0000">
 										<button type="button" onclick="TelCheck()"
@@ -324,7 +326,7 @@ let isPwChecked = false;
 								</tr>
 
 								<tr>
-									<td><strong for="m_file">프로필 사진선택:</strong></td>
+									<td><strong>프로필 사진선택:</strong></td>
 									<td><input class="w3-input" type="file" id="m_file"
 										name="m_file" placeholder=" "></td>
 								</tr>
@@ -332,11 +334,9 @@ let isPwChecked = false;
 							<div class="button-container">
 								<button type="button" onclick="submitForm()" id="joinBtn"
 									class="w3-button w3-ripple w3-round btn-round"
-									"
 									style="background-color: #94b5e0">Join</button>
 								<button type="button" id="gohome"
 									class="w3-button w3-ripple w3-round btn-round"
-									"
 									style="background-color: #94b5e0">Cancel</button>
 							</div>
 

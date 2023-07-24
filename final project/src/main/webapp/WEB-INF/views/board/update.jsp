@@ -46,114 +46,116 @@ function input_check(){
 <jsp:include page="../sidebar.jsp"></jsp:include>
 <jsp:include page="../navbar.jsp"></jsp:include>
 <div class="main-panel">
-	<div class="col-md-12">
-		<div class="card">
-			<div class="card-header" style="margin-top:20px; margin-left:20px">
-				<h2>글 수정</h2>
-			</div>
-			<div class="card-body" style="width: 100%">
-				<form action="b_updateOK.do" method="post" enctype="multipart/form-data" id="update_form" style="width:800px">
-				<table style="width: 100%">
-					<thead>
-						<tr>
-							<td>
-								<input type="text" name="title" id="title" style="width:400px" placeholder="제목을 입력하세요." value="${vo2.title }">
-								<input type="hidden" name="bnum" id="bnum" value="${vo2.bnum }">
-								<input type="hidden" name="bname" id="bname" value="${vo2.bname }">
-								<input type="hidden" name="writer" id="writer" value="${vo2.writer }">
-							</td>
-							<td>
-								<c:set var="bname" value="${vo2.bname}"></c:set>
-								<c:choose>
-									<c:when test="${bname eq 'board01'}"> <!-- 자유 -->
-										<select name="caname" id="board01">
-											<option value="category01">자유</option>
-											<option value="category02">질문</option>
-											<option value="category03">썰</option>
-											<option id="announcement" value="category00">공지</option>
-										</select>
-									</c:when>
-									
-									<c:when test="${bname eq 'board02'}"> <!-- 일상 -->
-										<select name="caname" id="board02">
-											<option value="category04">일상</option>
-											<option value="category05">맛집</option>
-											<option value="category06">고민</option>
-											<option value="category07">OOTD</option>
-											<option value="category08">뷰티</option>
-											<option id="announcement" value="category00">공지</option>
-										</select>
-									</c:when>
-									
-									<c:when test="${bname eq 'board03'}"> <!-- 유머 -->
-										<select name="caname" id="board03">
-											<option value="category09">유머</option>
-											<option value="category10">이슈</option>
-											<option id="announcement" value="category00">공지</option>
-										</select>
-									</c:when>
-									
-									<c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
-										<select name="caname" id="board04">
-											<option value="category11">가수</option>
-											<option value="category12">아이돌</option>
-											<option value="category13">배우</option>
-											<option value="category14">드라마</option>
-											<option value="category15">영화</option>
-											<option value="category16">유튜브</option>
-											<option id="announcement" value="category00">공지</option>
-										</select>
-									</c:when>
-									
-									<c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
-										<select name="caname" id="board05">
-											<option value="category17">축구</option>
-											<option value="category18">야구</option>
-											<option value="category19">농구</option>
-											<option value="category20">배구</option>
-											<option value="category21">골프</option>
-											<option value="category22">e스포츠</option>
-											<option id="announcement" value="category00">공지</option>
-										</select>
-									</c:when>
-								</c:choose>
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<label for="file">
-									<span class="btn-two cyan mini" id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
-								</label>
-								<input type="hidden" id="isFileExist" name="isFileExist" value="0">
-							</td>
-							<td>
-								<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<textarea rows="20" cols="50" name="content" id="content" style="width:100%;"></textarea>
-							</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="2">
-								<div class="card-footer"  style="display: flex; justify-content: flex-end;">
-									<button type="button" onclick="history.back()" class="custom-btn btn-4" style="margin-right: 10px;">취소</button>
-									<button type="button" onclick="input_check()" class="custom-btn btn-4">수정</button>
-								</div>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
-				</form>
-			</div> <!-- end "card-body" -->
-		</div> <!-- end "card" -->
-	</div> <!-- end "col-md-12 -->
-	<jsp:include page="../footer.jsp"></jsp:include>
+	<div class="content" style="height:100%;">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header" style="margin-top:20px; margin-left:20px">
+					<h2>글 수정</h2>
+				</div>
+				<div class="card-body" style="width: 100%">
+					<form action="b_updateOK.do" method="post" enctype="multipart/form-data" id="update_form" style="width:800px">
+					<table style="width: 100%">
+						<thead>
+							<tr>
+								<td>
+									<input type="text" name="title" id="title" style="width:400px" placeholder="제목을 입력하세요." value="${vo2.title }">
+									<input type="hidden" name="bnum" id="bnum" value="${vo2.bnum }">
+									<input type="hidden" name="bname" id="bname" value="${vo2.bname }">
+									<input type="hidden" name="writer" id="writer" value="${vo2.writer }">
+								</td>
+								<td>
+									<c:set var="bname" value="${vo2.bname}"></c:set>
+									<c:choose>
+										<c:when test="${bname eq 'board01'}"> <!-- 자유 -->
+											<select name="caname" id="board01">
+												<option value="category01">자유</option>
+												<option value="category02">질문</option>
+												<option value="category03">썰</option>
+												<option id="announcement" value="category00">공지</option>
+											</select>
+										</c:when>
+										
+										<c:when test="${bname eq 'board02'}"> <!-- 일상 -->
+											<select name="caname" id="board02">
+												<option value="category04">일상</option>
+												<option value="category05">맛집</option>
+												<option value="category06">고민</option>
+												<option value="category07">OOTD</option>
+												<option value="category08">뷰티</option>
+												<option id="announcement" value="category00">공지</option>
+											</select>
+										</c:when>
+										
+										<c:when test="${bname eq 'board03'}"> <!-- 유머 -->
+											<select name="caname" id="board03">
+												<option value="category09">유머</option>
+												<option value="category10">이슈</option>
+												<option id="announcement" value="category00">공지</option>
+											</select>
+										</c:when>
+										
+										<c:when test="${bname eq 'board04'}"> <!-- 엔터 -->
+											<select name="caname" id="board04">
+												<option value="category11">가수</option>
+												<option value="category12">아이돌</option>
+												<option value="category13">배우</option>
+												<option value="category14">드라마</option>
+												<option value="category15">영화</option>
+												<option value="category16">유튜브</option>
+												<option id="announcement" value="category00">공지</option>
+											</select>
+										</c:when>
+										
+										<c:when test="${bname eq 'board05'}"> <!-- 스포츠 -->
+											<select name="caname" id="board05">
+												<option value="category17">축구</option>
+												<option value="category18">야구</option>
+												<option value="category19">농구</option>
+												<option value="category20">배구</option>
+												<option value="category21">골프</option>
+												<option value="category22">e스포츠</option>
+												<option id="announcement" value="category00">공지</option>
+											</select>
+										</c:when>
+									</c:choose>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<label for="file">
+										<span class="btn-two cyan mini" id="filepath_text" style="border: 1px solid black">사진/동영상 첨부</span>
+									</label>
+									<input type="hidden" id="isFileExist" name="isFileExist" value="0">
+								</td>
+								<td>
+									<input type="file" id="file" name="file" multiple="multiple" style="display: none" onchange="uploadFile()">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<textarea rows="20" cols="50" name="content" id="content" style="width:100%;"></textarea>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2">
+									<div class="card-footer"  style="display: flex; justify-content: flex-end;">
+										<button type="button" onclick="history.back()" class="custom-btn btn-4" style="margin-right: 10px;">취소</button>
+										<button type="button" onclick="input_check()" class="custom-btn btn-4">수정</button>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					</form>
+				</div> <!-- end "card-body" -->
+			</div> <!-- end "card" -->
+		</div> <!-- end "col-md-12 -->
+		<jsp:include page="../footer.jsp"></jsp:include>
+	</div> <!-- end "content" -->
 </div>
 <script type="text/javascript" src="./resources/smarteditor2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">

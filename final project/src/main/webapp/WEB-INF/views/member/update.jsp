@@ -324,12 +324,18 @@
 													<option value="가장 행복했던 순간은?"
 														${vo2.question == '가장 행복했던 순간은?' ? 'selected' : ''}>
 														가장 행복했던 순간은?</option>
-													<option value="집주소는?"
-														${vo2.question == '집주소는?' ? 'selected' : ''}>
-														집주소는?</option>
-													<option value="가입하게 된 이유"
-														${vo2.question == '가입하게 된 이유' ? 'selected' : ''}>
-														가입하게 된 이유</option>
+													<option value="가장 좋아하는 색깔은?"
+														${vo2.question == '가장 좋아하는 색깔은?' ? 'selected' : ''}>
+														가장 좋아하는 색깔은?</option>
+													<option value="나의 MBTI는?"
+														${vo2.question == '나의 MBTI는?' ? 'selected' : ''}>
+														나의 MBTI는?</option>
+													<option value="나의 혈액형은?"
+													${vo2.question == '나의 혈액형은?' ? 'selected' : ''}>
+													나의 혈액형은?</option>
+													<option value="처음 입학한 학교는?"
+													${vo2.question == '처음 입학한 학교는?' ? 'selected' : ''}>
+													처음 입학한 학교는?</option>
 												</select>
 
 											</div>
